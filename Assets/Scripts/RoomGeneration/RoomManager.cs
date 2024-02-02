@@ -8,6 +8,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] int LevelWidth = 16;
     [SerializeField] int LevelHeight = 16;
     [Header("Rooms")]
+    [SerializeField] Transform grid;
     [SerializeField] float roomWidthInUnits = 16;
     [SerializeField] float roomHeightInUnits = 16;
     [SerializeField] GameObject[] rooms;
@@ -16,13 +17,14 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
-        
+        StartRoomGeneration();
     }
 
     void StartRoomGeneration()
     {
         GenerateRoomArray();
 
+        SpawnRooms();  
     }
 
     void GenerateRoomArray()
@@ -47,7 +49,7 @@ public class RoomManager : MonoBehaviour
             {
                 _roomPos = new Vector2(_x * roomWidthInUnits, _y * roomHeightInUnits);
 
-                Instantiate(roomsArray[_x, _y], _roomPos, Quaternion.identity);
+                Instantiate(roomsArray[_x, _y], _roomPos, Quaternion.identity, grid);
             }
         }
     }
