@@ -9,6 +9,7 @@ public class PlayerMovment : MonoBehaviour
 
 public float walkSpeed = 8f;
 public float Sprint = 1f;
+public float maxSpeed = 0.2f;
 float inputHorizontal;
 float inputVertical;
 
