@@ -14,24 +14,23 @@ public class EnemyBehavior : MonoBehaviour
     public Transform target; 
     public float speed = 5f;
 
+    public LayerMask playerLayer;
+
     private bool lineOfSight = true;
+    private bool shootingDistance = false;
 
     void Update()
     {
-        if (lineOfSight == true)
+        if (lineOfSight == true & shootingDistance == false)
         {
             MoveTowardsTarget();
-
-            ShootRaycast();
-            
         }
-       
+        ShootLineOfSightRay();
     }
 
-    void ShootRaycast()
+    void ShootLineOfSightRay()
     {
-        RaycastHit2D hit = Physics2D.Raycast(target.position, myself.position);
-
+        RaycastHit2D hit = Physics2D.Raycast(target.position, myself.position,100,playerLayer);
 
         if (hit.collider != null)
         {
@@ -41,7 +40,16 @@ public class EnemyBehavior : MonoBehaviour
         {
             lineOfSight = false;
         }
+    }
 
+    void ShootDistanceRay()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(target.position, myself.position, 5, playerLayer);
+
+        if (hit.collider != null)
+        {
+            
+        }
     }
 
     void MoveTowardsTarget()
