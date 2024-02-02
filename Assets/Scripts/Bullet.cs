@@ -4,27 +4,40 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float vanishTimer = 3f;
+    //Configurable parameters
+    
 
+    //Cached references
     Rigidbody2D myRigidbody;
+    GunFire gun;
+
+    //Private variables
+    float vanishTimer;
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        gun = FindObjectOfType<GunFire>();
+
+        vanishTimer = gun.GetVanishAfter();
     }
 
     private void Update()
+    {
+        Vanish();
+    }
+
+    void FixedUpdate()
+    {
+        myRigidbody.velocity = transform.up * - gun.GetProjectileSpeed();
+    }
+
+    void Vanish()
     {
         vanishTimer -= Time.deltaTime;
         if (vanishTimer <= 0)
         {
             Destroy(gameObject);
         }
-    }
-
-    void FixedUpdate()
-    {
-        myRigidbody.velocity = transform.up * -moveSpeed;
     }
 }
