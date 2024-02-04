@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
@@ -8,10 +10,15 @@ public class RoomManager : MonoBehaviour
     [SerializeField] int LevelWidth = 16;
     [SerializeField] int LevelHeight = 16;
     [Header("Rooms")]
-    [SerializeField] Transform grid;
-    [SerializeField] float roomWidthInUnits = 16;
-    [SerializeField] float roomHeightInUnits = 16;
-    [SerializeField] GameObject[] rooms;
+    public Transform grid;
+    public float roomWidthInUnits = 16;
+    public float roomHeightInUnits = 16;
+    [Header("Room Spawning Prefabs")]
+    public GameObject RoomSpawnerPrefab;
+    [SerializeField] List<GameObject> BottomOpeningrooms;
+    [SerializeField] List<GameObject> LeftOpeningrooms;
+    [SerializeField] List<GameObject> TopOpeningrooms;
+    [SerializeField] List<GameObject> RightOpeningrooms;
 
     GameObject[,] roomsArray;
 
@@ -22,37 +29,55 @@ public class RoomManager : MonoBehaviour
 
     void StartRoomGeneration()
     {
-        GenerateRoomArray();
 
-        SpawnRooms();  
     }
 
-    void GenerateRoomArray()
-    {
-        roomsArray = new GameObject[LevelWidth, LevelHeight];
+    /// <summary>
+    /// returns a random room based on the opening direction needed
+    /// </summary>
 
-        for (int x = 0; x < LevelWidth; x++)
+    GameObject _room;
+    int _rand;
+    public GameObject GetRandomRoom(Direction direction)
+    {
+        List<GameObject> _list = GetListFromDirecton(direction);
+        _rand = UnityEngine.Random.Range(0, BottomOpeningrooms.Count - 1);
+        _room = BottomOpeningrooms[_rand];
+        return _room;
+    }
+
+    public GameObject GetRandomRoom(Direction[] directions)
+    {
+        List<GameObject> _validRooms = GetListFromDirecton(directions[0]).ToList();
+        for (int i = 1; i < directions.Length; i++) 
         {
-            for (int y = 0; y < LevelHeight; y++)
+            for(int j = 0; j > _validRooms.Count; j++)
             {
-                roomsArray[x, y] = rooms[0];
+                if (RoomHasDirection(_validRooms[i], directions[i]))
+                    _validRooms.RemoveAt(i);
             }
         }
+        return _validRooms[UnityEngine.Random.Range(0, _validRooms.Count - 1)];
     }
 
-    Vector2 _roomPos;
-    void SpawnRooms()
+    private bool RoomHasDirection(GameObject room, Direction direction)
     {
-        for (int _x = 0; _x < LevelWidth; _x++)
-        {
-            for (int _y = 0; _y < LevelHeight; _y++)
-            {
-                _roomPos = new Vector2(_x * roomWidthInUnits, _y * roomHeightInUnits);
-
-                Instantiate(roomsArray[_x, _y], _roomPos, Quaternion.identity, grid);
-            }
-        }
+        return room.GetComponent<Room>().roomOpeningDirections.Contains(direction);
     }
+
+
+    List<GameObject> GetListFromDirecton(Direction direction) 
+    {
+        switch (direction)
+        {
+            case (Direction.Bottom):   return BottomOpeningrooms;
+            case (Direction.Left):     return LeftOpeningrooms;
+            case (Direction.Top):      return TopOpeningrooms;
+            case (Direction.Right):    return RightOpeningrooms;
+        }
+        return null;
+    }
+
 
     // Update is called once per frame
     void Update()
