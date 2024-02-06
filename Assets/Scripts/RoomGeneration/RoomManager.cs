@@ -27,17 +27,21 @@ public class RoomManager : MonoBehaviour
         StartRoomGeneration();
     }
 
+    /// <summary>
+    /// hhejwhfsehf
+    /// </summary>
     void StartRoomGeneration()
     {
 
     }
 
-    /// <summary>
-    /// returns a random room based on the opening direction needed
-    /// </summary>
+
 
     GameObject _room;
     int _rand;
+    /// <summary>
+    /// returns a random room based on the opening direction needed
+    /// </summary>
     public GameObject GetRandomRoom(Direction direction)
     {
         List<GameObject> _list = GetListFromDirecton(direction);
