@@ -64,7 +64,8 @@ public class PlayerMovment : MonoBehaviour
                 }
                 break;
             case State.rolling:
-                float rollSpeedDropMunlitplier = 5f;
+                // dash/roll range
+                float rollSpeedDropMunlitplier = 8f;
                 rollSpeed -= rollSpeed * rollSpeedDropMunlitplier * Time.deltaTime;
 
                 
