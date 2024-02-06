@@ -10,14 +10,34 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public Transform myself;
-    public Transform target; 
-    public float speed = 5f;
 
-    public LayerMask playerLayer;
+    //Me and the targets position  
+
+    public Transform target; 
+
+    //Public variables
+    
+    [SerializeField] public float speed = 5f;
+    [SerializeField] public float aiShootingDistance = 5f;
+
+
+    //Private varibles
 
     private bool lineOfSight = true;
     private bool shootingDistance = false;
+
+    //LayerMasks
+
+    public LayerMask playerLayer;
+    public LayerMask obsticleLayer;
+
+    //Components
+
+    void Start()
+    {
+        //gonna keep this here for later 
+    }
+
 
     void Update()
     {
@@ -25,46 +45,53 @@ public class EnemyBehavior : MonoBehaviour
         {
             MoveTowardsTarget();
         }
+        
         ShootLineOfSightRay();
+
+        
     }
 
     void ShootLineOfSightRay()
     {
-        RaycastHit2D hit = Physics2D.Raycast(target.position, myself.position,100,playerLayer);
+        Vector2 direction = target.position - transform.position;
+        float distance = direction.magnitude;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance,obsticleLayer);
 
+        Debug.DrawLine(transform.position, hit.point, Color.white, 2.5f);
         if (hit.collider != null)
         {
-            lineOfSight = true;
+            lineOfSight = false;
         }
         else
         {
-            lineOfSight = false;
+            lineOfSight = true;
         }
     }
 
     void ShootDistanceRay()
     {
-        RaycastHit2D hit = Physics2D.Raycast(target.position, myself.position, 5, playerLayer);
+
+        RaycastHit2D hit = Physics2D.Raycast(target.position, transform.position, aiShootingDistance, playerLayer);
 
         if (hit.collider != null)
         {
-            
+            shootingDistance = false;
+        }
+        else
+        {
+            shootingDistance = true;
         }
     }
 
     void MoveTowardsTarget()
     {
         // Calculate the direction from the current position to the target position
-        Vector3 direction = target.position - transform.position;
+        Vector3 direction = target.position - base.transform.position;
 
         // Normalize the direction vector to ensure consistent speed in all directions
         direction.Normalize();
 
         // Move the object towards the target using Translate
-        transform.Translate(direction * speed * Time.deltaTime);
+        base.transform.Translate(direction * speed * Time.deltaTime);
     }
-
-
-
-
 }
