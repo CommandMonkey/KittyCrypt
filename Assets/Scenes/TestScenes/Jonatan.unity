@@ -207,9 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedb169af54241a42a7a3973671d5972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  Sprint: 1
-  maxSpeed: 1
+  Move_speed: 10
+  rollSpeedMinimum: 5
+  rollSpeed: 3000
 --- !u!50 &1233565097
 Rigidbody2D:
   serializedVersion: 4
