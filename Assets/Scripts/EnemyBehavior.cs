@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -17,9 +18,8 @@ public class EnemyBehavior : MonoBehaviour
 
     //Public variables
     
-    [SerializeField] public float speed = 5f;
-    [SerializeField] public float aiShootingDistance = 5f;
-
+    [SerializeField, Range(1, 10)] public float speed = 5f;
+    [SerializeField, Range(2, 10)] public float distanceToTarget = 5f;
 
     //Private varibles
 
@@ -33,31 +33,34 @@ public class EnemyBehavior : MonoBehaviour
 
     //Components
 
-    void Start()
-    {
-        //gonna keep this here for later 
-    }
-
-
     void Update()
     {
         if (lineOfSight == true & shootingDistance == false)
         {
             MoveTowardsTarget();
         }
-        
         ShootLineOfSightRay();
 
-        
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        if (distance <= distanceToTarget)
+        {
+            shootingDistance = true;
+        }
+        else
+        {
+            shootingDistance = false;
+        }
     }
 
     void ShootLineOfSightRay()
     {
         Vector2 direction = target.position - transform.position;
         float distance = direction.magnitude;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance,obsticleLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obsticleLayer);
 
-        Debug.DrawLine(transform.position, hit.point, Color.white, 2.5f);
+        Debug.DrawLine(transform.position, hit.point, Color.white, 0.1f);
+
         if (hit.collider != null)
         {
             lineOfSight = false;
@@ -65,21 +68,6 @@ public class EnemyBehavior : MonoBehaviour
         else
         {
             lineOfSight = true;
-        }
-    }
-
-    void ShootDistanceRay()
-    {
-
-        RaycastHit2D hit = Physics2D.Raycast(target.position, transform.position, aiShootingDistance, playerLayer);
-
-        if (hit.collider != null)
-        {
-            shootingDistance = false;
-        }
-        else
-        {
-            shootingDistance = true;
         }
     }
 
