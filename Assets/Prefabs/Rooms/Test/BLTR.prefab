@@ -340,7 +340,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 15
-      m_TileSpriteIndex: 15
+      m_TileSpriteIndex: 16
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -430,7 +430,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 14
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -440,7 +440,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 12
-      m_TileSpriteIndex: 12
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -810,7 +810,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 13
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -940,7 +940,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 12
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -995,12 +995,12 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -503446892, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 10
     m_Data: {fileID: -95063042, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1039816347, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: -1895490454, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
   - m_RefCount: 4
@@ -1016,15 +1016,15 @@ Tilemap:
   - m_RefCount: 4
     m_Data: {fileID: 556330537, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
   - m_RefCount: 1
+    m_Data: {fileID: -503446892, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 1039816347, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
+  - m_RefCount: 1
     m_Data: {fileID: -1133854655, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 1000096719, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1930014652, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 1669002283, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
   - m_RefCount: 8
@@ -1422,6 +1422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3478328682861642060}
   - component: {fileID: 133979408298044591}
+  - component: {fileID: 2939126284320088402}
   m_Layer: 0
   m_Name: BLTR
   m_TagString: Room
@@ -1460,7 +1461,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea844e624a5909345bf3479d7dd47919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomOpeningDirections: 00000000
+  roomOpeningDirections: 00000000010000000200000003000000
+--- !u!61 &2939126284320088402
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3722623101364078196}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 16, y: 16}
+  m_EdgeRadius: 0
 --- !u!1 &7645753694609595624
 GameObject:
   m_ObjectHideFlags: 0

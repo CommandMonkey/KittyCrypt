@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RoomManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class RoomManager : MonoBehaviour
     public Transform grid;
     public float roomGridSizeInUnits = 16;
     public float roomSpawningDelay = 1;
+    [SerializeField] int maxRooms = 16;
+    [SerializeField] List<Direction> startRoomDirections;
+    
 
     [Header("Room Spawning Prefabs")]
     public GameObject RoomSpawnerPrefab;
@@ -18,6 +22,12 @@ public class RoomManager : MonoBehaviour
     [SerializeField] List<GameObject> TopOpeningrooms;
     [SerializeField] List<GameObject> RightOpeningrooms;
 
+
+    public UnityEvent OnSpawnRooms;
+    public UnityEvent OnNewSpawnWave;
+    public int currentWave = 0;
+
+    int spawnedRooms = 1;
     GameObject[,] roomsArray;
 
     void Start()
@@ -30,9 +40,22 @@ public class RoomManager : MonoBehaviour
     /// </summary>
     void StartRoomGeneration()
     {
+        RoomSpawner roomSpawner = Instantiate(RoomSpawnerPrefab, Vector3.zero, Quaternion.identity, grid)
+            .GetComponent<RoomSpawner>();
+
+        roomSpawner.roomType = RoomType.Start;
+        roomSpawner.openingDirections = startRoomDirections;
 
     }
 
+    IEnumerator InvokeNewSpawnerWaveRoutine()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(roomSpawningDelay);
+            OnNewSpawnWave.Invoke();
+        }
+    }
 
 
     GameObject _room;
@@ -40,14 +63,6 @@ public class RoomManager : MonoBehaviour
     /// <summary>
     /// returns a random room based on the opening direction needed
     /// </summary>
-    public GameObject GetRandomRoom(Direction direction)
-    {
-        List<GameObject> _list = GetListFromDirecton(direction);
-        _rand = UnityEngine.Random.Range(0, BottomOpeningrooms.Count - 1);
-        _room = BottomOpeningrooms[_rand];
-        return _room;
-    }
-
     public GameObject GetRandomRoom(List<Direction> directions)
     {
         List<GameObject> _validRooms = GetListFromDirecton(directions[0]).ToList();
@@ -59,7 +74,11 @@ public class RoomManager : MonoBehaviour
                     _validRooms.RemoveAt(i);
             }
         }
-        return _validRooms[UnityEngine.Random.Range(0, _validRooms.Count - 1)];
+        _room = _validRooms[UnityEngine.Random.Range(0, _validRooms.Count - 1)];
+        if (_room.GetComponent<Room>().roomOpeningDirections.Count < maxRooms - spawnedRooms)
+            return _room;
+        else 
+            return GetRandomRoom(directions);
     }
 
     private bool RoomHasDirection(GameObject room, Direction direction)
@@ -80,10 +99,8 @@ public class RoomManager : MonoBehaviour
         return null;
     }
 
-
-    // Update is called once per frame
-    void Update()
+    public void RegisterRoom()
     {
-        
+        spawnedRooms++;
     }
 }
