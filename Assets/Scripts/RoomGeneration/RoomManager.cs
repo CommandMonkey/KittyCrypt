@@ -6,13 +6,11 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    [Header("Level")]
-    [SerializeField] int LevelWidth = 16;
-    [SerializeField] int LevelHeight = 16;
     [Header("Rooms")]
     public Transform grid;
-    public float roomWidthInUnits = 16;
-    public float roomHeightInUnits = 16;
+    public float roomGridSizeInUnits = 16;
+    public float roomSpawningDelay = 1;
+
     [Header("Room Spawning Prefabs")]
     public GameObject RoomSpawnerPrefab;
     [SerializeField] List<GameObject> BottomOpeningrooms;
@@ -27,17 +25,21 @@ public class RoomManager : MonoBehaviour
         StartRoomGeneration();
     }
 
+    /// <summary>
+    /// hhejwhfsehf
+    /// </summary>
     void StartRoomGeneration()
     {
 
     }
 
-    /// <summary>
-    /// returns a random room based on the opening direction needed
-    /// </summary>
+
 
     GameObject _room;
     int _rand;
+    /// <summary>
+    /// returns a random room based on the opening direction needed
+    /// </summary>
     public GameObject GetRandomRoom(Direction direction)
     {
         List<GameObject> _list = GetListFromDirecton(direction);
@@ -46,10 +48,10 @@ public class RoomManager : MonoBehaviour
         return _room;
     }
 
-    public GameObject GetRandomRoom(Direction[] directions)
+    public GameObject GetRandomRoom(List<Direction> directions)
     {
         List<GameObject> _validRooms = GetListFromDirecton(directions[0]).ToList();
-        for (int i = 1; i < directions.Length; i++) 
+        for (int i = 1; i < directions.Count; i++) 
         {
             for(int j = 0; j > _validRooms.Count; j++)
             {

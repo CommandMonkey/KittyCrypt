@@ -25,35 +25,41 @@ public class Room : MonoBehaviour
         roomManager = FindObjectOfType<RoomManager>();
         parent = GetComponentInParent<Transform>();
 
-        Invoke("SpawnRooms", 3f);
+        SpawnRoomSpawners();
     }
 
-    void SpawnRooms()
+    void SpawnRoomSpawners()
     {
-        foreach(Direction direction in roomOpeningDirections) 
+        foreach(Direction _direction in roomOpeningDirections) 
         {
             //Invert direction to get the opening direction the new room needs
-            Direction invertedDirection = InvertDirection(direction);
+            Direction _invertedDirection = InvertDirection(_direction);
 
-            float xPos = direction == Direction.Left ? -roomManager.roomWidthInUnits :
-                         direction == Direction.Right ? roomManager.roomWidthInUnits : 0;
-            float yPos = direction == Direction.Bottom ? -roomManager.roomHeightInUnits :
-                         direction == Direction.Top ? roomManager.roomHeightInUnits : 0;
+            Vector3 _spawnerPosition = DirectionToVector(_direction) * roomManager.roomGridSizeInUnits;
 
-            GameObject roomSpawner = Instantiate(roomManager.RoomSpawnerPrefab, new Vector2(xPos+parent.position.x, yPos + parent.position.y), Quaternion.identity, transform);
-            roomSpawner.GetComponent<RoomSpawner>().openingDirection.Add(invertedDirection);
+            GameObject roomSpawner = Instantiate(roomManager.RoomSpawnerPrefab, _spawnerPosition + parent.position, Quaternion.identity, transform);
+            roomSpawner.GetComponent<RoomSpawner>().AddOpeningDirection(_invertedDirection);
         }
     }
 
 
-    Direction InvertDirection(Direction originalDirection)
+    Direction InvertDirection(Direction _originalDirection)
     {
         int enumLength = Enum.GetValues(typeof(Direction)).Length;
         int halfEnumLength = enumLength / 2;
 
-        int originalValue = (int)originalDirection;
+        int originalValue = (int)_originalDirection;
         int invertedValue = (originalValue + halfEnumLength) % enumLength;
 
         return (Direction)invertedValue;
+    }
+
+    Vector2 DirectionToVector(Direction _direction)
+    {
+        float xPos = _direction == Direction.Left    ? -1 :
+                     _direction == Direction.Right   ?  1 : 0;
+        float yPos = _direction == Direction.Bottom  ? -1 :
+                     _direction == Direction.Top     ?  1 : 0;
+        return new Vector2(xPos, yPos);
     }
 }
