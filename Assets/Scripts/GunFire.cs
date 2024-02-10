@@ -6,7 +6,8 @@ public class GunFire : MonoBehaviour
     enum WeaponType
     {
         ProjectileFire,
-        RaycastFire
+        RaycastFire,
+        BurstFire
     }
 
     //Configurable parameters
@@ -18,13 +19,17 @@ public class GunFire : MonoBehaviour
     [SerializeField, Tooltip("Set to 0 for infinite")] int bulletsBeforeReload = 5;
     [SerializeField, Range(0f, 180f)] float bulletSpreadRange = 1f;
 
-    [Header("Projectile Fire Options")]
+    [Header("Projectile Options")]
     [SerializeField] GameObject projectile;
     [SerializeField] float projectileSpeed = 5f;
     [SerializeField] float projectileVanishAfter = 3f;
 
-    [Header("Raycast Fire Options")]
+    [Header("Raycast Options")]
     [SerializeField] float fireDistance = 10f;
+    [SerializeField] GameObject hitEffect;
+    [SerializeField] float destroySmokeAfter = 1.5f;
+    [SerializeField] GameObject bulletTrail;
+    [SerializeField] float destroyTrailAfter = .1f;
 
 
     //Cached references
@@ -36,6 +41,7 @@ public class GunFire : MonoBehaviour
     bool fireRateCoolingDown = false;
     bool reloading = false;
     Quaternion randomBulletSpread;
+    RaycastHit2D bulletHit;
 
     private void Start()
     {
@@ -47,6 +53,7 @@ public class GunFire : MonoBehaviour
     void Update()
     {
         ProjectileFire();
+        BurstFire();
         RaycastFire();
         Reload();
         CheckBulletsFired();
@@ -66,14 +73,30 @@ public class GunFire : MonoBehaviour
     void ProjectileFire()
     {
         if(weaponType != WeaponType.ProjectileFire || fireRateCoolingDown || reloading) { return; }
-        
-        randomBulletSpread = GetBulletSpread();
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            fireRateCoolingDown = true;
+            randomBulletSpread = GetBulletSpread();
             Instantiate(projectile, transform.position, randomBulletSpread);
+            fireRateCoolingDown = true;
             bulletsFired++;
+        }
+    }
+
+    void BurstFire()
+    {
+        if(weaponType != WeaponType.BurstFire || reloading) { return; }
+
+        if(Input.GetKey(KeyCode.Mouse0))
+        {
+            for (int i = 0; i < bulletsBeforeReload; i++)
+            {
+                Debug.Log(i);
+                randomBulletSpread = GetBulletSpread();
+                Instantiate(projectile, transform.position, randomBulletSpread);
+                bulletsFired++;
+            }
+
         }
     }
 
@@ -83,17 +106,19 @@ public class GunFire : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            //TODO: Make raycast firing work
-            RaycastHit2D bulletHit = Physics2D.Raycast(transform.position, -transform.up);
-            if (!bulletHit)
+            bulletHit = Physics2D.Raycast(transform.position, -transform.up);
+            if (bulletHit)
             {
-                Debug.Log("Hit");
-            }else
+                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
+                Destroy(smoke, destroySmokeAfter);
+
+                var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
+                Destroy(line, destroyTrailAfter);
+            }
+            else
             {
                 Debug.Log("No hit :(");
             }
-
-            Debug.DrawRay(transform.position, -transform.up * fireDistance);
             bulletsFired++;
             fireRateCoolingDown = true;
         }
@@ -141,5 +166,10 @@ public class GunFire : MonoBehaviour
     public float GetVanishAfter()
     {
         return projectileVanishAfter;
+    }
+
+    public Vector3 GetBulletHitPoint()
+    {
+        return bulletHit.point;
     }
 }

@@ -58,3 +58,6 @@ TagManager:
   - name: Over-Front
     uniqueID: 909717799
     locked: 0
+  - name: Effects
+    uniqueID: 2480439107
+    locked: 0
