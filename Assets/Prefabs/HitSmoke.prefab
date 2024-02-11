@@ -988,7 +988,7 @@ ParticleSystem:
     enabled: 1
     curve:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -996,30 +996,39 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.40191963
-          inSlope: 25.6848
-          outSlope: 25.6848
+          value: 0.4199568
+          inSlope: 4.9909353
+          outSlope: 4.9909353
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.43386686
+          outWeight: 0.27272716
         - serializedVersion: 3
-          time: 0.02300404
-          value: 0.5476601
-          inSlope: -83.508484
-          outSlope: -47.997097
-          tangentMode: 1
-          weightedMode: 0
-          inWeight: 0.19970372
-          outWeight: 0.14314134
-        - serializedVersion: 3
-          time: 0.06277021
-          value: 0
-          inSlope: -2.8928127
-          outSlope: -2.8928127
+          time: 0.05473146
+          value: 0.11604592
+          inSlope: -1.7259207
+          outSlope: -1.7259207
           tangentMode: 0
           weightedMode: 0
-          inWeight: 1
+          inWeight: 0.5887445
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.076269776
+          value: 0.04456435
+          inSlope: -1.9205527
+          outSlope: -1.9205527
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.12359279
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1029,16 +1038,34 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          value: 0.55391914
+          inSlope: 0.11977518
+          outSlope: 0.11977518
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
-          value: 1
+          time: 0.03315902
+          value: 0.09215264
+          inSlope: -4.681173
+          outSlope: -4.681173
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.0689356
+          value: 0.02111708
+          inSlope: -1.5715487
+          outSlope: -1.5715487
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.16885376
+          value: 0
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1050,7 +1077,7 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1103,7 +1130,7 @@ ParticleSystem:
         m_RotationOrder: 4
     z:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1327,8 +1354,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.51572317, g: 0.51572317, b: 0.51572317, a: 0}
-        key1: {r: 0.72327036, g: 0.72327036, b: 0.72327036, a: 1}
-        key2: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 0.72327036, g: 0.72327036, b: 0.72327036, a: 0.78431374}
+        key2: {r: 1, g: 1, b: 1, a: 0.78431374}
         key3: {r: 1, g: 1, b: 1, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1343,10 +1370,10 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 2827
-        atime2: 11051
-        atime3: 65535
-        atime4: 0
+        atime1: 1414
+        atime2: 2699
+        atime3: 11822
+        atime4: 11822
         atime5: 0
         atime6: 0
         atime7: 0

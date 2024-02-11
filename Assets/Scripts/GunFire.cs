@@ -13,11 +13,12 @@ public class GunFire : MonoBehaviour
     //Configurable parameters
     [Header("General Options")]
     [SerializeField] WeaponType weaponType;
-    [SerializeField] Transform pivotPoint;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
-    [SerializeField, Tooltip("Set to 0 for infinite")] int bulletsBeforeReload = 5;
-    [SerializeField, Range(0f, 180f)] float bulletSpreadRange = 1f;
+    [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] int bulletsBeforeReload = 5;
+    [SerializeField, Range(0f, 180f), Tooltip("Range goes in both directions")] float bulletSpreadRange = 1f;
+    [SerializeField] GameObject hitEffect;
+    [SerializeField] float destroyHitEffectAfter = 1.5f;
 
     [Header("Projectile Options")]
     [SerializeField] GameObject projectile;
@@ -26,8 +27,6 @@ public class GunFire : MonoBehaviour
 
     [Header("Raycast Options")]
     [SerializeField] float fireDistance = 10f;
-    [SerializeField] GameObject hitEffect;
-    [SerializeField] float destroySmokeAfter = 1.5f;
     [SerializeField] GameObject bulletTrail;
     [SerializeField] float destroyTrailAfter = .1f;
 
@@ -60,16 +59,6 @@ public class GunFire : MonoBehaviour
         FireRateCooldown();
     }
 
-    private Quaternion GetBulletSpread()
-    {
-        Vector3 angles = transform.rotation.eulerAngles;
-        Vector3 newAngles = new Vector3(
-            angles.x,
-            angles.y,
-            angles.z + Random.Range(-bulletSpreadRange, bulletSpreadRange));
-        return Quaternion.Euler(newAngles);
-    }
-
     void ProjectileFire()
     {
         if(weaponType != WeaponType.ProjectileFire || fireRateCoolingDown || reloading) { return; }
@@ -85,11 +74,11 @@ public class GunFire : MonoBehaviour
 
     void BurstFire()
     {
-        if(weaponType != WeaponType.BurstFire || reloading) { return; }
+        if(weaponType != WeaponType.BurstFire || fireRateCoolingDown || reloading) { return; }
 
         if(Input.GetKey(KeyCode.Mouse0))
         {
-            for (int i = 0; i < bulletsBeforeReload; i++)
+            for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
             {
                 Debug.Log(i);
                 randomBulletSpread = GetBulletSpread();
@@ -106,21 +95,26 @@ public class GunFire : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            randomBulletSpread = GetBulletSpread();
+
             bulletHit = Physics2D.Raycast(transform.position, -transform.up);
             if (bulletHit)
             {
+                bulletsFired++;
+                fireRateCoolingDown = true;
+
                 var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
-                Destroy(smoke, destroySmokeAfter);
+                Destroy(smoke, destroyHitEffectAfter);
 
                 var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
                 Destroy(line, destroyTrailAfter);
             }
             else
             {
+                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
+                Destroy(smoke, destroyHitEffectAfter);
                 Debug.Log("No hit :(");
             }
-            bulletsFired++;
-            fireRateCoolingDown = true;
         }
     }
 
@@ -171,5 +165,25 @@ public class GunFire : MonoBehaviour
     public Vector3 GetBulletHitPoint()
     {
         return bulletHit.point;
+    }
+
+    public GameObject GetHitEffect()
+    {
+        return hitEffect;
+    }
+
+    public float GetDestroyHitEffectAfter()
+    {
+        return destroyHitEffectAfter;
+    }
+
+    private Quaternion GetBulletSpread()
+    {
+        Vector3 angles = transform.rotation.eulerAngles;
+        Vector3 newAngles = new Vector3(
+            angles.x,
+            angles.y,
+            angles.z + Random.Range(-bulletSpreadRange, bulletSpreadRange));
+        return Quaternion.Euler(newAngles);
     }
 }

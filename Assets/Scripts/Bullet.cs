@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     //Configurable parameters
-    
 
     //Cached references
     Rigidbody2D myRigidbody;
@@ -30,6 +29,13 @@ public class Bullet : MonoBehaviour
     void FixedUpdate()
     {
         myRigidbody.velocity = transform.up * - gun.GetProjectileSpeed();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var hitEffect = Instantiate(gun.GetHitEffect(), transform.position, Quaternion.identity);
+        Destroy(hitEffect, gun.GetDestroyHitEffectAfter());
+        Destroy(gameObject);
     }
 
     void Vanish()
