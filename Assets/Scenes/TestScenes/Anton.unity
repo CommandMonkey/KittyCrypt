@@ -215,7 +215,7 @@ MonoBehaviour:
   roomGridSizeInUnits: 16
   roomSpawningDelay: 1
   maxRooms: 16
-  startRoomDirections: 
+  startRoomDirections: 0000000002000000
   RoomSpawnerPrefab: {fileID: 6044684687659341760, guid: 81b76c1323e153f4c94e3fa106ceb08b, type: 3}
   BottomOpeningrooms:
   - {fileID: 3722623101364078196, guid: 5f4f748048fc9ac419303a509c3f461a, type: 3}
@@ -253,12 +253,6 @@ MonoBehaviour:
   - {fileID: 3722623101364078196, guid: 92ec89e8b91fc0045847866a95511d88, type: 3}
   - {fileID: 3722623101364078196, guid: 56a0bb5975039a443b2efdd8e1c983b7, type: 3}
   - {fileID: 3722623101364078196, guid: 0bdaecb599e1e8b4c80d587d307fa1cb, type: 3}
-  OnSpawnRooms:
-    m_PersistentCalls:
-      m_Calls: []
-  OnNewSpawnWave:
-    m_PersistentCalls:
-      m_Calls: []
   currentWave: 0
 --- !u!1 &874234843
 GameObject:
