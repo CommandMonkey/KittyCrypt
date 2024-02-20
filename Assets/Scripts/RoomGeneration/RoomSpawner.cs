@@ -1,82 +1,133 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class RoomSpawner : MonoBehaviour
 {
-    [SerializeField] List<Direction> openingDirection = new List<Direction>();
+    public List<Direction> openingDirections = new List<Direction>();
+    public RoomType roomType = RoomType.Normal;
+    [NonSerialized] public bool spawnedChildren = false;
 
-    private static List<Vector3> spawnPositions = new List<Vector3>();
     private static Dictionary<Vector3, RoomSpawner> survivingInstances = new Dictionary<Vector3, RoomSpawner>();
+    Vector3 spawnPos;
+    
 
     Transform parentTransform;
     RoomManager roomManager;
 
     private void Start()
     {
-        Vector3 spawnPos = transform.position;
-        Debug.Log(spawnPositions.Count);
+        // Init References
+        parentTransform = FindObjectOfType<Grid>().transform;
+        roomManager = FindObjectOfType<RoomManager>();
 
-        if (spawnPositions.Contains(spawnPos))
+        // Subscribe to spawn room Event
+        roomManager.OnSpawnRooms.AddListener(SpawnRoom);
+        roomManager.OnNewSpawnWave.AddListener(NewSpawnWave);
+
+        spawnPos = transform.TransformPoint(Vector3.right);
+
+        if (survivingInstances.TryGetValue(spawnPos, out RoomSpawner survivingInstance))
         {
-            if (survivingInstances.TryGetValue(spawnPos, out RoomSpawner survivingInstance))
-            {
-                survivingInstance.AddOpeningDirection(openingDirection[0]);
-            }
-
-            // DIE
+            survivingInstance.AddOpeningDirection(openingDirections[0]);
+            Die();
         }
         else
         {
-            spawnPositions.Add(spawnPos);
-            Debug.Log("Live");
-        }
+            survivingInstances.Add(spawnPos, this);
+            roomManager.RegisterRoom();
+        }   
+
+    }
+
+    void NewSpawnWave()
+    {
+        if (spawnedChildren) return;
+        spawnedChildren = true;
+        SpawnRoomSpawners();
     }
 
     public void AddOpeningDirection(Direction direction)
     {
-        openingDirection.Add(direction);
+        if (!openingDirections.Contains(direction))
+            openingDirections.Add(direction);
     }
 
 
     void SpawnRoom()
     {
-        
-
-        Debug.Log(openingDirection);
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Room"))
-        {
-            Die();
-        }
-        //else if (other.CompareTag("RoomSpawner"))
-        //{
-        //    RoomSpawner otherSpawner = other.GetComponent<RoomSpawner>();
-        //    if (otherSpawner.initiated)
-        //    {
-        //        otherSpawner.openingDirection.Add(openingDirection[0]);
-        //        initiated = false;
-        //        Die();
-        //    }
-        //}
+        GameObject room = roomManager.GetRandomRoom(openingDirections);
+        Instantiate(room, transform.position, Quaternion.identity, parentTransform);
+        //Debug.Log(room.name);
+        Die();
     }
 
     void Die()
-    {
+    {   
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
     private void OnDisable()
     {
-        // Clear the spawnPositions HashSet when the script is disabled
-        spawnPositions.Clear();
+        // Clear the static SurvivingInstances Dictionary when the script is disabled
+        survivingInstances.Clear();
+    }
+
+    void SpawnRoomSpawners()
+    {
+
+
+        // Spawn children spawners
+        for (int j = 0; j < openingDirections.Count; j++)
+        {
+            //Invert direction to get the opening direction the new room needs
+            List<Direction> _instanceDirections = new List<Direction>();
+            _instanceDirections.Add(InvertDirection(_direction));
+
+            Vector3 _spawnerPosition = DirectionToVector(_direction) * roomManager.roomGridSizeInUnits;
+
+            int _extraDirections = UnityEngine.Random.Range(1, 3);
+            // add random directions
+            Debug.Log(_extraDirections);
+            for (int i = 0; i < _extraDirections;)
+            {
+                Debug.Log("yes");
+                Direction _dir = (Direction)UnityEngine.Random.Range(0, 3);
+                if (!_instanceDirections.Contains(_dir))
+                {
+                    _instanceDirections.Add(_dir);
+                    i++;
+                }
+
+            }
+
+            Instantiate(roomManager.RoomSpawnerPrefab, _spawnerPosition + parentTransform.position, Quaternion.identity, transform)
+            .GetComponent<RoomSpawner>().openingDirections = _instanceDirections;
+        }
+    }
+
+    Direction InvertDirection(Direction _originalDirection)
+    {
+        int enumLength = Enum.GetValues(typeof(Direction)).Length;
+        int halfEnumLength = enumLength / 2;
+
+        int originalValue = (int)_originalDirection;
+        int invertedValue = (originalValue + halfEnumLength) % enumLength;
+
+        return (Direction)invertedValue;
+    }
+
+    Vector2 DirectionToVector(Direction _direction)
+    {
+        float xPos = _direction == Direction.Left ? -1 :
+                     _direction == Direction.Right ? 1 : 0;
+        float yPos = _direction == Direction.Bottom ? -1 :
+                     _direction == Direction.Top ? 1 : 0;
+        return new Vector2(xPos, yPos);
     }
 }
