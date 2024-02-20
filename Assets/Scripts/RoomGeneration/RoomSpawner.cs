@@ -87,10 +87,10 @@ public class RoomSpawner : MonoBehaviour
         {
             //Invert direction to get the opening direction the new room needs
             List<Direction> _instanceDirections = new List<Direction>();
-            _instanceDirections.Add(InvertDirection(_direction));
+            _instanceDirections.Add(InvertDirection(openingDirections[j]));
 
-            Vector3 _spawnerPosition = DirectionToVector(_direction) * roomManager.roomGridSizeInUnits;
-
+            Vector3 _spawnerPosition = DirectionToVector(openingDirections[j]) * roomManager.roomGridSizeInUnits;
+                
             int _extraDirections = UnityEngine.Random.Range(1, 3);
             // add random directions
             Debug.Log(_extraDirections);
