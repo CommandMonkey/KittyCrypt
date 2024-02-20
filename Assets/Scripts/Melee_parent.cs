@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mace : MonoBehaviour
+public class Melee_parent : MonoBehaviour
 {
     private Camera mainCam;
     private Vector3 mousePos;
 
-    public Transform circleOrgin;
-    public float radius;
 
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -27,21 +27,5 @@ public class Mace : MonoBehaviour
         float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, 0, rotZ);
-
-        if (rotZ > 10f)
-        {
-      
-        }
-    }
-
-
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Vector3 position = circleOrgin == null ? Vector3.zero : circleOrgin.position;
-        Gizmos.DrawWireSphere(position, radius);
     }
 }
-
-

@@ -16,6 +16,8 @@ public class enemy_Test : MonoBehaviour
 
     public void TakeDamage()
     {
+        health--;
+        Debug.Log("AHHHH");
         if (health <= 0)
         {
             Destroy(gameObject);
