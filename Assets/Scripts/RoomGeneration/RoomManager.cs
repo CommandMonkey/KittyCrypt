@@ -22,9 +22,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField] List<GameObject> TopOpeningrooms;
     [SerializeField] List<GameObject> RightOpeningrooms;
 
-
-    public UnityEvent OnSpawnRooms;
-    public UnityEvent OnNewSpawnWave;
+    [NonSerialized] public UnityEvent OnSpawnRooms;
+    [NonSerialized] public UnityEvent OnNewSpawnWave;
     public int currentWave = 0;
 
     int spawnedRooms = 1;
@@ -32,6 +31,8 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
+        OnSpawnRooms = new UnityEvent();
+        OnNewSpawnWave = new UnityEvent();
         StartRoomGeneration();
     }
 
@@ -46,6 +47,7 @@ public class RoomManager : MonoBehaviour
         roomSpawner.roomType = RoomType.Start;
         roomSpawner.openingDirections = startRoomDirections;
 
+        StartCoroutine(InvokeNewSpawnerWaveRoutine());
     }
 
     IEnumerator InvokeNewSpawnerWaveRoutine()
