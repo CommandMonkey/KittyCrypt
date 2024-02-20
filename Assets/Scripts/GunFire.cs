@@ -16,12 +16,12 @@ public class GunFire : MonoBehaviour
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
     [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] int bulletsBeforeReload = 5;
-    [SerializeField, Range(0f, 180f), Tooltip("Range goes in both directions")] float bulletSpreadRange = 1f;
     [SerializeField] GameObject hitEffect;
     [SerializeField] float destroyHitEffectAfter = 1.5f;
 
     [Header("Projectile Options")]
     [SerializeField] GameObject projectile;
+    [SerializeField, Range(0f, 180f), Tooltip("Range goes in both directions")] float bulletSpreadRange = 1f;
     [SerializeField] float projectileSpeed = 5f;
     [SerializeField] float projectileVanishAfter = 3f;
 
@@ -113,7 +113,6 @@ public class GunFire : MonoBehaviour
             {
                 var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
                 Destroy(smoke, destroyHitEffectAfter);
-                Debug.Log("No hit :(");
             }
         }
     }
