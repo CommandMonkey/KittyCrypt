@@ -1,60 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
-    Rigidbody2D MyRigidbody;
-
-public float walkSpeed = 8f;
-public float Sprint = 1f;
-public float maxSpeed = 0.2f;
-float inputHorizontal;
-float inputVertical;
-
-private void Start()
-{
-    MyRigidbody = GetComponent<Rigidbody2D>();
-}
-
-private void Update()
-{
-    inputHorizontal = Input.GetAxisRaw("Horizontal");
-    inputVertical = Input.GetAxisRaw("Vertical");
-}
-
-private void FixedUpdate()
-{
-    if (inputHorizontal != 0 || inputVertical != 0)
+    private enum State
     {
-        if (inputHorizontal != 0 && inputVertical != 0)
+        normal,
+        rolling,
+    }
+
+    [SerializeField] float Move_speed = 30f;
+    [SerializeField] float rollSpeedMinimum = 50f;
+    private Rigidbody2D MyRigidbody;
+    private Vector2 movedir;
+    private Vector2 rolldir;
+    private float rollSpeed;
+    private State state;
+
+
+    private void Awake()
+    {
+        state = State.normal;
+        MyRigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        switch (state)
         {
-                walkSpeed = 4.6f * Sprint;
+            case State.normal:
+
+                float moveX = 0f;
+                float moveY = 0f;
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    moveY = +1f;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    moveY = -1f;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    moveX = +1f;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    moveX = -1f;
+                }
+
+                movedir = new Vector2(moveX, moveY).normalized;
+
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    rolldir = movedir;
+                    // ändra dash/roll här
+                    rollSpeed = 40f;
+                    state = State.rolling;
+                }
+                break;
+            case State.rolling:
+                // dash/roll range
+                float rollSpeedDropMunlitplier = 8f;
+                rollSpeed -= rollSpeed * rollSpeedDropMunlitplier * Time.deltaTime;
+
+                
+                if (rollSpeed < rollSpeedMinimum)
+                {
+                    state = State.normal;
+                }
+                break;
         }
-        else
-            {
-                walkSpeed = 6f * Sprint;
-            }
-
-        MyRigidbody.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
     }
-    else
+
+    private void FixedUpdate()
     {
-        MyRigidbody.velocity = new Vector2(0f, 0f);
+        switch (state)
+        {
+            case State.normal:
+
+
+                MyRigidbody.velocity = movedir * Move_speed;
+
+
+                break;
+            case State.rolling:
+                MyRigidbody.velocity = rolldir * rollSpeed;
+                break;
+        }
     }
-
-
-    if (Input.GetKey(KeyCode.LeftShift))
-    {
-      Sprint = 1.5f;
-    }
-    else
-    {
-            Sprint = 1f;
-    }
-
-
-}
-
 }
