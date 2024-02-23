@@ -21,10 +21,11 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField, Range(1, 10)] public float speed = 5f;
     [SerializeField, Range(2, 10)] public float distanceToTarget = 5f;
 
-    //Private varibles
-
+    //varibles
+     
     private bool lineOfSight = true;
     private bool shootingDistance = false;
+    public Vector3 playerPosition = Vector3.zero;
 
     //LayerMasks
 
@@ -35,22 +36,13 @@ public class EnemyBehavior : MonoBehaviour
 
     void Update()
     {
-        if (lineOfSight == true & shootingDistance == false)
+        if (shootingDistance == false)
         {
             MoveTowardsTarget();
         }
         ShootLineOfSightRay();
-
-        float distance = Vector3.Distance(transform.position, target.position);
-
-        if (distance <= distanceToTarget)
-        {
-            shootingDistance = true;
-        }
-        else
-        {
-            shootingDistance = false;
-        }
+        HowFarFromTarget();
+        
     }
 
     void ShootLineOfSightRay()
@@ -68,13 +60,28 @@ public class EnemyBehavior : MonoBehaviour
         else
         {
             lineOfSight = true;
+            playerPosition = target.position;
+        }
+    }
+
+    void HowFarFromTarget()
+    {
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        if (distance <= distanceToTarget)
+        {
+            shootingDistance = true;
+        }
+        else
+        {
+            shootingDistance = false;
         }
     }
 
     void MoveTowardsTarget()
     {
         // Calculate the direction from the current position to the target position
-        Vector3 direction = target.position - base.transform.position;
+        Vector3 direction = playerPosition - base.transform.position;
 
         // Normalize the direction vector to ensure consistent speed in all directions
         direction.Normalize();
