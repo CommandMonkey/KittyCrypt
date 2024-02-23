@@ -261,9 +261,9 @@ GameObject:
   m_Component:
   - component: {fileID: 916169107}
   - component: {fileID: 916169108}
+  - component: {fileID: 916169111}
   - component: {fileID: 916169110}
   - component: {fileID: 916169109}
-  - component: {fileID: 916169111}
   m_Layer: 0
   m_Name: Melee
   m_TagString: Untagged
@@ -351,6 +351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c96f43d27515740b8120fa50233eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Animatorn: {fileID: 916169111}
+  delay: 0.75
+  AttackBlock: 0
   circleOrgin: {fileID: 232901523}
   radius: 1.26
 --- !u!114 &916169110
@@ -368,7 +371,7 @@ MonoBehaviour:
   OnAnimationEventTriggerd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7400000, guid: 1f85476afc36a4e458ac30b3d6a01341, type: 2}
+      - m_Target: {fileID: 916169106}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 0
@@ -382,7 +385,19 @@ MonoBehaviour:
         m_CallState: 2
   OnAttackPreformed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 916169109}
+        m_TargetAssemblyTypeName: Mace, Assembly-CSharp
+        m_MethodName: DetectColliders
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &916169111
 Animator:
   serializedVersion: 5
@@ -393,7 +408,7 @@ Animator:
   m_GameObject: {fileID: 916169106}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7580e037414840a4d9655692c6a5b350, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5fc94e1382832534baa51e14ac3a12ad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

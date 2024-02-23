@@ -33,29 +33,17 @@ public class PlayerMovment : MonoBehaviour
         {
             case State.normal:
 
-                float moveX = 0f;
-                float moveY = 0f;
+                //float moveX = 0f;
+                //float moveY = 0f;
 
-                if (Input.GetKey(KeyCode.W))
-                {
-                    moveY = +1f;
-                }
-                if (Input.GetKey(KeyCode.S))
-                {
-                    moveY = -1f;
-                }
-                if (Input.GetKey(KeyCode.D))
-                {
-                    moveX = +1f;
-                }
-                if (Input.GetKey(KeyCode.A))
-                {
-                    moveX = -1f;
-                }
+                float moveY = Input.GetAxisRaw("Vertical");
+
+                float moveX = Input.GetAxisRaw("Horizontal");
+               
 
                 movedir = new Vector2(moveX, moveY).normalized;
 
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetButtonDown("Jump"))
                 {
                     rolldir = movedir;
                     // ändra dash/roll här
