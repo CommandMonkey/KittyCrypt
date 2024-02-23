@@ -1,23 +1,18 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GunRotation : MonoBehaviour
 {
     [SerializeField] Transform barrelExitPoint;
 
     Vector3 mousePos;
-    Vector3 positiveMouseDir;
     Vector3 gunPivotToExit;
     float angle;
-
-    private void Start()
-    {
-        positiveMouseDir = mousePos;
-    }
 
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(transform.localEulerAngles);
         gunPivotToExit = transform.localPosition - transform.InverseTransformPoint(barrelExitPoint.position);
         CalculateMousePos();
         CalculateOffset();
@@ -43,7 +38,7 @@ public class GunRotation : MonoBehaviour
         {
             mousePos = -mousePos;
             angle = -angle;
-        }
+        } //angle might have something to do with bug when not at 0 0
 
         Vector3 lookRotation = transform.position - mousePos;
         Quaternion pivotToMouseRotation = Quaternion.FromToRotation(Vector3.left, lookRotation);
@@ -57,10 +52,9 @@ public class GunRotation : MonoBehaviour
     {
         float currentScaleX = transform.localScale.x;
 
-        if (Mathf.Clamp(transform.rotation.eulerAngles.z, 105, 255) == transform.rotation.eulerAngles.z)
+        if (Mathf.Clamp(transform.localEulerAngles.z, 105, 255) == transform.localEulerAngles.z)
         {
             transform.localScale = new Vector3(-currentScaleX, transform.localScale.y, transform.localScale.z);
         }
-        Debug.Log(transform.rotation.eulerAngles.z.ToString());
     }
 }

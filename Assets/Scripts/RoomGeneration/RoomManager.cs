@@ -24,7 +24,7 @@ public class RoomManager : MonoBehaviour
 
     [NonSerialized] public UnityEvent OnSpawnRooms;
     [NonSerialized] public UnityEvent OnNewSpawnWave;
-    public int currentWave = 0;
+    [NonSerialized] public int amountOfSpawners;
 
     int spawnedRooms = 1;
     GameObject[,] roomsArray;
@@ -36,9 +36,7 @@ public class RoomManager : MonoBehaviour
         StartRoomGeneration();
     }
 
-    /// <summary>
-    /// hhejwhfsehf
-    /// </summary>
+
     void StartRoomGeneration()
     {
         RoomSpawner roomSpawner = Instantiate(RoomSpawnerPrefab, Vector3.zero, Quaternion.identity, grid)
@@ -52,11 +50,13 @@ public class RoomManager : MonoBehaviour
 
     IEnumerator InvokeNewSpawnerWaveRoutine()
     {
-        while(true)
+        for(int i = 0; i < 4; i++) // DEBUG
         {
             yield return new WaitForSeconds(roomSpawningDelay);
             OnNewSpawnWave.Invoke();
         }
+        yield return new WaitForSeconds(roomSpawningDelay);
+        OnSpawnRooms.Invoke();
     }
 
 
@@ -76,6 +76,7 @@ public class RoomManager : MonoBehaviour
                     _validRooms.RemoveAt(i);
             }
         }
+
         _room = _validRooms[UnityEngine.Random.Range(0, _validRooms.Count - 1)];
         if (_room.GetComponent<Room>().roomOpeningDirections.Count < maxRooms - spawnedRooms)
             return _room;
@@ -101,8 +102,9 @@ public class RoomManager : MonoBehaviour
         return null;
     }
 
-    public void RegisterRoom()
+    public void RegisterSpawner()
     {
-        spawnedRooms++;
+        amountOfSpawners++;
+        Debug.Log(amountOfSpawners);
     }
 }
