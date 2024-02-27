@@ -5,6 +5,10 @@ using UnityEngine;
 public class Mace : MonoBehaviour
 {
     private enemy_Test enemyT;
+    private AnimationEvent Animation;
+    public Animator Animatorn;
+    [SerializeField] private float delay = 0.3f;
+    [SerializeField] private bool AttackBlock;
 
     public Transform circleOrgin;
     public float radius;
@@ -13,16 +17,34 @@ public class Mace : MonoBehaviour
     private void Start()
     {
         enemyT = FindObjectOfType<enemy_Test>();
+        Animation = FindObjectOfType<AnimationEvent>();
     }
 
     private void Update()
-    { 
-        if (Input.GetMouseButtonDown(0))
+    {
+        Attack();
+    }
+
+    private void Attack()
+    {
+            if (Input.GetButtonDown("Fire1"))
         {
-            DetectColliders();
+            if (AttackBlock)
+            {
+                return;
+            }
+            Animatorn.SetTrigger("Meele Attack");
+            AttackBlock = true;
+            StartCoroutine(DelayAttack());
         }
     }
 
+
+    public IEnumerator DelayAttack()
+    {
+        yield return new WaitForSeconds(delay);
+        AttackBlock = false;
+    }
 
 
     private void OnDrawGizmosSelected()
@@ -37,8 +59,11 @@ public class Mace : MonoBehaviour
     {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrgin.position, radius))
         {
-            enemyT.TakeDamage();
-            Debug.Log("Hit");
+           //if (enemyT = collider
+           // {
+                // enemyT.
+            //}
+
         }
     }
 }
