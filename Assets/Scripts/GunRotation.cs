@@ -55,13 +55,12 @@ public class GunRotation : MonoBehaviour
         if (mousePos.x < transform.position.x)
         {
             transform.localScale = new Vector3(1, -1, 1);
-            barrelExitPoint.localRotation = Quaternion.Euler(new Vector3(0, 180, 0));
         }
         else
         {
             transform.localScale = new Vector3(1, 1, 1);
-            barrelExitPoint.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
-        
+
+        barrelExitPoint.localRotation = Quaternion.identity;
     }
 }
