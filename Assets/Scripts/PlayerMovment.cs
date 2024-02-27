@@ -1,82 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovment : MonoBehaviour
 {
-    Rigidbody2D myRigidbody;
-    SpriteRenderer spriteRenderer;
-
-    public float walkSpeed = 8f;
-    public float Sprint = 1f;
-    public float maxSpeed = 0.2f;
-    float inputHorizontal;
-    float inputVertical;
-
-   
-
-    private void Start()
+    private enum State
     {
-        myRigidbody = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        normal,
+        rolling,
+    }
+
+    [SerializeField] float Move_speed = 30f;
+    [SerializeField] float rollSpeedMinimum = 50f;
+    private Rigidbody2D MyRigidbody;
+    private Vector2 movedir;
+    private Vector2 rolldir;
+    private float rollSpeed;
+    private State state;
+
+    Vector2 moveInput;
+
+    private void Awake()
+    {
+        state = State.normal;
+        MyRigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        inputHorizontal = Input.GetAxisRaw("Horizontal");
-        inputVertical = Input.GetAxisRaw("Vertical");
+        if (state == State.rolling) { 
+            // dash/roll range
+            float rollSpeedDropMunlitplier = 8f;
+            rollSpeed -= rollSpeed * rollSpeedDropMunlitplier * Time.deltaTime;
+
+
+            if (rollSpeed < rollSpeedMinimum)
+            {
+                state = State.normal;
+            }
+        }
+        Debug.Log(rollSpeed);
+        
     }
+
+
+    void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
+
+    void OnDash()
+    {
+        rolldir = movedir;
+        
+        rollSpeed = 40f;
+        state = State.rolling;
+    }
+
 
     private void FixedUpdate()
     {
-        if (inputHorizontal != 0 || inputVertical != 0)
+        switch (state)
         {
+            case State.normal:
+                MyRigidbody.velocity = moveInput * Move_speed;
 
-            // calculate walkspeed
-            if (inputHorizontal != 0 && inputVertical != 0)
-            {
-                walkSpeed = 4.6f * Sprint;
-            }
-            else
-            {
-                walkSpeed = 6f * Sprint;
-            }
-
-
-            FlipSprite();
-
-            myRigidbody.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
-        }
-        else
-        {
-            myRigidbody.velocity = new Vector2(0f, 0f);
-        }
-
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Sprint = 1.5f;
-        }
-        else
-        {
-            Sprint = 1f;
-        }
-
-
-    }
-
-    void FlipSprite()
-    {
-        // flip sprite x
-        if (inputHorizontal < 0)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (inputHorizontal > 0) // more than 0
-        {
-            spriteRenderer.flipX = false;
+                break;
+            case State.rolling:
+                MyRigidbody.velocity = moveInput * rollSpeed;
+                break;
         }
     }
-
 }

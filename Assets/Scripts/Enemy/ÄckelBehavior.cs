@@ -7,24 +7,24 @@ using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class EnemyBehavior : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
-
     //Me and the targets position  
 
-    public Transform target; 
+    public Transform target;
 
     //Public variables
-    
-    [SerializeField] public float speed = 5f;
-    [SerializeField] public float aiShootingDistance = 5f;
 
+    [SerializeField, Range(1, 10)] public float speed = 5f;
+    [SerializeField, Range(2, 10)] public float distanceToTarget = 5f;
 
-    //Private varibles
+    //varibles
 
     private bool lineOfSight = true;
     private bool shootingDistance = false;
+    public Vector3 playerPosition = Vector3.zero;
 
     //LayerMasks
 
@@ -33,31 +33,24 @@ public class EnemyBehavior : MonoBehaviour
 
     //Components
 
-    void Start()
-    {
-        //gonna keep this here for later 
-    }
-
-
     void Update()
     {
-        if (lineOfSight == true & shootingDistance == false)
+        if (shootingDistance == false)
         {
             MoveTowardsTarget();
         }
-        
         ShootLineOfSightRay();
-
-        
+        HowFarFromTarget();
     }
 
     void ShootLineOfSightRay()
     {
         Vector2 direction = target.position - transform.position;
         float distance = direction.magnitude;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance,obsticleLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obsticleLayer);
 
-        Debug.DrawLine(transform.position, hit.point, Color.white, 2.5f);
+        Debug.DrawLine(transform.position, hit.point, Color.white, 0.1f);
+
         if (hit.collider != null)
         {
             lineOfSight = false;
@@ -65,28 +58,28 @@ public class EnemyBehavior : MonoBehaviour
         else
         {
             lineOfSight = true;
+            playerPosition = target.position;
         }
     }
 
-    void ShootDistanceRay()
+    void HowFarFromTarget()
     {
+        float distance = Vector3.Distance(transform.position, target.position);
 
-        RaycastHit2D hit = Physics2D.Raycast(target.position, transform.position, aiShootingDistance, playerLayer);
-
-        if (hit.collider != null)
+        if (distance <= distanceToTarget)
         {
-            shootingDistance = false;
+            shootingDistance = true;
         }
         else
         {
-            shootingDistance = true;
+            shootingDistance = false;
         }
     }
 
     void MoveTowardsTarget()
     {
         // Calculate the direction from the current position to the target position
-        Vector3 direction = target.position - base.transform.position;
+        Vector3 direction = playerPosition - base.transform.position;
 
         // Normalize the direction vector to ensure consistent speed in all directions
         direction.Normalize();
