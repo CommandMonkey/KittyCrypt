@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -18,14 +19,19 @@ public class PlayerInventory : MonoBehaviour
 
     void AddWeapon(GameObject weapon)
     {
-        //for (GameObject weaponItem in weaponInventory) 
-        //{
-        //    if (weaponItem == null)
-        //    {
-                
-        //    }
-        //}
-        
+        for (int i = 0; i < weaponInventory.Length; i++)
+        {
+            if (weaponInventory[i] == null)
+            {
+                weaponInventory[i] = weapon;
+            }
+        }
+
+    }
+
+    void OnScroll(InputValue value)
+    {
+        Debug.Log(value.Get());
     }
 
 
