@@ -51,10 +51,10 @@ public class Mace : MonoBehaviour
     {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrgin.position, radius))
         {
-           //if (enemyT = collider
-           // {
-                // enemyT.
-            //}
+           //if (enemyT = collider.
+           //{
+           //  enemyT.
+           //}
 
         }
     }
