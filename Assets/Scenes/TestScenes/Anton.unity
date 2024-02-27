@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 833031181}
   - component: {fileID: 833031182}
   m_Layer: 0
-  m_Name: RoomManager
+  m_Name: LevelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,7 +253,6 @@ MonoBehaviour:
   - {fileID: 3722623101364078196, guid: 92ec89e8b91fc0045847866a95511d88, type: 3}
   - {fileID: 3722623101364078196, guid: 56a0bb5975039a443b2efdd8e1c983b7, type: 3}
   - {fileID: 3722623101364078196, guid: 0bdaecb599e1e8b4c80d587d307fa1cb, type: 3}
-  currentWave: 0
 --- !u!1 &874234843
 GameObject:
   m_ObjectHideFlags: 0
