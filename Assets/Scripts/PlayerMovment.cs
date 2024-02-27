@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovment : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerMovment : MonoBehaviour
     private float rollSpeed;
     private State state;
 
+    Vector2 moveInput;
 
     private void Awake()
     {
@@ -29,55 +31,46 @@ public class PlayerMovment : MonoBehaviour
 
     private void Update()
     {
-        switch (state)
-        {
-            case State.normal:
+        if (state == State.rolling) { 
+            // dash/roll range
+            float rollSpeedDropMunlitplier = 8f;
+            rollSpeed -= rollSpeed * rollSpeedDropMunlitplier * Time.deltaTime;
 
-                //float moveX = 0f;
-                //float moveY = 0f;
 
-                float moveY = Input.GetAxisRaw("Vertical");
-
-                float moveX = Input.GetAxisRaw("Horizontal");
-               
-
-                movedir = new Vector2(moveX, moveY).normalized;
-
-                if (Input.GetButtonDown("Jump"))
-                {
-                    rolldir = movedir;
-                    // ändra dash/roll här
-                    rollSpeed = 40f;
-                    state = State.rolling;
-                }
-                break;
-            case State.rolling:
-                // dash/roll range
-                float rollSpeedDropMunlitplier = 8f;
-                rollSpeed -= rollSpeed * rollSpeedDropMunlitplier * Time.deltaTime;
-
-                
-                if (rollSpeed < rollSpeedMinimum)
-                {
-                    state = State.normal;
-                }
-                break;
+            if (rollSpeed < rollSpeedMinimum)
+            {
+                state = State.normal;
+            }
         }
+        Debug.Log(rollSpeed);
+        
     }
+
+
+    void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
+
+    void OnDash()
+    {
+        rolldir = movedir;
+        
+        rollSpeed = 40f;
+        state = State.rolling;
+    }
+
 
     private void FixedUpdate()
     {
         switch (state)
         {
             case State.normal:
-
-
-                MyRigidbody.velocity = movedir * Move_speed;
-
+                MyRigidbody.velocity = moveInput * Move_speed;
 
                 break;
             case State.rolling:
-                MyRigidbody.velocity = rolldir * rollSpeed;
+                MyRigidbody.velocity = moveInput * rollSpeed;
                 break;
         }
     }
