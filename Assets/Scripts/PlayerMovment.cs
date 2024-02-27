@@ -42,7 +42,7 @@ public class PlayerMovment : MonoBehaviour
                 state = State.normal;
             }
         }
-        Debug.Log(rollSpeed);
+        
         
     }
 

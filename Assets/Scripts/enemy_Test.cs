@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class enemy_Test : MonoBehaviour
 {
-    float health = 3f;
+    public float health = 3f;
     float maxHealth = 3f;
 
     private void Start()
