@@ -30,15 +30,14 @@ public class EnemyGunBehavior : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
 
         //Flip if upside down
-        Debug.Log(transform.rotation.eulerAngles);
-
         if (transform.rotation.eulerAngles.z is >= 90 and <= 270)
         { spriteRenderer.flipY = true; }
-        else 
+        else
         { spriteRenderer.flipY = false; }
-           
-        
+    }
 
+    void shoot()
+    { 
         
     }
 }

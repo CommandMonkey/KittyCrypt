@@ -42,7 +42,6 @@ public class EnemyBehavior : MonoBehaviour
         }
         ShootLineOfSightRay();
         HowFarFromTarget();
-        
     }
 
     void ShootLineOfSightRay()
