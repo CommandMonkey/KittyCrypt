@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Room
   - RoomSpawner
+  - Weapons
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - weapons
   - Water
   - UI
   - Wall

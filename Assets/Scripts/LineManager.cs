@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class lineManager : MonoBehaviour
+public class LineManager : MonoBehaviour
 {
     Vector3[] linePositions = new Vector3[2];
     LineRenderer gunLineRenderer;
@@ -32,10 +32,10 @@ public class lineManager : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             gunLineRenderer.startWidth += .01f;
-            gunLineRenderer.endWidth += .02f;
+            gunLineRenderer.endWidth += .025f;
             yield return new WaitForSeconds(0.01f);
         }
-            yield return StartCoroutine(DecreaseWidth());
+        yield return StartCoroutine(DecreaseWidth());
     }
 
     IEnumerator DecreaseWidth()
@@ -43,7 +43,7 @@ public class lineManager : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             gunLineRenderer.startWidth -= .01f;
-            gunLineRenderer.endWidth -= .02f;
+            gunLineRenderer.endWidth -= .025f;
             yield return new WaitForSeconds(0.01f);
         }
     }
