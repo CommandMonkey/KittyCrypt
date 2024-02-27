@@ -20,23 +20,15 @@ public class Mace : MonoBehaviour
         Animation = FindObjectOfType<AnimationEvent>();
     }
 
-    private void Update()
+    void OnFire()
     {
-        Attack();
-    }
-
-    private void Attack()
-    {
-            if (Input.GetButtonDown("Fire1"))
-        {
-            if (AttackBlock)
+             if (AttackBlock)
             {
                 return;
             }
             Animatorn.SetTrigger("Meele Attack");
             AttackBlock = true;
             StartCoroutine(DelayAttack());
-        }
     }
 
 
