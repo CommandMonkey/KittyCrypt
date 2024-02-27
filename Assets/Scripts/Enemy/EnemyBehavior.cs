@@ -19,7 +19,7 @@ public class EnemyBehavior : MonoBehaviour
     //Public variables
     
     [SerializeField, Range(1, 10)] public float speed = 5f;
-    [SerializeField, Range(2, 10)] public float distanceToTarget = 5f;
+    [SerializeField, Range(1, 10)] public float distanceToTarget = 5f;
 
     //varibles
      
