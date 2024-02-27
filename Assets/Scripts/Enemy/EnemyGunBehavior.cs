@@ -17,7 +17,7 @@ public class EnemyGunBehavior : MonoBehaviour
 
     void Update()
     {
-        aimToPlayer();
+        //aimToPlayer();
     }
 
     void aimToPlayer()
