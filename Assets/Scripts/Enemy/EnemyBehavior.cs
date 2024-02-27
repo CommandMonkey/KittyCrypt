@@ -14,9 +14,9 @@ public class EnemyBehavior : MonoBehaviour
 
     //Me and the targets position  
 
-    public Transform target; 
+    private Transform target; 
 
-    //Public variables
+    //variables
     
     [SerializeField, Range(1, 10)] public float speed = 5f;
     [SerializeField, Range(1, 10)] public float distanceToTarget = 5f;
@@ -25,12 +25,12 @@ public class EnemyBehavior : MonoBehaviour
      
     private bool lineOfSight = true;
     private bool shootingDistance = false;
-    public Vector3 playerPosition = Vector3.zero;
+    private Vector3 playerPosition = Vector3.zero;
 
     //LayerMasks
 
-    public LayerMask playerLayer;
-    public LayerMask obsticleLayer;
+    private LayerMask playerLayer;
+    private LayerMask obsticleLayer;
 
     //Components
 
