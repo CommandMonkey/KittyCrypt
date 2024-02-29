@@ -7,13 +7,12 @@ public class PlayerInventory : MonoBehaviour
 {
     [Header("Weapons")]
     [SerializeField] Transform weaponAnchor;
-    [SerializeField] int weaponInventorySize = 2;
+    [SerializeField] GameObject[] weaponInventory;
 
-    GameObject[] weaponInventory;
+    int currentHotbarPos = 0;
 
     private void Awake()
     {
-        weaponInventory = new GameObject[weaponInventorySize];
         AddWeapon(new GameObject());
     }
 
@@ -24,14 +23,47 @@ public class PlayerInventory : MonoBehaviour
             if (weaponInventory[i] == null)
             {
                 weaponInventory[i] = weapon;
+                return;
             }
         }
-
     }
 
     void OnScroll(InputValue value)
     {
-        Debug.Log(value.Get());
+        float scrollValue = value.Get<float>();
+        if (scrollValue > 0)
+        {
+            AddToHotbarPos(1);
+        }
+        else if(scrollValue < 0)
+        {
+            AddToHotbarPos(-1);
+        }
+    }
+
+    void AddToHotbarPos(int value)
+    {
+        currentHotbarPos = (currentHotbarPos + value) % weaponInventory.Length;
+        UpdateWeapon();
+    }
+
+
+    void UpdateWeapon()
+    {
+        if (weaponInventory[currentHotbarPos].activeSelf) return;
+
+        foreach (GameObject weapon in weaponInventory)
+        {
+            if (weapon != null && weapon == weaponInventory[currentHotbarPos]) 
+            {
+                weapon.SetActive(true);
+            }
+            else if (weapon != null)
+            {
+                weapon.SetActive(false);
+            }
+        }
+
     }
 
 
