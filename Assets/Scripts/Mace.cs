@@ -20,23 +20,15 @@ public class Mace : MonoBehaviour
         Animation = FindObjectOfType<AnimationEvent>();
     }
 
-    private void Update()
+    void OnFire()
     {
-        Attack();
-    }
-
-    private void Attack()
-    {
-            if (Input.GetButtonDown("Fire1"))
-        {
-            if (AttackBlock)
+             if (AttackBlock)
             {
                 return;
             }
             Animatorn.SetTrigger("Meele Attack");
             AttackBlock = true;
             StartCoroutine(DelayAttack());
-        }
     }
 
 
@@ -59,10 +51,10 @@ public class Mace : MonoBehaviour
     {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrgin.position, radius))
         {
-           //if (enemyT = collider
-           // {
-                // enemyT.
-            //}
+           if (enemyT = collider.GetComponent<enemy_Test>())
+           {
+                enemyT.TakeDamage();
+           }
 
         }
     }
