@@ -14,34 +14,84 @@ public class EnemyBehavior : MonoBehaviour
 
     //Me and the targets position  
 
-    public Transform target; 
+    public Transform target;
 
-    //Public variables
-    
-    [SerializeField, Range(1, 10)] public float speed = 5f;
-    [SerializeField, Range(1, 10)] public float distanceToTarget = 5f;
+    //variables
+
+    [SerializeField, Range(1, 10)] private float speed = 5f;
+    [SerializeField, Range(1, 10)] private float distanceToTarget = 5f;
+    [SerializeField, Range(1, 10)] private float meleeRange = 5f;
+    [SerializeField, Range(1, 1000)] private float HP = 1f;
 
     //varibles
-     
+
     private bool lineOfSight = true;
     private bool shootingDistance = false;
-    public Vector3 playerPosition = Vector3.zero;
+    private bool inMeleeRange = false;
+
+    private Vector3 playerPosition = Vector3.zero;
+
+    private Vector3 previousPosition;
 
     //LayerMasks
 
-    public LayerMask playerLayer;
     public LayerMask obsticleLayer;
 
-    //Components
+    //declerations
+
+    SpriteRenderer spriteRenderer;
+    Rigidbody2D rigidbody2D;
+
+    void Start()
+    {
+        previousPosition = transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
-        if (shootingDistance == false)
-        {
-            MoveTowardsTarget();
-        }
+        if (shootingDistance == false )
+        { MoveTowardsTarget(); }
+
+        if (inMeleeRange == true)
+        { HitPlayer(); }
+
+        if (lineOfSight == true)
+        { HowFarFromTarget(); }
+
+        CheakWalkDirection();
         ShootLineOfSightRay();
-        HowFarFromTarget();
+        ShootMeleeRay();
+        
+    }
+
+    void HitPlayer()
+    {
+
+    }
+
+    void CheakWalkDirection()
+    {
+        Vector3 currentPosition = transform.position;
+
+        float deltaX = currentPosition.x - previousPosition.x;
+        if (deltaX > 0)
+        { spriteRenderer.flipX = true; }
+        else if (deltaX < 0)
+        { spriteRenderer.flipX = false; }
+
+        previousPosition = currentPosition;
+    }
+
+    void ShootMeleeRay()
+    {
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        if (distance <= meleeRange)
+        { inMeleeRange = true;  }
+        else
+        { inMeleeRange = false; }
     }
 
     void ShootLineOfSightRay()
@@ -50,7 +100,7 @@ public class EnemyBehavior : MonoBehaviour
         float distance = direction.magnitude;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obsticleLayer);
 
-        Debug.DrawLine(transform.position, hit.point, Color.white, 0.1f);
+        Debug.DrawLine(transform.position, hit.point, Color.blue, 0.1f);
 
         if (hit.collider != null)
         {
@@ -68,13 +118,9 @@ public class EnemyBehavior : MonoBehaviour
         float distance = Vector3.Distance(transform.position, target.position);
 
         if (distance <= distanceToTarget)
-        {
-            shootingDistance = true;
-        }
+        { shootingDistance = true; }
         else
-        {
-            shootingDistance = false;
-        }
+        { shootingDistance = false; }
     }
 
     void MoveTowardsTarget()
@@ -86,6 +132,10 @@ public class EnemyBehavior : MonoBehaviour
         direction.Normalize();
 
         // Move the object towards the target using Translate
-        base.transform.Translate(direction * speed * Time.deltaTime);
+        //transform.Translate(direction * speed * Time.deltaTime);
+
+
+
+        rigidbody2D.velocity = direction * speed;
     }
 }
