@@ -47,7 +47,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Update()
     {
-        if (shootingDistance == false )
+        if (shootingDistance == false)
         { MoveTowardsTarget(); }
 
         if (inMeleeRange == true)
@@ -108,10 +108,12 @@ public class EnemyBehavior : MonoBehaviour
 
         if (hit.collider != null)
         {
+            Debug.Log("Cant see player");
             lineOfSight = false;
         }
         else
         {
+            Debug.Log("Can see player");
             lineOfSight = true;
             playerPosition = target.position;
         }
@@ -129,6 +131,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void MoveTowardsTarget()
     {
+        if (playerPosition == Vector3.zero) return;
         // Calculate the direction from the current position to the target position
         Vector3 direction = playerPosition - base.transform.position;
 

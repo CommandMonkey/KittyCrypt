@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7406951540403912369}
   m_Layer: 0
-  m_Name: TemplateGun
+  m_Name: TemplateGun (Shotgun)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,15 +238,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0908f6828171d49b104f347669e020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 0
+  weaponType: 1
   fireRate: 0.1
   reloadTime: 1
   damagePerBullet: 1
-  bulletsBeforeReload: 5
+  bulletsBeforeReload: 10
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 0.75
   projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 2
+  bulletSpreadRange: 20
   projectileSpeed: 5
   projectileVanishAfter: 5
   bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
