@@ -1,13 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class GunFire : MonoBehaviour
 {
     enum WeaponType
     {
         ProjectileFire,
-        RaycastFire,
-        BurstFire
+        BurstFire,
+        RaycastFire
     }
 
     //Configurable parameters
@@ -15,6 +17,7 @@ public class GunFire : MonoBehaviour
     [SerializeField] WeaponType weaponType;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
+    [SerializeField] float damagePerBullet = 1f;
     [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] int bulletsBeforeReload = 5;
     [SerializeField] GameObject hitEffect;
     [SerializeField] float destroyHitEffectAfter = 1.5f;
@@ -26,9 +29,9 @@ public class GunFire : MonoBehaviour
     [SerializeField] float projectileVanishAfter = 3f;
 
     [Header("Raycast Options")]
-    [SerializeField] float fireDistance = 10f;
     [SerializeField] GameObject bulletTrail;
     [SerializeField] float destroyTrailAfter = .1f;
+    [SerializeField] LayerMask ignoreLayerMask;
 
 
     //Cached references
@@ -39,6 +42,9 @@ public class GunFire : MonoBehaviour
     float fireRateCooldownTimer;
     bool fireRateCoolingDown = false;
     bool reloading = false;
+
+    Transform pivotPointTransform;
+    PlayerInput playerInput;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
 
@@ -46,11 +52,13 @@ public class GunFire : MonoBehaviour
     {
         reloadTimer = reloadTime;
         fireRateCooldownTimer = fireRate;
+        playerInput = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        pivotPointTransform = GetComponentInParent<Transform>();
         ProjectileFire();
         BurstFire();
         RaycastFire();
@@ -63,7 +71,7 @@ public class GunFire : MonoBehaviour
     {
         if(weaponType != WeaponType.ProjectileFire || fireRateCoolingDown || reloading) { return; }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (playerInput.actions["Fire"].IsPressed()) 
         {
             randomBulletSpread = GetBulletSpread();
             Instantiate(projectile, transform.position, randomBulletSpread);
@@ -76,7 +84,7 @@ public class GunFire : MonoBehaviour
     {
         if(weaponType != WeaponType.BurstFire || fireRateCoolingDown || reloading) { return; }
 
-        if(Input.GetKey(KeyCode.Mouse0))
+        if(playerInput.actions["Fire"].IsPressed())
         {
             for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
             {
@@ -93,11 +101,11 @@ public class GunFire : MonoBehaviour
     {
         if (weaponType != WeaponType.RaycastFire || fireRateCoolingDown || reloading) { return; }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (playerInput.actions["Fire"].IsPressed())
         {
             randomBulletSpread = GetBulletSpread();
 
-            bulletHit = Physics2D.Raycast(transform.position, -transform.up);
+            bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~ignoreLayerMask);
             if (bulletHit)
             {
                 bulletsFired++;
@@ -108,11 +116,15 @@ public class GunFire : MonoBehaviour
 
                 var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
                 Destroy(line, destroyTrailAfter);
-            }
-            else
-            {
-                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
-                Destroy(smoke, destroyHitEffectAfter);
+
+                Debug.Log(bulletHit.collider);
+
+                if (bulletHit.collider.gameObject.transform.tag == "Enemy")
+                {
+                    EnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<EnemyBehavior>();
+
+                    enemyScript.TakeDamage(damagePerBullet);
+                }
             }
         }
     }
@@ -159,6 +171,11 @@ public class GunFire : MonoBehaviour
     public float GetVanishAfter()
     {
         return projectileVanishAfter;
+    }
+
+    public float GetDamagePerBullet()
+    {
+        return damagePerBullet;
     }
 
     public Vector3 GetBulletHitPoint()

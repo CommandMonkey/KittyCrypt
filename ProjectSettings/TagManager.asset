@@ -6,18 +6,21 @@ TagManager:
   tags:
   - Room
   - RoomSpawner
+  - Weapons
+  - Pickup
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Weapons
   - Water
   - UI
   - Wall
   - Player
   - Bullet
-  - 
-  - 
+  - Room
+  - Enemy
   - 
   - 
   - 
@@ -48,6 +51,9 @@ TagManager:
     locked: 0
   - name: Walls
     uniqueID: 2834280801
+    locked: 0
+  - name: Enemy
+    uniqueID: 2809014027
     locked: 0
   - name: Player
     uniqueID: 1765373491

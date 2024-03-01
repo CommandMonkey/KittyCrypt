@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+    public SoundManager soundManager { get; private set; }
+    public Camera mainCamera { get; private set; }
+    public Transform player;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        soundManager = FindObjectOfType<SoundManager>();
+        mainCamera = Camera.main;
     }
 }

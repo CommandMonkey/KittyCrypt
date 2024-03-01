@@ -1,47 +1,101 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyBehavior : MonoBehaviour
 {
 
-    //Me and the targets position  
-
-    public Transform target; 
-
-    //Public variables
+    //The targets position  
     
-    [SerializeField, Range(1, 10)] public float speed = 5f;
-    [SerializeField, Range(1, 10)] public float distanceToTarget = 5f;
+
+    //variables
+    [SerializeField, Range(1, 10)] private float speed = 5f;
+    [SerializeField, Range(1, 10)] private float distanceToTarget = 5f;
+    [SerializeField, Range(1, 10)] private float meleeRange = 5f;
+    [SerializeField, Range(1, 1000)] private float HP = 1f;
+
+    private Transform target;
 
     //varibles
-     
     private bool lineOfSight = true;
     private bool shootingDistance = false;
-    public Vector3 playerPosition = Vector3.zero;
+    private bool inMeleeRange = false;
+
+    private Vector3 playerPosition = Vector3.zero;
+
+    private Vector3 previousPosition;
 
     //LayerMasks
-
-    public LayerMask playerLayer;
     public LayerMask obsticleLayer;
 
-    //Components
+    //declerations
+    GameManager gameManager;
+    SpriteRenderer spriteRenderer;
+    Rigidbody2D rigidBody2D;
+    
+
+    void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
+
+
+        previousPosition = transform.position;
+        target = gameManager.player;
+    }
 
     void Update()
     {
-        if (shootingDistance == false)
-        {
-            MoveTowardsTarget();
-        }
+        if (shootingDistance == false )
+        { MoveTowardsTarget(); }
+
+        if (inMeleeRange == true)
+        { HitPlayer(); }
+
+        if (lineOfSight == true)
+        { HowFarFromTarget(); }
+
+        CheakWalkDirection();
         ShootLineOfSightRay();
-        HowFarFromTarget();
+        ShootMeleeRay();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        HP -= damage;
+        if (HP < 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void HitPlayer()
+    {
+
+    }
+
+    void CheakWalkDirection()
+    {
+        Vector3 currentPosition = transform.position;
+
+        float deltaX = currentPosition.x - previousPosition.x;
+        if (deltaX > 0)
+        { spriteRenderer.flipX = true; }
+        else if (deltaX < 0)
+        { spriteRenderer.flipX = false; }
+
+        previousPosition = currentPosition;
+    }
+
+    void ShootMeleeRay()
+    {
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        if (distance <= meleeRange)
+        { inMeleeRange = true;  }
+        else
+        { inMeleeRange = false; }
     }
 
     void ShootLineOfSightRay()
@@ -50,11 +104,11 @@ public class EnemyBehavior : MonoBehaviour
         float distance = direction.magnitude;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obsticleLayer);
 
-        Debug.DrawLine(transform.position, hit.point, Color.white, 0.1f);
+        Debug.DrawLine(transform.position, hit.point, Color.blue, 0.1f);
 
-        if (hit.collider != null)
+        if (hit.collider != null || hit.point == Vector2.zero)
         {
-            lineOfSight = false;
+            lineOfSight = false ;
         }
         else
         {
@@ -68,13 +122,9 @@ public class EnemyBehavior : MonoBehaviour
         float distance = Vector3.Distance(transform.position, target.position);
 
         if (distance <= distanceToTarget)
-        {
-            shootingDistance = true;
-        }
+        { shootingDistance = true; }
         else
-        {
-            shootingDistance = false;
-        }
+        { shootingDistance = false; }
     }
 
     void MoveTowardsTarget()
@@ -85,7 +135,8 @@ public class EnemyBehavior : MonoBehaviour
         // Normalize the direction vector to ensure consistent speed in all directions
         direction.Normalize();
 
-        // Move the object towards the target using Translate
-        base.transform.Translate(direction * speed * Time.deltaTime);
+        //Move myself
+        rigidBody2D.velocity = direction * speed;
     }
+
 }
