@@ -17,6 +17,7 @@ public class GunFire : MonoBehaviour
     [SerializeField] WeaponType weaponType;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
+    [SerializeField] float damagePerBullet = 1f;
     [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] int bulletsBeforeReload = 5;
     [SerializeField] GameObject hitEffect;
     [SerializeField] float destroyHitEffectAfter = 1.5f;
@@ -122,7 +123,7 @@ public class GunFire : MonoBehaviour
                 {
                     EnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<EnemyBehavior>();
 
-                    enemyScript.
+                    enemyScript.TakeDamage(damagePerBullet);
                 }
             }
         }

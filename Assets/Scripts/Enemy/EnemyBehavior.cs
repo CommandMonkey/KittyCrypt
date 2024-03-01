@@ -53,7 +53,7 @@ public class EnemyBehavior : MonoBehaviour
         ShootMeleeRay();
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         HP -= damage;
         if (HP < 0)
