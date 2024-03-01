@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animatorn: {fileID: 2395079894995752658}
-  delay: 0.75
+  delay: 0.3
   AttackBlock: 0
   circleOrgin: {fileID: 9096372544093070705}
   radius: 1.26
@@ -269,7 +269,7 @@ Transform:
   m_GameObject: {fileID: 2991981425205067385}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.042580593, w: -0.99909306}
-  m_LocalPosition: {x: 4.4, y: 0, z: -0.55285966}
+  m_LocalPosition: {x: 1.04, y: -0, z: -0.55285966}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

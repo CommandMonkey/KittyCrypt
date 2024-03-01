@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class GunFire : MonoBehaviour
@@ -42,6 +43,7 @@ public class GunFire : MonoBehaviour
     bool reloading = false;
 
     Transform pivotPointTransform;
+    PlayerInput playerInput;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
 
@@ -49,44 +51,48 @@ public class GunFire : MonoBehaviour
     {
         reloadTimer = reloadTime;
         fireRateCooldownTimer = fireRate;
+        playerInput = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
         pivotPointTransform = GetComponentInParent<Transform>();
-        Reload();
-        CheckBulletsFired();
-        FireRateCooldown();
-    }
-
-    void OnFire()
-    {
         ProjectileFire();
         BurstFire();
         RaycastFire();
+        Reload();
+        CheckBulletsFired();
+        FireRateCooldown();
     }
 
     void ProjectileFire()
     {
         if(weaponType != WeaponType.ProjectileFire || fireRateCoolingDown || reloading) { return; }
 
-        randomBulletSpread = GetBulletSpread();
-        Instantiate(projectile, transform.position, randomBulletSpread);
-        fireRateCoolingDown = true;
-        bulletsFired++;
+        if (playerInput.actions["Fire"].IsPressed()) 
+        {
+            randomBulletSpread = GetBulletSpread();
+            Instantiate(projectile, transform.position, randomBulletSpread);
+            fireRateCoolingDown = true;
+            bulletsFired++;
+        }
     }
 
     void BurstFire()
     {
         if(weaponType != WeaponType.BurstFire || fireRateCoolingDown || reloading) { return; }
 
-        for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
+        if(playerInput.actions["Fire"].IsPressed())
         {
-            Debug.Log(i);
-            randomBulletSpread = GetBulletSpread();
-            Instantiate(projectile, transform.position, randomBulletSpread);
-            bulletsFired++;
+            for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
+            {
+                Debug.Log(i);
+                randomBulletSpread = GetBulletSpread();
+                Instantiate(projectile, transform.position, randomBulletSpread);
+                bulletsFired++;
+            }
+
         }
     }
 
@@ -94,19 +100,29 @@ public class GunFire : MonoBehaviour
     {
         if (weaponType != WeaponType.RaycastFire || fireRateCoolingDown || reloading) { return; }
 
-        randomBulletSpread = GetBulletSpread();
-
-        bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~ignoreLayerMask);
-        if (bulletHit)
+        if (playerInput.actions["Fire"].IsPressed())
         {
-            bulletsFired++;
-            fireRateCoolingDown = true;
+            randomBulletSpread = GetBulletSpread();
 
-            var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
-            Destroy(smoke, destroyHitEffectAfter);
+            bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~ignoreLayerMask);
+            if (bulletHit)
+            {
+                bulletsFired++;
+                fireRateCoolingDown = true;
 
-            var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
-            Destroy(line, destroyTrailAfter);
+                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
+                Destroy(smoke, destroyHitEffectAfter);
+
+                var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
+                Destroy(line, destroyTrailAfter);
+
+                Debug.Log(bulletHit.collider);
+            }
+            else
+            {
+                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
+                Destroy(smoke, destroyHitEffectAfter);
+            }
         }
     }
 

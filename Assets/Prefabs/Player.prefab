@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Move_speed: 10
-  rollSpeedMinimum: 5
+  rollSpeedMinimum: 2
 --- !u!212 &985665903586509229
 SpriteRenderer:
   m_ObjectHideFlags: 0
