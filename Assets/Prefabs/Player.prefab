@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6535117181497046564}
   - component: {fileID: 79651003279785704}
   - component: {fileID: 985665903586509229}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 5535915679937639577}
   - component: {fileID: 284683155832742126}
   - component: {fileID: 2583925021004024128}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerInventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9164578391081965062}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunGripper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

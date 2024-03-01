@@ -46,27 +46,25 @@ public class PlayerInventory : MonoBehaviour
 
     void AddWeapon(GameObject weapon)
     {
-        for (int i = 0; i < weaponInventory.Length; i++)
+        GameObject cHotbarSpot = weaponInventory[currentHotbarPos];
+        if (cHotbarSpot != null)
         {
-            if (weaponInventory[i] == null)
-            {
-                weaponInventory[i] = weapon;
-                return;
-            }
+            SpawnPickup(cHotbarSpot, PickupType.Weapon);
+            cHotbarSpot.SetActive(false);
         }
-
-        GameObject Pickup = weaponInventory[currentHotbarPos];
-        SpawnPickup(Pickup, PickupType.Weapon);
-        Pickup.SetActive(false);
+        
 
         if(weapon.transform.IsChildOf(weaponAnchor))
         {
+            Debug.Log("Found pickup Content in hierarchy, Rebasing");
+
+            weapon.transform.SetParent(weaponAnchor);
+            weapon.SetActive(true);
             weaponInventory[currentHotbarPos] = weapon;
-            weaponInventory[currentHotbarPos].transform.SetParent(weaponAnchor);
-            weaponInventory[currentHotbarPos].SetActive(true);
         }
         else
         {
+            Debug.Log("Pickup Content not in hierarchy, Spawning new");
             weaponInventory[currentHotbarPos] = Instantiate(weapon, weaponAnchor);
         }
     }
