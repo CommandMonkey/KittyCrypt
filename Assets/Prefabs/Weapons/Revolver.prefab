@@ -92,7 +92,7 @@ MonoBehaviour:
   destroyTrailAfter: 0.1
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 896
 --- !u!114 &5041264691167727542
 MonoBehaviour:
   m_ObjectHideFlags: 0
