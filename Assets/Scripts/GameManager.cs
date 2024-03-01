@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public SoundManager soundManager { get; private set; }
     public Camera mainCamera { get; private set; }
+    public Transform player;
 
     private void Start()
     {
