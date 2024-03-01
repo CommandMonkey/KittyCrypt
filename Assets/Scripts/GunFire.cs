@@ -29,6 +29,7 @@ public class GunFire : MonoBehaviour
     [Header("Raycast Options")]
     [SerializeField] GameObject bulletTrail;
     [SerializeField] float destroyTrailAfter = .1f;
+    [SerializeField] LayerMask ignoreLayerMask;
 
 
     //Cached references
@@ -43,13 +44,11 @@ public class GunFire : MonoBehaviour
     Transform pivotPointTransform;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
-    LayerMask ignorePlayerMask;
 
     private void Start()
     {
         reloadTimer = reloadTime;
         fireRateCooldownTimer = fireRate;
-        ignorePlayerMask = ~(LayerMask.GetMask("Player"));
     }
 
     // Update is called once per frame
@@ -102,7 +101,7 @@ public class GunFire : MonoBehaviour
         {
             randomBulletSpread = GetBulletSpread();
 
-            bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ignorePlayerMask);
+            bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~ignoreLayerMask);
             if (bulletHit)
             {
                 bulletsFired++;
@@ -113,6 +112,8 @@ public class GunFire : MonoBehaviour
 
                 var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
                 Destroy(line, destroyTrailAfter);
+
+                Debug.Log(bulletHit.collider);
             }
             else
             {
