@@ -7,8 +7,8 @@ public class GunFire : MonoBehaviour
     enum WeaponType
     {
         ProjectileFire,
-        RaycastFire,
-        BurstFire
+        BurstFire,
+        RaycastFire
     }
 
     //Configurable parameters
@@ -29,6 +29,7 @@ public class GunFire : MonoBehaviour
     [Header("Raycast Options")]
     [SerializeField] GameObject bulletTrail;
     [SerializeField] float destroyTrailAfter = .1f;
+    [SerializeField] LayerMask ignoreLayerMask;
 
 
     //Cached references
@@ -54,41 +55,38 @@ public class GunFire : MonoBehaviour
     void Update()
     {
         pivotPointTransform = GetComponentInParent<Transform>();
-        ProjectileFire();
-        BurstFire();
-        RaycastFire();
         Reload();
         CheckBulletsFired();
         FireRateCooldown();
+    }
+
+    void OnFire()
+    {
+        ProjectileFire();
+        BurstFire();
+        RaycastFire();
     }
 
     void ProjectileFire()
     {
         if(weaponType != WeaponType.ProjectileFire || fireRateCoolingDown || reloading) { return; }
 
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            randomBulletSpread = GetBulletSpread();
-            Instantiate(projectile, transform.position, randomBulletSpread);
-            fireRateCoolingDown = true;
-            bulletsFired++;
-        }
+        randomBulletSpread = GetBulletSpread();
+        Instantiate(projectile, transform.position, randomBulletSpread);
+        fireRateCoolingDown = true;
+        bulletsFired++;
     }
 
     void BurstFire()
     {
         if(weaponType != WeaponType.BurstFire || fireRateCoolingDown || reloading) { return; }
 
-        if(Input.GetKey(KeyCode.Mouse0))
+        for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
         {
-            for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
-            {
-                Debug.Log(i);
-                randomBulletSpread = GetBulletSpread();
-                Instantiate(projectile, transform.position, randomBulletSpread);
-                bulletsFired++;
-            }
-
+            Debug.Log(i);
+            randomBulletSpread = GetBulletSpread();
+            Instantiate(projectile, transform.position, randomBulletSpread);
+            bulletsFired++;
         }
     }
 
@@ -96,27 +94,19 @@ public class GunFire : MonoBehaviour
     {
         if (weaponType != WeaponType.RaycastFire || fireRateCoolingDown || reloading) { return; }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        randomBulletSpread = GetBulletSpread();
+
+        bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~ignoreLayerMask);
+        if (bulletHit)
         {
-            randomBulletSpread = GetBulletSpread();
+            bulletsFired++;
+            fireRateCoolingDown = true;
 
-            bulletHit = Physics2D.Raycast(transform.position, transform.right);
-            if (bulletHit)
-            {
-                bulletsFired++;
-                fireRateCoolingDown = true;
+            var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
+            Destroy(smoke, destroyHitEffectAfter);
 
-                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
-                Destroy(smoke, destroyHitEffectAfter);
-
-                var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
-                Destroy(line, destroyTrailAfter);
-            }
-            else
-            {
-                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
-                Destroy(smoke, destroyHitEffectAfter);
-            }
+            var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
+            Destroy(line, destroyTrailAfter);
         }
     }
 
