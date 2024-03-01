@@ -80,6 +80,7 @@ MonoBehaviour:
   weaponType: 2
   fireRate: 0.75
   reloadTime: 3
+  damagePerBullet: 2
   bulletsBeforeReload: 6
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 0.75
@@ -194,7 +195,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1765373491
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ef840803fb005e94eb85c9fdae739ebf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

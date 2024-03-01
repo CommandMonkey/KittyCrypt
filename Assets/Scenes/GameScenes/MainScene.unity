@@ -323,6 +323,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: BLTR
       objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7699842609000826298, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7699842609000826298, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -337,6 +361,67 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 766672973}
   m_SourcePrefab: {fileID: 100100000, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
+--- !u!1001 &450812975
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3997974298972901596, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_Name
+      value: Enemy Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.11346498
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 20.466873
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420835062766780503, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 840870981}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
 --- !u!4 &494475540 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3478328682861642060, guid: 6be6f76322d1a9440be1066609a2c147, type: 3}
@@ -644,7 +729,7 @@ MonoBehaviour:
   m_Intensity: 0.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000006540b64e3376396961b1efa8a9dc459d27313936437fd893
+  m_ApplyToSortingLayers: 000000006540b64e3376396961b1efa8a9dc459d27313936437fd8930b276ea7
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -740,6 +825,22 @@ PrefabInstance:
     - target: {fileID: 3722623101364078196, guid: 56a0bb5975039a443b2efdd8e1c983b7, type: 3}
       propertyPath: m_Name
       value: R
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 56a0bb5975039a443b2efdd8e1c983b7, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 56a0bb5975039a443b2efdd8e1c983b7, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 56a0bb5975039a443b2efdd8e1c983b7, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 56a0bb5975039a443b2efdd8e1c983b7, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1157,6 +1258,22 @@ PrefabInstance:
     - target: {fileID: 3722623101364078196, guid: 2afc4d07c33606240a79773e7ae4c4ff, type: 3}
       propertyPath: m_Name
       value: L
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 2afc4d07c33606240a79773e7ae4c4ff, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 2afc4d07c33606240a79773e7ae4c4ff, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 2afc4d07c33606240a79773e7ae4c4ff, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 2afc4d07c33606240a79773e7ae4c4ff, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1653,7 +1770,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1656365911
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 25ead4a3fe8456a4a8db9e62b43d4466, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1834,6 +1951,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 5243ab9d74514c447bdb866c3fa1153e, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346990113433418814, guid: 5243ab9d74514c447bdb866c3fa1153e, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 5243ab9d74514c447bdb866c3fa1153e, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054244432263865922, guid: 5243ab9d74514c447bdb866c3fa1153e, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1856,3 +1989,4 @@ SceneRoots:
   - {fileID: 343925243}
   - {fileID: 1946870733}
   - {fileID: 1533487080}
+  - {fileID: 450812975}
