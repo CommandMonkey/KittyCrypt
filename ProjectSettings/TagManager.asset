@@ -6,17 +6,19 @@ TagManager:
   tags:
   - Room
   - RoomSpawner
+  - Weapons
+  - Pickup
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - weapons
   - Water
   - UI
   - Wall
   - Player
   - Bullet
-  - 
+  - Room
   - 
   - 
   - 

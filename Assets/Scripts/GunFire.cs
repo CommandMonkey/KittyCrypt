@@ -1,13 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GunFire : MonoBehaviour
 {
     enum WeaponType
     {
         ProjectileFire,
-        RaycastFire,
-        BurstFire
+        BurstFire,
+        RaycastFire
     }
 
     //Configurable parameters
@@ -26,9 +27,9 @@ public class GunFire : MonoBehaviour
     [SerializeField] float projectileVanishAfter = 3f;
 
     [Header("Raycast Options")]
-    [SerializeField] float fireDistance = 10f;
     [SerializeField] GameObject bulletTrail;
     [SerializeField] float destroyTrailAfter = .1f;
+    [SerializeField] LayerMask ignoreLayerMask;
 
 
     //Cached references
@@ -39,6 +40,8 @@ public class GunFire : MonoBehaviour
     float fireRateCooldownTimer;
     bool fireRateCoolingDown = false;
     bool reloading = false;
+
+    Transform pivotPointTransform;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
 
@@ -51,6 +54,7 @@ public class GunFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pivotPointTransform = GetComponentInParent<Transform>();
         ProjectileFire();
         BurstFire();
         RaycastFire();
@@ -97,7 +101,7 @@ public class GunFire : MonoBehaviour
         {
             randomBulletSpread = GetBulletSpread();
 
-            bulletHit = Physics2D.Raycast(transform.position, -transform.up);
+            bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~ignoreLayerMask);
             if (bulletHit)
             {
                 bulletsFired++;
@@ -108,6 +112,8 @@ public class GunFire : MonoBehaviour
 
                 var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
                 Destroy(line, destroyTrailAfter);
+
+                Debug.Log(bulletHit.collider);
             }
             else
             {

@@ -259,6 +259,26 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -1, y: -8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 20
+      m_TileSpriteIndex: 20
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 0, y: -8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 20
+      m_TileSpriteIndex: 20
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 1, y: -8, z: 0}
     second:
       serializedVersion: 2
@@ -1011,7 +1031,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 78
+  - m_RefCount: 80
     m_Data: {fileID: 11400000, guid: a3f4accba239af242b9a982e64bf442a, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
@@ -1054,10 +1074,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 78
+  - m_RefCount: 80
     m_Data: {fileID: 28967203, guid: 17ccf52db70685741adcdf200f37fc3d, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 78
+  - m_RefCount: 80
     m_Data:
       e00: 1
       e01: 0
@@ -1076,7 +1096,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 78
+  - m_RefCount: 80
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1141,7 +1161,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1460686495
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -1263,9 +1283,13 @@ CompositeCollider2D:
         Y: 50000000
       - X: 70000000
         Y: -70000000
-      - X: 10000000
+      - X: -70000000
         Y: -70000000
-      - X: 10000000
+      - X: -70000000
+        Y: -10000000
+      - X: -80000000
+        Y: -10000000
+      - X: -80000000
         Y: -80000000
       - X: 80000000
         Y: -80000000
@@ -1281,18 +1305,6 @@ CompositeCollider2D:
         Y: 10000000
       - X: -70000000
         Y: 10000000
-    - - X: -10000000
-        Y: -70000000
-      - X: -70000000
-        Y: -70000000
-      - X: -70000000
-        Y: -10000000
-      - X: -80000000
-        Y: -10000000
-      - X: -80000000
-        Y: -80000000
-      - X: -10000000
-        Y: -80000000
   m_CompositePaths:
     m_Paths:
     - - {x: 7.9999704, y: -8}
@@ -1301,20 +1313,16 @@ CompositeCollider2D:
       - {x: 1.0000293, y: 5}
       - {x: 7, y: 4.9999704}
       - {x: 6.9999704, y: -7}
-      - {x: 1, y: -7.0000296}
-      - {x: 1.0000293, y: -8}
+      - {x: -7, y: -6.9999704}
+      - {x: -7.0000296, y: -1}
+      - {x: -8, y: -1.0000293}
+      - {x: -7.9999704, y: -8}
     - - {x: -7.0000296, y: 1}
       - {x: -6.9999704, y: 5}
       - {x: -1, y: 5.000029}
       - {x: -1.0000293, y: 8}
       - {x: -8, y: 7.9999704}
       - {x: -7.9999704, y: 1}
-    - - {x: -1.0000293, y: -8}
-      - {x: -1.0000293, y: -7}
-      - {x: -7, y: -6.9999704}
-      - {x: -7.0000296, y: -1}
-      - {x: -8, y: -1.0000293}
-      - {x: -7.9999704, y: -8}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -1494,7 +1502,7 @@ GameObject:
   - component: {fileID: 3478328682861642060}
   - component: {fileID: 133979408298044591}
   - component: {fileID: 2615426938405879940}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LT
   m_TagString: Room
   m_Icon: {fileID: 0}
