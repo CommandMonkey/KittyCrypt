@@ -67,6 +67,9 @@ public class PlayerInventory : MonoBehaviour
             Debug.Log("Pickup Content not in hierarchy, Spawning new");
             weaponInventory[currentHotbarPos] = Instantiate(weapon, weaponAnchor);
         }
+
+        // reset local pos (cus had some problem or smthn)
+        weaponInventory[currentHotbarPos].transform.localPosition = Vector3.zero;
     }
 
     void OnScroll(InputValue value)
@@ -146,6 +149,8 @@ public class PlayerInventory : MonoBehaviour
         {
             AddWeapon(closestPickup.content);
             Destroy(closestPickup.gameObject);
+
+            UpdateWeapon();
         }
     }
 
@@ -180,6 +185,9 @@ public class PlayerInventory : MonoBehaviour
     {
         GameObject pickup = Instantiate(pickupPrefab, transform.position, Quaternion.identity);
         pickup.name = content.name;
+
+        // make weapon child of pickup
+        content.transform.SetParent(pickup.transform);
 
         Pickup pickupScript = pickup.GetComponent<Pickup>();
         pickupScript.content = content;
