@@ -106,9 +106,9 @@ public class EnemyBehavior : MonoBehaviour
 
         Debug.DrawLine(transform.position, hit.point, Color.blue, 0.1f);
 
-        if (hit.collider != null)
+        if (hit.collider != null || hit.point == Vector2.zero)
         {
-            lineOfSight = false;
+            lineOfSight = false ;
         }
         else
         {
