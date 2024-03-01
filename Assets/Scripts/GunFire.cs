@@ -7,8 +7,8 @@ public class GunFire : MonoBehaviour
     enum WeaponType
     {
         ProjectileFire,
-        RaycastFire,
-        BurstFire
+        BurstFire,
+        RaycastFire
     }
 
     //Configurable parameters
@@ -43,11 +43,13 @@ public class GunFire : MonoBehaviour
     Transform pivotPointTransform;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
+    LayerMask ignorePlayerMask;
 
     private void Start()
     {
         reloadTimer = reloadTime;
         fireRateCooldownTimer = fireRate;
+        ignorePlayerMask = ~(LayerMask.GetMask("Player"));
     }
 
     // Update is called once per frame
@@ -100,7 +102,7 @@ public class GunFire : MonoBehaviour
         {
             randomBulletSpread = GetBulletSpread();
 
-            bulletHit = Physics2D.Raycast(transform.position, transform.right);
+            bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ignorePlayerMask);
             if (bulletHit)
             {
                 bulletsFired++;

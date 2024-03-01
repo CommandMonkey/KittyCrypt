@@ -572,6 +572,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3865313931253725056, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5398213958659527685, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5398213958659527685, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801526581952323716, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -792,7 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0908f6828171d49b104f347669e020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 1
+  weaponType: 2
   fireRate: 0.75
   reloadTime: 3
   bulletsBeforeReload: 6
