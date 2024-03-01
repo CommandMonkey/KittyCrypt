@@ -117,11 +117,13 @@ public class GunFire : MonoBehaviour
                 Destroy(line, destroyTrailAfter);
 
                 Debug.Log(bulletHit.collider);
-            }
-            else
-            {
-                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
-                Destroy(smoke, destroyHitEffectAfter);
+
+                if (bulletHit.collider.gameObject.transform.tag == "Enemy")
+                {
+                    EnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<EnemyBehavior>();
+
+                    enemyScript.
+                }
             }
         }
     }
