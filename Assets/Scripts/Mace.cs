@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Mace : MonoBehaviour
 {
-    
+    private enemy_Test enemyT;
     private AnimationEvent Animation;
     public Animator Animatorn;
     [SerializeField] private float delay = 0.3f;
     [SerializeField] private bool AttackBlock;
-    [SerializeField] float damagePerHit = 1f;
 
     public Transform circleOrgin;
     public float radius;
@@ -17,7 +16,7 @@ public class Mace : MonoBehaviour
 
     private void Start()
     {
-        
+        enemyT = FindObjectOfType<enemy_Test>();
         Animation = GetComponent<AnimationEvent>();
     }
 
@@ -52,12 +51,10 @@ public class Mace : MonoBehaviour
     {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrgin.position, radius))
         {
-            if (collider.gameObject.transform.tag == "Enemy")
-            {
-                EnemyBehavior enemyScript = collider.gameObject.GetComponent<EnemyBehavior>();
-
-                enemyScript.TakeDamage(damagePerHit);
-            }
+           if (enemyT = collider.GetComponent<enemy_Test>())
+           {
+                enemyT.TakeDamage();
+           }
 
         }
     }
