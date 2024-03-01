@@ -173,6 +173,11 @@ public class GunFire : MonoBehaviour
         return projectileVanishAfter;
     }
 
+    public float GetDamagePerBullet()
+    {
+        return damagePerBullet;
+    }
+
     public Vector3 GetBulletHitPoint()
     {
         return bulletHit.point;
