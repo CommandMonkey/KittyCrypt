@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        myRigidbody.velocity = transform.up * - gun.GetProjectileSpeed();
+        myRigidbody.velocity = - transform.right * - gun.GetProjectileSpeed();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

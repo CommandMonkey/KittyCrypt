@@ -1,28 +1,23 @@
+using System.Net.Security;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GunRotation : MonoBehaviour
 {
     [SerializeField] Transform barrelExitPoint;
 
     Vector3 mousePos;
-    Vector3 positiveMouseDir;
     Vector3 gunPivotToExit;
     float angle;
-
-    private void Start()
-    {
-        positiveMouseDir = mousePos;
-    }
 
     // Update is called once per frame
     void Update()
     {
-
         gunPivotToExit = transform.localPosition - transform.InverseTransformPoint(barrelExitPoint.position);
         CalculateMousePos();
         CalculateOffset();
-        FlipGun();
         SetRotation();
+        FlipGun();
     }
 
     void CalculateMousePos()
@@ -39,28 +34,33 @@ public class GunRotation : MonoBehaviour
 
     void SetRotation()
     {
-        if (transform.localScale.x < 0)
-        {
-            mousePos = -mousePos;
-            angle = -angle;
-        }
-
         Vector3 lookRotation = transform.position - mousePos;
         Quaternion pivotToMouseRotation = Quaternion.FromToRotation(Vector3.left, lookRotation);
         Vector3 eulerAngles = pivotToMouseRotation.eulerAngles;
-        eulerAngles.z -= angle;
 
+        if (transform.localScale.y < 0)
+        {
+            eulerAngles.z += angle;
+        }
+        else
+        {
+            eulerAngles.z -= angle;
+        }
         transform.rotation = Quaternion.Euler(eulerAngles);
     }
 
     void FlipGun()
     {
-        float currentScaleX = transform.localScale.x;
-
-        if (Mathf.Clamp(transform.rotation.eulerAngles.z, 105, 255) == transform.rotation.eulerAngles.z)
+        //TODO make gun shoot right direction
+        if (mousePos.x < transform.position.x)
         {
-            transform.localScale = new Vector3(-currentScaleX, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(1, -1, 1);
         }
-        Debug.Log(transform.rotation.eulerAngles.z.ToString());
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        barrelExitPoint.localRotation = Quaternion.identity;
     }
 }

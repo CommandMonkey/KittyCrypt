@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class RoomSpawner : MonoBehaviour
@@ -29,6 +26,8 @@ public class RoomSpawner : MonoBehaviour
         roomManager.OnSpawnRooms.AddListener(SpawnRoom);
         roomManager.OnNewSpawnWave.AddListener(NewSpawnWave);
 
+        roomManager.RegisterSpawner();
+
         spawnPos = transform.TransformPoint(Vector3.right);
 
         if (survivingInstances.TryGetValue(spawnPos, out RoomSpawner survivingInstance))
@@ -39,7 +38,7 @@ public class RoomSpawner : MonoBehaviour
         else
         {
             survivingInstances.Add(spawnPos, this);
-            roomManager.RegisterRoom();
+            roomManager.RegisterSpawner();
         }   
 
     }
@@ -81,7 +80,6 @@ public class RoomSpawner : MonoBehaviour
     void SpawnRoomSpawners()
     {
 
-
         // Spawn children spawners
         for (int j = 0; j < openingDirections.Count; j++)
         {
@@ -91,12 +89,10 @@ public class RoomSpawner : MonoBehaviour
 
             Vector3 _spawnerPosition = DirectionToVector(openingDirections[j]) * roomManager.roomGridSizeInUnits;
                 
-            int _extraDirections = UnityEngine.Random.Range(1, 3);
+            int _extraDirections = UnityEngine.Random.Range(1, 2);
             // add random directions
-            Debug.Log(_extraDirections);
             for (int i = 0; i < _extraDirections;)
             {
-                Debug.Log("yes");
                 Direction _dir = (Direction)UnityEngine.Random.Range(0, 3);
                 if (!_instanceDirections.Contains(_dir))
                 {
@@ -106,7 +102,7 @@ public class RoomSpawner : MonoBehaviour
 
             }
 
-            Instantiate(roomManager.RoomSpawnerPrefab, _spawnerPosition + parentTransform.position, Quaternion.identity, transform)
+            Instantiate(roomManager.RoomSpawnerPrefab, _spawnerPosition, Quaternion.identity, transform)
             .GetComponent<RoomSpawner>().openingDirections = _instanceDirections;
         }
     }
