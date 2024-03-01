@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3284044740975574064}
   - component: {fileID: 5535915679937639577}
+  - component: {fileID: 284683155832742126}
   - component: {fileID: 2583925021004024128}
   m_Layer: 7
   m_Name: PlayerInventory
@@ -274,6 +275,36 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &284683155832742126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5398213958659527685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: d1408bbba88a7574bada20fcb7127903, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!114 &2583925021004024128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,8 +317,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d695e905f9c5e4394405da9eb5727a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponAnchor: {fileID: 0}
-  weaponInventorySize: 2
+  weaponAnchor: {fileID: 9164578391081965062}
+  weaponInventory:
+  - {fileID: 0}
+  - {fileID: 0}
+  pickupPromptText: {fileID: 0}
+  pickupPrefab: {fileID: 5068044822145740819, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
 --- !u!1 &6801526581952323716
 GameObject:
   m_ObjectHideFlags: 0

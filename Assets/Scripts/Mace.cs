@@ -17,12 +17,12 @@ public class Mace : MonoBehaviour
     private void Start()
     {
         enemyT = FindObjectOfType<enemy_Test>();
-        Animation = FindObjectOfType<AnimationEvent>();
+        Animation = GetComponent<AnimationEvent>();
     }
 
     void OnFire()
     {
-             if (AttackBlock)
+            if (AttackBlock)
             {
                 return;
             }
@@ -57,6 +57,14 @@ public class Mace : MonoBehaviour
            }
 
         }
+    }
+
+
+    private void OnEnable()
+    {
+        transform.localPosition = new Vector3(0, 0, 0);
+        AttackBlock = false;
+        Debug.Log(transform.localPosition);
     }
 }
 
