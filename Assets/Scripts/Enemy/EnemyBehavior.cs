@@ -55,7 +55,11 @@ public class EnemyBehavior : MonoBehaviour
 
     void TakeDamage(int damage)
     {
-
+        HP -= damage;
+        if (HP < 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void HitPlayer()
@@ -126,4 +130,5 @@ public class EnemyBehavior : MonoBehaviour
         //Move myself
         rigidBody2D.velocity = direction * speed;
     }
+
 }
