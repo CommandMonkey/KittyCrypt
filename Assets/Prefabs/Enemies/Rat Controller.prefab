@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5448624960009787811}
   - component: {fileID: 5110593887869287197}
   - component: {fileID: 9059753733606019280}
-  - component: {fileID: 108881033111630407}
+  - component: {fileID: 3763955644099479781}
   m_Layer: 10
   m_Name: Rat Controller
   m_TagString: Enemy
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &108881033111630407
+--- !u!114 &3763955644099479781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,13 +158,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8634053150640929787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1964af1d8c2ff4d9e596180e49b857, type: 3}
+  m_Script: {fileID: 11500000, guid: df55567b8d61b5e419417ba0e24c9de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 6
   distanceToTarget: 5
   meleeRange: 5
-  HP: 1
+  HP: 30
   obsticleLayer:
     serializedVersion: 2
     m_Bits: 64

@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.transform.tag == "Enemy")
         {
-            ÄckelBehavior enemyScript = other.gameObject.GetComponent<ÄckelBehavior>();
+            RushingEnemyBehavior enemyScript = other.gameObject.GetComponent<RushingEnemyBehavior>();
 
             enemyScript.TakeDamage(damagePerBullet);
         }

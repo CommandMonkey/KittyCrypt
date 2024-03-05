@@ -121,7 +121,7 @@ public class GunFire : MonoBehaviour
 
                 if (bulletHit.collider.gameObject.transform.tag == "Enemy")
                 {
-                    ÄckelBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<ÄckelBehavior>();
+                    RushingEnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<RushingEnemyBehavior>();
 
                     enemyScript.TakeDamage(damagePerBullet);
                 }
