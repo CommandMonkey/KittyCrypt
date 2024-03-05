@@ -241,7 +241,7 @@ MonoBehaviour:
   weaponType: 1
   fireRate: 0.1
   reloadTime: 1
-  damagePerBullet: 1
+  damagePerBullet: 3
   bulletsBeforeReload: 10
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 0.75
