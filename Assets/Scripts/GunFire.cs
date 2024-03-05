@@ -12,7 +12,7 @@ public class GunFire : MonoBehaviour
         RaycastFire
     }
 
-    //Configurable parameters
+    //Configurable parameters damage
     [Header("General Options")]
     [SerializeField] WeaponType weaponType;
     [SerializeField] float fireRate = 0.5f;

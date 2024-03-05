@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RatBehavior : MonoBehaviour
 {
+    // is un used 
 
     //variables
     [SerializeField, Range(1, 10)] private float speed = 5f;
