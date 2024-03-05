@@ -15,6 +15,7 @@ public class GunFire : MonoBehaviour
     //Configurable parameters
     [Header("General Options")]
     [SerializeField] WeaponType weaponType;
+    [SerializeField] AudioClip fireAudio;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
     [SerializeField] float damagePerBullet = 1f;
@@ -46,12 +47,14 @@ public class GunFire : MonoBehaviour
     PlayerInput playerInput;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
+    AudioSource gunSource;
 
     private void Start()
     {
         reloadTimer = reloadTime;
         fireRateCooldownTimer = fireRate;
         playerInput = GetComponent<PlayerInput>();
+        gunSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -73,6 +76,7 @@ public class GunFire : MonoBehaviour
         {
             randomBulletSpread = GetBulletSpread();
             Instantiate(projectile, transform.position, randomBulletSpread);
+            PlayFireAudio();
             fireRateCoolingDown = true;
             bulletsFired++;
         }
@@ -90,7 +94,7 @@ public class GunFire : MonoBehaviour
                 Instantiate(projectile, transform.position, randomBulletSpread);
                 bulletsFired++;
             }
-
+            PlayFireAudio();
         }
     }
 
@@ -106,6 +110,7 @@ public class GunFire : MonoBehaviour
             if (bulletHit)
             {
                 bulletsFired++;
+                PlayFireAudio();
                 fireRateCoolingDown = true;
 
                 var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
@@ -122,6 +127,11 @@ public class GunFire : MonoBehaviour
                 }
             }
         }
+    }
+
+    void PlayFireAudio()
+    {
+        gunSource.PlayOneShot(fireAudio);
     }
 
     void CheckBulletsFired()
