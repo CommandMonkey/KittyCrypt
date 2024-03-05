@@ -746,6 +746,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: rat enemy
       objectReference: {fileID: 0}
+    - target: {fileID: -8172261211446949467, guid: b5419db791abd874b9d8a9e20e21155e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.3086886
+      objectReference: {fileID: 0}
     - target: {fileID: -7876463653040851790, guid: b5419db791abd874b9d8a9e20e21155e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.0132558
