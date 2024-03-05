@@ -86,7 +86,6 @@ public class GunFire : MonoBehaviour
         {
             for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
             {
-                Debug.Log(i);
                 randomBulletSpread = GetBulletSpread();
                 Instantiate(projectile, transform.position, randomBulletSpread);
                 bulletsFired++;
@@ -114,8 +113,6 @@ public class GunFire : MonoBehaviour
 
                 var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
                 Destroy(line, destroyTrailAfter);
-
-                Debug.Log(bulletHit.collider);
 
                 if (bulletHit.collider.gameObject.transform.tag == "Enemy")
                 {
