@@ -1,6 +1,4 @@
-using System.Net.Security;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GunRotation : MonoBehaviour
 {

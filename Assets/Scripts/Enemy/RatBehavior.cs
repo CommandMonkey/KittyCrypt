@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public class RatBehavior : MonoBehaviour
 {
-
-    //The targets position  
-    
+    // is un used 
 
     //variables
     [SerializeField, Range(1, 10)] private float speed = 5f;
@@ -32,14 +30,12 @@ public class EnemyBehavior : MonoBehaviour
     GameManager gameManager;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
-    
 
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
-
 
         previousPosition = transform.position;
         target = gameManager.player;
@@ -93,7 +89,7 @@ public class EnemyBehavior : MonoBehaviour
         float distance = Vector3.Distance(transform.position, target.position);
 
         if (distance <= meleeRange)
-        { inMeleeRange = true;  }
+        { inMeleeRange = true; }
         else
         { inMeleeRange = false; }
     }
@@ -108,12 +104,10 @@ public class EnemyBehavior : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("Cant see player");
             lineOfSight = false;
         }
         else
         {
-            Debug.Log("Can see player");
             lineOfSight = true;
             playerPosition = target.position;
         }
@@ -121,7 +115,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void HowFarFromTarget()
     {
-        float distance = Vector3.Distance(transform.position, target.position);
+        float distance = Vector3.Distance(transform.position, target.position );
 
         if (distance <= distanceToTarget)
         { shootingDistance = true; }
@@ -141,5 +135,9 @@ public class EnemyBehavior : MonoBehaviour
         //Move myself
         rigidBody2D.velocity = direction * speed;
     }
+
+
+
+
 
 }
