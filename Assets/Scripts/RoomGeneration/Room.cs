@@ -20,8 +20,7 @@ public enum RoomType
 
 public class Room : MonoBehaviour
 {
-    public List<Direction> roomOpeningDirections;
-
+    public List<Entrance> entrances;
 
     // Cached references
     RoomManager roomManager;
@@ -34,7 +33,11 @@ public class Room : MonoBehaviour
 
     }
 
+    void SpawnConnectingRooms()
+    {
+        foreach(Entrance entrence in entrances)
+        {
 
-
-
+        }
+    }
 }

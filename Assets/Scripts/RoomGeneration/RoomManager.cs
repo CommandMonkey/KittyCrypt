@@ -12,81 +12,55 @@ public class RoomManager : MonoBehaviour
     public float roomGridSizeInUnits = 16;
     public float roomSpawningDelay = 1;
     [SerializeField] int maxRooms = 16;
-    [SerializeField] List<Direction> startRoomDirections;
+    
     
 
     [Header("Room Spawning Prefabs")]
-    public GameObject RoomSpawnerPrefab;
-    [SerializeField] List<GameObject> BottomOpeningrooms;
-    [SerializeField] List<GameObject> LeftOpeningrooms;
-    [SerializeField] List<GameObject> TopOpeningrooms;
-    [SerializeField] List<GameObject> RightOpeningrooms;
+    [SerializeField] GameObject startRoom;
+    [SerializeField] List<GameObject> rooms;
+    List<GameObject> bottomOpeningrooms;
+    List<GameObject> leftOpeningrooms;
+    List<GameObject> topOpeningrooms;
+    List<GameObject> rightOpeningrooms;
 
-    [NonSerialized] public UnityEvent OnSpawnRooms;
-    [NonSerialized] public UnityEvent OnNewSpawnWave;
-    [NonSerialized] public int amountOfSpawners;
+    [NonSerialized] public int amountOfRooms;
 
     int spawnedRooms = 1;
     GameObject[,] roomsArray;
 
     void Start()
     {
-        OnSpawnRooms = new UnityEvent();
-        OnNewSpawnWave = new UnityEvent();
-        StartRoomGeneration();
+        SortRoomsByEntranceDir();
+
+        //Spawn first room (it will spawn more rooms)
+        Instantiate(startRoom);
     }
 
-
-    void StartRoomGeneration()
+    private void SortRoomsByEntranceDir()
     {
-        RoomSpawner roomSpawner = Instantiate(RoomSpawnerPrefab, Vector3.zero, Quaternion.identity, grid)
-            .GetComponent<RoomSpawner>();
-
-        roomSpawner.roomType = RoomType.Start;
-        roomSpawner.openingDirections = startRoomDirections;
-
-        StartCoroutine(InvokeNewSpawnerWaveRoutine());
-    }
-
-    IEnumerator InvokeNewSpawnerWaveRoutine()
-    {
-        for(int i = 0; i < 4; i++) // DEBUG
+        foreach (GameObject room in rooms)
         {
-            yield return new WaitForSeconds(roomSpawningDelay);
-            OnNewSpawnWave.Invoke();
+            List<Entrance> roomEntrances = room.GetComponent<Room>().entrances;
+            foreach(Entrance entrance in roomEntrances)
+            {
+                GetListFromDirecton(entrance.direction).Add(room);
+            }
         }
-        yield return new WaitForSeconds(roomSpawningDelay);
-        OnSpawnRooms.Invoke();
     }
 
-
-    GameObject _room;
-    int _rand;
+    List<GameObject> _roomList;
     /// <summary>
     /// returns a random room based on the opening direction needed
     /// </summary>
-    public GameObject GetRandomRoom(List<Direction> directions)
+    public GameObject GetRandomRoom(Direction direction)
     {
-        List<GameObject> _validRooms = GetListFromDirecton(directions[0]).ToList();
-        for (int i = 1; i < directions.Count; i++) 
-        {
-            for(int j = 0; j > _validRooms.Count; j++)
-            {
-                if (RoomHasDirection(_validRooms[i], directions[i]))
-                    _validRooms.RemoveAt(i);
-            }
-        }
-
-        _room = _validRooms[UnityEngine.Random.Range(0, _validRooms.Count - 1)];
-        if (_room.GetComponent<Room>().roomOpeningDirections.Count < maxRooms - spawnedRooms)
-            return _room;
-        else 
-            return GetRandomRoom(directions);
+        _roomList = GetListFromDirecton(direction);
+        return _roomList[UnityEngine.Random.Range(0, _roomList.Count)];
     }
 
     private bool RoomHasDirection(GameObject room, Direction direction)
     {
-        return room.GetComponent<Room>().roomOpeningDirections.Contains(direction);
+        
     }
 
 
@@ -94,17 +68,22 @@ public class RoomManager : MonoBehaviour
     {
         switch (direction)
         {
-            case (Direction.Bottom):   return BottomOpeningrooms;
-            case (Direction.Left):     return LeftOpeningrooms;
-            case (Direction.Top):      return TopOpeningrooms;
-            case (Direction.Right):    return RightOpeningrooms;
+            case (Direction.Bottom):   return bottomOpeningrooms;
+            case (Direction.Left):     return leftOpeningrooms;
+            case (Direction.Top):      return topOpeningrooms;
+            case (Direction.Right):    return rightOpeningrooms;
         }
         return null;
     }
 
-    public void RegisterSpawner()
+    public static Direction InvertDirection(Direction _originalDirection)
     {
-        amountOfSpawners++;
-        Debug.Log(amountOfSpawners);
+        int enumLength = Enum.GetValues(typeof(Direction)).Length;
+        int halfEnumLength = enumLength / 2;
+
+        int originalValue = (int)_originalDirection;
+        int invertedValue = (originalValue + halfEnumLength) % enumLength;
+
+        return (Direction)invertedValue;
     }
 }
