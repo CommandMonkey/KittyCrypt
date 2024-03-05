@@ -56,7 +56,7 @@ public class PlayerInventory : MonoBehaviour
 
         if(weapon.transform.IsChildOf(weaponAnchor))
         {
-            Debug.Log("Found pickup Content in hierarchy, Rebasing");
+            //Debug.Log("Found pickup Content in hierarchy, Rebasing");
 
             weapon.transform.SetParent(weaponAnchor);
             weapon.SetActive(true);
@@ -64,7 +64,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            Debug.Log("Pickup Content not in hierarchy, Spawning new");
+            //Debug.Log("Pickup Content not in hierarchy, Spawning new");
             weaponInventory[currentHotbarPos] = Instantiate(weapon, weaponAnchor);
         }
 
@@ -187,7 +187,7 @@ public class PlayerInventory : MonoBehaviour
         pickup.name = content.name;
 
         // make weapon child of pickup
-        content.transform.SetParent(pickup.transform);
+        //content.transform.SetParent(pickup.transform);
 
         Pickup pickupScript = pickup.GetComponent<Pickup>();
         pickupScript.content = content;

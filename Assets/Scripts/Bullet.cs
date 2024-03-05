@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
 
     //Private variables
     float vanishTimer;
+    float damagePerBullet;
 
     private void Start()
     {
@@ -19,6 +20,7 @@ public class Bullet : MonoBehaviour
         gun = FindObjectOfType<GunFire>();
 
         vanishTimer = gun.GetVanishAfter();
+        damagePerBullet = gun.GetDamagePerBullet();
     }
 
     private void Update()
@@ -28,11 +30,18 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        myRigidbody.velocity = - transform.right * - gun.GetProjectileSpeed();
+        myRigidbody.velocity = transform.right * gun.GetProjectileSpeed();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.transform.tag == "Enemy")
+        {
+            RushingEnemyBehavior enemyScript = other.gameObject.GetComponent<RushingEnemyBehavior>();
+
+            enemyScript.TakeDamage(damagePerBullet);
+        }
+
         var hitEffect = Instantiate(gun.GetHitEffect(), transform.position, Quaternion.identity);
         Destroy(hitEffect, gun.GetDestroyHitEffectAfter());
         Destroy(gameObject);

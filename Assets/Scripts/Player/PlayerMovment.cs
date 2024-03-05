@@ -19,6 +19,7 @@ public class PlayerMovment : MonoBehaviour
     private Vector2 movedir;
     private Vector2 rolldir;
     private float rollSpeed;
+    float rollSpeedDropMultiplier = 8f;
     private State state;
 
     Vector2 moveInput;
@@ -33,11 +34,11 @@ public class PlayerMovment : MonoBehaviour
     {
         if (state == State.rolling) { 
             // dash/roll range
-            float rollSpeedDropMunlitplier = 8f;
-            rollSpeed -= rollSpeed * rollSpeedDropMunlitplier * Time.deltaTime;
+            
+            rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
 
 
-            if (rollSpeed < rollSpeedMinimum)
+            if (rollSpeed < Move_speed)
             {
                 state = State.normal;
             }
@@ -55,7 +56,7 @@ public class PlayerMovment : MonoBehaviour
     void OnDash()
     {
         rolldir = movedir;
-        
+
         rollSpeed = 40f;
         state = State.rolling;
     }

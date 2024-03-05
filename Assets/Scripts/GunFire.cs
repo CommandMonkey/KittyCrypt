@@ -17,9 +17,11 @@ public class GunFire : MonoBehaviour
     [SerializeField] WeaponType weaponType;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
+    [SerializeField] float damagePerBullet = 1f;
     [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] int bulletsBeforeReload = 5;
     [SerializeField] GameObject hitEffect;
     [SerializeField] float destroyHitEffectAfter = 1.5f;
+    [SerializeField] LayerMask ignoreLayerMask;
 
     [Header("Projectile Options")]
     [SerializeField] GameObject projectile;
@@ -30,7 +32,6 @@ public class GunFire : MonoBehaviour
     [Header("Raycast Options")]
     [SerializeField] GameObject bulletTrail;
     [SerializeField] float destroyTrailAfter = .1f;
-    [SerializeField] LayerMask ignoreLayerMask;
 
 
     //Cached references
@@ -42,7 +43,6 @@ public class GunFire : MonoBehaviour
     bool fireRateCoolingDown = false;
     bool reloading = false;
 
-    Transform pivotPointTransform;
     PlayerInput playerInput;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
@@ -57,7 +57,6 @@ public class GunFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pivotPointTransform = GetComponentInParent<Transform>();
         ProjectileFire();
         BurstFire();
         RaycastFire();
@@ -87,7 +86,6 @@ public class GunFire : MonoBehaviour
         {
             for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
             {
-                Debug.Log(i);
                 randomBulletSpread = GetBulletSpread();
                 Instantiate(projectile, transform.position, randomBulletSpread);
                 bulletsFired++;
@@ -116,12 +114,12 @@ public class GunFire : MonoBehaviour
                 var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
                 Destroy(line, destroyTrailAfter);
 
-                Debug.Log(bulletHit.collider);
-            }
-            else
-            {
-                var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
-                Destroy(smoke, destroyHitEffectAfter);
+                if (bulletHit.collider.gameObject.transform.tag == "Enemy")
+                {
+                    RushingEnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<RushingEnemyBehavior>();
+
+                    enemyScript.TakeDamage(damagePerBullet);
+                }
             }
         }
     }
@@ -170,6 +168,11 @@ public class GunFire : MonoBehaviour
         return projectileVanishAfter;
     }
 
+    public float GetDamagePerBullet()
+    {
+        return damagePerBullet;
+    }
+
     public Vector3 GetBulletHitPoint()
     {
         return bulletHit.point;
@@ -178,6 +181,11 @@ public class GunFire : MonoBehaviour
     public GameObject GetHitEffect()
     {
         return hitEffect;
+    }
+
+    public LayerMask GetIgnoredLayers()
+    {
+        return ignoreLayerMask;
     }
 
     public float GetDestroyHitEffectAfter()

@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public class RushingEnemyBehavior : MonoBehaviour
 {
-
-    //The targets position  
-    public Transform target;
 
     //variables
     [SerializeField, Range(1, 10)] private float speed = 5f;
     [SerializeField, Range(1, 10)] private float distanceToTarget = 5f;
     [SerializeField, Range(1, 10)] private float meleeRange = 5f;
     [SerializeField, Range(1, 1000)] private float HP = 1f;
+
+    private Transform target;
 
     //varibles
     private bool lineOfSight = true;
@@ -27,19 +26,24 @@ public class EnemyBehavior : MonoBehaviour
     public LayerMask obsticleLayer;
 
     //declerations
+    GameManager gameManager;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
+    
 
     void Start()
     {
-        previousPosition = transform.position;
+        gameManager = FindObjectOfType<GameManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
+
+        previousPosition = transform.position;
+        target = gameManager.player;
     }
 
     void Update()
     {
-        if (shootingDistance == false )
+        if (shootingDistance == false)
         { MoveTowardsTarget(); }
 
         if (inMeleeRange == true)
@@ -53,7 +57,7 @@ public class EnemyBehavior : MonoBehaviour
         ShootMeleeRay();
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         HP -= damage;
         if (HP < 0)
@@ -121,6 +125,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void MoveTowardsTarget()
     {
+        if (playerPosition == Vector3.zero) return;
         // Calculate the direction from the current position to the target position
         Vector3 direction = playerPosition - base.transform.position;
 
