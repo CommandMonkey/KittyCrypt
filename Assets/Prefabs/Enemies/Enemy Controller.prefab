@@ -126,7 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df55567b8d61b5e419417ba0e24c9de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   speed: 1.82
   distanceToTarget: 1
   meleeRange: 5
