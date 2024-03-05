@@ -502,6 +502,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7420835062766780503, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      propertyPath: HP
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1022,8 +1026,8 @@ Transform:
   m_GameObject: {fileID: 1953066659}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: 0.7143918, w: 0.6997459}
-  m_LocalPosition: {x: -0.39238098, y: -9.425372, z: 0}
-  m_LocalScale: {x: 7.812911, y: 0.12766683, z: 1}
+  m_LocalPosition: {x: -0.59, y: -9.16, z: 0}
+  m_LocalScale: {x: 7.241921, y: 0.12766683, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 670679342}

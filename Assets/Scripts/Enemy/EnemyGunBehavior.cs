@@ -6,12 +6,12 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyGunBehavior : MonoBehaviour
 {
     //Declarations
-    ÄckelBehavior enemyBehavior;
+    RushingEnemyBehavior enemyBehavior;
     SpriteRenderer spriteRenderer;
 
     void Start()
     {
-        enemyBehavior = GetComponentInParent<ÄckelBehavior>();
+        enemyBehavior = GetComponentInParent<RushingEnemyBehavior>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

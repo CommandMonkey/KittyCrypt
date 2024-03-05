@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ÄckelBehavior : MonoBehaviour
+public class RushingEnemyBehavior : MonoBehaviour
 {
 
     //variables
@@ -104,12 +104,10 @@ public class ÄckelBehavior : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("Cant see player");
             lineOfSight = false;
         }
         else
         {
-            Debug.Log("Can see player");
             lineOfSight = true;
             playerPosition = target.position;
         }
