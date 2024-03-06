@@ -18,10 +18,13 @@ public class RoomManager : MonoBehaviour
     [Header("Room Spawning Prefabs")]
     [SerializeField] GameObject startRoom;
     [SerializeField] List<GameObject> rooms;
-    List<GameObject> bottomOpeningrooms;
-    List<GameObject> leftOpeningrooms;
-    List<GameObject> topOpeningrooms;
-    List<GameObject> rightOpeningrooms;
+    public List<DirectionGameObjectPair> doorCovers;
+
+
+    List<GameObject> bottomOpeningrooms = new List<GameObject>(1);
+    List<GameObject> leftOpeningrooms = new List<GameObject>(1);
+    List<GameObject> topOpeningrooms = new List<GameObject>(1);
+    List<GameObject> rightOpeningrooms = new List<GameObject>(1);
 
     [NonSerialized] public int amountOfRooms;
 
@@ -33,19 +36,24 @@ public class RoomManager : MonoBehaviour
         SortRoomsByEntranceDir();
 
         //Spawn first room (it will spawn more rooms)
-        Instantiate(startRoom);
+        Instantiate(startRoom, grid);
     }
 
     private void SortRoomsByEntranceDir()
     {
+        Debug.Log("----------");
         foreach (GameObject room in rooms)
         {
+            Debug.Log("Room: " + room.name);
+            Debug.Log("Entrance count: " + room.GetComponent<Room>().entrances.Count);
             List<Entrance> roomEntrances = room.GetComponent<Room>().entrances;
             foreach(Entrance entrance in roomEntrances)
             {
-                GetListFromDirecton(entrance.direction).Add(room);
+                Debug.Log("Direction: "+entrance.direction);
+                GetListFromDirecton(entrance.direction)?.Add(room);
             }
         }
+        Debug.Log("----------");
     }
 
     List<GameObject> _roomList;
@@ -55,14 +63,53 @@ public class RoomManager : MonoBehaviour
     public GameObject GetRandomRoom(Direction direction)
     {
         _roomList = GetListFromDirecton(direction);
-        return _roomList[UnityEngine.Random.Range(0, _roomList.Count)];
-    }
-
-    private bool RoomHasDirection(GameObject room, Direction direction)
-    {
+        if (_roomList.Count == 0)
+        {
+            Debug.Log("No Direction list");
+            return null;
+        }
         
+
+        int _rand = UnityEngine.Random.Range(0, _roomList.Count);
+        return _roomList[_rand];
     }
 
+    GameObject _room;
+    public void SpawnRoomConectedToEntrance(Entrance entrance)
+    {
+        Direction _newRoomDir = InvertDirection(entrance.direction);
+        _room = GetRandomRoom(_newRoomDir);
+        if (_room == null) // null check
+        {
+            Debug.Log("no room D:");
+            return;
+        }
+
+        Vector3 _entranceToZero = Vector3.zero - GetEntranceOfDir(_room.GetComponent<Room>(), _newRoomDir).transform.localPosition;
+
+        GameObject newRoomInstance = Instantiate(_room, entrance.transform.position + _entranceToZero, Quaternion.identity, grid);
+
+        // Remove entrance from the spawned room instance
+        Entrance _roomMeetingEntrance = GetEntranceOfDir(newRoomInstance.GetComponent<Room>(), _newRoomDir);
+        if (_roomMeetingEntrance != null)
+        {
+            newRoomInstance.GetComponent<Room>().entrances.Remove(_roomMeetingEntrance);
+        }
+    }
+
+    public void SpawnDoorCover(Direction _dir, Vector3 pos)
+    {
+
+    }
+
+    Entrance GetEntranceOfDir(Room room, Direction dir)
+    {
+        foreach(Entrance entr in room.entrances)
+        {
+            if (entr.direction == dir) return entr;
+        }
+        return null;
+    }
 
     List<GameObject> GetListFromDirecton(Direction direction) 
     {
@@ -86,4 +133,12 @@ public class RoomManager : MonoBehaviour
 
         return (Direction)invertedValue;
     }
+}
+
+
+[System.Serializable]
+public class DirectionGameObjectPair
+{
+    public Direction direction;
+    public GameObject gameObject;
 }

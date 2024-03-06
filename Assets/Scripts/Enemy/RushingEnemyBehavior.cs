@@ -38,11 +38,12 @@ public class RushingEnemyBehavior : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
-        playerMovment = GetComponent<PlayerMovment>();
 
         previousPosition = transform.position;
         target = gameManager.player;
-        
+
+        playerMovment = target.GetComponent<PlayerMovment>();
+
     }
 
     void Update()
