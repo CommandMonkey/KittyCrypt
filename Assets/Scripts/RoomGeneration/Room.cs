@@ -26,16 +26,17 @@ public class Room : MonoBehaviour
 
     // Cached references
     RoomManager roomManager;
-    BoxCollider2D compositeCollider;
+    BoxCollider2D boxCollider;
     
 
     void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
-        compositeCollider = GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
         if (IsOverlapping())
         {
+            Debug.Log("ROOM ION THA W");
             Die();
         }
         newlySpawned = false;
@@ -47,15 +48,19 @@ public class Room : MonoBehaviour
     {
 
         Collider2D[] results = new Collider2D[10]; 
-        int numColliders = compositeCollider.OverlapCollider(new ContactFilter2D(), results);
+        int numColliders = boxCollider.OverlapCollider(new ContactFilter2D(), results);
         Debug.Log(numColliders);
 
         // Check if any colliders are detected
-        if (numColliders > 1)
+        if (numColliders > 0)
         {
             foreach (Collider2D collider in results)
             {
-                if (collider != null && !collider.gameObject.GetComponent<Room>().newlySpawned)
+                // WAS DOING, !room.newlySpawned throws a Null ref error. IDK WHYYYYYYYYYYY!!
+
+                GameObject obj = collider.gameObject;
+                Room room = obj.GetComponent<Room>();
+                if (collider.gameObject != null && !room.newlySpawned) 
                 {
                     return true;
                 }

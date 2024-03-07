@@ -12,14 +12,11 @@ public class RoomManager : MonoBehaviour
     public float roomGridSizeInUnits = 16;
     public float roomSpawningDelay = 1;
     [SerializeField] int maxRooms = 16;
-    
-    
+
+
 
     [Header("Room Spawning Prefabs")]
-    [SerializeField] GameObject startRoom;
-    [SerializeField] List<GameObject> rooms;
-    public List<DirectionGameObjectPair> doorCovers;
-
+    public LevelDataObject levelData;
 
     List<GameObject> bottomOpeningrooms = new List<GameObject>(1);
     List<GameObject> leftOpeningrooms = new List<GameObject>(1);
@@ -36,24 +33,19 @@ public class RoomManager : MonoBehaviour
         SortRoomsByEntranceDir();
 
         //Spawn first room (it will spawn more rooms)
-        Instantiate(startRoom, grid);
+        Instantiate(levelData.startRoom, grid);
     }
 
     private void SortRoomsByEntranceDir()
     {
-        Debug.Log("----------");
-        foreach (GameObject room in rooms)
+        foreach (GameObject room in levelData.rooms)
         {
-            Debug.Log("Room: " + room.name);
-            Debug.Log("Entrance count: " + room.GetComponent<Room>().entrances.Count);
             List<Entrance> roomEntrances = room.GetComponent<Room>().entrances;
-            foreach(Entrance entrance in roomEntrances)
+            foreach (Entrance entrance in roomEntrances)
             {
-                Debug.Log("Direction: "+entrance.direction);
                 GetListFromDirecton(entrance.direction)?.Add(room);
             }
         }
-        Debug.Log("----------");
     }
 
     List<GameObject> _roomList;
@@ -67,7 +59,7 @@ public class RoomManager : MonoBehaviour
         {
             return null;
         }
-        
+
 
         int _rand = UnityEngine.Random.Range(0, _roomList.Count);
         return _roomList[_rand];
@@ -102,21 +94,21 @@ public class RoomManager : MonoBehaviour
 
     Entrance GetEntranceOfDir(Room room, Direction dir)
     {
-        foreach(Entrance entr in room.entrances)
+        foreach (Entrance entr in room.entrances)
         {
             if (entr.direction == dir) return entr;
         }
         return null;
     }
 
-    List<GameObject> GetListFromDirecton(Direction direction) 
+    List<GameObject> GetListFromDirecton(Direction direction)
     {
         switch (direction)
         {
-            case (Direction.Bottom):   return bottomOpeningrooms;
-            case (Direction.Left):     return leftOpeningrooms;
-            case (Direction.Top):      return topOpeningrooms;
-            case (Direction.Right):    return rightOpeningrooms;
+            case (Direction.Bottom): return bottomOpeningrooms;
+            case (Direction.Left): return leftOpeningrooms;
+            case (Direction.Top): return topOpeningrooms;
+            case (Direction.Right): return rightOpeningrooms;
         }
         return null;
     }
@@ -131,12 +123,4 @@ public class RoomManager : MonoBehaviour
 
         return (Direction)invertedValue;
     }
-}
-
-
-[System.Serializable]
-public class DirectionGameObjectPair
-{
-    public Direction direction;
-    public GameObject gameObject;
 }
