@@ -22,20 +22,23 @@ public enum RoomType
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
+    public bool newlySpawned = true;
 
     // Cached references
     RoomManager roomManager;
-    Collider2D compositeCollider;
+    BoxCollider2D compositeCollider;
+    
 
     void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
-        compositeCollider = GetComponent<Collider2D>();
+        compositeCollider = GetComponent<BoxCollider2D>();
 
         if (IsOverlapping())
         {
             Die();
         }
+        newlySpawned = false;
 
         Invoke("SpawnConnectingRooms", 3);
     }
@@ -45,13 +48,14 @@ public class Room : MonoBehaviour
 
         Collider2D[] results = new Collider2D[10]; 
         int numColliders = compositeCollider.OverlapCollider(new ContactFilter2D(), results);
+        Debug.Log(numColliders);
 
         // Check if any colliders are detected
-        if (numColliders > 0)
+        if (numColliders > 1)
         {
             foreach (Collider2D collider in results)
             {
-                if (collider != null && collider.gameObject.CompareTag("Room"))
+                if (collider != null && !collider.gameObject.GetComponent<Room>().newlySpawned)
                 {
                     return true;
                 }

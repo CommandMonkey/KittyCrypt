@@ -65,7 +65,6 @@ public class RoomManager : MonoBehaviour
         _roomList = GetListFromDirecton(direction);
         if (_roomList.Count == 0)
         {
-            Debug.Log("No Direction list");
             return null;
         }
         
@@ -81,7 +80,6 @@ public class RoomManager : MonoBehaviour
         _room = GetRandomRoom(_newRoomDir);
         if (_room == null) // null check
         {
-            Debug.Log("no room D:");
             return;
         }
 

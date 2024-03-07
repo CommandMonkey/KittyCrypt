@@ -215,9 +215,10 @@ MonoBehaviour:
   roomGridSizeInUnits: 16
   roomSpawningDelay: 1
   maxRooms: 16
-  startRoom: {fileID: 3722623101364078196, guid: 3ba99f2d7a7ea334bbc2a0ca4faf9d1b, type: 3}
+  startRoom: {fileID: 3722623101364078196, guid: beafb67c20d1a84449c9e6a184935c32, type: 3}
   rooms:
-  - {fileID: 3722623101364078196, guid: beafb67c20d1a84449c9e6a184935c32, type: 3}
+  - {fileID: 3722623101364078196, guid: 23cc22af7ea42354db9e391adf72a292, type: 3}
+  doorCovers: []
 --- !u!1 &874234843
 GameObject:
   m_ObjectHideFlags: 0
