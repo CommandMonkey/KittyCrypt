@@ -16,6 +16,7 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float health = 100f;
+    [SerializeField] float rolldelay = 0.2f;
 
     private Rigidbody2D MyRigidbody;
     private Vector2 movedir;
@@ -23,6 +24,8 @@ public class PlayerMovment : MonoBehaviour
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
     private State state;
+    float rollResetTime;
+    bool isRollDelaying = false;
 
     Vector2 moveInput;
 
@@ -31,6 +34,11 @@ public class PlayerMovment : MonoBehaviour
     {
         state = State.normal;
         MyRigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        rollResetTime = rolldelay;
     }
 
     private void Update()
@@ -46,6 +54,7 @@ public class PlayerMovment : MonoBehaviour
                 state = State.normal;
             }
         }
+        RollDelay();
     }
 
 
@@ -56,14 +65,32 @@ public class PlayerMovment : MonoBehaviour
 
     void OnDash()
     {
+        if(isRollDelaying) { return; }
         rolldir = movedir;
 
-        rollSpeed = 40f;
+        rollSpeed = 50f;
         state = State.rolling;
+        isRollDelaying = true;
+    }
+
+    private void RollDelay()
+    {
+        if (!isRollDelaying) { return; }
+        rollResetTime -= Time.deltaTime;
+
+        if(rollResetTime <= 0 )
+        {
+            isRollDelaying = false;
+            rollResetTime = rolldelay;
+        }
     }
 
     public void TakeDamage(float damage)
     {
+        if (state == State.rolling)
+        {
+            return;
+        }
         health -= damage;
         if (health < 0)
         {
