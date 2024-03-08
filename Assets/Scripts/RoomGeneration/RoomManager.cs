@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,24 +7,21 @@ public class RoomManager : MonoBehaviour
 {
     [Header("Rooms")]
     public Transform grid;
-    public float roomGridSizeInUnits = 16;
     public float roomSpawningDelay = 1;
-    [SerializeField] int maxRooms = 16;
-
-
 
     [Header("Room Spawning Prefabs")]
     public LevelDataObject levelData;
 
-    List<GameObject> bottomOpeningrooms = new List<GameObject>(1);
-    List<GameObject> leftOpeningrooms = new List<GameObject>(1);
-    List<GameObject> topOpeningrooms = new List<GameObject>(1);
-    List<GameObject> rightOpeningrooms = new List<GameObject>(1);
+    // public fields
+    [NonSerialized] public UnityEvent OnSpawnRoomWave = new UnityEvent();
+    [NonSerialized] public List<Room> currentWaveRooms;
 
-    [NonSerialized] public int amountOfRooms;
+    // private fields
+    List<GameObject> bottomOpeningrooms = new List<GameObject>();
+    List<GameObject> leftOpeningrooms = new List<GameObject>();
+    List<GameObject> topOpeningrooms = new List<GameObject>();
+    List<GameObject> rightOpeningrooms = new List<GameObject>();
 
-    int spawnedRooms = 1;
-    GameObject[,] roomsArray;
 
     void Start()
     {
@@ -34,7 +29,16 @@ public class RoomManager : MonoBehaviour
 
         //Spawn first room (it will spawn more rooms)
         Instantiate(levelData.startRoom, grid);
+
+        InvokeRepeating("SpawnRoomWave", 1f, roomSpawningDelay);
     }
+
+    void SpawnRoomWave() 
+    {
+        currentWaveRooms = new List<Room>();
+        OnSpawnRoomWave.Invoke(); 
+    }
+
 
     private void SortRoomsByEntranceDir()
     {
@@ -47,6 +51,7 @@ public class RoomManager : MonoBehaviour
             }
         }
     }
+
 
     List<GameObject> _roomList;
     /// <summary>
@@ -65,6 +70,7 @@ public class RoomManager : MonoBehaviour
         return _roomList[_rand];
     }
 
+
     GameObject _room;
     public void SpawnRoomConectedToEntrance(Entrance entrance)
     {
@@ -77,20 +83,25 @@ public class RoomManager : MonoBehaviour
 
         Vector3 _entranceToZero = Vector3.zero - GetEntranceOfDir(_room.GetComponent<Room>(), _newRoomDir).transform.localPosition;
 
-        GameObject newRoomInstance = Instantiate(_room, entrance.transform.position + _entranceToZero, Quaternion.identity, grid);
+        Room newRoomInstance = Instantiate(_room, entrance.transform.position + _entranceToZero, Quaternion.identity, grid)
+            .GetComponent<Room>();
 
         // Remove entrance from the spawned room instance
-        Entrance _roomMeetingEntrance = GetEntranceOfDir(newRoomInstance.GetComponent<Room>(), _newRoomDir);
+        Entrance _roomMeetingEntrance = GetEntranceOfDir(newRoomInstance, _newRoomDir);
         if (_roomMeetingEntrance != null)
         {
-            newRoomInstance.GetComponent<Room>().entrances.Remove(_roomMeetingEntrance);
+            newRoomInstance.previousRoomEntrance = _roomMeetingEntrance;
+            newRoomInstance.entrances.Remove(_roomMeetingEntrance);
         }
     }
 
-    public void SpawnDoorCover(Direction _dir, Vector3 pos)
-    {
 
+    public void SpawnDoorCover(Direction _dir, Vector3 _pos)
+    {
+        GameObject roomBlocker = levelData.GetEntranceBlockerOfDir(_dir);
+        Instantiate(roomBlocker, _pos, Quaternion.identity, grid);
     }
+
 
     Entrance GetEntranceOfDir(Room room, Direction dir)
     {
@@ -100,6 +111,7 @@ public class RoomManager : MonoBehaviour
         }
         return null;
     }
+
 
     List<GameObject> GetListFromDirecton(Direction direction)
     {
@@ -112,6 +124,7 @@ public class RoomManager : MonoBehaviour
         }
         return null;
     }
+
 
     public static Direction InvertDirection(Direction _originalDirection)
     {

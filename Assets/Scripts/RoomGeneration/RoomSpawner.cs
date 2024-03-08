@@ -87,7 +87,7 @@ public class RoomSpawner : MonoBehaviour
             List<Direction> _instanceDirections = new List<Direction>();
             _instanceDirections.Add(InvertDirection(openingDirections[j]));
 
-            Vector3 _spawnerPosition = DirectionToVector(openingDirections[j]) * roomManager.roomGridSizeInUnits;
+
                 
             int _extraDirections = UnityEngine.Random.Range(1, 2);
             // add random directions

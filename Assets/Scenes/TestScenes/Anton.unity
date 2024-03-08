@@ -212,9 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 805043321}
-  roomGridSizeInUnits: 16
   roomSpawningDelay: 1
-  maxRooms: 16
   levelData: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
 --- !u!1 &874234843
 GameObject:
