@@ -12,12 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453845e9d0284934091243b8c5da5fb2, type: 3}
   m_Name: LevelData_Test
   m_EditorClassIdentifier: 
-  startRoom: {fileID: 3722623101364078196, guid: 3ba99f2d7a7ea334bbc2a0ca4faf9d1b, type: 3}
+  startRoom: {fileID: 3722623101364078196, guid: beafb67c20d1a84449c9e6a184935c32, type: 3}
   rooms:
   - {fileID: 3722623101364078196, guid: 23cc22af7ea42354db9e391adf72a292, type: 3}
-  - {fileID: 3722623101364078196, guid: 3ba99f2d7a7ea334bbc2a0ca4faf9d1b, type: 3}
+  - {fileID: 3722623101364078196, guid: beafb67c20d1a84449c9e6a184935c32, type: 3}
   - {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}
   - {fileID: 3722623101364078196, guid: 123e5076b449c2c469b32ef3d69bb3b4, type: 3}
   - {fileID: 3722623101364078196, guid: 7ccd626a1b75b354a9193e2a8756eaf7, type: 3}
   endRoom: {fileID: 0}
-  entranceBlockers: []
+  entranceBlockers:
+  - direction: 0
+    gameObject: {fileID: 3722623101364078196, guid: 7c1d9730c6c59a94f89eb6b072f5a935, type: 3}
+  - direction: 1
+    gameObject: {fileID: 3722623101364078196, guid: cecaed77ffd93da4a89fb0fa980221c8, type: 3}
+  - direction: 2
+    gameObject: {fileID: 3722623101364078196, guid: 6bfe20e8df8c34f45ae2eb24505a3228, type: 3}
+  - direction: 3
+    gameObject: {fileID: 3722623101364078196, guid: 82f2a2764afb9e64dae3bb41e0f37ed0, type: 3}

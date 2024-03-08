@@ -6,19 +6,23 @@ public class RushingEnemyBehavior : MonoBehaviour
 {
 
     //variables
+    [Header("Enemy stats")]
     [SerializeField, Range(1, 10)] private float speed = 5f;
-    [SerializeField, Range(1, 10)] private float distanceToTarget = 5f;
+    [SerializeField, Range(1, 10)] private float distanceToTarget = 6f;
     [SerializeField, Range(1, 10)] private float meleeRange = 5f;
     [SerializeField, Range(1, 1000)] private float hp = 1f;
     [SerializeField, Range(1, 100)] private float enemyDMG = 1f;
-    [SerializeField, Range(0.1f, 3)] private float attackSpeed = 0.5f;
+    [Header("The Lower the number the faster the attack")]
+    [SerializeField, Range(0.1f, 3)] private float attackSpeed = 0.1f;
 
     private Transform target;
 
-    //varibles
+    //variblues
+
     private bool lineOfSight = true;
     private bool shootingDistance = false;
     private bool inMeleeRange = false;
+    private bool ableToHit = false;
 
     private Vector3 playerPosition = Vector3.zero;
 
@@ -39,11 +43,11 @@ public class RushingEnemyBehavior : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
+
         previousPosition = transform.position;
+
         target = gameManager.player;
-
         playerMovment = target.GetComponent<PlayerMovment>();
-
     }
 
     void Update()
@@ -51,7 +55,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         if (shootingDistance == false)
         { MoveTowardsTarget(); }
 
-        if (inMeleeRange == true)
+        if (ableToHit == true)
         { HitPlayer(); }
 
         if (lineOfSight == true)
@@ -59,26 +63,27 @@ public class RushingEnemyBehavior : MonoBehaviour
 
         CheakWalkDirection();
         ShootLineOfSightRay();
-        ShootMeleeRay();
+        CheakMeleeRange();
     }
 
     public void TakeDamage(float damage)
     {
         hp -= damage;
         if (hp < 0)
-        {
-            Destroy(gameObject);
-        }
+        { Destroy(gameObject); }
     }
 
     void HitPlayer()
     {
         playerMovment.TakeDamage(enemyDMG);
+        ableToHit = false;
+        DelayedSetAbleToHit();
     }
 
-    void AbleToHit()
+    IEnumerator DelayedSetAbleToHit()
     {
-
+        yield return new WaitForSeconds(attackSpeed);
+        ableToHit = true;
     }
 
     void CheakWalkDirection()
@@ -94,7 +99,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         previousPosition = currentPosition;
     }
 
-    void ShootMeleeRay()
+    void CheakMeleeRange()
     {
         float distance = Vector3.Distance(transform.position, target.position);
 

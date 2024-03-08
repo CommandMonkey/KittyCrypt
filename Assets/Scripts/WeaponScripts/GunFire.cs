@@ -1,3 +1,4 @@
+using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +17,7 @@ public class GunFire : MonoBehaviour
     [Header("General Options")]
     [SerializeField] WeaponType weaponType;
     [SerializeField] AudioClip fireAudio;
+    [SerializeField] AudioClip reloadAudio;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
     [SerializeField] float damagePerBullet = 1f;
@@ -43,8 +45,10 @@ public class GunFire : MonoBehaviour
     float fireRateCooldownTimer;
     bool fireRateCoolingDown = false;
     bool reloading = false;
+    bool reloadAudioPlayed = false;
 
     PlayerInput playerInput;
+    Animator virtualCameraAnimator;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
     AudioSource gunSource;
@@ -54,6 +58,7 @@ public class GunFire : MonoBehaviour
         reloadTimer = reloadTime;
         fireRateCooldownTimer = fireRate;
         playerInput = GetComponent<PlayerInput>();
+        virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
         gunSource = GetComponent<AudioSource>();
     }
 
@@ -76,7 +81,7 @@ public class GunFire : MonoBehaviour
         {
             randomBulletSpread = GetBulletSpread();
             Instantiate(projectile, transform.position, randomBulletSpread);
-            PlayFireAudio();
+            GunFeedbackEffects();
             fireRateCoolingDown = true;
             bulletsFired++;
         }
@@ -94,7 +99,7 @@ public class GunFire : MonoBehaviour
                 Instantiate(projectile, transform.position, randomBulletSpread);
                 bulletsFired++;
             }
-            PlayFireAudio();
+            GunFeedbackEffects();
         }
     }
 
@@ -110,7 +115,7 @@ public class GunFire : MonoBehaviour
             if (bulletHit)
             {
                 bulletsFired++;
-                PlayFireAudio();
+                GunFeedbackEffects();
                 fireRateCoolingDown = true;
 
                 var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
@@ -129,9 +134,10 @@ public class GunFire : MonoBehaviour
         }
     }
 
-    void PlayFireAudio()
+    void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(fireAudio);
+        virtualCameraAnimator.SetTrigger("CameraShake");
     }
 
     void CheckBulletsFired()
@@ -159,12 +165,20 @@ public class GunFire : MonoBehaviour
     void Reload()
     {
         if (!reloading) { return; }
+        if (!reloadAudioPlayed)
+        {
+            Debug.Log("Audio played");
+            reloadAudioPlayed = true;
+        }
+
         reloadTimer -= Time.deltaTime;
         if(reloadTimer <= 0)
         {
             bulletsFired = 0;
             reloading = false;
+            reloadAudioPlayed = false;
             reloadTimer = reloadTime;
+            gunSource.PlayOneShot(reloadAudio);
         }
     }
 
