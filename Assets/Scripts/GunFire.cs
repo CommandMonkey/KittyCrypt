@@ -12,15 +12,17 @@ public class GunFire : MonoBehaviour
         RaycastFire
     }
 
-    //Configurable parameters
+    //Configurable parameters damage
     [Header("General Options")]
     [SerializeField] WeaponType weaponType;
+    [SerializeField] AudioClip fireAudio;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float reloadTime = 1f;
     [SerializeField] float damagePerBullet = 1f;
     [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] int bulletsBeforeReload = 5;
     [SerializeField] GameObject hitEffect;
     [SerializeField] float destroyHitEffectAfter = 1.5f;
+    [SerializeField] LayerMask ignoreLayerMask;
 
     [Header("Projectile Options")]
     [SerializeField] GameObject projectile;
@@ -31,7 +33,6 @@ public class GunFire : MonoBehaviour
     [Header("Raycast Options")]
     [SerializeField] GameObject bulletTrail;
     [SerializeField] float destroyTrailAfter = .1f;
-    [SerializeField] LayerMask ignoreLayerMask;
 
 
     //Cached references
@@ -43,22 +44,22 @@ public class GunFire : MonoBehaviour
     bool fireRateCoolingDown = false;
     bool reloading = false;
 
-    Transform pivotPointTransform;
     PlayerInput playerInput;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
+    AudioSource gunSource;
 
     private void Start()
     {
         reloadTimer = reloadTime;
         fireRateCooldownTimer = fireRate;
         playerInput = GetComponent<PlayerInput>();
+        gunSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        pivotPointTransform = GetComponentInParent<Transform>();
         ProjectileFire();
         BurstFire();
         RaycastFire();
@@ -75,6 +76,7 @@ public class GunFire : MonoBehaviour
         {
             randomBulletSpread = GetBulletSpread();
             Instantiate(projectile, transform.position, randomBulletSpread);
+            PlayFireAudio();
             fireRateCoolingDown = true;
             bulletsFired++;
         }
@@ -88,12 +90,11 @@ public class GunFire : MonoBehaviour
         {
             for (int i = 0; i < bulletsBeforeReload || bulletsBeforeReload == 0; i++)
             {
-                Debug.Log(i);
                 randomBulletSpread = GetBulletSpread();
                 Instantiate(projectile, transform.position, randomBulletSpread);
                 bulletsFired++;
             }
-
+            PlayFireAudio();
         }
     }
 
@@ -109,6 +110,7 @@ public class GunFire : MonoBehaviour
             if (bulletHit)
             {
                 bulletsFired++;
+                PlayFireAudio();
                 fireRateCoolingDown = true;
 
                 var smoke = Instantiate(hitEffect, bulletHit.point, Quaternion.identity);
@@ -117,16 +119,19 @@ public class GunFire : MonoBehaviour
                 var line = Instantiate(bulletTrail, transform.position, Quaternion.identity);
                 Destroy(line, destroyTrailAfter);
 
-                Debug.Log(bulletHit.collider);
-
                 if (bulletHit.collider.gameObject.transform.tag == "Enemy")
                 {
-                    EnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<EnemyBehavior>();
+                    RushingEnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<RushingEnemyBehavior>();
 
                     enemyScript.TakeDamage(damagePerBullet);
                 }
             }
         }
+    }
+
+    void PlayFireAudio()
+    {
+        gunSource.PlayOneShot(fireAudio);
     }
 
     void CheckBulletsFired()
@@ -186,6 +191,11 @@ public class GunFire : MonoBehaviour
     public GameObject GetHitEffect()
     {
         return hitEffect;
+    }
+
+    public LayerMask GetIgnoredLayers()
+    {
+        return ignoreLayerMask;
     }
 
     public float GetDestroyHitEffectAfter()

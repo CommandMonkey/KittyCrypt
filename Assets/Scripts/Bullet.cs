@@ -30,14 +30,14 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        myRigidbody.velocity = - transform.right * - gun.GetProjectileSpeed();
+        myRigidbody.velocity = transform.right * gun.GetProjectileSpeed();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.transform.tag == "Enemy")
         {
-            EnemyBehavior enemyScript = other.gameObject.GetComponent<EnemyBehavior>();
+            RushingEnemyBehavior enemyScript = other.gameObject.GetComponent<RushingEnemyBehavior>();
 
             enemyScript.TakeDamage(damagePerBullet);
         }

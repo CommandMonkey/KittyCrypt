@@ -23,10 +23,10 @@ public class RoomSpawner : MonoBehaviour
         roomManager = FindObjectOfType<RoomManager>();
 
         // Subscribe to spawn room Event
-        roomManager.OnSpawnRooms.AddListener(SpawnRoom);
-        roomManager.OnNewSpawnWave.AddListener(NewSpawnWave);
+        //roomManager.OnSpawnRooms.AddListener(SpawnRoom);
+        //roomManager.OnNewSpawnWave.AddListener(NewSpawnWave);
 
-        roomManager.RegisterSpawner();
+        //roomManager.RegisterSpawner();
 
         spawnPos = transform.TransformPoint(Vector3.right);
 
@@ -38,7 +38,7 @@ public class RoomSpawner : MonoBehaviour
         else
         {
             survivingInstances.Add(spawnPos, this);
-            roomManager.RegisterSpawner();
+            //roomManager.RegisterSpawner();
         }   
 
     }
@@ -59,8 +59,8 @@ public class RoomSpawner : MonoBehaviour
 
     void SpawnRoom()
     {
-        GameObject room = roomManager.GetRandomRoom(openingDirections);
-        Instantiate(room, transform.position, Quaternion.identity, parentTransform);
+        //GameObject room = roomManager.GetRandomRoom(openingDirections);
+        //Instantiate(room, transform.position, Quaternion.identity, parentTransform);
         //Debug.Log(room.name);
         Die();
     }
@@ -102,8 +102,8 @@ public class RoomSpawner : MonoBehaviour
 
             }
 
-            Instantiate(roomManager.RoomSpawnerPrefab, _spawnerPosition, Quaternion.identity, transform)
-            .GetComponent<RoomSpawner>().openingDirections = _instanceDirections;
+            //Instantiate(roomManager.RoomSpawnerPrefab, _spawnerPosition, Quaternion.identity, transform)
+            //.GetComponent<RoomSpawner>().openingDirections = _instanceDirections;
         }
     }
 

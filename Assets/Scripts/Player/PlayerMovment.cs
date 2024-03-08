@@ -15,13 +15,17 @@ public class PlayerMovment : MonoBehaviour
 
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
+    [SerializeField] float health = 100f;
+
     private Rigidbody2D MyRigidbody;
     private Vector2 movedir;
     private Vector2 rolldir;
     private float rollSpeed;
+    float rollSpeedDropMultiplier = 8f;
     private State state;
 
     Vector2 moveInput;
+
 
     private void Awake()
     {
@@ -33,17 +37,15 @@ public class PlayerMovment : MonoBehaviour
     {
         if (state == State.rolling) { 
             // dash/roll range
-            float rollSpeedDropMunlitplier = 8f;
-            rollSpeed -= rollSpeed * rollSpeedDropMunlitplier * Time.deltaTime;
+            
+            rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
 
 
-            if (rollSpeed < rollSpeedMinimum)
+            if (rollSpeed < Move_speed)
             {
                 state = State.normal;
             }
         }
-        
-        
     }
 
 
@@ -55,11 +57,19 @@ public class PlayerMovment : MonoBehaviour
     void OnDash()
     {
         rolldir = movedir;
-        
+
         rollSpeed = 40f;
         state = State.rolling;
     }
 
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health < 0)
+        {
+            Debug.Log("you died >:C");
+        }
+    }
 
     private void FixedUpdate()
     {
