@@ -167,7 +167,7 @@ public class GunFire : MonoBehaviour
         if (!reloading) { return; }
         if (!reloadAudioPlayed)
         {
-            Debug.Log("Audio played");
+            gunSource.PlayOneShot(reloadAudio);
             reloadAudioPlayed = true;
         }
 
@@ -178,7 +178,6 @@ public class GunFire : MonoBehaviour
             reloading = false;
             reloadAudioPlayed = false;
             reloadTimer = reloadTime;
-            gunSource.PlayOneShot(reloadAudio);
         }
     }
 
