@@ -2008,6 +2008,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 79651003279785704, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+      propertyPath: rolldelay
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2583925021004024128, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
       propertyPath: pickupPromptText
       value: 
