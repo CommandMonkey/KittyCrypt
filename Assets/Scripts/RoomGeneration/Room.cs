@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
     public bool newlySpawned = true;
+    public Entrance previousRoomEntrance;
 
     // Cached references
     RoomManager roomManager;
@@ -37,16 +38,18 @@ public class Room : MonoBehaviour
         if (IsOverlapping())
         {
             Debug.Log("ROOM ION THA W");
+            roomManager.SpawnDoorCover(RoomManager.InvertDirection(previousRoomEntrance.direction), previousRoomEntrance.transform.position);
             Die();
+            return;
         }
-        newlySpawned = false;
 
-        Invoke("SpawnConnectingRooms", 3);
+        newlySpawned = false;
+        roomManager.currentWaveRooms.Add(this);
+        roomManager.OnSpawnRoomWave.AddListener(SpawnConnectingRooms);
     }
 
     private bool IsOverlapping()
     {
-
         Collider2D[] results = new Collider2D[10]; 
         int numColliders = boxCollider.OverlapCollider(new ContactFilter2D(), results);
         Debug.Log(numColliders);
@@ -58,11 +61,10 @@ public class Room : MonoBehaviour
             {
                 // WAS DOING, !room.newlySpawned throws a Null ref error. IDK WHYYYYYYYYYYY!!
 
-                GameObject obj = collider.gameObject;
-                Room room = obj.GetComponent<Room>();
-                if (collider.gameObject != null && !room.newlySpawned) 
+                if (collider?.gameObject.CompareTag("Room") ?? false) 
                 {
-                    return true;
+                    if (!collider.gameObject.GetComponent<Room>().newlySpawned)
+                        return true;
                 }
             }
         }
@@ -76,6 +78,8 @@ public class Room : MonoBehaviour
             if (entrence.connection == null)
                 roomManager.SpawnRoomConectedToEntrance(entrence);
         }
+
+        roomManager.OnSpawnRoomWave.RemoveListener(SpawnConnectingRooms);
     }
 
     private void Die()
