@@ -175,6 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 2
+  fireAudio: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
+  reloadAudio: {fileID: 8300000, guid: 913567dd4b8d98d46ad0c09aec4e585d, type: 3}
   fireRate: 0.75
   reloadTime: 3
   damagePerBullet: 2
