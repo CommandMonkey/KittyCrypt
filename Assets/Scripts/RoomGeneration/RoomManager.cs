@@ -12,99 +12,115 @@ public class RoomManager : MonoBehaviour
     public float roomGridSizeInUnits = 16;
     public float roomSpawningDelay = 1;
     [SerializeField] int maxRooms = 16;
-    [SerializeField] List<Direction> startRoomDirections;
-    
+
+
 
     [Header("Room Spawning Prefabs")]
-    public GameObject RoomSpawnerPrefab;
-    [SerializeField] List<GameObject> BottomOpeningrooms;
-    [SerializeField] List<GameObject> LeftOpeningrooms;
-    [SerializeField] List<GameObject> TopOpeningrooms;
-    [SerializeField] List<GameObject> RightOpeningrooms;
+    public LevelDataObject levelData;
 
-    [NonSerialized] public UnityEvent OnSpawnRooms;
-    [NonSerialized] public UnityEvent OnNewSpawnWave;
-    [NonSerialized] public int amountOfSpawners;
+    List<GameObject> bottomOpeningrooms = new List<GameObject>(1);
+    List<GameObject> leftOpeningrooms = new List<GameObject>(1);
+    List<GameObject> topOpeningrooms = new List<GameObject>(1);
+    List<GameObject> rightOpeningrooms = new List<GameObject>(1);
+
+    [NonSerialized] public int amountOfRooms;
 
     int spawnedRooms = 1;
     GameObject[,] roomsArray;
 
     void Start()
     {
-        OnSpawnRooms = new UnityEvent();
-        OnNewSpawnWave = new UnityEvent();
-        StartRoomGeneration();
+        SortRoomsByEntranceDir();
+
+        //Spawn first room (it will spawn more rooms)
+        Instantiate(levelData.startRoom, grid);
     }
 
-
-    void StartRoomGeneration()
+    private void SortRoomsByEntranceDir()
     {
-        RoomSpawner roomSpawner = Instantiate(RoomSpawnerPrefab, Vector3.zero, Quaternion.identity, grid)
-            .GetComponent<RoomSpawner>();
-
-        roomSpawner.roomType = RoomType.Start;
-        roomSpawner.openingDirections = startRoomDirections;
-
-        StartCoroutine(InvokeNewSpawnerWaveRoutine());
-    }
-
-    IEnumerator InvokeNewSpawnerWaveRoutine()
-    {
-        for(int i = 0; i < 4; i++) // DEBUG
+        foreach (GameObject room in levelData.rooms)
         {
-            yield return new WaitForSeconds(roomSpawningDelay);
-            OnNewSpawnWave.Invoke();
+            List<Entrance> roomEntrances = room.GetComponent<Room>().entrances;
+            foreach (Entrance entrance in roomEntrances)
+            {
+                GetListFromDirecton(entrance.direction)?.Add(room);
+            }
         }
-        yield return new WaitForSeconds(roomSpawningDelay);
-        OnSpawnRooms.Invoke();
     }
 
-
-    GameObject _room;
-    int _rand;
+    List<GameObject> _roomList;
     /// <summary>
     /// returns a random room based on the opening direction needed
     /// </summary>
-    public GameObject GetRandomRoom(List<Direction> directions)
+    public GameObject GetRandomRoom(Direction direction)
     {
-        List<GameObject> _validRooms = GetListFromDirecton(directions[0]).ToList();
-        for (int i = 1; i < directions.Count; i++) 
+        _roomList = GetListFromDirecton(direction);
+        if (_roomList.Count == 0)
         {
-            for(int j = 0; j > _validRooms.Count; j++)
-            {
-                if (RoomHasDirection(_validRooms[i], directions[i]))
-                    _validRooms.RemoveAt(i);
-            }
+            return null;
         }
 
-        _room = _validRooms[UnityEngine.Random.Range(0, _validRooms.Count - 1)];
-        if (_room.GetComponent<Room>().roomOpeningDirections.Count < maxRooms - spawnedRooms)
-            return _room;
-        else 
-            return GetRandomRoom(directions);
+
+        int _rand = UnityEngine.Random.Range(0, _roomList.Count);
+        return _roomList[_rand];
     }
 
-    private bool RoomHasDirection(GameObject room, Direction direction)
+    GameObject _room;
+    public void SpawnRoomConectedToEntrance(Entrance entrance)
     {
-        return room.GetComponent<Room>().roomOpeningDirections.Contains(direction);
-    }
-
-
-    List<GameObject> GetListFromDirecton(Direction direction) 
-    {
-        switch (direction)
+        Direction _newRoomDir = InvertDirection(entrance.direction);
+        _room = GetRandomRoom(_newRoomDir);
+        if (_room == null) // null check
         {
-            case (Direction.Bottom):   return BottomOpeningrooms;
-            case (Direction.Left):     return LeftOpeningrooms;
-            case (Direction.Top):      return TopOpeningrooms;
-            case (Direction.Right):    return RightOpeningrooms;
+            return;
+        }
+
+        Vector3 _entranceToZero = Vector3.zero - GetEntranceOfDir(_room.GetComponent<Room>(), _newRoomDir).transform.localPosition;
+
+        GameObject newRoomInstance = Instantiate(_room, entrance.transform.position + _entranceToZero, Quaternion.identity, grid);
+
+        // Remove entrance from the spawned room instance
+        Entrance _roomMeetingEntrance = GetEntranceOfDir(newRoomInstance.GetComponent<Room>(), _newRoomDir);
+        if (_roomMeetingEntrance != null)
+        {
+            newRoomInstance.GetComponent<Room>().entrances.Remove(_roomMeetingEntrance);
+        }
+    }
+
+    public void SpawnDoorCover(Direction _dir, Vector3 pos)
+    {
+
+    }
+
+    Entrance GetEntranceOfDir(Room room, Direction dir)
+    {
+        foreach (Entrance entr in room.entrances)
+        {
+            if (entr.direction == dir) return entr;
         }
         return null;
     }
 
-    public void RegisterSpawner()
+    List<GameObject> GetListFromDirecton(Direction direction)
     {
-        amountOfSpawners++;
-        Debug.Log(amountOfSpawners);
+        switch (direction)
+        {
+            case (Direction.Bottom): return bottomOpeningrooms;
+            case (Direction.Left): return leftOpeningrooms;
+            case (Direction.Top): return topOpeningrooms;
+            case (Direction.Right): return rightOpeningrooms;
+        }
+        return null;
+    }
+
+    public static Direction InvertDirection(Direction _originalDirection)
+    {
+        int enumLength = Enum.GetValues(typeof(Direction)).Length;
+        int halfEnumLength = enumLength / 2;
+
+        int originalValue = (int)_originalDirection;
+        int invertedValue = (originalValue + halfEnumLength) % enumLength;
+
+        return (Direction)invertedValue;
     }
 }

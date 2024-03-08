@@ -15,6 +15,8 @@ public class PlayerMovment : MonoBehaviour
 
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
+    [SerializeField] float health = 100f;
+
     private Rigidbody2D MyRigidbody;
     private Vector2 movedir;
     private Vector2 rolldir;
@@ -23,6 +25,7 @@ public class PlayerMovment : MonoBehaviour
     private State state;
 
     Vector2 moveInput;
+
 
     private void Awake()
     {
@@ -43,8 +46,6 @@ public class PlayerMovment : MonoBehaviour
                 state = State.normal;
             }
         }
-        
-        
     }
 
 
@@ -61,6 +62,14 @@ public class PlayerMovment : MonoBehaviour
         state = State.rolling;
     }
 
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health < 0)
+        {
+            Debug.Log("you died >:C");
+        }
+    }
 
     private void FixedUpdate()
     {

@@ -9,7 +9,9 @@ public class RushingEnemyBehavior : MonoBehaviour
     [SerializeField, Range(1, 10)] private float speed = 5f;
     [SerializeField, Range(1, 10)] private float distanceToTarget = 5f;
     [SerializeField, Range(1, 10)] private float meleeRange = 5f;
-    [SerializeField, Range(1, 1000)] private float HP = 1f;
+    [SerializeField, Range(1, 1000)] private float hp = 1f;
+    [SerializeField, Range(1, 100)] private float enemyDMG = 1f;
+    [SerializeField, Range(0.1f, 3)] private float attackSpeed = 0.5f;
 
     private Transform target;
 
@@ -29,7 +31,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     GameManager gameManager;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
-    
+    PlayerMovment playerMovment;
 
     void Start()
     {
@@ -39,6 +41,9 @@ public class RushingEnemyBehavior : MonoBehaviour
 
         previousPosition = transform.position;
         target = gameManager.player;
+
+        playerMovment = target.GetComponent<PlayerMovment>();
+
     }
 
     void Update()
@@ -50,7 +55,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         { HitPlayer(); }
 
         if (lineOfSight == true)
-        { HowFarFromTarget(); }
+        { HowFarFromTarget(); } 
 
         CheakWalkDirection();
         ShootLineOfSightRay();
@@ -59,14 +64,19 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        HP -= damage;
-        if (HP < 0)
+        hp -= damage;
+        if (hp < 0)
         {
             Destroy(gameObject);
         }
     }
 
     void HitPlayer()
+    {
+        playerMovment.TakeDamage(enemyDMG);
+    }
+
+    void AbleToHit()
     {
 
     }
