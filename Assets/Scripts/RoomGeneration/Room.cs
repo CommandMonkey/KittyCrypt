@@ -37,15 +37,13 @@ public class Room : MonoBehaviour
 
         if (IsOverlapping())
         {
-            Debug.Log("ROOM ION THA W");
-            roomManager.SpawnDoorCover(RoomManager.InvertDirection(previousRoomEntrance.direction), previousRoomEntrance.transform.position);
+            previousRoomEntrance.SpawnDoorCover();
             Die();
             return;
         }
 
         newlySpawned = false;
         roomManager.currentWaveRooms.Add(this);
-        roomManager.OnSpawnRoomWave.AddListener(SpawnConnectingRooms);
     }
 
     private bool IsOverlapping()
@@ -69,17 +67,6 @@ public class Room : MonoBehaviour
             }
         }
         return false;
-    }
-
-    void SpawnConnectingRooms()
-    {
-        foreach(Entrance entrence in entrances)
-        {
-            if (entrence.connection == null)
-                roomManager.SpawnRoomConectedToEntrance(entrence);
-        }
-
-        roomManager.OnSpawnRoomWave.RemoveListener(SpawnConnectingRooms);
     }
 
     private void Die()

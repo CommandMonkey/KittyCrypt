@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,10 +6,33 @@ public class LevelDataObject : ScriptableObject
 {
     [Header("Room Prefabs")]
     public GameObject startRoom;
-    public List<GameObject> rooms;
+    [SerializeField] List<GameObject> randomRoomPool;
+    [SerializeField] int amountOfRandomRooms;
+    [SerializeField] List<GameObject> setRooms;
     public GameObject endRoom;
     [Header("EntranceBlockers")]
     public List<DirectionGameObjectPair> entranceBlockers;
+
+
+    public List<GameObject> GetRoomsList()
+    {
+        List<GameObject>  resultList = new List<GameObject>();
+        foreach(GameObject room in setRooms)
+        {
+           resultList.Add(room);
+        }
+        if (amountOfRandomRooms > 0) 
+        { 
+            for (int i = 0; i <= amountOfRandomRooms; i++)
+            {
+                resultList.Add(randomRoomPool[Random.Range(0, randomRoomPool.Count)]);
+            }
+        }
+        
+
+        return resultList;
+    }
+
 
     public GameObject GetEntranceBlockerOfDir(Direction dir)
     {
@@ -22,7 +44,6 @@ public class LevelDataObject : ScriptableObject
         return null;
     }
 }
-
 
 [System.Serializable]
 public class DirectionGameObjectPair
