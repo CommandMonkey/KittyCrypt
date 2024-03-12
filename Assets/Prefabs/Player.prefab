@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Move_speed: 10
   rollSpeedMinimum: 2
+  health: 100
+  rolldelay: 0.5
 --- !u!212 &985665903586509229
 SpriteRenderer:
   m_ObjectHideFlags: 0

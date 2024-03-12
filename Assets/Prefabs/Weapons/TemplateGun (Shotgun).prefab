@@ -337,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 1
   fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
+  reloadAudio: {fileID: 0}
   fireRate: 0.1
   reloadTime: 1
   damagePerBullet: 3
@@ -348,7 +349,7 @@ MonoBehaviour:
     m_Bits: 904
   projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
   bulletSpreadRange: 20
-  projectileSpeed: 5
+  projectileSpeed: 50
   projectileVanishAfter: 5
   bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
   destroyTrailAfter: 0.1
