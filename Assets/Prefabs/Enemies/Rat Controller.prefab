@@ -163,8 +163,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   distanceToTarget: 5
-  meleeRange: 5
-  HP: 30
+  meleeRange: 2
+  hp: 1
+  enemyDMG: 1
+  attackSpeed: 0.1
   obsticleLayer:
     serializedVersion: 2
     m_Bits: 64

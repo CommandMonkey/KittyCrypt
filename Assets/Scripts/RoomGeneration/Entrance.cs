@@ -26,6 +26,6 @@ public class Entrance : MonoBehaviour
 
     public void SpawnDoorCover()
     {
-        roomManager.SpawnDoorCover(RoomManager.InvertDirection(direction), transform.position);
+        roomManager.SpawnDoorCover(direction, transform.position);
     }
 }
