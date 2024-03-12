@@ -22,7 +22,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     private bool lineOfSight = true;
     private bool shootingDistance = false;
     private bool inMeleeRange = false;
-    private bool ableToHit = false;
+    private bool ableToHit = true;
 
     private Vector3 playerPosition = Vector3.zero;
 
@@ -55,7 +55,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         if (shootingDistance == false)
         { MoveTowardsTarget(); }
 
-        if (ableToHit == true)
+        if (ableToHit == true && inMeleeRange == true)
         { HitPlayer(); }
 
         if (lineOfSight == true)
@@ -77,7 +77,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     {
         playerMovment.TakeDamage(enemyDMG);
         ableToHit = false;
-        DelayedSetAbleToHit();
+        StartCoroutine(DelayedSetAbleToHit());
     }
 
     IEnumerator DelayedSetAbleToHit()
@@ -102,9 +102,8 @@ public class RushingEnemyBehavior : MonoBehaviour
     void CheakMeleeRange()
     {
         float distance = Vector3.Distance(transform.position, target.position);
-
         if (distance <= meleeRange)
-        { inMeleeRange = true;  }
+        { inMeleeRange = true; }
         else
         { inMeleeRange = false; }
     }
