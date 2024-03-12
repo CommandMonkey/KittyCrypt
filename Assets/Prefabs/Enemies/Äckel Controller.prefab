@@ -94,8 +94,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07378187, y: -0.10542882}
-  m_Size: {x: 3.066476, y: 1.3714855}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 3, y: 1.4}
   m_Direction: 1
 --- !u!212 &7022496038752928453
 SpriteRenderer:
@@ -164,7 +164,9 @@ MonoBehaviour:
   speed: 1.82
   distanceToTarget: 1
   meleeRange: 5
-  HP: 1
+  hp: 1
+  enemyDMG: 1
+  attackSpeed: 0.1
   obsticleLayer:
     serializedVersion: 2
     m_Bits: 64
