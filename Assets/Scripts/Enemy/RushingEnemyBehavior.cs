@@ -35,7 +35,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     GameManager gameManager;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
-    PlayerMovment playerMovment;
+    PlayerMovement playerMovment;
 
     void Start()
     {
@@ -47,7 +47,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         previousPosition = transform.position;
 
         target = gameManager.player;
-        playerMovment = target.GetComponent<PlayerMovment>();
+        playerMovment = target.GetComponent<PlayerMovement>();
     }
 
     void Update()
