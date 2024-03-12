@@ -16,7 +16,7 @@ MonoBehaviour:
   randomRoomPool:
   - {fileID: 3722623101364078196, guid: beafb67c20d1a84449c9e6a184935c32, type: 3}
   - {fileID: 3722623101364078196, guid: 23cc22af7ea42354db9e391adf72a292, type: 3}
-  amountOfRandomRooms: 4
+  amountOfRandomRooms: 0
   setRooms:
   - {fileID: 3722623101364078196, guid: 123e5076b449c2c469b32ef3d69bb3b4, type: 3}
   - {fileID: 3722623101364078196, guid: 123e5076b449c2c469b32ef3d69bb3b4, type: 3}
