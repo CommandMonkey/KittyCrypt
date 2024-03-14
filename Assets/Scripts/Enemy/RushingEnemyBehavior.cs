@@ -46,7 +46,7 @@ public class RushingEnemyBehavior : MonoBehaviour
 
         previousPosition = transform.position;
 
-        target = gameManager.player;
+        target = gameManager.player.transform;
         playerMovment = target.GetComponent<PlayerMovement>();
     }
 

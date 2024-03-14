@@ -24,11 +24,15 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         _rooms = levelData.GetRoomsList();
+    }
 
+
+    public void StartRoomSpawning()
+    {
         //Spawn first room (it will spawn more rooms)
         Instantiate(levelData.startRoom, grid);
 
-        InvokeRepeating("SpawnRoomWave", 1f, roomSpawningDelay);
+        InvokeRepeating("SpawnRoomWave", 0f, roomSpawningDelay);
     }
 
 
@@ -59,9 +63,10 @@ public class RoomManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// returns a random room based on the opening direction needed
-    /// </summary>
+
+    // /////// ================= /////// //
+    // ///////  HELPER FUNCTION  /////// //
+    // /////// ================= /////// //
     public GameObject RetrieveRandomRoomPrefab(Direction direction)
     {
         if (_rooms.Count == 0)

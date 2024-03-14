@@ -155,6 +155,7 @@ MonoBehaviour:
   rollSpeedMinimum: 2
   health: 100
   rolldelay: 0.5
+  drag: 0.9
 --- !u!1 &5398213958659527685
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +269,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponAnchor: {fileID: 9164578391081965062}
   weaponInventory:
-  - {fileID: 0}
   - {fileID: 0}
   pickupPromptText: {fileID: 0}
   pickupPrefab: {fileID: 5068044822145740819, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}

@@ -16,8 +16,10 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] TMP_Text pickupPromptText;
     [SerializeField] GameObject pickupPrefab;
 
+
     // Hotbar
     int currentHotbarPos = 0;
+
     // Pickup
     bool anyPickupsInRange = false;
     List<Pickup> pickupsInRange = new List<Pickup>();

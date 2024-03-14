@@ -38,7 +38,7 @@ public class RatBehavior : MonoBehaviour
         rigidBody2D = GetComponent<Rigidbody2D>();
 
         previousPosition = transform.position;
-        target = gameManager.player;
+        target = gameManager.player.transform;
     }
 
     void Update()
