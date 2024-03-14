@@ -18,12 +18,11 @@ public class RoomManager : MonoBehaviour
 
     // private fields
     List<GameObject> _rooms = new List<GameObject>();
-
+    bool _exitSpawned = false;
 
 
     void Start()
     {
-
         _rooms = levelData.GetRoomsList();
 
         //Spawn first room (it will spawn more rooms)
@@ -31,6 +30,7 @@ public class RoomManager : MonoBehaviour
 
         InvokeRepeating("SpawnRoomWave", 1f, roomSpawningDelay);
     }
+
 
     void SpawnRoomWave() 
     {
@@ -43,9 +43,7 @@ public class RoomManager : MonoBehaviour
             }
         }
         currentWaveRooms = new List<Room>();
-        
     }
-
 
 
     private void DistributeRooms()
@@ -61,7 +59,6 @@ public class RoomManager : MonoBehaviour
     }
 
 
-
     /// <summary>
     /// returns a random room based on the opening direction needed
     /// </summary>
@@ -69,7 +66,7 @@ public class RoomManager : MonoBehaviour
     {
         if (_rooms.Count == 0)
         {
-            return null;
+            return _exitSpawned ? levelData.endRoom : null;
         }
 
         int _rand = UnityEngine.Random.Range(0, _rooms.Count);
