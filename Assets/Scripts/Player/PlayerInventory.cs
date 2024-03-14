@@ -24,12 +24,12 @@ public class PlayerInventory : MonoBehaviour
     Pickup closestPickup;
 
     // References
-    GameManager gameManager;
+    LevelManager gameManager;
 
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<LevelManager>();
 
         UpdateWeapon();
     }

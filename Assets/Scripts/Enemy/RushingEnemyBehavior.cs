@@ -32,14 +32,14 @@ public class RushingEnemyBehavior : MonoBehaviour
     public LayerMask obsticleLayer;
 
     //declerations
-    GameManager gameManager;
+    LevelManager gameManager;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
     PlayerMovement playerMovment;
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<LevelManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
