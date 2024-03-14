@@ -61,7 +61,7 @@ public class GunFire : MonoBehaviour
         fireRateCooldownTimer = fireRate;
         playerInput = GetComponent<PlayerInput>();
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
-        gunSource = FindObjectOfType<GameManager>().gameObject.GetComponent<AudioSource>();
+        gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
