@@ -9,7 +9,7 @@ public class LevelDataObject : ScriptableObject
     [SerializeField] List<GameObject> randomRoomPool;
     [SerializeField] int amountOfRandomRooms;
     [SerializeField] List<GameObject> setRooms;
-    public GameObject endRoom;
+    public GameObject endRoom = null;
     [Header("EntranceBlockers")]
     public List<DirectionGameObjectPair> entranceBlockers;
 
@@ -29,7 +29,6 @@ public class LevelDataObject : ScriptableObject
             }
         }
         
-
         return resultList;
     }
 

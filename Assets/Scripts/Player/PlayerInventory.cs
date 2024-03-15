@@ -16,20 +16,22 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] TMP_Text pickupPromptText;
     [SerializeField] GameObject pickupPrefab;
 
+
     // Hotbar
     int currentHotbarPos = 0;
+
     // Pickup
     bool anyPickupsInRange = false;
     List<Pickup> pickupsInRange = new List<Pickup>();
     Pickup closestPickup;
 
     // References
-    GameManager gameManager;
+    LevelManager gameManager;
 
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<LevelManager>();
 
         UpdateWeapon();
     }
