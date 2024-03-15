@@ -33,21 +33,23 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     //declerations
     LevelManager gameManager;
-    SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
     Player playerMovment;
+
 
     void Start()
     {
         gameManager = FindObjectOfType<LevelManager>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
 
         previousPosition = transform.position;
 
         target = gameManager.player.transform;
+
         playerMovment = target.GetComponent<Player>();
+
+
     }
 
     void Update()
@@ -93,9 +95,9 @@ public class RushingEnemyBehavior : MonoBehaviour
 
         float deltaX = currentPosition.x - previousPosition.x;
         if (deltaX > 0)
-        { spriteRenderer.flipX = true; }
+        { transform.rotation = Quaternion.Euler(0f, 180f, 0f); }
         else if (deltaX < 0)
-        { spriteRenderer.flipX = false; }
+        { transform.rotation = Quaternion.Euler(0f, 0f, 0f); }
 
         previousPosition = currentPosition;
     }
