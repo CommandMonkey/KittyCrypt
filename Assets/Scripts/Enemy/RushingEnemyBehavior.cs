@@ -71,7 +71,6 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        myAnimator.SetTrigger("WasHurt");
         hp -= damage;
         if (hp < 0)
         { Destroy(gameObject); }
