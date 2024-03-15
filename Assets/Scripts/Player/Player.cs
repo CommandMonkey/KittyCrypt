@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
-    [SerializeField] float health = 100f;
     [SerializeField] float rolldelay = 0.2f;
+    [SerializeField] int health = 100;
 
     [SerializeField] float drag = 0.9f;
 
@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
+    bool isDead = false;    
 
     Vector2 moveInput;
 
@@ -75,13 +76,14 @@ public class Player : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        if(isDead) { return; }
         moveInput = value.Get<Vector2>();
-        
     }
 
     void OnDash()
     {
-        if(isRollDelaying) { return; }
+        if (isDead) { return; }
+        if (isRollDelaying) { return; }
         rolldir = movedir;
 
         rollSpeed = 50f;
@@ -101,16 +103,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
-        if (state == State.rolling)
-        {
-            return;
-        }
+        if (state == State.rolling) { return; }
+        animator.SetTrigger("WasHurt");
         health -= damage;
         if (health < 0)
         {
-            Debug.Log("you died >:C");
+            isDead = true;
         }
     }
 
@@ -127,5 +127,18 @@ public class Player : MonoBehaviour
                 break;
         }
         exteriorVelocity *= drag;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.transform.tag == "Enemy")
+        {
+
+        }
+    }
+
+    public bool GetIsDead()
+    {
+        return isDead;
     }
 }
