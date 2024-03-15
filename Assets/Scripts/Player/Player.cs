@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovment : MonoBehaviour
+public class Player : MonoBehaviour
 {
     private enum State
     {
@@ -18,7 +20,13 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] float health = 100f;
     [SerializeField] float rolldelay = 0.2f;
 
-    private Rigidbody2D MyRigidbody;
+    [SerializeField] float drag = 0.9f;
+
+    [NonSerialized] public Vector2 exteriorVelocity;
+
+    private Rigidbody2D myRigidbody;
+    private Animator animator;
+
     private Vector2 movedir;
     private Vector2 rolldir;
     private float rollSpeed;
@@ -30,14 +38,13 @@ public class PlayerMovment : MonoBehaviour
     Vector2 moveInput;
 
 
-    private void Awake()
-    {
-        state = State.normal;
-        MyRigidbody = GetComponent<Rigidbody2D>();
-    }
 
     private void Start()
     {
+        myRigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();  
+
+        state = State.normal;
         rollResetTime = rolldelay;
     }
 
@@ -54,6 +61,14 @@ public class PlayerMovment : MonoBehaviour
                 state = State.normal;
             }
         }
+
+        if (moveInput != Vector2.zero)
+        {
+            animator.SetBool("IsWalking", true);
+        }else
+        {
+            animator.SetBool("IsWalking", false);
+        }
         RollDelay();
     }
 
@@ -61,6 +76,7 @@ public class PlayerMovment : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        
     }
 
     void OnDash()
@@ -103,12 +119,13 @@ public class PlayerMovment : MonoBehaviour
         switch (state)
         {
             case State.normal:
-                MyRigidbody.velocity = moveInput * Move_speed;
+                myRigidbody.velocity = moveInput.normalized * Move_speed + exteriorVelocity;
 
                 break;
             case State.rolling:
-                MyRigidbody.velocity = moveInput * rollSpeed;
+                myRigidbody.velocity = moveInput.normalized * rollSpeed + exteriorVelocity;
                 break;
         }
+        exteriorVelocity *= drag;
     }
 }

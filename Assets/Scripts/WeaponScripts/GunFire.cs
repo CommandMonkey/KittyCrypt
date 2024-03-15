@@ -24,6 +24,7 @@ public class GunFire : MonoBehaviour
     [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] int bulletsBeforeReload = 5;
     [SerializeField] GameObject hitEffect;
     [SerializeField] float destroyHitEffectAfter = 1.5f;
+    [SerializeField] float knockback = 2f;
     [SerializeField] LayerMask ignoreLayerMask;
 
     [Header("Projectile Options")]
@@ -48,6 +49,7 @@ public class GunFire : MonoBehaviour
     bool reloadAudioPlayed = false;
 
     PlayerInput playerInput;
+    Player playerMovement;
     Animator virtualCameraAnimator;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
@@ -59,7 +61,8 @@ public class GunFire : MonoBehaviour
         fireRateCooldownTimer = fireRate;
         playerInput = GetComponent<PlayerInput>();
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
-        gunSource = GetComponent<AudioSource>();
+        gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
+        playerMovement = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
@@ -138,6 +141,7 @@ public class GunFire : MonoBehaviour
     {
         gunSource.PlayOneShot(fireAudio);
         virtualCameraAnimator.SetTrigger("CameraShake");
+        playerMovement.exteriorVelocity += -(Vector2)transform.right * knockback;
     }
 
     void CheckBulletsFired()

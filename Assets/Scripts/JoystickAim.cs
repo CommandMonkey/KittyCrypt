@@ -5,13 +5,13 @@ using UnityEngine.InputSystem;
 
 public class JoystickAim : MonoBehaviour
 {
-    public PlayerMovment pM;
+    public Player pM;
     public Transform GunGripper;
     public float aiming;
     // Start is called before the first frame update
     void Start()
     {
-        pM = FindObjectOfType<PlayerMovment>();
+        pM = FindObjectOfType<Player>();
        // aiming = vaule.get();
     }
 
