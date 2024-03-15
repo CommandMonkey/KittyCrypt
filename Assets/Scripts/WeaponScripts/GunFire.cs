@@ -49,7 +49,7 @@ public class GunFire : MonoBehaviour
     bool reloadAudioPlayed = false;
 
     PlayerInput playerInput;
-    PlayerMovement playerMovement;
+    Player playerMovement;
     Animator virtualCameraAnimator;
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
@@ -62,7 +62,7 @@ public class GunFire : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
         gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
-        playerMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
