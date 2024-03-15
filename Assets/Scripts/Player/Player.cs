@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovment : MonoBehaviour
+public class Player : MonoBehaviour
 {
     private enum State
     {
@@ -16,21 +18,34 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float health = 100f;
+    [SerializeField] float rolldelay = 0.2f;
 
-    private Rigidbody2D MyRigidbody;
+    [SerializeField] float drag = 0.9f;
+
+    [NonSerialized] public Vector2 exteriorVelocity;
+
+    private Rigidbody2D myRigidbody;
+    private Animator animator;
+
     private Vector2 movedir;
     private Vector2 rolldir;
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
     private State state;
+    float rollResetTime;
+    bool isRollDelaying = false;
 
     Vector2 moveInput;
 
 
-    private void Awake()
+
+    private void Start()
     {
+        myRigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();  
+
         state = State.normal;
-        MyRigidbody = GetComponent<Rigidbody2D>();
+        rollResetTime = rolldelay;
     }
 
     private void Update()
@@ -46,24 +61,52 @@ public class PlayerMovment : MonoBehaviour
                 state = State.normal;
             }
         }
+
+        if (moveInput != Vector2.zero)
+        {
+            animator.SetBool("IsWalking", true);
+        }else
+        {
+            animator.SetBool("IsWalking", false);
+        }
+        RollDelay();
     }
 
 
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        
     }
 
     void OnDash()
     {
+        if(isRollDelaying) { return; }
         rolldir = movedir;
 
-        rollSpeed = 40f;
+        rollSpeed = 50f;
         state = State.rolling;
+        isRollDelaying = true;
+    }
+
+    private void RollDelay()
+    {
+        if (!isRollDelaying) { return; }
+        rollResetTime -= Time.deltaTime;
+
+        if(rollResetTime <= 0 )
+        {
+            isRollDelaying = false;
+            rollResetTime = rolldelay;
+        }
     }
 
     public void TakeDamage(float damage)
     {
+        if (state == State.rolling)
+        {
+            return;
+        }
         health -= damage;
         if (health < 0)
         {
@@ -76,12 +119,13 @@ public class PlayerMovment : MonoBehaviour
         switch (state)
         {
             case State.normal:
-                MyRigidbody.velocity = moveInput * Move_speed;
+                myRigidbody.velocity = moveInput.normalized * Move_speed + exteriorVelocity;
 
                 break;
             case State.rolling:
-                MyRigidbody.velocity = moveInput * rollSpeed;
+                myRigidbody.velocity = moveInput.normalized * rollSpeed + exteriorVelocity;
                 break;
         }
+        exteriorVelocity *= drag;
     }
 }
