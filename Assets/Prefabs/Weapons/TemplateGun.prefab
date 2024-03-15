@@ -239,12 +239,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 0
-  fireRate: 0.1
-  reloadTime: 1
-  damagePerBullet: 1
-  bulletsBeforeReload: 5
+  fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
+  reloadAudio: {fileID: 0}
+  fireRate: 0.05
+  reloadTime: 5
+  damagePerBullet: 2
+  bulletsBeforeReload: 200
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 0.75
+  knockback: 2
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 904

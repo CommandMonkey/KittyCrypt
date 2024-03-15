@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RatBehavior : MonoBehaviour
 {
+    // is un used 
 
     //variables
     [SerializeField, Range(1, 10)] private float speed = 5f;
@@ -26,18 +27,18 @@ public class RatBehavior : MonoBehaviour
     public LayerMask obsticleLayer;
 
     //declerations
-    GameManager gameManager;
+    LevelManager gameManager;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<LevelManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
         previousPosition = transform.position;
-        target = gameManager.player;
+        target = gameManager.player.transform;
     }
 
     void Update()
