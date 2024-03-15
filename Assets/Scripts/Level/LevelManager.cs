@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     public SoundManager soundManager { get; private set; }
     public Camera mainCamera { get; private set; }
     public Player player;
+    public bool gamePaused = false;
 
     private void Start()
     {

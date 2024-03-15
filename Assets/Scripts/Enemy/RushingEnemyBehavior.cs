@@ -36,7 +36,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     LevelManager gameManager;
     Rigidbody2D rigidBody2D;
     Player playerMovment;
-
+    Animator animator; 
 
     void Start()
     {
@@ -50,16 +50,17 @@ public class RushingEnemyBehavior : MonoBehaviour
 
         playerMovment = target.GetComponent<Player>();
 
-
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
         if (shootingDistance == false)
-        { MoveTowardsTarget(); }
+        { MoveTowardsTarget(); animator.SetBool("isRunning", true); }
 
         if (ableToHit == true && inMeleeRange == true)
         { HitPlayer(); }
+        else { animator.SetBool("isAttacking", false); }
 
         if (lineOfSight == true)
         { HowFarFromTarget(); } 
@@ -78,6 +79,7 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     void HitPlayer()
     {
+        animator.SetBool("isAttacking", true);
         if (!ableToHit) { return; }
         playerMovment.TakeDamage(enemyDMG);
         StartCoroutine(DelayedSetAbleToHit());
@@ -123,6 +125,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         if (hit.collider != null)
         {
             lineOfSight = false;
+            animator.SetBool("isRunning", false);
         }
         else
         {
@@ -143,6 +146,7 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     void MoveTowardsTarget()
     {
+
         if (playerPosition == Vector3.zero) return;
         // Calculate the direction from the current position to the target position
         Vector3 direction = playerPosition - base.transform.position;
@@ -152,6 +156,8 @@ public class RushingEnemyBehavior : MonoBehaviour
 
         //Move myself
         rigidBody2D.velocity = direction * speed;
+
+
     }
 
 }
