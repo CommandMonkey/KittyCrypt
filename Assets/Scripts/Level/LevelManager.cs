@@ -10,13 +10,13 @@ public class LevelManager : MonoBehaviour
 
     public SoundManager soundManager { get; private set; }
     public Camera mainCamera { get; private set; }
-    public PlayerMovement player;
+    public Player player;
     public bool gamePaused = false;
 
     private void Start()
     {
         soundManager = FindObjectOfType<SoundManager>();
-        player = FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<Player>();
         mainCamera = Camera.main;
 
         if (spawnRooms) StartLevelGeneration();
