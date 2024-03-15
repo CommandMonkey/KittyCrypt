@@ -11,7 +11,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     [SerializeField, Range(1, 10)] private float distanceToTarget = 6f;
     [SerializeField, Range(1, 10)] private float meleeRange = 5f;
     [SerializeField, Range(1, 1000)] private float hp = 1f;
-    [SerializeField, Range(1, 100)] private float enemyDMG = 1f;
+    [SerializeField, Range(1, 100)] private int enemyDMG = 1;
     [Header("The Lower the number the faster the attack")]
     [SerializeField, Range(0.1f, 3)] private float attackSpeed = 0.1f;
 
@@ -33,21 +33,23 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     //declerations
     LevelManager gameManager;
-    SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody2D;
-    PlayerMovement playerMovment;
+    Player playerMovment;
+
 
     void Start()
     {
         gameManager = FindObjectOfType<LevelManager>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
 
         previousPosition = transform.position;
 
         target = gameManager.player.transform;
-        playerMovment = target.GetComponent<PlayerMovement>();
+
+        playerMovment = target.GetComponent<Player>();
+
+
     }
 
     void Update()
@@ -75,6 +77,7 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     void HitPlayer()
     {
+        if (!ableToHit) { return; }
         playerMovment.TakeDamage(enemyDMG);
         ableToHit = false;
         StartCoroutine(DelayedSetAbleToHit());
@@ -92,9 +95,9 @@ public class RushingEnemyBehavior : MonoBehaviour
 
         float deltaX = currentPosition.x - previousPosition.x;
         if (deltaX > 0)
-        { spriteRenderer.flipX = true; }
+        { transform.rotation = Quaternion.Euler(0f, 180f, 0f); }
         else if (deltaX < 0)
-        { spriteRenderer.flipX = false; }
+        { transform.rotation = Quaternion.Euler(0f, 0f, 0f); }
 
         previousPosition = currentPosition;
     }

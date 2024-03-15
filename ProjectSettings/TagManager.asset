@@ -9,6 +9,7 @@ TagManager:
   - Weapons
   - Pickup
   - Enemy
+  - PowerUp
   layers:
   - Default
   - TransparentFX
