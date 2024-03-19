@@ -50,6 +50,9 @@ TagManager:
   - name: Ground
     uniqueID: 1320566885
     locked: 0
+  - name: Shadow
+    uniqueID: 1653427209
+    locked: 0
   - name: Walls
     uniqueID: 2834280801
     locked: 0
@@ -59,7 +62,10 @@ TagManager:
   - name: Player
     uniqueID: 1765373491
     locked: 0
-  - name: Front
+  - name: 'Weapons '
+    uniqueID: 3536978525
+    locked: 0
+  - name: Walls over
     uniqueID: 2638601385
     locked: 0
   - name: Over-Front
@@ -67,7 +73,4 @@ TagManager:
     locked: 0
   - name: Effects
     uniqueID: 2480439107
-    locked: 0
-  - name: 'Weapons '
-    uniqueID: 3536978525
     locked: 0

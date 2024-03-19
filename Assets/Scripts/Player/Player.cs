@@ -34,7 +34,8 @@ public class Player : MonoBehaviour
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
-    bool isDead = false;    
+    bool isDead = false;
+    bool damageTaken = false;
 
     Vector2 moveInput;
 
@@ -51,6 +52,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (isDead)
+        {
+            myRigidbody.velocity = Vector2.zero;
+            return;
+        }
         if (state == State.rolling) { 
             // dash/roll range
             
@@ -72,17 +78,33 @@ public class Player : MonoBehaviour
         }
         RollDelay();
     }
+    private void FixedUpdate()
+    {
+        if (isDead)
+        {
+            myRigidbody.velocity = Vector2.zero;
+            return;
+        }
+        switch (state)
+        {
+            case State.normal:
+                myRigidbody.velocity = moveInput.normalized * Move_speed + exteriorVelocity;
 
+                break;
+            case State.rolling:
+                myRigidbody.velocity = moveInput.normalized * rollSpeed + exteriorVelocity;
+                break;
+        }
+        exteriorVelocity *= drag;
+    }
 
     void OnMove(InputValue value)
     {
-        if(isDead) { return; }
         moveInput = value.Get<Vector2>();
     }
 
     void OnDash()
     {
-        if (isDead) { return; }
         if (isRollDelaying) { return; }
         rolldir = movedir;
 
@@ -105,40 +127,24 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (damageTaken) { return; }
         if (state == State.rolling) { return; }
         animator.SetTrigger("WasHurt");
         health -= damage;
-        if (health < 0)
+        damageTaken = true;
+        if (health <= 0)
         {
             isDead = true;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        switch (state)
-        {
-            case State.normal:
-                myRigidbody.velocity = moveInput.normalized * Move_speed + exteriorVelocity;
-
-                break;
-            case State.rolling:
-                myRigidbody.velocity = moveInput.normalized * rollSpeed + exteriorVelocity;
-                break;
-        }
-        exteriorVelocity *= drag;
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.transform.tag == "Enemy")
-        {
-
         }
     }
 
     public bool GetIsDead()
     {
         return isDead;
+    }
+
+    public void SetDamageTakenFalse()
+    {
+        damageTaken = false;
     }
 }
