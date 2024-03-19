@@ -32,7 +32,6 @@ public class RushingEnemyBehavior : MonoBehaviour
     public LayerMask obsticleLayer;
 
     //declerations
-    Animator myAnimator;
     LevelManager gameManager;
     Rigidbody2D rigidBody2D;
     Player playerMovment;
@@ -43,7 +42,6 @@ public class RushingEnemyBehavior : MonoBehaviour
         gameManager = FindObjectOfType<LevelManager>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
-        myAnimator = GetComponentInChildren<Animator>();
         previousPosition = transform.position;
 
         target = gameManager.player.transform;
@@ -51,6 +49,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         playerMovment = target.GetComponent<Player>();
 
         animator = GetComponentInChildren<Animator>();
+        if (animator != null) { Debug.Log("hej"); }
     }
 
     void Update()
