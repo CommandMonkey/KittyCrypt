@@ -535,11 +535,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.87
+      value: -6.28
       objectReference: {fileID: 0}
     - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.49
+      value: 1.69
       objectReference: {fileID: 0}
     - target: {fileID: 5618583144603747049, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -593,7 +593,8 @@ PrefabInstance:
       propertyPath: enemyDMG
       value: 20
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7022496038752928453, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
