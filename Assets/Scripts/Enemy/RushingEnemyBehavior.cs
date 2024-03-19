@@ -49,7 +49,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         playerMovment = target.GetComponent<Player>();
 
         animator = GetComponentInChildren<Animator>();
-        if (animator != null) { Debug.Log("hej"); }
+       
     }
 
     void Update()

@@ -1,32 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class JoystickAim : MonoBehaviour
 {
-    public Player pM;
-    public Transform GunGripper;
-    public float aiming;
+    [SerializeField] float Move_speed = 30f;
+
+    Vector2 moveInput;
     // Start is called before the first frame update
     void Start()
     {
-        pM = FindObjectOfType<Player>();
-       // aiming = vaule.get();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    void OnMove(InputValue value)
     {
-        Aim();
-}
-    void onAiming(InputValue value)
-    {
-        value.Get();
+        moveInput = value.Get<Vector2>();
     }
 
-    public void Aim()
-    {
-       // GunGripper.Transform.localEulerAngles = new Vector3(0f,0f,Mathf.Atan(onAiming) ;
-    }
 }

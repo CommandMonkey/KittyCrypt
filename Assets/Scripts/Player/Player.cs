@@ -28,8 +28,6 @@ public class Player : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private Animator animator;
 
-    private Vector2 movedir;
-    private Vector2 rolldir;
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
     private State state;
@@ -38,6 +36,7 @@ public class Player : MonoBehaviour
     bool isDead = false;
     bool invinsibility = false;
 
+
     Vector2 moveInput;
 
 
@@ -45,7 +44,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>();  
+        animator = GetComponentInChildren<Animator>(); 
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -107,7 +106,6 @@ public class Player : MonoBehaviour
     void OnDash()
     {
         if (isRollDelaying) { return; }
-        rolldir = movedir;
 
         rollSpeed = 50f;
         state = State.rolling;
@@ -154,4 +152,7 @@ public class Player : MonoBehaviour
     {
         invinsibility = false;
     }
+
+
+
 }
