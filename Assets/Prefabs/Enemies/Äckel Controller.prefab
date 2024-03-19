@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.82
   distanceToTarget: 1
-  meleeRange: 5
+  meleeRange: 1
   hp: 1
   enemyDMG: 1
   attackSpeed: 0.1
