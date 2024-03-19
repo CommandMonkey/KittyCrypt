@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,7 +39,6 @@ public class Player : MonoBehaviour
 
 
     Vector2 moveInput;
-
 
 
     private void Start()
@@ -95,7 +95,22 @@ public class Player : MonoBehaviour
                 myRigidbody.velocity = moveInput.normalized * rollSpeed + exteriorVelocity;
                 break;
         }
+
+        Flip();
+
         exteriorVelocity *= drag;
+    }
+
+    private void Flip()
+    {
+        if (moveInput.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (moveInput.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 
     void OnMove(InputValue value)
