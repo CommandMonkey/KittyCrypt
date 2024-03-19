@@ -7,11 +7,11 @@ public class RushingEnemyBehavior : MonoBehaviour
 
     //variables
     [Header("Enemy stats")]
-    [SerializeField, Range(1, 10)] private float speed = 5f;
-    [SerializeField, Range(1, 10)] private float distanceToTarget = 6f;
-    [SerializeField, Range(1, 10)] private float meleeRange = 5f;
-    [SerializeField, Range(1, 1000)] private float hp = 1f;
-    [SerializeField, Range(1, 100)] private int enemyDMG = 1;
+    [SerializeField, Range(0, 10)] private float speed = 5f;
+    [SerializeField, Range(0, 10)] private float distanceToTarget = 6f;
+    [SerializeField, Range(0, 10)] private float meleeRange = 5f;
+    [SerializeField, Range(0, 1000)] private float hp = 1f;
+    [SerializeField, Range(0, 100)] private int enemyDMG = 1;
     [Header("The Lower the number the faster the attack")]
     [SerializeField, Range(0.1f, 3)] private float attackSpeed = 0.1f;
 
@@ -42,7 +42,6 @@ public class RushingEnemyBehavior : MonoBehaviour
         gameManager = FindObjectOfType<LevelManager>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
-
         previousPosition = transform.position;
 
         target = gameManager.player.transform;
@@ -50,6 +49,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         playerMovment = target.GetComponent<Player>();
 
         animator = GetComponentInChildren<Animator>();
+        if (animator != null) { Debug.Log("hej"); }
     }
 
     void Update()
@@ -81,8 +81,8 @@ public class RushingEnemyBehavior : MonoBehaviour
         animator.SetBool("isAttacking", true);
         if (!ableToHit) { return; }
         playerMovment.TakeDamage(enemyDMG);
-        ableToHit = false;
         StartCoroutine(DelayedSetAbleToHit());
+        ableToHit = false;
     }
 
     IEnumerator DelayedSetAbleToHit()
