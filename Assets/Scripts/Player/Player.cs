@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] int health = 100;
 
     [SerializeField] float drag = 0.9f;
+    [SerializeField] float invinsibilityLenght = 1f;
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     float rollResetTime;
     bool isRollDelaying = false;
     bool isDead = false;
-    bool damageTaken = false;
+    bool invinsibility = false;
 
     Vector2 moveInput;
 
@@ -127,11 +128,10 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (damageTaken) { return; }
-        if (state == State.rolling) { return; }
+        if (invinsibility || state == State.rolling) { return; }
         animator.SetTrigger("WasHurt");
         health -= damage;
-        damageTaken = true;
+        StartCoroutine(InvisibilityDelayRoutine());
         if (health <= 0)
         {
             isDead = true;
@@ -143,8 +143,15 @@ public class Player : MonoBehaviour
         return isDead;
     }
 
+    IEnumerator InvisibilityDelayRoutine()
+    {
+        invinsibility = true;
+        yield return new WaitForSeconds(invinsibilityLenght);
+        invinsibility = false;
+    }
+
     public void SetDamageTakenFalse()
     {
-        damageTaken = false;
+        invinsibility = false;
     }
 }
