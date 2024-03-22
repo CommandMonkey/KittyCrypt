@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497d9a96524ba7b45ad7b63887f7c938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnRooms: 1
   player: {fileID: 0}
+  gamePaused: 0
 --- !u!82 &8017914383874881742
 AudioSource:
   m_ObjectHideFlags: 0
