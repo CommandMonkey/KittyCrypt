@@ -9,15 +9,17 @@ public class Entrance : MonoBehaviour
     protected bool _doorOpen = true;
 
     RoomManager roomManager;
-    GameObject doorObject;
+    GameObject doorCollisionObject;
 
     private void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
-        doorObject = transform.GetChild(0).gameObject;
+        doorCollisionObject = transform.GetChild(0).gameObject;
 
         if (roomManager != null ) 
             roomManager.entrances.Add(this);
+
+        doorCollisionObject.SetActive(_doorOpen);
     }
 
 
@@ -47,6 +49,6 @@ public class Entrance : MonoBehaviour
     {
         _doorOpen = !_doorOpen;
 
-        doorObject.SetActive(_doorOpen);
+        doorCollisionObject.SetActive(_doorOpen);
     }
 }
