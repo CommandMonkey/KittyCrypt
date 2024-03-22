@@ -11,20 +11,11 @@ public class Bullet : MonoBehaviour
     GunFire gun;
 
     //Private variables
-    float vanishTimer;
-    float damagePerBullet;
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         gun = FindObjectOfType<GunFire>();
-
-        vanishTimer = gun.GetVanishAfter();
-        damagePerBullet = gun.GetDamagePerBullet();
-    }
-
-    private void Update()
-    {
         Vanish();
     }
 
@@ -39,7 +30,8 @@ public class Bullet : MonoBehaviour
         {
             RushingEnemyBehavior enemyScript = other.gameObject.GetComponent<RushingEnemyBehavior>();
 
-            enemyScript.TakeDamage(damagePerBullet);
+            enemyScript.gameObject.GetComponent<Rigidbody2D>().velocity += -(Vector2)transform.forward * 100;
+            enemyScript.TakeDamage(gun.GetDamagePerBullet());
         }
 
         var hitEffect = Instantiate(gun.GetHitEffect(), transform.position, Quaternion.identity);
@@ -47,12 +39,9 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void Vanish()
+    IEnumerator Vanish()
     {
-        vanishTimer -= Time.deltaTime;
-        if (vanishTimer <= 0)
-        {
-            Destroy(gameObject);
-        }
+        yield return new WaitForSeconds(gun.GetVanishAfter());
+        Destroy(gameObject);
     }
 }
