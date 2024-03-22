@@ -1,8 +1,8 @@
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using System.Collections;
 
 public class GunFire : MonoBehaviour
 {
@@ -54,6 +54,7 @@ public class GunFire : MonoBehaviour
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
     AudioSource gunSource;
+    Light2D nuzzleLight;
 
     private void Start()
     {
@@ -63,6 +64,8 @@ public class GunFire : MonoBehaviour
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
         gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
         player = FindObjectOfType<Player>();
+        nuzzleLight = GetComponent<Light2D>();
+        nuzzleLight.enabled = false;
     }
 
     // Update is called once per frame
@@ -141,6 +144,8 @@ public class GunFire : MonoBehaviour
     void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(fireAudio);
+        StopCoroutine(nuzzleFlash());
+        StartCoroutine(nuzzleFlash());
         virtualCameraAnimator.SetTrigger("CameraShake");
         player.exteriorVelocity += -(Vector2)transform.right * knockback;
     }
@@ -184,6 +189,13 @@ public class GunFire : MonoBehaviour
             reloadAudioPlayed = false;
             reloadTimer = reloadTime;
         }
+    }
+
+    IEnumerator nuzzleFlash()
+    {
+        nuzzleLight.enabled = true;
+        yield return new WaitForSeconds(0.05f);
+        nuzzleLight.enabled = false;
     }
 
     public float GetProjectileSpeed()

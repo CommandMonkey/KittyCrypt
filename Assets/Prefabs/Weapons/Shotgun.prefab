@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7406951540403912369}
   m_Layer: 0
-  m_Name: TemplateGun
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,6 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4383058845420255976}
   - component: {fileID: 2108397045879704026}
+  - component: {fileID: 5846253672359437390}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -152,17 +153,38 @@ SpriteRenderer:
   m_SortingLayerID: -757988771
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: cda40561cd89cda478860195418472b1, type: 3}
+  m_Sprite: {fileID: 3551583045618981167, guid: 20348caf8875b1243916709cb88b01e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.3, y: 4.59}
+  m_Size: {x: 1.268, y: 0.40666667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5846253672359437390
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4562296148939219744}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 496243e8ff58d2e4c958de45c2a8de7a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7445562969301839146
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +196,7 @@ GameObject:
   - component: {fileID: 864004575432457577}
   - component: {fileID: 890045728921608099}
   - component: {fileID: 1332264228652906649}
-  - component: {fileID: 264496823960170481}
+  - component: {fileID: 5810745877326213981}
   m_Layer: 0
   m_Name: BarrelExit
   m_TagString: Untagged
@@ -191,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 7445562969301839146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.7, y: 0.3, z: 0}
+  m_LocalPosition: {x: 1.09, y: 0.193, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,26 +261,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0908f6828171d49b104f347669e020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 0
-  fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
+  weaponType: 1
+  fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
   reloadAudio: {fileID: 0}
-  fireRate: 0.06
-  reloadTime: 5
+  fireRate: 0.1
+  reloadTime: 1
   damagePerBullet: 3
-  bulletsBeforeReload: 200
+  bulletsBeforeReload: 10
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 0.75
-  knockback: 2
+  knockback: 30
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 904
   projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 2
-  projectileSpeed: 20
+  bulletSpreadRange: 20
+  projectileSpeed: 50
   projectileVanishAfter: 5
   bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
   destroyTrailAfter: 0.1
---- !u!114 &264496823960170481
+--- !u!114 &5810745877326213981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -287,7 +309,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 1
+  m_ShadowIntensityEnabled: 0
   m_ShadowIntensity: 0.75
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
