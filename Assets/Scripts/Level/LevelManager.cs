@@ -7,7 +7,6 @@ public class LevelManager : MonoBehaviour
     [Header("Load Settings")]
     public bool spawnRooms = true;
 
-
     public SoundManager soundManager { get; private set; }
     public Camera mainCamera { get; private set; }
     public Player player;
