@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [Header("Load Settings")]
-    [SerializeField] bool spawnRooms = true;
+    public bool spawnRooms = true;
 
 
     public SoundManager soundManager { get; private set; }
@@ -18,14 +18,5 @@ public class LevelManager : MonoBehaviour
         soundManager = FindObjectOfType<SoundManager>();
         player = FindObjectOfType<Player>();
         mainCamera = Camera.main;
-
-        if (spawnRooms) StartLevelGeneration();
     }
-
-
-    void StartLevelGeneration()
-    {
-
-    }
-
 }

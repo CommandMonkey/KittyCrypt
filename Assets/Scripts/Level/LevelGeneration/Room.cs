@@ -22,8 +22,9 @@ public enum RoomType
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
-    public bool newlySpawned = true;
-    public Entrance previousRoomEntrance;
+    [NonSerialized] public bool newlySpawned = true;
+    [NonSerialized] public Entrance previousRoomEntrance;
+    [NonSerialized] public GameObject thisRoomPrefab;
 
     // Cached references
     RoomManager roomManager;
@@ -37,7 +38,8 @@ public class Room : MonoBehaviour
 
         if (IsOverlapping())
         {
-            previousRoomEntrance.SpawnDoorCover();
+            roomManager.SpawnDoorCover(RoomManager.InvertDirection(previousRoomEntrance.direction), previousRoomEntrance.transform.position);
+            previousRoomEntrance.Die();
             Die();
             return;
         }
@@ -46,32 +48,39 @@ public class Room : MonoBehaviour
         roomManager.currentWaveRooms.Add(this);
     }
 
-    private bool IsOverlapping()
+    public bool IsOverlapping()
     {
         Collider2D[] results = new Collider2D[10]; 
         int numColliders = boxCollider.OverlapCollider(new ContactFilter2D(), results);
-        Debug.Log(numColliders);
 
         // Check if any colliders are detected
         if (numColliders > 0)
         {
             foreach (Collider2D collider in results)
             {
-                // WAS DOING, !room.newlySpawned throws a Null ref error. IDK WHYYYYYYYYYYY!!
-
+                // Check if Room
                 if (collider?.gameObject.CompareTag("Room") ?? false) 
                 {
-                    if (!collider.gameObject.GetComponent<Room>().newlySpawned)
-                        return true;
+                    return true;
                 }
             }
         }
         return false;
     }
 
-    private void Die()
+    public void Die()
     {
+        roomManager.AddRoomToList(thisRoomPrefab);
         gameObject.SetActive(false);
         Destroy(gameObject);
+    }
+
+    void CloseDoors()
+    {
+        foreach(Entrance entr in entrances)
+        {
+
+        }
+        previousRoomEntrance.CloseDoor();
     }
 }

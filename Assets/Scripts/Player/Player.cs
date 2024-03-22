@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,30 +22,29 @@ public class Player : MonoBehaviour
     [SerializeField] int health = 100;
 
     [SerializeField] float drag = 0.9f;
+    [SerializeField] float invinsibilityLenght = 1f;
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
     private Rigidbody2D myRigidbody;
     private Animator animator;
 
-    private Vector2 movedir;
-    private Vector2 rolldir;
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
     bool isDead = false;
-    bool damageTaken = false;
+    bool invinsibility = false;
+
 
     Vector2 moveInput;
-
 
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>();  
+        animator = GetComponentInChildren<Animator>(); 
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -95,7 +95,22 @@ public class Player : MonoBehaviour
                 myRigidbody.velocity = moveInput.normalized * rollSpeed + exteriorVelocity;
                 break;
         }
+
+        Flip();
+
         exteriorVelocity *= drag;
+    }
+
+    private void Flip()
+    {
+        if (moveInput.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (moveInput.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 
     void OnMove(InputValue value)
@@ -106,7 +121,6 @@ public class Player : MonoBehaviour
     void OnDash()
     {
         if (isRollDelaying) { return; }
-        rolldir = movedir;
 
         rollSpeed = 50f;
         state = State.rolling;
@@ -127,11 +141,10 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (damageTaken) { return; }
-        if (state == State.rolling) { return; }
+        if (invinsibility || state == State.rolling) { return; }
         animator.SetTrigger("WasHurt");
         health -= damage;
-        damageTaken = true;
+        StartCoroutine(InvisibilityDelayRoutine());
         if (health <= 0)
         {
             isDead = true;
@@ -143,8 +156,18 @@ public class Player : MonoBehaviour
         return isDead;
     }
 
+    IEnumerator InvisibilityDelayRoutine()
+    {
+        invinsibility = true;
+        yield return new WaitForSeconds(invinsibilityLenght);
+        invinsibility = false;
+    }
+
     public void SetDamageTakenFalse()
     {
-        damageTaken = false;
+        invinsibility = false;
     }
+
+
+
 }

@@ -12,6 +12,8 @@ public class LevelDataObject : ScriptableObject
     public GameObject endRoom = null;
     [Header("EntranceBlockers")]
     public List<DirectionGameObjectPair> entranceBlockers;
+    [Header("Doors")]
+    public List<DirectionGameObjectPair> doors;
 
 
     public List<GameObject> GetRoomsList()
