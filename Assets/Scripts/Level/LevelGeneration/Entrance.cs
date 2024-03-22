@@ -6,14 +6,18 @@ public class Entrance : MonoBehaviour
     public Direction direction;
     [NonSerialized] public GameObject roomToSpawn;
 
-    bool doorOpen = true;
+    protected bool _doorOpen = true;
 
     RoomManager roomManager;
+    GameObject doorObject;
 
     private void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
-        roomManager.entrances.Add(this);
+        doorObject = transform.GetChild(0).gameObject;
+
+        if (roomManager != null ) 
+            roomManager.entrances.Add(this);
     }
 
 
@@ -29,13 +33,20 @@ public class Entrance : MonoBehaviour
         Destroy(gameObject);
     }
 
-    internal void CloseDoor()
+    protected void CloseDoor()
     {
-        
+        if (_doorOpen) ToggleDoor();
     }
 
-    private void UpdateDoorState()
+    protected void OpenDoor()
     {
-        
+        if (!_doorOpen) ToggleDoor();
+    }
+
+    protected void ToggleDoor()
+    {
+        _doorOpen = !_doorOpen;
+
+        doorObject.SetActive(_doorOpen);
     }
 }
