@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Sprites/Alternativ healtbar brustet.png.meta
-guid: fd7c6a7fed570664789b4992b44afcf3
-========
-guid: 1e97c7691f5229c42aded3d992f22183
->>>>>>>> 111b6aeadaf09514cfe562bcc4120fa41138ae2a:Assets/Sprites/GUI/Alternativ healtbar brustet.png.meta
+guid: cf7bdacb42a9b3447955c308d3eb0523
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
