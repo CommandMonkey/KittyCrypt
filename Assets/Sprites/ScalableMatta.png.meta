@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Sprites/Alternativ healtbar brustet.png.meta
-guid: 032c6f1b6261898488a0b58486283ed2
-========
-guid: 1e97c7691f5229c42aded3d992f22183
->>>>>>>> 111b6aeadaf09514cfe562bcc4120fa41138ae2a:Assets/Sprites/GUI/Alternativ healtbar brustet.png.meta
+guid: 35986772994f02247ac0d178b2d704a1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -52,8 +48,8 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 256
+  spriteBorder: {x: 69, y: 0, z: 73, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -117,7 +113,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
