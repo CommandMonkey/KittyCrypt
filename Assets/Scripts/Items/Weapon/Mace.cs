@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Mace : MonoBehaviour
 {
-    private enemy_Test enemyT;
     private AnimationEvent Animation;
     public Animator Animatorn;
     [SerializeField] private float delay = 0.3f;
@@ -16,7 +15,6 @@ public class Mace : MonoBehaviour
 
     private void Start()
     {
-        enemyT = FindObjectOfType<enemy_Test>();
         Animation = GetComponent<AnimationEvent>();
     }
 
@@ -51,10 +49,6 @@ public class Mace : MonoBehaviour
     {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrgin.position, radius))
         {
-           if (enemyT = collider.GetComponent<enemy_Test>())
-           {
-                enemyT.TakeDamage();
-           }
 
         }
     }

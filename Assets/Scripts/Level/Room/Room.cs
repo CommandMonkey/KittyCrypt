@@ -29,10 +29,10 @@ public class Room : MonoBehaviour
     // Cached references
     RoomManager roomManager;
     BoxCollider2D boxCollider;
-    
 
     void Start()
     {
+        
         roomManager = FindObjectOfType<RoomManager>();
         boxCollider = GetComponent<BoxCollider2D>();
 

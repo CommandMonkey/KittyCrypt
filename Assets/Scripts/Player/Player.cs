@@ -26,19 +26,23 @@ public class Player : MonoBehaviour
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
-    private Rigidbody2D myRigidbody;
-    private Animator animator;
+
+    public bool isDead = false;
 
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
-    bool isDead = false;
+    
     bool invinsibility = false;
 
 
     Vector2 moveInput;
+
+    // refs
+    private Rigidbody2D myRigidbody;
+    private Animator animator;
 
 
     private void Start()
@@ -48,6 +52,8 @@ public class Player : MonoBehaviour
 
         state = State.normal;
         rollResetTime = rolldelay;
+
+        
     }
 
     private void Update()
@@ -100,7 +106,7 @@ public class Player : MonoBehaviour
 
         exteriorVelocity *= drag;
     }
-
+    // flip 
     private void Flip()
     {
         if (moveInput.x > 0)
@@ -112,10 +118,11 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
-
+    // on_move
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        
     }
 
     void OnDash()
@@ -151,11 +158,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool GetIsDead()
-    {
-        return isDead;
-    }
-
     IEnumerator InvisibilityDelayRoutine()
     {
         invinsibility = true;
@@ -163,10 +165,6 @@ public class Player : MonoBehaviour
         invinsibility = false;
     }
 
-    public void SetDamageTakenFalse()
-    {
-        invinsibility = false;
-    }
 
 
 

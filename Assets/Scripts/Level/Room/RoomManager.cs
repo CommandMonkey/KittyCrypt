@@ -8,20 +8,20 @@ using UnityEngine.Events;
 public class RoomManager : MonoBehaviour
 {
     [Header("Rooms")]
-    public Transform grid;
-    public float roomSpawningDelay = 1;
+    internal Transform grid;
+    internal float roomSpawningDelay = 1;
 
     [Header("Room Spawning Prefabs")]
-    public LevelDataObject levelData;
+    internal LevelDataObject levelData;
 
     // public fields
-    [NonSerialized] public UnityEvent OnSpawnRoomWave;
-    [NonSerialized] public List<Room> currentWaveRooms = new List<Room>();
-    [NonSerialized] public List<Entrance> entrances = new List<Entrance>();
+    [NonSerialized] internal UnityEvent OnSpawnRoomWave;
+    [NonSerialized] internal List<Room> currentWaveRooms = new List<Room>();
+    [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
 
     // private fields
     List<GameObject> _rooms = new List<GameObject>();
-    public bool _exitSpawned = false;
+    bool _exitSpawned = false;
 
     // Cached refs
     LevelManager levelManager;
@@ -192,5 +192,20 @@ public class RoomManager : MonoBehaviour
         int invertedValue = (originalValue + halfEnumLength) % enumLength;
 
         return (Direction)invertedValue;
+    }
+
+    internal void CloseDoors()
+    {
+        foreach (Entrance entrance in entrances)
+        {
+            entrance.CloseDoor();
+        }
+    }
+    internal void OpenDoors()
+    {
+        foreach (Entrance entrance in entrances)
+        {
+            entrance.OpenDoor();
+        }
     }
 }

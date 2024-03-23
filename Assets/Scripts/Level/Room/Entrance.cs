@@ -7,20 +7,23 @@ public class Entrance : MonoBehaviour
     public Direction direction;
     [NonSerialized] public GameObject roomToSpawn;
 
-    protected bool doorOpen = true;
+    bool doorOpen = true;
 
     RoomManager roomManager;
     GameObject doorCollisionObject;
+    Animator animator;
 
     private void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
         doorCollisionObject = transform.GetChild(0).gameObject;
+        animator = GetComponent<Animator>();
 
         if (roomManager != null ) 
             roomManager.entrances.Add(this);
 
         doorCollisionObject.SetActive(doorOpen);
+
     }
 
 
@@ -39,12 +42,12 @@ public class Entrance : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected void CloseDoor()
+    internal void CloseDoor()
     {
         if (doorOpen) ToggleDoor();
     }
 
-    protected void OpenDoor()
+    internal void OpenDoor()
     {
         if (!doorOpen) ToggleDoor();
     }
@@ -54,5 +57,8 @@ public class Entrance : MonoBehaviour
         doorOpen = !doorOpen;
 
         doorCollisionObject.SetActive(doorOpen);
+        UpdateDoorState();
     }
+
+
 }
