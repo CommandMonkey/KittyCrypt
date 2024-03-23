@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class Entrance : MonoBehaviour
@@ -6,7 +7,7 @@ public class Entrance : MonoBehaviour
     public Direction direction;
     [NonSerialized] public GameObject roomToSpawn;
 
-    protected bool _doorOpen = true;
+    protected bool doorOpen = true;
 
     RoomManager roomManager;
     GameObject doorCollisionObject;
@@ -19,7 +20,7 @@ public class Entrance : MonoBehaviour
         if (roomManager != null ) 
             roomManager.entrances.Add(this);
 
-        doorCollisionObject.SetActive(_doorOpen);
+        doorCollisionObject.SetActive(doorOpen);
     }
 
 
@@ -31,24 +32,27 @@ public class Entrance : MonoBehaviour
 
     public void Die()
     {
+        if (roomManager.entrances.Contains(this))
+            roomManager.entrances.Remove(this);
+
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
     protected void CloseDoor()
     {
-        if (_doorOpen) ToggleDoor();
+        if (doorOpen) ToggleDoor();
     }
 
     protected void OpenDoor()
     {
-        if (!_doorOpen) ToggleDoor();
+        if (!doorOpen) ToggleDoor();
     }
 
     protected void ToggleDoor()
     {
-        _doorOpen = !_doorOpen;
+        doorOpen = !doorOpen;
 
-        doorCollisionObject.SetActive(_doorOpen);
+        doorCollisionObject.SetActive(doorOpen);
     }
 }
