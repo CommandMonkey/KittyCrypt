@@ -71,7 +71,7 @@ public class GunFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.GetIsDead()) {  return; }
+        if (player.isDead) {  return; }
         ProjectileFire();
         BurstFire();
         RaycastFire();
@@ -144,8 +144,8 @@ public class GunFire : MonoBehaviour
     void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(fireAudio);
-        StopCoroutine(nuzzleFlash());
-        StartCoroutine(nuzzleFlash());
+        StopCoroutine(NuzzleFlash());
+        StartCoroutine(NuzzleFlash());
         virtualCameraAnimator.SetTrigger("CameraShake");
         player.exteriorVelocity += -(Vector2)transform.right * knockback;
     }
@@ -191,7 +191,7 @@ public class GunFire : MonoBehaviour
         }
     }
 
-    IEnumerator nuzzleFlash()
+    IEnumerator NuzzleFlash()
     {
         nuzzleLight.enabled = true;
         yield return new WaitForSeconds(0.05f);

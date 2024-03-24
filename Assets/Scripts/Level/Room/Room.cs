@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 public enum Direction
 {
@@ -22,14 +22,21 @@ public enum RoomType
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
-    public bool newlySpawned = true;
-    public Entrance previousRoomEntrance;
-    public GameObject thisRoomPrefab;
+    [NonSerialized] public bool newlySpawned = true;
+    [NonSerialized] public Entrance previousRoomEntrance;
+    [NonSerialized] public GameObject thisRoomPrefab;
+    [NonSerialized] protected UnityEvent OnPlayerEnter;
+
+    
 
     // Cached references
-    RoomManager roomManager;
+    protected RoomManager roomManager;
     BoxCollider2D boxCollider;
-    
+
+    private void Awake()
+    {
+        OnPlayerEnter = new UnityEvent();
+    }
 
     void Start()
     {
@@ -38,7 +45,7 @@ public class Room : MonoBehaviour
 
         if (IsOverlapping())
         {
-            roomManager.SpawnDoorCover(RoomManager.InvertDirection(previousRoomEntrance.direction), previousRoomEntrance.transform.position);
+            previousRoomEntrance.hasConnectedRoom = false;
             Die();
             return;
         }
@@ -78,4 +85,11 @@ public class Room : MonoBehaviour
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+            OnPlayerEnter.Invoke();
+    }
+
 }
