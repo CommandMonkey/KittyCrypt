@@ -75,27 +75,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 4459397233979908493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0908f6828171d49b104f347669e020, type: 3}
+  m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 2
-  fireAudio: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
-  reloadAudio: {fileID: 8300000, guid: d201d037fe8984e459f72175ff450ead, type: 3}
-  fireRate: 0.75
-  reloadTime: 3.5
-  damagePerBullet: 50
-  bulletsBeforeReload: 6
-  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
-  destroyHitEffectAfter: 0.75
-  knockback: 15
+  weaponType: 0
+  fireAudio: {fileID: 0}
+  reloadAudio: {fileID: 0}
+  fireRate: 0.5
+  reloadTime: 1
+  damagePerBullet: 1
+  bulletsBeforeReload: 5
+  hitEffect: {fileID: 0}
+  destroyHitEffectAfter: 1.5
+  knockback: 2
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 904
-  projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 40
+    m_Bits: 0
+  projectile: {fileID: 0}
+  bulletSpreadRange: 1
   projectileSpeed: 5
-  projectileVanishAfter: 5
-  bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
+  projectileVanishAfter: 3
+  bulletTrail: {fileID: 0}
   destroyTrailAfter: 0.1
 --- !u!114 &5041264691167727542
 MonoBehaviour:
@@ -249,7 +249,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -757988771
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ef840803fb005e94eb85c9fdae739ebf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -304,7 +304,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6239386400827781191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2b138c668c27b34d8cabf12d428f972, type: 3}
+  m_Script: {fileID: 11500000, guid: 55181fb28ba149c40b7b69906252bfec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   barrelExitPoint: {fileID: 206916783322102975}
