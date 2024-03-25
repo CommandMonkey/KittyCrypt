@@ -6,7 +6,14 @@ public class LevelManager : MonoBehaviour
 {
     [Header("Load Settings")]
     public bool spawnRooms = true;
+    public LevelState state = LevelState.Running;
 
+    public enum LevelState
+    {
+        Running,
+        Paused,
+        Loading,
+    }
     public SoundManager soundManager { get; private set; }
     public Camera mainCamera { get; private set; }
     public Player player;
@@ -21,3 +28,5 @@ public class LevelManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 }
+
+

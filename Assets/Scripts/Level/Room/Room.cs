@@ -29,8 +29,8 @@ public class Room : MonoBehaviour
     
 
     // Cached references
-    protected RoomManager roomManager;
-    protected BoxCollider2D boxCollider;
+    RoomManager roomManager;
+    BoxCollider2D boxCollider;
 
     private void Awake()
     {
@@ -62,8 +62,9 @@ public class Room : MonoBehaviour
         {
             foreach (Collider2D collider in results)
             {
-                if (collider?.gameObject.CompareTag("Room") ?? false)
+                if (collider != null && collider.gameObject.CompareTag("Room"))
                 {
+                    Debug.Log("COLLIDING");
                     return true;
                 }
             }
@@ -82,7 +83,7 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collide!!!");
+        Debug.Log("Collide!!!: " + name + " with: " + collision.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             OnPlayerEnter.Invoke();

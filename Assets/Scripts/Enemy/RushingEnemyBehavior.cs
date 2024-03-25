@@ -36,7 +36,7 @@ public class RushingEnemyBehavior : Enemy
     Rigidbody2D rigidBody2D;
     Player playerMovment;
     Animator animator;
-    [SerializeField] GameObject MouseBlood;
+    [SerializeField] GameObject EnemyBlood;
 
     void Start()
     {
@@ -80,8 +80,8 @@ public class RushingEnemyBehavior : Enemy
 
     void PlayVFX()
     {
-        GameObject mouseBlood = Instantiate(MouseBlood, transform.position, transform.rotation);
-        Destroy(mouseBlood, 1f);
+        GameObject Blood = Instantiate(EnemyBlood, transform.position, transform.rotation);
+        Destroy(Blood, 1f);
     }
 
     void HitPlayer()

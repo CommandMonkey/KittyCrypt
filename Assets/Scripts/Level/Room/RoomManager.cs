@@ -40,6 +40,8 @@ public class RoomManager : MonoBehaviour
 
     public void StartRoomSpawning()
     {
+        levelManager.state = LevelManager.LevelState.Loading;
+
         //Spawn first room (it will spawn more rooms)
         Instantiate(levelData.startRoom, grid);
 

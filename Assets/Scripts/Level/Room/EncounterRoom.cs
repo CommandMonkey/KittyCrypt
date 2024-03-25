@@ -8,6 +8,10 @@ public class EncounterRoom : Room
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
 
+    bool isActive; // if the player has entered and the encounter is active
+    bool isRoomDefeated; // if the room has been defeted
+    List<GameObject> enemies = new List<GameObject>();
+
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
     LevelManager levelManager;
@@ -20,23 +24,37 @@ public class EncounterRoom : Room
         OnPlayerEnter.AddListener(PlayerEnter);
     }
 
+    private void Update()
+    {
+        if(isActive)
+        {
+            if (enemies.Count <= 0)
+            {
+                thisRoomManager.OpenDoors();
+                isActive = false;
+            }
+        }
+    }
+
 
     void PlayerEnter()
     {
-        StartCoroutine(PlayerEnterRoutine());
+        if (isRoomDefeated) return;
         
+        StartCoroutine(PlayerEnterRoutine());
     }
 
     IEnumerator PlayerEnterRoutine()
     {
         yield return new WaitForSeconds(1f);
         thisRoomManager.CloseDoors();
-        StartCoroutine(SpawnEnemiesRoutine());
+        SpawnEnemies();
+        isActive = true;
     }
 
-    IEnumerator SpawnEnemiesRoutine()
+    void SpawnEnemies()
     {
-
+        enemies.Clear();
 
         foreach (GameObject enemy in enemiesToSpawn)
         {
@@ -50,9 +68,7 @@ public class EncounterRoom : Room
             }
 
             Debug.Log(enemy.name + " is spawning at: " + pos);
-            Instantiate(enemy, pos, Quaternion.identity, levelManager.enemyContainer);
+            enemies.Add(Instantiate(enemy, pos, Quaternion.identity, levelManager.enemyContainer));
         }
-
-        yield break;
     }
 }
