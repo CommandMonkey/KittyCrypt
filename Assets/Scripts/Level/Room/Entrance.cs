@@ -50,8 +50,7 @@ public class Entrance : MonoBehaviour
 
     public void SpawnDoorCover()
     {
-        roomManager.SpawnDoorCover(RoomManager.InvertDirection(direction), transform.position);
-        if (roomManager != null) roomManager.entrances.Remove(this);
+        roomManager.SpawnDoorCover(direction, transform.position);
         Invoke("Die", .1f);
     }
 

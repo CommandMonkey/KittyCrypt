@@ -193,6 +193,7 @@ public class RoomManager : MonoBehaviour
             newRoomInstance.entrances.Remove(_roomMeetingEntrance);
             _roomMeetingEntrance.Die();
         }
+        _entrance.hasConnectedRoom = true;
     }
 
 
