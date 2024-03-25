@@ -65,7 +65,10 @@ public class GunFire : MonoBehaviour
         gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
         player = FindObjectOfType<Player>();
         nuzzleLight = GetComponent<Light2D>();
-        nuzzleLight.enabled = false;
+        if (nuzzleLight != null)
+        {
+            nuzzleLight.enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -144,10 +147,12 @@ public class GunFire : MonoBehaviour
     void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(fireAudio);
-        StopCoroutine(NuzzleFlash());
-        StartCoroutine(NuzzleFlash());
         virtualCameraAnimator.SetTrigger("CameraShake");
         player.exteriorVelocity += -(Vector2)transform.right * knockback;
+
+        if (nuzzleLight == null) { return; }
+        StopCoroutine(NuzzleFlash());
+        StartCoroutine(NuzzleFlash());
     }
 
     void CheckBulletsFired()

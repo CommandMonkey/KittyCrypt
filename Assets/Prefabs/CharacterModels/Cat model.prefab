@@ -818,8 +818,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.1
+  m_Pitch: 0.1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -915,12 +915,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footsteps:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 93ec084ace41c1348ad88b0bbf12c724, type: 3}
+  - {fileID: 8300000, guid: 61aeb23212857d94785ffcdadc0ced93, type: 3}
+  - {fileID: 8300000, guid: 1de180c277b3b14408e3c79100434c90, type: 3}
+  - {fileID: 8300000, guid: 34b7d9b8807e1f44eb4da3345e1398ec, type: 3}
+  - {fileID: 8300000, guid: 00989e026679d75468ee57f926fb551c, type: 3}
+  - {fileID: 8300000, guid: 9b0b711e8fb653742a3eecd756faff7b, type: 3}
 --- !u!1 &4412862239110998917
 GameObject:
   m_ObjectHideFlags: 0

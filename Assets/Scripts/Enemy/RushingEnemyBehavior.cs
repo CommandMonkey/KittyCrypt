@@ -70,12 +70,18 @@ public class RushingEnemyBehavior : Enemy
         CheakMeleeRange();
     }
 
+    private void OnDestroy()
+    {
+        PlayVFX();
+    }
+
     public void TakeDamage(float damage)
     {
         hp -= damage;
         if (hp < 0)
-        PlayVFX();
-        { Destroy(gameObject); }
+        {
+            Destroy(gameObject);
+        }
     }
 
     void PlayVFX()
