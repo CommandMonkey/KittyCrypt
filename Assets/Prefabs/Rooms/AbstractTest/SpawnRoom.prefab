@@ -2630,7 +2630,7 @@ MonoBehaviour:
   - {x: 33, y: -12, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 83746
+  m_InstanceId: 39598
   m_LocalBounds:
     m_Center: {x: 10.5, y: 10.5, z: 0}
     m_Extent: {x: 22.5, y: 22.5, z: 0}
@@ -4325,7 +4325,7 @@ MonoBehaviour:
   - {x: 32.125, y: -11.125, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 83728
+  m_InstanceId: 39580
   m_LocalBounds:
     m_Center: {x: 10.5, y: 8, z: 0}
     m_Extent: {x: 21.625, y: 19.125, z: 0}
@@ -4348,13 +4348,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &3478328682861642060
-RectTransform:
+--- !u!4 &3478328682861642060
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3722623101364078196}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -4369,11 +4370,6 @@ RectTransform:
   - {fileID: 3918568924533159810}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &133979408298044591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4390,9 +4386,6 @@ MonoBehaviour:
   - {fileID: 2484827387508037546}
   - {fileID: 1878025689086817034}
   - {fileID: 7502734693209204236}
-  newlySpawned: 1
-  previousRoomEntrance: {fileID: 0}
-  thisRoomPrefab: {fileID: 0}
 --- !u!61 &2939126284320088402
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4422,7 +4415,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.5, y: 0.5}
@@ -4464,7 +4457,7 @@ MonoBehaviour:
   - {x: 11.95, y: -10.95, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 83730
+  m_InstanceId: 39582
   m_LocalBounds:
     m_Center: {x: 0.5, y: 0.5, z: 0}
     m_Extent: {x: 11.45, y: 11.45, z: 0}
