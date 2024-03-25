@@ -1,11 +1,15 @@
 using System;
-using UnityEditor.EditorTools;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Entrance : MonoBehaviour
 {
     public Direction direction;
+
     [NonSerialized] public GameObject roomToSpawn;
+    [NonSerialized] public List<string> roomTriesNames = new List<string>();
+     public bool hasConnectedRoom;
 
     bool doorOpen = true;
 
@@ -19,18 +23,28 @@ public class Entrance : MonoBehaviour
         doorCollisionObject = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
 
+        animator.SetInteger("direction", (int)direction);
+
+        SetDoorCollisionSize();
+
         if (roomManager != null ) 
             roomManager.entrances.Add(this);
 
-        doorCollisionObject.SetActive(doorOpen);
+        doorCollisionObject.SetActive(!doorOpen);
 
     }
 
+    private void SetDoorCollisionSize()
+    {
+        int numDir = (int)direction;
+        doorCollisionObject.GetComponent<BoxCollider2D>().size =
+            numDir == 0 || numDir == 2 ? new Vector2(3, 1) : new Vector2(1, 3);
+    }
 
     public void SpawnDoorCover()
     {
         roomManager.SpawnDoorCover(direction, transform.position);
-        Die();
+        Invoke("Die", .1f);
     }
 
     public void Die()
@@ -56,8 +70,8 @@ public class Entrance : MonoBehaviour
     {
         doorOpen = !doorOpen;
 
-        doorCollisionObject.SetActive(doorOpen);
-        UpdateDoorState();
+        doorCollisionObject.SetActive(!doorOpen);
+        animator.SetBool("doorOpen", doorOpen);
     }
 
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class EncounterRoom : Room
 {
     [SerializeField] List<GameObject> enemiesToSpawn;
-    [SerializeField] LayerMask noEnemyLayers = LayerMask.GetMask("Wall");
+    [SerializeField] LayerMask noEnemyLayers;
 
     BoxCollider2D roomCollider;
     LevelManager levelManager;
@@ -15,7 +15,7 @@ public class EncounterRoom : Room
     {
         roomCollider = GetComponent<BoxCollider2D>();
         levelManager = FindObjectOfType<LevelManager>();
-        StartCoroutine(SpawnEnemiesRoutine());
+        OnPlayerEnter.AddListener(PlayerEnter);
     }
 
     IEnumerator SpawnEnemiesRoutine()
@@ -38,11 +38,9 @@ public class EncounterRoom : Room
         yield break;
     }
 
-    // Update is called once per frame
-    void Update()
+    void PlayerEnter()
     {
-        
+        StartCoroutine(SpawnEnemiesRoutine());
+        roomManager.CloseDoors();
     }
-
-    
 }
