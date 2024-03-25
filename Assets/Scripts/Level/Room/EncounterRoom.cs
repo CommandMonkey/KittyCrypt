@@ -8,9 +8,9 @@ public class EncounterRoom : Room
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
 
-    bool isActive; // if the player has entered and the encounter is active
-    bool isRoomDefeated; // if the room has been defeted
-    List<GameObject> enemies = new List<GameObject>();
+    bool isActive = false; // if the player has entered and the encounter is active
+    bool isRoomDefeated = false; // if the room has been defeted
+    List<GameObject> enemies;
 
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
@@ -21,24 +21,37 @@ public class EncounterRoom : Room
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
         levelManager = FindObjectOfType<LevelManager>();
+
         OnPlayerEnter.AddListener(PlayerEnter);
+        levelManager.OnEnemyKill.AddListener(EnemyKill);
     }
 
     private void Update()
     {
-        if(isActive)
+
+    }
+
+    void EnemyKill()
+    {
+        if (!isActive || isRoomDefeated) return;
+        int _enemiesAlive = enemies.Count-1;
+        foreach(GameObject obj in enemies)
         {
-            if (enemies.Count <= 0)
-            {
-                thisRoomManager.OpenDoors();
-                isActive = false;
-            }
+            if (obj == null) _enemiesAlive--; 
+        }
+        Debug.Log(_enemiesAlive);
+        if (_enemiesAlive == 0)
+        {
+            isRoomDefeated = true;
+            isActive = false;
+            thisRoomManager.OpenDoors();
         }
     }
 
 
     void PlayerEnter()
     {
+        Debug.Log("Palyer Enter");
         if (isRoomDefeated) return;
         
         StartCoroutine(PlayerEnterRoutine());
@@ -54,9 +67,9 @@ public class EncounterRoom : Room
 
     void SpawnEnemies()
     {
-        enemies.Clear();
+        enemies = new List<GameObject>();
 
-        foreach (GameObject enemy in enemiesToSpawn)
+        for(int i = 0; i < enemiesToSpawn.Count; i++)
         {
 
             Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider);
@@ -67,8 +80,7 @@ public class EncounterRoom : Room
                 pos = GameHelper.GetRandomPosInCollider(roomCollider);
             }
 
-            Debug.Log(enemy.name + " is spawning at: " + pos);
-            enemies.Add(Instantiate(enemy, pos, Quaternion.identity, levelManager.enemyContainer));
+            enemies.Add( Instantiate(enemiesToSpawn[i], pos, Quaternion.identity, levelManager.enemyContainer));
         }
     }
 }
