@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRoom: {fileID: 3722623101364078196, guid: eabfd13b394f5284fadcff6ae3609e63, type: 3}
   randomRoomPool:
-  - {fileID: 3722623101364078196, guid: beafb67c20d1a84449c9e6a184935c32, type: 3}
-  - {fileID: 3722623101364078196, guid: 23cc22af7ea42354db9e391adf72a292, type: 3}
-  amountOfRandomRooms: 0
+  - {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}
+  amountOfRandomRooms: 2
   setRooms:
   - {fileID: 3722623101364078196, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
   - {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}

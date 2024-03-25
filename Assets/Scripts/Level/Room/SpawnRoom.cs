@@ -6,10 +6,6 @@ public class SpawnRoom : MonoBehaviour
 {
     [SerializeField] GameObject startWeaponPickup;
     
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

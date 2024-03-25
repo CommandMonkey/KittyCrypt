@@ -87,7 +87,7 @@ public class GunFire : MonoBehaviour
         if (playerInput.actions["Fire"].IsPressed()) 
         {
             randomBulletSpread = GetBulletSpread();
-            Instantiate(projectile, transform.position, randomBulletSpread);
+            Instantiate(projectile, transform.position, randomBulletSpread);    
             GunFeedbackEffects();
             fireRateCoolingDown = true;
             bulletsFired++;
