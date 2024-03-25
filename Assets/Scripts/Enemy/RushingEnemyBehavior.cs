@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RushingEnemyBehavior : MonoBehaviour
+public class RushingEnemyBehavior : Enemy
 {
 
     //variables
@@ -35,7 +35,8 @@ public class RushingEnemyBehavior : MonoBehaviour
     LevelManager gameManager;
     Rigidbody2D rigidBody2D;
     Player playerMovment;
-    Animator animator; 
+    Animator animator;
+    [SerializeField] GameObject MouseBlood;
 
     void Start()
     {
@@ -73,13 +74,20 @@ public class RushingEnemyBehavior : MonoBehaviour
     {
         hp -= damage;
         if (hp < 0)
+        PlayVFX();
         { Destroy(gameObject); }
+    }
+
+    void PlayVFX()
+    {
+        GameObject mouseBlood = Instantiate(MouseBlood, transform.position, transform.rotation);
+        Destroy(mouseBlood, 1f);
     }
 
     void HitPlayer()
     {
         animator.SetBool("isAttacking", true);
-        if (!ableToHit) { return; }
+        if (!ableToHit) return;
         playerMovment.TakeDamage(enemyDMG);
         StartCoroutine(DelayedSetAbleToHit());
         ableToHit = false;
@@ -112,7 +120,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         else
         { inMeleeRange = false; }
     }
-
+  
     void ShootLineOfSightRay()
     {
         Vector2 direction = target.position - transform.position;

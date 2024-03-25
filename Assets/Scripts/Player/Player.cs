@@ -1,10 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,26 +14,30 @@ public class Player : MonoBehaviour
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
-    [SerializeField] int health = 100;
+    [SerializeField] int health = 9;
 
     [SerializeField] float drag = 0.9f;
     [SerializeField] float invinsibilityLenght = 1f;
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
-    private Rigidbody2D myRigidbody;
-    private Animator animator;
+
+    public bool isDead = false;
 
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
-    bool isDead = false;
+    
     bool invinsibility = false;
 
 
     Vector2 moveInput;
+
+    // refs
+    private Rigidbody2D myRigidbody;
+    private Animator animator;
 
 
     private void Start()
@@ -48,6 +47,8 @@ public class Player : MonoBehaviour
 
         state = State.normal;
         rollResetTime = rolldelay;
+
+        
     }
 
     private void Update()
@@ -100,7 +101,7 @@ public class Player : MonoBehaviour
 
         exteriorVelocity *= drag;
     }
-
+    // flip 
     private void Flip()
     {
         if (moveInput.x > 0)
@@ -112,10 +113,11 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
-
+    // on_move
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        
     }
 
     void OnDash()
@@ -151,11 +153,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool GetIsDead()
-    {
-        return isDead;
-    }
-
     IEnumerator InvisibilityDelayRoutine()
     {
         invinsibility = true;
@@ -163,11 +160,8 @@ public class Player : MonoBehaviour
         invinsibility = false;
     }
 
-    public void SetDamageTakenFalse()
+    public int GetHealth()
     {
-        invinsibility = false;
+        return health;
     }
-
-
-
 }

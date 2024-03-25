@@ -74,7 +74,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4196395211595052769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2b138c668c27b34d8cabf12d428f972, type: 3}
+  m_Script: {fileID: 11500000, guid: 55181fb28ba149c40b7b69906252bfec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   barrelExitPoint: {fileID: 864004575432457577}
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -757988771
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 3551583045618981167, guid: 20348caf8875b1243916709cb88b01e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -258,27 +258,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 7445562969301839146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0908f6828171d49b104f347669e020, type: 3}
+  m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 1
   fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
   reloadAudio: {fileID: 0}
-  fireRate: 0.1
-  reloadTime: 1
-  damagePerBullet: 3
+  fireRate: 1
+  reloadTime: 1.5
+  damagePerBullet: 4
   bulletsBeforeReload: 10
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
-  destroyHitEffectAfter: 0.75
-  knockback: 30
+  destroyHitEffectAfter: 1.5
+  knockback: 15
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 904
   projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
   bulletSpreadRange: 20
-  projectileSpeed: 50
-  projectileVanishAfter: 5
-  bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
+  projectileSpeed: 40
+  projectileVanishAfter: 3
+  bulletTrail: {fileID: 0}
   destroyTrailAfter: 0.1
 --- !u!114 &5810745877326213981
 MonoBehaviour:
