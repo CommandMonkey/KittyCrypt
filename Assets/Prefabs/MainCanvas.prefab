@@ -1390,8 +1390,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7b8283fd88ac1409862dea214581b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHeart: {fileID: 0}
-  damagedHeart: {fileID: 0}
+  heartsAmount:
+  - {fileID: 487047585289549876}
+  - {fileID: 3697745679177712744}
+  - {fileID: 1290840111010931879}
+  - {fileID: 360217757473550943}
+  - {fileID: 6239688997435966975}
+  - {fileID: 6255987634708334280}
+  - {fileID: 1946681129642090539}
+  - {fileID: 2907856553215140377}
+  - {fileID: 6000445696222785795}
+  fullHeart: {fileID: 2020767454, guid: 9d8a395b030aa3647bd5c3191e161015, type: 3}
+  damagedHeart: {fileID: -1884705432, guid: 9d8a395b030aa3647bd5c3191e161015, type: 3}
 --- !u!1 &7764757614233863462
 GameObject:
   m_ObjectHideFlags: 0

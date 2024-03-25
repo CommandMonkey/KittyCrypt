@@ -352,6 +352,18 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 34245969}
     m_ColliderPaths:
+    - - X: 110000000
+        Y: 110000000
+      - X: 80000000
+        Y: 110000000
+      - X: 80000000
+        Y: 70000000
+      - X: 100000000
+        Y: 70000000
+      - X: 100000000
+        Y: 10000000
+      - X: 110000000
+        Y: 10000000
     - - X: -90000000
         Y: -20000000
       - X: 20000000
@@ -362,79 +374,59 @@ CompositeCollider2D:
         Y: 70000000
       - X: 50000000
         Y: 110000000
-      - X: 10000000
-        Y: 110000000
-      - X: 10000000
-        Y: 100000000
-      - X: 9999999
-        Y: 110000000
-      - X: -10000000
-        Y: 110000000
-      - X: -9999999
-        Y: 100000000
-      - X: -10000000
-        Y: 100000000
-      - X: -10000000
-        Y: 110000000
       - X: -100000000
         Y: 110000000
+      - X: -100000000
+        Y: 10000000
+      - X: -90000000
+        Y: 10000000
+      - X: -100000000
+        Y: 9999999
       - X: -100000000
         Y: -40000000
       - X: -90000000
         Y: -40000000
+    - - X: 9999999
+        Y: 10000000
+      - X: 10000000
+        Y: 20000000
+      - X: -9999999
+        Y: 20000000
+      - X: -10000000
+        Y: 10000000
+      - X: -10000000
+        Y: 20000000
+      - X: -90000000
+        Y: 20000000
+      - X: -90000000
+        Y: 70000000
+      - X: 10000000
+        Y: 70000000
+      - X: 10000000
+        Y: 10000000
     - - X: 110000000
-        Y: 110000000
-      - X: 80000000
-        Y: 110000000
-      - X: 80000000
-        Y: 70000000
+        Y: 9999999
       - X: 100000000
-        Y: 70000000
+        Y: 10000000
+      - X: 100000000
+        Y: -9999999
+      - X: 110000000
+        Y: -10000000
+    - - X: 110000000
+        Y: -10000000
+      - X: 100000000
+        Y: -10000000
       - X: 100000000
         Y: -90000000
-      - X: 10000000
+      - X: -90000000
         Y: -90000000
-      - X: 10000000
+      - X: -90000000
+        Y: -70000000
+      - X: -100000000
+        Y: -70000000
+      - X: -100000000
         Y: -100000000
       - X: 110000000
-        Y: -100000000
-    - - X: -10000000
-        Y: 10000000
-      - X: -10000000
-        Y: 20000000
-      - X: -90000000
-        Y: 20000000
-      - X: -90000000
-        Y: 70000000
-      - X: 10000000
-        Y: 70000000
-      - X: 10000000
-        Y: 15000000
-      - X: 9999999
-        Y: 20000000
-      - X: -10000000
-        Y: 20000000
-      - X: -9999999
-        Y: 10000000
-    - - X: -10000000
-        Y: -90000000
-      - X: -90000000
-        Y: -90000000
-      - X: -90000000
-        Y: -70000000
-      - X: -100000000
-        Y: -70000000
-      - X: -100000000
-        Y: -100000000
-      - X: -10000000
-        Y: -100000000
-    - - X: 9999999
-        Y: -90000000
-      - X: -10000000
-        Y: -90000000
-      - X: -9999999
-        Y: -100000000
-      - X: 10000000
         Y: -100000000
   m_CompositePaths:
     m_Paths:
@@ -456,7 +448,7 @@ CompositeCollider2D:
       - {x: 4.999971, y: 11}
       - {x: -10, y: 10.99997}
       - {x: -9.99997, y: -4}
-    - - {x: 0.99999994, y: 2.0000293}
+    - - {x: 1, y: 2.0000293}
       - {x: -9, y: 2.0000293}
       - {x: -8.99997, y: 7}
       - {x: 1, y: 6.9999704}
@@ -593,11 +585,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3478328682861642060, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 3478328682861642060, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3478328682861642060, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1403,7 +1395,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 271190585155846044, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 271190585155846044, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayerID
@@ -1411,7 +1403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 839488451139223770, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 839488451139223770, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayerID
@@ -1419,7 +1411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1197789707874607807, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1197789707874607807, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayerID
@@ -1479,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4413985912551051931, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4413985912551051931, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayerID
@@ -1487,7 +1479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6247118561470230043, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6247118561470230043, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayerID
@@ -1495,7 +1487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6344323425225627520, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6344323425225627520, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayerID
@@ -1503,7 +1495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8348955338479129986, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8348955338479129986, guid: aa424c0756c45c244868633da29337ca, type: 3}
       propertyPath: m_SortingLayerID
@@ -8170,13 +8162,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &960703463 stripped
-RectTransform:
+--- !u!4 &960703463 stripped
+Transform:
   m_CorrespondingSourceObject: {fileID: 3478328682861642060, guid: 74e11636006de494194d9042af50be4d, type: 3}
   m_PrefabInstance: {fileID: 614669849}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1113828321 stripped
-RectTransform:
+--- !u!4 &1113828321 stripped
+Transform:
   m_CorrespondingSourceObject: {fileID: 3478328682861642060, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
   m_PrefabInstance: {fileID: 61691730}
   m_PrefabAsset: {fileID: 0}
