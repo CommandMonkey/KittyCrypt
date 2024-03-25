@@ -12,21 +12,13 @@ public enum Direction
     Right
 }
 
-public enum RoomType
-{
-    Start, 
-    End,
-    Normal
-}
-
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
+
     [NonSerialized] public Entrance previousRoomEntrance;
     [NonSerialized] public GameObject thisRoomPrefab;
     [NonSerialized] protected UnityEvent OnPlayerEnter;
-
-    
 
     // Cached references
     RoomManager roomManager;
@@ -35,6 +27,7 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         OnPlayerEnter = new UnityEvent();
+
     }
 
     void Start()
@@ -42,39 +35,56 @@ public class Room : MonoBehaviour
         roomManager = FindObjectOfType<RoomManager>();
         boxCollider = GetComponent<BoxCollider2D>();
 
+        //Invoke("CheckSpawningConditions", .01f);
+    }
+
+    void CheckSpawningConditions()
+    {
         if (IsOverlapping())
         {
             previousRoomEntrance.hasConnectedRoom = false;
             Die();
             return;
         }
-
-        roomManager.currentWaveRooms.Add(this);
     }
 
     private bool IsOverlapping()
     {
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.layerMask = LayerMask.GetMask("Room");
+        filter.useTriggers = true;
+
         Collider2D[] results = new Collider2D[10];
-        int numColliders = boxCollider.OverlapCollider(new ContactFilter2D(), results);
+        int numColliders = boxCollider.OverlapCollider(filter, results);
 
         // Check if any colliders are detected
         if (numColliders > 0)
         {
-            foreach (Collider2D collider in results)
+            for (int i = 0; i < numColliders; i++)
             {
-                if (collider != null && collider.gameObject.CompareTag("Room"))
+                Collider2D collider = results[i];
+                if (collider != null)
                 {
-                    Debug.Log("COLLIDING");
-                    return true;
+                    if (collider.gameObject.CompareTag("Room"))
+                    {
+                        Debug.Log("COLLIDING with Room: " + collider.gameObject.name);
+                        return true;
+                    }
                 }
             }
         }
+        else
+        {
+            Debug.Log("No overlapping colliders found.");
+        }
+
         return false;
     }
 
 
     private void Die()
     {
+        Debug.Log("KillingMyself: " + name);
         roomManager.AddRoomToList(thisRoomPrefab);
         gameObject.SetActive(false);
         Destroy(gameObject);
