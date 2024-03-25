@@ -1,10 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
-    [SerializeField] int health = 100;
+    [SerializeField] int health = 9;
 
     [SerializeField] float drag = 0.9f;
     [SerializeField] float invinsibilityLenght = 1f;
@@ -165,7 +160,8 @@ public class Player : MonoBehaviour
         invinsibility = false;
     }
 
-
-
-
+    public int GetHealth()
+    {
+        return health;
+    }
 }

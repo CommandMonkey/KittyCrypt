@@ -74,7 +74,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1814528189
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -156,6 +156,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9181747754686250940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccfc2f8e4897c534bb579129c7a16ffa, type: 3}
+  m_Script: {fileID: 11500000, guid: b25f6f7962c53ae4fbe54c51751359fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

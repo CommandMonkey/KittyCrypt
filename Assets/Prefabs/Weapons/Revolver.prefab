@@ -78,24 +78,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 0
-  fireAudio: {fileID: 0}
-  reloadAudio: {fileID: 0}
-  fireRate: 0.5
-  reloadTime: 1
-  damagePerBullet: 1
-  bulletsBeforeReload: 5
-  hitEffect: {fileID: 0}
+  weaponType: 2
+  fireAudio: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
+  reloadAudio: {fileID: 8300000, guid: d201d037fe8984e459f72175ff450ead, type: 3}
+  fireRate: 1
+  reloadTime: 3.5
+  damagePerBullet: 50
+  bulletsBeforeReload: 6
+  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
-  knockback: 2
+  knockback: 10
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 904
   projectile: {fileID: 0}
   bulletSpreadRange: 1
   projectileSpeed: 5
   projectileVanishAfter: 3
-  bulletTrail: {fileID: 0}
+  bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
   destroyTrailAfter: 0.1
 --- !u!114 &5041264691167727542
 MonoBehaviour:

@@ -158,6 +158,7 @@ MonoBehaviour:
   health: 9
   drag: 0.9
   invinsibilityLenght: 1
+  isDead: 0
 --- !u!1 &5398213958659527685
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +346,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1765373491
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 17baf8e4a48e9f9408928a9c91eb26d5, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
@@ -368,7 +369,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2032172135112041769, guid: 7cc553b8b3a7f5d479bb021119dc5e88, type: 3}
       propertyPath: m_SortingLayer
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2032172135112041769, guid: 7cc553b8b3a7f5d479bb021119dc5e88, type: 3}
       propertyPath: m_SortingOrder
@@ -466,28 +467,8 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 1298693227849991585, guid: 7cc553b8b3a7f5d479bb021119dc5e88, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3939717795354744802, guid: 7cc553b8b3a7f5d479bb021119dc5e88, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2761925463258596893}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cc553b8b3a7f5d479bb021119dc5e88, type: 3}
---- !u!1 &4105674938743413776 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3939717795354744802, guid: 7cc553b8b3a7f5d479bb021119dc5e88, type: 3}
-  m_PrefabInstance: {fileID: 1033287958756707314}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2761925463258596893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4105674938743413776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cebf51a3792db4fa083917681c6a55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7261892003396207799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7679083361852165957, guid: 7cc553b8b3a7f5d479bb021119dc5e88, type: 3}
