@@ -35,7 +35,8 @@ public class RushingEnemyBehavior : Enemy
     LevelManager gameManager;
     Rigidbody2D rigidBody2D;
     Player playerMovment;
-    Animator animator; 
+    Animator animator;
+    [SerializeField] GameObject EnemyBlood;
 
     void Start()
     {
@@ -73,7 +74,14 @@ public class RushingEnemyBehavior : Enemy
     {
         hp -= damage;
         if (hp < 0)
+        PlayVFX();
         { Destroy(gameObject); }
+    }
+
+    void PlayVFX()
+    {
+        GameObject Blood = Instantiate(EnemyBlood, transform.position, transform.rotation);
+        Destroy(Blood, 1f);
     }
 
     void HitPlayer()
