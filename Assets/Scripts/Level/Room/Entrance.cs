@@ -6,38 +6,45 @@ using UnityEngine;
 public class Entrance : MonoBehaviour
 {
     public Direction direction;
+    [SerializeField] Sprite frontClosedDoorSprite;
+    [SerializeField] Sprite frontOpenDoorSprite;
+    [SerializeField] Sprite sideClosedDoorSprite;
+    [SerializeField] Sprite sideOpenDoorSprite;
 
     [NonSerialized] public GameObject roomToSpawn;
     [NonSerialized] public List<string> roomTriesNames = new List<string>();
      public bool hasConnectedRoom;
 
-    bool doorOpen = true;
+    [SerializeField] bool doorOpen = true;
 
     RoomManager roomManager;
-    GameObject doorCollisionObject;
-    Animator animator;
+    BoxCollider2D doorBoxCollision;
+    SpriteRenderer spriteRenderer;
+    //Animator animator;
 
     private void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
-        doorCollisionObject = transform.GetChild(0).gameObject;
-        animator = GetComponent<Animator>();
+        doorBoxCollision = GetComponentInChildren<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        //animator = GetComponent<Animator>();
 
-        animator.SetInteger("direction", (int)direction);
+        //animator.SetInteger("direction", (int)direction);
 
         SetDoorCollisionSize();
 
-        if (roomManager != null ) 
-            roomManager.entrances.Add(this);
+        roomManager.entrances.Add(this);
 
-        doorCollisionObject.SetActive(!doorOpen);
+        doorBoxCollision.gameObject.SetActive(!doorOpen);
+        //animator.SetBool("doorOpen", doorOpen);
+        UpdateSprite();
 
     }
 
     private void SetDoorCollisionSize()
     {
         int numDir = (int)direction;
-        doorCollisionObject.GetComponent<BoxCollider2D>().size =
+        doorBoxCollision.size =
             numDir == 0 || numDir == 2 ? new Vector2(3, 1) : new Vector2(1, 3);
     }
 
@@ -56,23 +63,35 @@ public class Entrance : MonoBehaviour
         Destroy(gameObject);
     }
 
-    internal void CloseDoor()
+    public void CloseDoor()
     {
         if (doorOpen) ToggleDoor();
     }
 
-    internal void OpenDoor()
+    public void OpenDoor()
     {
         if (!doorOpen) ToggleDoor();
     }
 
     protected void ToggleDoor()
-    {
+    {   
         doorOpen = !doorOpen;
 
-        doorCollisionObject.SetActive(!doorOpen);
-        animator.SetBool("doorOpen", doorOpen);
+        doorBoxCollision.gameObject.SetActive(!doorOpen);
+        //animator.SetBool("doorOpen", doorOpen);
+        UpdateSprite();
     }
 
+    void UpdateSprite()
+    {
+        if ((int)direction == 0 || (int)direction == 2)
+        {
+            spriteRenderer.sprite = doorOpen ? frontOpenDoorSprite : frontClosedDoorSprite;
+        } 
+        else
+        {
+            spriteRenderer.sprite = doorOpen ? sideOpenDoorSprite : sideClosedDoorSprite;
+        }
+    }
 
 }

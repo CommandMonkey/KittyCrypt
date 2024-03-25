@@ -22,7 +22,6 @@ public enum RoomType
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
-    [NonSerialized] public bool newlySpawned = true;
     [NonSerialized] public Entrance previousRoomEntrance;
     [NonSerialized] public GameObject thisRoomPrefab;
     [NonSerialized] protected UnityEvent OnPlayerEnter;
@@ -31,7 +30,7 @@ public class Room : MonoBehaviour
 
     // Cached references
     protected RoomManager roomManager;
-    BoxCollider2D boxCollider;
+    protected BoxCollider2D boxCollider;
 
     private void Awake()
     {
@@ -50,33 +49,27 @@ public class Room : MonoBehaviour
             return;
         }
 
-        newlySpawned = false;
         roomManager.currentWaveRooms.Add(this);
     }
 
     private bool IsOverlapping()
     {
-        Collider2D[] results = new Collider2D[10]; 
+        Collider2D[] results = new Collider2D[10];
         int numColliders = boxCollider.OverlapCollider(new ContactFilter2D(), results);
-        Debug.Log(numColliders);
 
         // Check if any colliders are detected
         if (numColliders > 0)
         {
             foreach (Collider2D collider in results)
             {
-                // WAS DOING, !room.newlySpawned throws a Null ref error. IDK WHYYYYYYYYYYY!!
-
-                if (collider?.gameObject.CompareTag("Room") ?? false) 
+                if (collider?.gameObject.CompareTag("Room") ?? false)
                 {
-                    if (!collider.gameObject.GetComponent<Room>().newlySpawned)
-                        return true;
+                    return true;
                 }
             }
         }
         return false;
     }
-
 
 
     private void Die()
@@ -86,10 +79,21 @@ public class Room : MonoBehaviour
         Destroy(gameObject);
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        Debug.Log("Collide!!!");
+        if (collision.gameObject.CompareTag("Player"))
+        {
             OnPlayerEnter.Invoke();
+            Debug.Log("player enter room:" + gameObject.name);  
+        }
+            
+    }
+
+    bool IsPlayerInside()
+    {
+        throw new NotImplementedException();
     }
 
 }

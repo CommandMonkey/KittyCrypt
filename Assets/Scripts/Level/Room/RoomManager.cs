@@ -51,10 +51,9 @@ public class RoomManager : MonoBehaviour
         int _previousRoomCount = 0;
         int _waveCount = 0;
         GameObject _roomToSpawn = null;
-        while (_rooms.Count > 0 || currentWaveRooms.Count > 0)
+        while (_rooms.Count > 0)
         {
-            Debug.Log("Distributing Rooms -----------------------------------");
-
+            Debug.Log("wave: " + _waveCount);
             // If No rooms distributed last wave, terminate
             if (_waveCount > 5 && _rooms.Count == _previousRoomCount) 
             {
@@ -170,7 +169,7 @@ public class RoomManager : MonoBehaviour
         {
             newRoomInstance.previousRoomEntrance = connectedEntrance;
             newRoomInstance.entrances.Remove(_roomMeetingEntrance);
-            Destroy(_roomMeetingEntrance);
+            Destroy(_roomMeetingEntrance.gameObject);
         }
         
         connectedEntrance.hasConnectedRoom = true;
@@ -208,17 +207,18 @@ public class RoomManager : MonoBehaviour
         return (Direction)invertedValue;
     }
 
-    internal void CloseDoors()
+    public void CloseDoors()
     {
         foreach (Entrance entrance in entrances)
         {
             entrance.CloseDoor();
         }
     }
-    internal void OpenDoors()
+    public void OpenDoors()
     {
         foreach (Entrance entrance in entrances)
         {
+            Debug.Log("manager closing door");
             entrance.OpenDoor();
         }
     }
