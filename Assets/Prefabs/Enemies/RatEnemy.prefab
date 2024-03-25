@@ -204,7 +204,7 @@ MonoBehaviour:
   obsticleLayer:
     serializedVersion: 2
     m_Bits: 64
-  MouseBlood: {fileID: 5376875274643884105, guid: 4bca45e73eabc0e42b0708aed64270a1, type: 3}
+  EnemyBlood: {fileID: 5376875274643884105, guid: 4bca45e73eabc0e42b0708aed64270a1, type: 3}
 --- !u!111 &8225980211696084977
 Animation:
   m_ObjectHideFlags: 0
