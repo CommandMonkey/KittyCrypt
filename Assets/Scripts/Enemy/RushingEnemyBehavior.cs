@@ -32,7 +32,7 @@ public class RushingEnemyBehavior : Enemy
     public LayerMask obsticleLayer;
 
     //declerations
-    LevelManager gameManager;
+    LevelManager levelManager;
     Rigidbody2D rigidBody2D;
     Player playerMovment;
     Animator animator;
@@ -40,12 +40,12 @@ public class RushingEnemyBehavior : Enemy
 
     void Start()
     {
-        gameManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
         previousPosition = transform.position;
 
-        target = gameManager.player.transform;
+        target = levelManager.player.transform;
 
         playerMovment = target.GetComponent<Player>();
 
@@ -70,12 +70,19 @@ public class RushingEnemyBehavior : Enemy
         CheakMeleeRange();
     }
 
+    private void OnDestroy()
+    {
+        PlayVFX();
+    }
+
     public void TakeDamage(float damage)
     {
         hp -= damage;
         if (hp < 0)
-        PlayVFX();
-        { Destroy(gameObject); }
+        {
+            levelManager.OnEnemyKill.Invoke();
+            Destroy(gameObject);
+        }
     }
 
     void PlayVFX()

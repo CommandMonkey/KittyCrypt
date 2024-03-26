@@ -56,10 +56,8 @@ public class Entrance : MonoBehaviour
 
     public void Die()
     {
-        if (roomManager.entrances.Contains(this))
-            roomManager.entrances.Remove(this);
-
         gameObject.SetActive(false);
+        if (roomManager != null) roomManager.entrances.Remove(this);
         Destroy(gameObject);
     }
 
