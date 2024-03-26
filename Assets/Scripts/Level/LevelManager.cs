@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
     [Header("Load Settings")]
     public bool spawnRooms = true;
     public LevelState state = LevelState.Running;
+
+    [NonSerialized] public UnityEvent OnEnemyKill;
 
     public enum LevelState
     {
@@ -20,6 +24,12 @@ public class LevelManager : MonoBehaviour
     public Transform enemyContainer;
 
     public bool gamePaused = false;
+
+
+    private void Awake()
+    {
+        OnEnemyKill = new UnityEvent();
+    }
 
     private void Start()
     {

@@ -16,7 +16,6 @@ public class RoomManager : MonoBehaviour
 
     // public fields
     [NonSerialized] internal UnityEvent OnSpawnRoomDone;
-    [NonSerialized] internal List<Room> currentWaveRooms = new List<Room>();
     [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
 
     // private fields
@@ -50,50 +49,76 @@ public class RoomManager : MonoBehaviour
 
     IEnumerator SpawnRoomsRoutine()
     {
-        int _previousRoomCount = 0;
-        int _waveCount = 0;
-        GameObject _roomToSpawn = null;
+        // Define the contact filter for room colliders
+        ContactFilter2D roomsFilter = new ContactFilter2D
+        {
+            layerMask = LayerMask.GetMask("Room"),
+            useTriggers = true
+        };
+
+        int previousRoomCount = 0;
+        int waveCount = 0;
+
         while (_rooms.Count > 0)
         {
-            Debug.Log("wave: " + _waveCount);
-            // If No rooms distributed last wave, terminate
-            if (_waveCount > 5 && _rooms.Count == _previousRoomCount) 
+            Debug.Log("Wave: " + waveCount);
+
+            // Check termination condition
+            if (waveCount > 5 && _rooms.Count == previousRoomCount)
             {
-                Debug.LogWarning("TERMINATING ROOMSPAWNING, cant spawn all rooms, check room Pool");
+                Debug.LogWarning("TERMINATING ROOMSPAWNING. Can't spawn all rooms. Check room Pool.");
                 break;
             }
-            _previousRoomCount = _rooms.Count;
+            previousRoomCount = _rooms.Count;
 
-            // Distribute Rooms
-            foreach (Entrance _entrance in entrances)
+            // Shuffle the list of rooms to spawn
+            List<GameObject> roomsToSpawn = GameHelper.ShuffleList(_rooms);
+            yield return new WaitForEndOfFrame();
+
+            // Iterate over entrances
+            foreach (Entrance entrance in GameHelper.ShuffleList(entrances))
             {
-                if (!_entrance.hasConnectedRoom)
+                Direction invDirection = InvertDirection(entrance.direction);
+                Vector3 entrancePosition = entrance.gameObject.transform.position;
+
+                // Check if the entrance has a connected room
+                if (!entrance.hasConnectedRoom)
                 {
-                    _roomToSpawn = RetrieveRandomRoomPrefab(InvertDirection(_entrance.direction));
-
-                    // Spawn Room
-                    if (_roomToSpawn != null)
+                    foreach (GameObject roomObj in roomsToSpawn)
                     {
-                        _entrance.roomTriesNames.Add(_roomToSpawn.name);
-                        SpawnRoom(_roomToSpawn, _entrance);
+                        Room roomComponent = roomObj.GetComponent<Room>();
+                        Entrance roomEntrance = GetEntranceOfDir(roomComponent, invDirection);
+
+                        // Check if the room can be spawned at this entrance
+                        if (roomEntrance != null)
+                        {
+                            Vector3 entranceToZero = Vector3.zero - roomEntrance.transform.localPosition;
+                            Vector3 spawnPosition = entrancePosition + entranceToZero;
+
+                            // Check if the room collider would touch anything at the spawn position
+                            bool isTouchingRoom = GameHelper.IsBoxColliderTouching(spawnPosition, roomObj.GetComponent<BoxCollider2D>(), roomsFilter);
+
+                            // If the room collider doesn't touch anything, spawn the room
+                            if (!isTouchingRoom)
+                            {
+                                SpawnRoom(roomObj, spawnPosition, entrance);
+                                roomsToSpawn.Remove(roomObj);
+                                _rooms.Remove(roomObj);
+                                break;
+                            }
+                        }
                     }
+                    yield return new WaitForEndOfFrame();
                 }
-
-                    
-
-                //yield return new WaitForEndOfFrame();
-
+                yield return new WaitForEndOfFrame();
             }
-           
-            _waveCount++;
-            yield return new WaitForSeconds(roomSpawningDelay);
         }
 
-        yield return new WaitForEndOfFrame();
-
-        foreach (Entrance entr in entrances)
+        // Spawn door covers for entrances without connected rooms
+        foreach (Entrance entrance in entrances)
         {
-            if(!entr.hasConnectedRoom) entr.SpawnDoorCover();
+            if (!entrance.hasConnectedRoom)
+                entrance.SpawnDoorCover();
         }
 
         Debug.Log("Room Spawning Done ---------------------------------");
@@ -153,28 +178,22 @@ public class RoomManager : MonoBehaviour
     }
 
 
-    public void SpawnRoom(GameObject _roomToSpawn, Entrance connectedEntrance)
+    public void SpawnRoom(GameObject _roomToSpawn, Vector3 _position, Entrance _entrance)
     {
-        Direction _roomEntranceDir = InvertDirection(connectedEntrance.direction);
 
-        Vector3 _entranceToZero = Vector3.zero - GetEntranceOfDir(_roomToSpawn.GetComponent<Room>(), _roomEntranceDir).transform.localPosition;
-
-        Room newRoomInstance = Instantiate(_roomToSpawn, connectedEntrance.transform.position + _entranceToZero, Quaternion.identity, grid)
+        Room newRoomInstance = Instantiate(_roomToSpawn, _position, Quaternion.identity, grid)
             .GetComponent<Room>();
 
-        // Give it its own prefab ref
-        newRoomInstance.thisRoomPrefab = _roomToSpawn;
 
         // Remove entrance from the spawned room instance
-        Entrance _roomMeetingEntrance = GetEntranceOfDir(newRoomInstance, _roomEntranceDir);
+        Entrance _roomMeetingEntrance = GetEntranceOfDir(newRoomInstance, InvertDirection(_entrance.direction));
         if (_roomMeetingEntrance != null)
         {
-            newRoomInstance.previousRoomEntrance = connectedEntrance;
+            newRoomInstance.previousRoomEntrance = _entrance;
             newRoomInstance.entrances.Remove(_roomMeetingEntrance);
-            Destroy(_roomMeetingEntrance.gameObject);
+            _roomMeetingEntrance.Die();
         }
-        
-        connectedEntrance.hasConnectedRoom = true;
+        _entrance.hasConnectedRoom = true;
     }
 
 
