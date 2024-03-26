@@ -71,6 +71,11 @@ public class Entrance : MonoBehaviour
         if (!doorOpen) ToggleDoor();
     }
 
+    public Room GetRoom()
+    {
+        return transform.parent.GetComponent<Room>();
+    }   
+
     protected void ToggleDoor()
     {   
         doorOpen = !doorOpen;
