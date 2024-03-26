@@ -109,10 +109,41 @@ public class RoomManager : MonoBehaviour
                         }
                     }
                     yield return new WaitForEndOfFrame();
+
+
                 }
-                yield return new WaitForEndOfFrame();
+
+
+            }
+
+
+        }
+        // Get entrance that is furthest away
+        Entrance furthestAway = null;
+        float furthestAwayDistance = 0;
+        foreach (Entrance entr in entrances)
+        {
+            if (!entr.hasConnectedRoom)
+            {
+                float distance = (Vector3.zero - entr.transform.position).magnitude;
+                if (distance > furthestAwayDistance)
+                {
+                    furthestAway = entr;
+                    furthestAwayDistance = distance;
+                }
             }
         }
+        if (furthestAway != null)
+        {
+            // spawn endroom
+            Room endRoomComponent = levelData.endRoom.GetComponent<Room>();
+            Entrance endRoomEntrance = GetEntranceOfDir(endRoomComponent, InvertDirection(furthestAway.direction));
+
+            Vector3 endEentranceToZero = Vector3.zero - endRoomEntrance.transform.localPosition;
+            Vector3 endSpawnPosition = furthestAway.transform.position + endEentranceToZero;
+            SpawnRoom(levelData.endRoom, endSpawnPosition, furthestAway);
+        }
+
 
         // Spawn door covers for entrances without connected rooms
         foreach (Entrance entrance in entrances)
