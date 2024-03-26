@@ -198,7 +198,7 @@ MonoBehaviour:
   speed: 6
   distanceToTarget: 5
   meleeRange: 0.2
-  hp: 1
+  hp: 20
   enemyDMG: 1
   attackSpeed: 0.1
   obsticleLayer:
