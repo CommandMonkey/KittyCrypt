@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     [NonSerialized] public Vector2 exteriorVelocity;
 
 
+    public GameObject Crosshair;
+
+
     public bool isDead = false;
 
     private float rollSpeed;
@@ -29,11 +32,13 @@ public class Player : MonoBehaviour
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
+    float Crosshair_distance = 30f;
     
     bool invinsibility = false;
 
 
     Vector2 moveInput;
+    Vector2 AimDirr;
 
     // refs
     private Rigidbody2D myRigidbody;
@@ -78,6 +83,7 @@ public class Player : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
         RollDelay();
+        Aim();
     }
     private void FixedUpdate()
     {
@@ -118,6 +124,11 @@ public class Player : MonoBehaviour
     {
         moveInput = value.Get<Vector2>();
         
+    }
+
+    void OnAim(InputValue value)
+    {
+        AimDirr = value.Get<Vector2>();
     }
 
     void OnDash()
@@ -163,5 +174,11 @@ public class Player : MonoBehaviour
     public int GetHealth()
     {
         return health;
+    }
+
+
+    void Aim()
+    {
+        Crosshair.transform.localPosition = AimDirr * Crosshair_distance;
     }
 }
