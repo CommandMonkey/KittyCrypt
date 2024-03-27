@@ -70,12 +70,11 @@ public class EncounterRoom : Room
         enemies = new List<GameObject>();
 
         for(int i = 0; i < enemiesToSpawn.Count; i++)
-        {
-
+        { 
             Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider);
 
             // get a random position
-            while (Physics2D.OverlapCircle(pos, .5f, noEnemyLayers))
+            while (Physics2D.OverlapCircle(pos, 1f, noEnemyLayers))
             {
                 pos = GameHelper.GetRandomPosInCollider(roomCollider);
             }

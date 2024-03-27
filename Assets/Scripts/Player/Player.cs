@@ -43,12 +43,14 @@ public class Player : MonoBehaviour
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
+    private SceneLoader loader;
 
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>(); 
+        animator = GetComponentInChildren<Animator>();
+        loader = FindObjectOfType<SceneLoader>();
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -119,6 +121,12 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
+
+    //void OnInteract()
+    //{
+    //    inventory.OnInteract();
+    //}
+
     // on_move
     void OnMove(InputValue value)
     {
@@ -161,7 +169,13 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             isDead = true;
+            Invoke("BackToMenu", 1f);
         }
+    }
+
+    void BackToMenu()
+    {
+        loader.LoadMainMenu();
     }
 
     IEnumerator InvisibilityDelayRoutine()
