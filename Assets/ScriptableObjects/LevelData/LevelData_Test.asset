@@ -14,17 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRoom: {fileID: 3722623101364078196, guid: eabfd13b394f5284fadcff6ae3609e63, type: 3}
   randomRoomPool:
-  - {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}
-  amountOfRandomRooms: 0
-  setRooms:
-  - {fileID: 3722623101364078196, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
-  - {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}
-  - {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}
-  - {fileID: 3722623101364078196, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
+  - {fileID: 3722623101364078196, guid: e55d434f63e9b3e4b948f6651a66ff89, type: 3}
   - {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}
   - {fileID: 3722623101364078196, guid: ed9d2d6e08313f44c93c8540649be83f, type: 3}
+  amountOfRandomRooms: 10
+  setRooms:
   - {fileID: 3722623101364078196, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
-  - {fileID: 3722623101364078196, guid: e55d434f63e9b3e4b948f6651a66ff89, type: 3}
   endRoom: {fileID: 3722623101364078196, guid: 2e91485884941024bb2ab76a98976c9c, type: 3}
   entranceBlockers:
   - direction: 0
