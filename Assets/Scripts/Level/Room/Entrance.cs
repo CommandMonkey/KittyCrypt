@@ -20,7 +20,6 @@ public class Entrance : MonoBehaviour
     RoomManager roomManager;
     BoxCollider2D doorBoxCollision;
     SpriteRenderer spriteRenderer;
-    //Animator animator;
 
     private void Start()
     {
