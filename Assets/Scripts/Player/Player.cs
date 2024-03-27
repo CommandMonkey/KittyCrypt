@@ -193,6 +193,7 @@ public class Player : MonoBehaviour
 
     void Aim()
     {
+        if(Crosshair == null) { return; }
         Crosshair.transform.localPosition = AimDirr * Crosshair_distance;
     }
 }
