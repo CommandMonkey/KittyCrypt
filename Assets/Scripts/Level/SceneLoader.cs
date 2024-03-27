@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    TimeManager timeManager;
-
-    private void Start()
-    {
-        timeManager = FindObjectOfType<TimeManager>();
-    }
 
     public void LoadNextScene()
     {
@@ -36,7 +30,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        timeManager.UnPause();
         SceneManager.LoadScene(0);
     }
 

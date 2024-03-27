@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private Animator animator;
     private SceneLoader loader;
+    LevelManager levelManager;
+    PlayerInventory inventory;
 
 
     private void Start()
@@ -51,6 +53,8 @@ public class Player : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         loader = FindObjectOfType<SceneLoader>();
+        levelManager = FindObjectOfType<LevelManager>();
+        inventory = GetComponentInChildren<PlayerInventory>();
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -122,14 +126,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    //void OnInteract()
-    //{
-    //    inventory.OnInteract();
-    //}
+    void OnInteract()
+    {
+        inventory.OnInteract();
+    }
 
-    // on_move
     void OnMove(InputValue value)
     {
+        if (levelManager.state != LevelManager.LevelState.Running) return;
         moveInput = value.Get<Vector2>();
         
     }
@@ -141,7 +145,7 @@ public class Player : MonoBehaviour
 
     void OnDash()
     {
-        if (isRollDelaying) { return; }
+        if (isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
 
         rollSpeed = 50f;
         state = State.rolling;

@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
 {
     [Header("Load Settings")]
     public bool spawnRooms = true;
-    public LevelState state = LevelState.Running;
+    public LevelState state = LevelState.Loading;
 
     [NonSerialized] public UnityEvent OnEnemyKill;
 
