@@ -149,6 +149,7 @@ public class RoomManager : MonoBehaviour
             SpawnRoom(levelData.endRoom, endSpawnPosition, furthestAway);
         }
 
+        yield return new WaitForEndOfFrame();
 
         // Spawn door covers for entrances without connected rooms
         foreach (Entrance entrance in entrances)
@@ -159,6 +160,7 @@ public class RoomManager : MonoBehaviour
 
         Debug.Log("Room Spawning Done ---------------------------------");
         levelManager.state = LevelManager.LevelState.Running;
+        CloseDoors();
         OnSpawnRoomDone.Invoke();
     }
 
