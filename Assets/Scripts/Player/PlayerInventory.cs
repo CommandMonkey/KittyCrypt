@@ -145,7 +145,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    void OnInteract()
+    public void OnInteract()
     {
         if (anyPickupsInRange && closestPickup.type == PickupType.Weapon)
         {

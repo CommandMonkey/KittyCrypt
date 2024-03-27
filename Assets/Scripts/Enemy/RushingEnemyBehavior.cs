@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RushingEnemyBehavior : MonoBehaviour
+public class RushingEnemyBehavior : Enemy
 {
 
     //variables
@@ -32,19 +32,20 @@ public class RushingEnemyBehavior : MonoBehaviour
     public LayerMask obsticleLayer;
 
     //declerations
-    LevelManager gameManager;
+    LevelManager levelManager;
     Rigidbody2D rigidBody2D;
     Player playerMovment;
-    Animator animator; 
+    Animator animator;
+    [SerializeField] GameObject EnemyBlood;
 
     void Start()
     {
-        gameManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
         previousPosition = transform.position;
 
-        target = gameManager.player.transform;
+        target = levelManager.player.transform;
 
         playerMovment = target.GetComponent<Player>();
 
@@ -69,17 +70,31 @@ public class RushingEnemyBehavior : MonoBehaviour
         CheakMeleeRange();
     }
 
+    private void OnDestroy()
+    {
+        PlayVFX();
+    }
+
     public void TakeDamage(float damage)
     {
         hp -= damage;
         if (hp < 0)
-        { Destroy(gameObject); }
+        {
+            levelManager.OnEnemyKill.Invoke();
+            Destroy(gameObject);
+        }
+    }
+
+    void PlayVFX()
+    {
+        GameObject Blood = Instantiate(EnemyBlood, transform.position, transform.rotation);
+        Destroy(Blood, 1f);
     }
 
     void HitPlayer()
     {
         animator.SetBool("isAttacking", true);
-        if (!ableToHit) { return; }
+        if (!ableToHit) return;
         playerMovment.TakeDamage(enemyDMG);
         StartCoroutine(DelayedSetAbleToHit());
         ableToHit = false;
@@ -112,7 +127,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         else
         { inMeleeRange = false; }
     }
-
+  
     void ShootLineOfSightRay()
     {
         Vector2 direction = target.position - transform.position;

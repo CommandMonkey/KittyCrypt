@@ -1,10 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,35 +14,48 @@ public class Player : MonoBehaviour
     [SerializeField] float Move_speed = 30f;
     [SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
-    [SerializeField] int health = 100;
+    [SerializeField] int health = 9;
 
     [SerializeField] float drag = 0.9f;
     [SerializeField] float invinsibilityLenght = 1f;
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
-    private Rigidbody2D myRigidbody;
-    private Animator animator;
+
+    public GameObject Crosshair;
+
+
+    public bool isDead = false;
 
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
-    bool isDead = false;
+    float Crosshair_distance = 30f;
+    
     bool invinsibility = false;
 
 
     Vector2 moveInput;
+    Vector2 AimDirr;
+
+    // refs
+    private Rigidbody2D myRigidbody;
+    private Animator animator;
+    private SceneLoader loader;
 
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>(); 
+        animator = GetComponentInChildren<Animator>();
+        loader = FindObjectOfType<SceneLoader>();
 
         state = State.normal;
         rollResetTime = rolldelay;
+
+        
     }
 
     private void Update()
@@ -77,6 +85,7 @@ public class Player : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
         RollDelay();
+        Aim();
     }
     private void FixedUpdate()
     {
@@ -100,7 +109,7 @@ public class Player : MonoBehaviour
 
         exteriorVelocity *= drag;
     }
-
+    // flip 
     private void Flip()
     {
         if (moveInput.x > 0)
@@ -113,9 +122,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    //void OnInteract()
+    //{
+    //    inventory.OnInteract();
+    //}
+
+    // on_move
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        
+    }
+
+    void OnAim(InputValue value)
+    {
+        AimDirr = value.Get<Vector2>();
     }
 
     void OnDash()
@@ -148,12 +169,13 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             isDead = true;
+            Invoke("BackToMenu", 1f);
         }
     }
 
-    public bool GetIsDead()
+    void BackToMenu()
     {
-        return isDead;
+        loader.LoadMainMenu();
     }
 
     IEnumerator InvisibilityDelayRoutine()
@@ -163,11 +185,15 @@ public class Player : MonoBehaviour
         invinsibility = false;
     }
 
-    public void SetDamageTakenFalse()
+    public int GetHealth()
     {
-        invinsibility = false;
+        return health;
     }
 
 
-
+    void Aim()
+    {
+        if(Crosshair == null) { return; }
+        Crosshair.transform.localPosition = AimDirr * Crosshair_distance;
+    }
 }

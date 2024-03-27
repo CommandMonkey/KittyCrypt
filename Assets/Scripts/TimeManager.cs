@@ -16,12 +16,9 @@ public class TimeManager : MonoBehaviour
         pauseMenuContainer.SetActive(false);
     }
 
-    private void Update()
+    private void OnTogglePause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePause();
-        }
+        TogglePause();
     }
 
     //-------------------------------------------------------------------------------------------------------------------
