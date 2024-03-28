@@ -60,7 +60,7 @@ public class EncounterRoom : Room
 
     IEnumerator PlayerEnterRoutine()
     {
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(1f);
         thisRoomManager.CloseDoors();
         SpawnEnemies();
         isActive = true;
