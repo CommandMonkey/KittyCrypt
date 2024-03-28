@@ -1,19 +1,23 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class GameHelper
 {
-    public static Vector2 GetRandomPosInCollider(BoxCollider2D collider)
+    public static Vector2 GetRandomPosInCollider(BoxCollider2D collider, LayerMask filter = new LayerMask())
     {
-        Vector2 pos = (Vector2)collider.transform.position - (collider.size / 2) + collider.offset;
+        Vector2 min = collider.bounds.min;
+        Vector2 max = collider.bounds.max;
 
-        // Adjust position by half the size of the collider to ensure the position is within the bounds
-        pos.x += UnityEngine.Random.Range(0f, collider.size.x);
-        pos.y += UnityEngine.Random.Range(0f, collider.size.y);
+        float randomX = UnityEngine.Random.Range(min.x, max.x);
+        float randomY = UnityEngine.Random.Range(min.y, max.y);
 
-        return pos;
+        Vector2 pos = new Vector2(randomX, randomY);
+
+        if (Physics2D.OverlapCircle(pos, 1f, filter))
+            return GetRandomPosInCollider(collider, filter);
+        else
+            return pos;
     }
 
     public static bool IsBoxColliderTouching(Vector3 _pos, BoxCollider2D _collider, ContactFilter2D _filter)
