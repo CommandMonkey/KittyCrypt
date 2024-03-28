@@ -4118,6 +4118,7 @@ MonoBehaviour:
   noEnemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  TEST_MARKER: {fileID: 9210700487414521221, guid: 0fbc0afb5defde349a73f8ceff75863a, type: 3}
 --- !u!61 &2939126284320088402
 BoxCollider2D:
   m_ObjectHideFlags: 0

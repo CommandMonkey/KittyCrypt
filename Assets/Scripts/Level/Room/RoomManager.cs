@@ -8,8 +8,8 @@ using UnityEngine.Events;
 public class RoomManager : MonoBehaviour
 {
     [Header("Rooms")]
-    [SerializeField] internal Transform grid;
-    [SerializeField] internal float roomSpawningDelay = 1;
+    [SerializeField]  Transform grid;
+    [SerializeField]  float roomSpawningDelay = 1;
 
     [Header("Room Spawning Prefabs")]
     [SerializeField] internal LevelDataObject levelData;
@@ -19,8 +19,8 @@ public class RoomManager : MonoBehaviour
     [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
 
     // private fields
-    List<GameObject> _rooms = new List<GameObject>();
-    bool _exitSpawned = false;
+    List<GameObject> roomsToSpawn = new List<GameObject>();
+    List<Room> spawnedRooms = new List<Room>();
 
     // Cached refs
     LevelManager levelManager;
@@ -30,19 +30,21 @@ public class RoomManager : MonoBehaviour
         OnSpawnRoomDone = new UnityEvent();
         levelManager = FindObjectOfType<LevelManager>();
 
-        _rooms = levelData.GetRoomsList();
+        
 
         if (levelManager.spawnRooms)
             StartRoomSpawning();
     }
 
-
     public void StartRoomSpawning()
     {
         levelManager.state = LevelManager.LevelState.Loading;
 
+        roomsToSpawn = levelData.GetRoomsList();
+        spawnedRooms.Clear();
+
         //Spawn first room (it will spawn more rooms)
-        Instantiate(levelData.startRoom, grid);
+        spawnedRooms.Add(Instantiate(levelData.startRoom, grid).GetComponent<Room>());
 
         StartCoroutine(SpawnRoomsRoutine());
     }
@@ -59,20 +61,23 @@ public class RoomManager : MonoBehaviour
         int previousRoomCount = 0;
         int waveCount = 0;
 
-        while (_rooms.Count > 0)
+        while (roomsToSpawn.Count > 0)
         {
+            waveCount++;
             Debug.Log("Wave: " + waveCount);
 
             // Check termination condition
-            if (waveCount > 5 && _rooms.Count == previousRoomCount)
+            if (waveCount > 10 && roomsToSpawn.Count == previousRoomCount)
             {
-                Debug.LogWarning("TERMINATING ROOMSPAWNING. Can't spawn all rooms. Check room Pool.");
-                break;
+                LogWarningPerRooms("TERMINATING ROOM SPAWNING, can't spawn room: ");
+                DestroyAllRooms();
+                StartRoomSpawning();
+                yield break;
             }
-            previousRoomCount = _rooms.Count;
+            previousRoomCount = roomsToSpawn.Count;
 
             // Shuffle the list of rooms to spawn
-            List<GameObject> roomsToSpawn = GameHelper.ShuffleList(_rooms);
+            List<GameObject> shuffledRooms = GameHelper.ShuffleList(roomsToSpawn);
             yield return new WaitForEndOfFrame();
 
             // Iterate over entrances
@@ -84,7 +89,7 @@ public class RoomManager : MonoBehaviour
                 // Check if the entrance has a connected room
                 if (!entrance.hasConnectedRoom)
                 {
-                    foreach (GameObject roomObj in roomsToSpawn)
+                    foreach (GameObject roomObj in shuffledRooms)
                     {
                         Room roomComponent = roomObj.GetComponent<Room>();
                         Entrance roomEntrance = GetEntranceOfDir(roomComponent, invDirection);
@@ -102,8 +107,8 @@ public class RoomManager : MonoBehaviour
                             if (!isTouchingRoom)
                             {
                                 SpawnRoom(roomObj, spawnPosition, entrance);
+                                shuffledRooms.Remove(roomObj);
                                 roomsToSpawn.Remove(roomObj);
-                                _rooms.Remove(roomObj);
                                 break;
                             }
                         }
@@ -144,6 +149,7 @@ public class RoomManager : MonoBehaviour
             SpawnRoom(levelData.endRoom, endSpawnPosition, furthestAway);
         }
 
+        yield return new WaitForEndOfFrame();
 
         // Spawn door covers for entrances without connected rooms
         foreach (Entrance entrance in entrances)
@@ -153,6 +159,8 @@ public class RoomManager : MonoBehaviour
         }
 
         Debug.Log("Room Spawning Done ---------------------------------");
+        levelManager.state = LevelManager.LevelState.Running;
+        CloseDoors();
         OnSpawnRoomDone.Invoke();
     }
 
@@ -160,52 +168,27 @@ public class RoomManager : MonoBehaviour
     // /////// ================= /////// //
     // ///////  HELPER FUNCTION  /////// //
     // /////// ================= /////// //
-    int _randomTries = 0;
-    public GameObject RetrieveRandomRoomPrefab(Direction _direction)
+
+    void DestroyAllRooms()
     {
-        // Check null
-        if (_rooms.Count == 0) return null;
-
-
-        // Get random room
-        int _rand = UnityEngine.Random.Range(0, _rooms.Count);
-        GameObject result = _rooms[_rand];
-
-        // Check if room has direction
-        if (GetEntranceOfDir(result.GetComponent<Room>(), _direction))
+        foreach (Room room in spawnedRooms)
         {
-            _rooms.Remove(result);
+            foreach(Entrance entr in room.entrances) entr.Die();
+            Destroy(room.gameObject);
+        }
+    }
 
-            // Add exit room
-            if (_rooms.Count == 0 && !_exitSpawned)
-            {
-                _rooms.Add(levelData.endRoom);
-                _exitSpawned = true;
-            }
-
-            return result;
-        } 
-        else
+    void LogWarningPerRooms(string pretext = "")
+    {
+        foreach(GameObject room in roomsToSpawn)
         {
-            // tries random 3 times, else it itterates over the lists to check if a valid room exists. else terminate
-            _randomTries++;
-            if (_randomTries > 3)
-            {
-                _randomTries = 0;
-                foreach (GameObject _room in _rooms)
-                {
-                    if (GetEntranceOfDir(_room.GetComponent<Room>(), _direction)) 
-                        return _room;
-                }
-                return null;
-            }
-            return RetrieveRandomRoomPrefab(_direction);
+            Debug.Log(pretext + room.name);
         }
     }
 
     public void AddRoomToList(GameObject _room)
     {
-        _rooms.Add(_room);
+        roomsToSpawn.Add(_room);
     }
 
 
@@ -214,6 +197,7 @@ public class RoomManager : MonoBehaviour
 
         Room newRoomInstance = Instantiate(_roomToSpawn, _position, Quaternion.identity, grid)
             .GetComponent<Room>();
+        spawnedRooms.Add(newRoomInstance);
 
 
         // Remove entrance from the spawned room instance

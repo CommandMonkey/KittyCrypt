@@ -35,57 +35,48 @@ public class Room : MonoBehaviour
         roomManager = FindObjectOfType<RoomManager>();
         boxCollider = GetComponent<BoxCollider2D>();
 
+        entrances = new List<Entrance>(FindObjectsByType<Entrance>(FindObjectsSortMode.None));
+
         //Invoke("CheckSpawningConditions", .01f);
     }
 
-    void CheckSpawningConditions()
-    {
-        if (IsOverlapping())
-        {
-            previousRoomEntrance.hasConnectedRoom = false;
-            Die();
-            return;
-        }
-    }
 
-    private bool IsOverlapping()
-    {
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.layerMask = LayerMask.GetMask("Room");
-        filter.useTriggers = true;
+    //private bool IsOverlapping()
+    //{
+    //    ContactFilter2D filter = new ContactFilter2D();
+    //    filter.layerMask = LayerMask.GetMask("Room");
+    //    filter.useTriggers = true;
 
-        Collider2D[] results = new Collider2D[10];
-        int numColliders = boxCollider.OverlapCollider(filter, results);
+    //    Collider2D[] results = new Collider2D[10];
+    //    int numColliders = boxCollider.OverlapCollider(filter, results);
 
-        // Check if any colliders are detected
-        if (numColliders > 0)
-        {
-            for (int i = 0; i < numColliders; i++)
-            {
-                Collider2D collider = results[i];
-                if (collider != null)
-                {
-                    if (collider.gameObject.CompareTag("Room"))
-                    {
-                        Debug.Log("COLLIDING with Room: " + collider.gameObject.name);
-                        return true;
-                    }
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("No overlapping colliders found.");
-        }
+    //    // Check if any colliders are detected
+    //    if (numColliders > 0)
+    //    {
+    //        for (int i = 0; i < numColliders; i++)
+    //        {
+    //            Collider2D collider = results[i];
+    //            if (collider != null)
+    //            {
+    //                if (collider.gameObject.CompareTag("Room"))
+    //                {
+    //                    Debug.Log("COLLIDING with Room: " + collider.gameObject.name);
+    //                    return true;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("No overlapping colliders found.");
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
 
     private void Die()
     {
-        Debug.Log("KillingMyself: " + name);
-        roomManager.AddRoomToList(thisRoomPrefab);
         gameObject.SetActive(false);
         Destroy(gameObject);
     }

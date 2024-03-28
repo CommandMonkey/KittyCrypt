@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     [NonSerialized] public Vector2 exteriorVelocity;
 
 
+    public GameObject Crosshair;
+
+
     public bool isDead = false;
 
     private float rollSpeed;
@@ -29,21 +32,29 @@ public class Player : MonoBehaviour
     private State state;
     float rollResetTime;
     bool isRollDelaying = false;
+    float Crosshair_distance = 30f;
     
     bool invinsibility = false;
 
 
     Vector2 moveInput;
+    Vector2 AimDirr;
 
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
+    private SceneLoader loader;
+    LevelManager levelManager;
+    PlayerInventory inventory;
 
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>(); 
+        animator = GetComponentInChildren<Animator>();
+        loader = FindObjectOfType<SceneLoader>();
+        levelManager = FindObjectOfType<LevelManager>();
+        inventory = GetComponentInChildren<PlayerInventory>();
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -78,6 +89,7 @@ public class Player : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
         RollDelay();
+        Aim();
     }
     private void FixedUpdate()
     {
@@ -113,16 +125,27 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
-    // on_move
+
+    void OnInteract()
+    {
+        inventory.OnInteract();
+    }
+
     void OnMove(InputValue value)
     {
+        if (levelManager.state != LevelManager.LevelState.Running) return;
         moveInput = value.Get<Vector2>();
         
     }
 
+    void OnAim(InputValue value)
+    {
+        AimDirr = value.Get<Vector2>();
+    }
+
     void OnDash()
     {
-        if (isRollDelaying) { return; }
+        if (isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
 
         rollSpeed = 50f;
         state = State.rolling;
@@ -150,7 +173,13 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             isDead = true;
+            Invoke("BackToMenu", 1f);
         }
+    }
+
+    void BackToMenu()
+    {
+        loader.LoadMainMenu();
     }
 
     IEnumerator InvisibilityDelayRoutine()
@@ -163,5 +192,12 @@ public class Player : MonoBehaviour
     public int GetHealth()
     {
         return health;
+    }
+
+
+    void Aim()
+    {
+        if(Crosshair == null) { return; }
+        Crosshair.transform.localPosition = AimDirr * Crosshair_distance;
     }
 }

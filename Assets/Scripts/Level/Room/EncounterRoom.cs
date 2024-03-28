@@ -7,6 +7,7 @@ public class EncounterRoom : Room
 {
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
+    [SerializeField] GameObject TEST_MARKER;
 
     bool isActive = false; // if the player has entered and the encounter is active
     bool isRoomDefeated = false; // if the room has been defeted
@@ -59,7 +60,7 @@ public class EncounterRoom : Room
 
     IEnumerator PlayerEnterRoutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0f);
         thisRoomManager.CloseDoors();
         SpawnEnemies();
         isActive = true;
@@ -70,15 +71,8 @@ public class EncounterRoom : Room
         enemies = new List<GameObject>();
 
         for(int i = 0; i < enemiesToSpawn.Count; i++)
-        {
-
-            Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider);
-
-            // get a random position
-            while (Physics2D.OverlapCircle(pos, .5f, noEnemyLayers))
-            {
-                pos = GameHelper.GetRandomPosInCollider(roomCollider);
-            }
+        { 
+            Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider, noEnemyLayers);
 
             enemies.Add( Instantiate(enemiesToSpawn[i], pos, Quaternion.identity, levelManager.enemyContainer));
         }
