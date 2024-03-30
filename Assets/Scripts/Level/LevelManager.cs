@@ -11,12 +11,13 @@ public class LevelManager : MonoBehaviour
     public LevelState state = LevelState.Loading;
 
     [NonSerialized] public UnityEvent OnEnemyKill;
+    [NonSerialized] public UnityEvent OnNewState;
 
     public enum LevelState
     {
-        Running,
-        Paused,
         Loading,
+        Running,
+        Paused
     }
     public SoundManager soundManager { get; private set; }
     public Camera mainCamera { get; private set; }
@@ -29,6 +30,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         OnEnemyKill = new UnityEvent();
+        OnNewState = new UnityEvent();
     }
 
     private void Start()
@@ -36,6 +38,16 @@ public class LevelManager : MonoBehaviour
         soundManager = FindObjectOfType<SoundManager>();
         player = FindObjectOfType<Player>();
         mainCamera = Camera.main;
+    }
+
+    LevelState previousState;
+    private void Update()
+    {
+        if (state != previousState)
+        {
+            OnNewState.Invoke();
+        }
+        previousState = state;
     }
 }
 
