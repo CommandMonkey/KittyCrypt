@@ -55,15 +55,20 @@ public class RushingEnemyBehavior : Enemy
 
     void Update()
     {
-        if (shootingDistance == false)
-        { MoveTowardsTarget(); animator.SetBool("isRunning", true); }
+        if (!shootingDistance)
+        { 
+            MoveTowardsTarget(); 
+            animator.SetBool("isRunning", true); 
+        }
 
-        if (IsMeleeOnCooldown == true && inMeleeRange == true)
-        { HitPlayer(); }
-        else { animator.SetBool("isAttacking", false); }
+        if (IsMeleeOnCooldown && inMeleeRange) 
+            HitPlayer();
+        else 
+            animator.SetBool("isAttacking", false);
 
-        if (lineOfSight == true)
-        { HowFarFromTarget(); } 
+
+        if (lineOfSight) 
+            HowFarFromTarget();
 
         CheckWalkDirection();
         ShootLineOfSightRay();
