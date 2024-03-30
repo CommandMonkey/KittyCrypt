@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RushingEnemyBehavior : Enemy
+public class RushingEnemyBehavior : MonoBehaviour
 {
 
     //variables

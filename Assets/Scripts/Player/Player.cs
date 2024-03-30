@@ -38,13 +38,14 @@ public class Player : MonoBehaviour
 
 
     Vector2 moveInput;
-    Vector2 AimDirr;
+    Vector2 AimDirection;
 
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
     private SceneLoader loader;
-    LevelManager levelManager;
+    private LevelManager levelManager;
+    private UserInput userInput;
 
 
     private void Awake()
@@ -58,6 +59,12 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         loader = FindObjectOfType<SceneLoader>();
         levelManager = FindObjectOfType<LevelManager>();
+        userInput = FindObjectOfType<UserInput>();
+
+        // Input Events
+        userInput.onMove.AddListener(OnMove);
+        userInput.onAiming.AddListener(OnAim);
+
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -129,21 +136,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnInteract()
-    {
-        onInteract.Invoke();
-    }
-
-    void OnMove(InputValue value)
+    public void OnMove(Vector2 moveVector)
     {
         if (levelManager.state != LevelManager.LevelState.Running) return;
-        moveInput = value.Get<Vector2>();
+        moveInput = moveVector;
         
     }
 
-    void OnAim(InputValue value)
+    void OnAim(Vector2 aimDirection)
     {
-        AimDirr = value.Get<Vector2>();
+        AimDirection = aimDirection;
+;
     }
 
     void OnDash()
@@ -202,6 +205,6 @@ public class Player : MonoBehaviour
     void Aim()
     {
         if(crosshair == null) { return; }
-        crosshair.transform.localPosition = AimDirr * Crosshair_distance;
+        crosshair.transform.localPosition = AimDirection * Crosshair_distance;
     }
 }

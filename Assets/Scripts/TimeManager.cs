@@ -16,6 +16,11 @@ public class TimeManager : MonoBehaviour
         pauseMenuContainer.SetActive(false);
     }
 
+    private void Start()
+    {
+        FindObjectOfType<UserInput>().onTogglePause.AddListener(OnTogglePause);
+    }
+
     private void OnTogglePause()
     {
         TogglePause();

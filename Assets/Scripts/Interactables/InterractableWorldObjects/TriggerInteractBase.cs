@@ -4,6 +4,7 @@ public class TriggerInteractBase : MonoBehaviour, IInteractable
 {
     public GameObject player { get; set; }
     public bool caninteract { get; set; }
+    public string interactPrompt { get; set; }
 
     private void Start()
     {

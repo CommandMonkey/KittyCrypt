@@ -27,21 +27,23 @@ public class PlayerInventory : MonoBehaviour
 
     // References
     LevelManager levelManager;
-    Player player;
+    UserInput userInput;
 
 
     private void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
-        player = levelManager.player;
+        userInput = FindObjectOfType<UserInput>();
 
-        player.onInteract.AddListener(OnInteract);
+        // input events
+        userInput.onInteract.AddListener(OnInteract);
+        userInput.onScroll.AddListener(OnScroll);
 
         UpdateWeapon();
     }
 
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (anyPickupsInRange)
         {
@@ -78,9 +80,8 @@ public class PlayerInventory : MonoBehaviour
         weaponInventory[currentHotbarPos].transform.localPosition = Vector3.zero;
     }
 
-    void OnScroll(InputValue value)
+    void OnScroll(float scrollValue)
     {
-        float scrollValue = value.Get<float>();
         if (scrollValue > 0)
         {
             AddToHotbarPos(1);

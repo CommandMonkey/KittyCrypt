@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: CAM_____ SDF
+  m_Name: Catharsis Macciato SDF
   m_EditorClassIdentifier: 
-  hashCode: 1255532769
+  hashCode: -1721425526
   material: {fileID: 5434258736561742950}
-  materialHashCode: 990118305
+  materialHashCode: 577681386
   m_Version: 1.1.0
   m_SourceFontFileGUID: 3628e9358f8eca64bb5d0213aac35f89
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 3628e9358f8eca64bb5d0213aac35f89, type: 3}
