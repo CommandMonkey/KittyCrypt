@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] float Move_speed = 30f;
-    [SerializeField] float rollSpeedMinimum = 50f;
+    //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
     [SerializeField] int health = 9;
 
@@ -22,10 +23,9 @@ public class Player : MonoBehaviour
     [NonSerialized] public Vector2 exteriorVelocity;
 
 
-    public GameObject Crosshair;
-
-
+    public GameObject crosshair;
     public bool isDead = false;
+    public UnityEvent onInteract;
 
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
@@ -45,8 +45,12 @@ public class Player : MonoBehaviour
     private Animator animator;
     private SceneLoader loader;
     LevelManager levelManager;
-    PlayerInventory inventory;
 
+
+    private void Awake()
+    {
+        onInteract = new UnityEvent();
+    }
 
     private void Start()
     {
@@ -54,7 +58,6 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         loader = FindObjectOfType<SceneLoader>();
         levelManager = FindObjectOfType<LevelManager>();
-        inventory = GetComponentInChildren<PlayerInventory>();
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -128,7 +131,7 @@ public class Player : MonoBehaviour
 
     void OnInteract()
     {
-        inventory.OnInteract();
+        onInteract.Invoke();
     }
 
     void OnMove(InputValue value)
@@ -173,6 +176,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             isDead = true;
+            animator.SetTrigger("IsDead");
             Invoke("BackToMenu", 1f);
         }
     }
@@ -197,7 +201,7 @@ public class Player : MonoBehaviour
 
     void Aim()
     {
-        if(Crosshair == null) { return; }
-        Crosshair.transform.localPosition = AimDirr * Crosshair_distance;
+        if(crosshair == null) { return; }
+        crosshair.transform.localPosition = AimDirr * Crosshair_distance;
     }
 }

@@ -22,7 +22,7 @@ public class RushingEnemyBehavior : Enemy
     private bool lineOfSight = true;
     private bool shootingDistance = false;
     private bool inMeleeRange = false;
-    private bool ableToHit = true;
+    private bool IsMeleeOnCooldown = true;
 
     private Vector3 playerPosition = Vector3.zero;
 
@@ -34,7 +34,7 @@ public class RushingEnemyBehavior : Enemy
     //declerations
     LevelManager levelManager;
     Rigidbody2D rigidBody2D;
-    Player playerMovment;
+    Player player;
     Animator animator;
     [SerializeField] GameObject EnemyBlood;
 
@@ -47,7 +47,7 @@ public class RushingEnemyBehavior : Enemy
 
         target = levelManager.player.transform;
 
-        playerMovment = target.GetComponent<Player>();
+        player = target.GetComponent<Player>();
 
         animator = GetComponentInChildren<Animator>();
        
@@ -58,16 +58,16 @@ public class RushingEnemyBehavior : Enemy
         if (shootingDistance == false)
         { MoveTowardsTarget(); animator.SetBool("isRunning", true); }
 
-        if (ableToHit == true && inMeleeRange == true)
+        if (IsMeleeOnCooldown == true && inMeleeRange == true)
         { HitPlayer(); }
         else { animator.SetBool("isAttacking", false); }
 
         if (lineOfSight == true)
         { HowFarFromTarget(); } 
 
-        CheakWalkDirection();
+        CheckWalkDirection();
         ShootLineOfSightRay();
-        CheakMeleeRange();
+        CheckMeleeRange();
     }
 
     private void OnDestroy()
@@ -94,19 +94,20 @@ public class RushingEnemyBehavior : Enemy
     void HitPlayer()
     {
         animator.SetBool("isAttacking", true);
-        if (!ableToHit) return;
-        playerMovment.TakeDamage(enemyDMG);
-        StartCoroutine(DelayedSetAbleToHit());
-        ableToHit = false;
+        if (!IsMeleeOnCooldown) return;
+        player.TakeDamage(enemyDMG);
+        
+        StartCoroutine(MeleeCooldownRoutine());
     }
 
-    IEnumerator DelayedSetAbleToHit()
+    IEnumerator MeleeCooldownRoutine()
     {
+        IsMeleeOnCooldown = false;
         yield return new WaitForSeconds(attackSpeed);
-        ableToHit = true;
+        IsMeleeOnCooldown = true;
     }
 
-    void CheakWalkDirection()
+    void CheckWalkDirection()
     {
         Vector3 currentPosition = transform.position;
 
@@ -119,7 +120,7 @@ public class RushingEnemyBehavior : Enemy
         previousPosition = currentPosition;
     }
 
-    void CheakMeleeRange()
+    void CheckMeleeRange()
     {
         float distance = Vector3.Distance(transform.position, target.position);
         if (distance <= meleeRange)
