@@ -26,12 +26,16 @@ public class PlayerInventory : MonoBehaviour
     Pickup closestPickup;
 
     // References
-    LevelManager gameManager;
+    LevelManager levelManager;
+    Player player;
 
 
     private void Start()
     {
-        gameManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
+        player = levelManager.player;
+
+        player.onInteract.AddListener(OnInteract);
 
         UpdateWeapon();
     }
@@ -158,7 +162,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void UpdatePickupPrompt()
     {
-        Vector2 textScreenPosition = gameManager.mainCamera.WorldToScreenPoint(closestPickup.transform.position);
+        Vector2 textScreenPosition = levelManager.mainCamera.WorldToScreenPoint(closestPickup.transform.position);
 
         pickupPromptText.transform.position = textScreenPosition;
         pickupPromptText.text = "E to pick up: " + closestPickup.name;

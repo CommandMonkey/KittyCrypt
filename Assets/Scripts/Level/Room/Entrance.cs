@@ -44,7 +44,9 @@ public class Entrance : MonoBehaviour
     {
         int numDir = (int)direction;
         doorBoxCollision.size =
-            numDir == 0 || numDir == 2 ? new Vector2(3, 1) : new Vector2(1, 3);
+            numDir == 0 || numDir == 2 ? new Vector2(3, 3) : new Vector2(1, 3);
+        doorBoxCollision.offset =
+            numDir == 0 || numDir == 2 ? new Vector2(0, -1) : Vector2.zero;
     }
 
     public void SpawnDoorCover()

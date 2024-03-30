@@ -9,7 +9,6 @@ public class RoomManager : MonoBehaviour
 {
     [Header("Rooms")]
     [SerializeField]  Transform grid;
-    [SerializeField]  float roomSpawningDelay = 1;
 
     [Header("Room Spawning Prefabs")]
     [SerializeField] internal LevelDataObject levelData;
