@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9bf95a2d8be144a8e8b3835c456403, type: 3}
+  m_Name: Crossbow_Settings
+  m_EditorClassIdentifier: 
+  weaponType: 0
+  fireAudio: {fileID: 0}
+  reloadAudio: {fileID: 0}
+  fireRate: 1.5
+  reloadTime: 0
+  damagePerBullet: 15
+  bulletsBeforeReload: 1
+  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
+  destroyHitEffectAfter: 1.5
+  knockback: 0
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 904
+  projectile: {fileID: 6098931812284524543, guid: 696c7a579f75f414f83afbfddce480a2, type: 3}
+  bulletSpreadRange: 0
+  projectileSpeed: 20
+  projectileVanishAfter: 3
+  bulletTrail: {fileID: 0}
+  destroyTrailAfter: 0.1

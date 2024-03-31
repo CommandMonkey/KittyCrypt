@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] float Move_speed = 30f;
-    [SerializeField] float rollSpeedMinimum = 50f;
+    //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
     [SerializeField] int health = 9;
 
@@ -22,10 +23,9 @@ public class Player : MonoBehaviour
     [NonSerialized] public Vector2 exteriorVelocity;
 
 
-    public GameObject Crosshair;
-
-
+    public GameObject crosshair;
     public bool isDead = false;
+    public UnityEvent onInteract;
 
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
@@ -38,15 +38,20 @@ public class Player : MonoBehaviour
 
 
     Vector2 moveInput;
-    Vector2 AimDirr;
+    Vector2 AimDirection;
 
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
     private SceneLoader loader;
-    LevelManager levelManager;
-    PlayerInventory inventory;
+    private LevelManager levelManager;
+    private UserInput userInput;
 
+
+    private void Awake()
+    {
+        onInteract = new UnityEvent();
+    }
 
     private void Start()
     {
@@ -54,7 +59,12 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         loader = FindObjectOfType<SceneLoader>();
         levelManager = FindObjectOfType<LevelManager>();
-        inventory = GetComponentInChildren<PlayerInventory>();
+        userInput = FindObjectOfType<UserInput>();
+
+        // Input Events
+        userInput.onMove.AddListener(OnMove);
+        userInput.onAiming.AddListener(OnAim);
+
 
         state = State.normal;
         rollResetTime = rolldelay;
@@ -126,21 +136,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnInteract()
-    {
-        inventory.OnInteract();
-    }
-
-    void OnMove(InputValue value)
+    public void OnMove(Vector2 moveVector)
     {
         if (levelManager.state != LevelManager.LevelState.Running) return;
-        moveInput = value.Get<Vector2>();
+        moveInput = moveVector;
         
     }
 
-    void OnAim(InputValue value)
+    void OnAim(Vector2 aimDirection)
     {
-        AimDirr = value.Get<Vector2>();
+        AimDirection = aimDirection;
+;
     }
 
     void OnDash()
@@ -173,6 +179,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             isDead = true;
+            animator.SetTrigger("IsDead");
             Invoke("BackToMenu", 1f);
         }
     }
@@ -197,7 +204,7 @@ public class Player : MonoBehaviour
 
     void Aim()
     {
-        if(Crosshair == null) { return; }
-        Crosshair.transform.localPosition = AimDirr * Crosshair_distance;
+        if(crosshair == null) { return; }
+        crosshair.transform.localPosition = AimDirection * Crosshair_distance;
     }
 }
