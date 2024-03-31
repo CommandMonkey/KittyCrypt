@@ -5,11 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    // Cached Component References
+    Animator transitionAnimator;
+
+    private void Start()
+    {
+        transitionAnimator = GetComponentInChildren<Animator>();
+
+        transitionAnimator.SetBool("isLoading", false);
+    }
 
     public void LoadNextScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1);
+        StartCoroutine(FadeAndLoadSceneRoutine(currentSceneIndex + 1));
     }
 
     public void Quit()
@@ -20,17 +29,26 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadLevel1()
     {
-        SceneManager.LoadScene(2);
+        StartCoroutine(FadeAndLoadSceneRoutine(2));
     }
 
     public void LoadSettings()
     {
-        SceneManager.LoadScene(1);
+        StartCoroutine(FadeAndLoadSceneRoutine(1));
     }
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine(FadeAndLoadSceneRoutine(0));
+    }
+
+    IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)
+    {
+        transitionAnimator.SetBool("isLoading", true);
+
+        yield return new WaitForSeconds(2f);
+
+        SceneManager.LoadScene(sceneIndex);
     }
 
 }
