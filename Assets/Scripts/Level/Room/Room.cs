@@ -18,7 +18,7 @@ public class Room : MonoBehaviour
 
     [NonSerialized] public Entrance previousRoomEntrance;
     [NonSerialized] public GameObject thisRoomPrefab;
-    [NonSerialized] protected UnityEvent OnPlayerEnter;
+    [NonSerialized] protected UnityEvent onPlayerEnter;
 
     // Cached references
     RoomManager roomManager;
@@ -26,7 +26,7 @@ public class Room : MonoBehaviour
 
     private void Awake()
     {
-        OnPlayerEnter = new UnityEvent();
+        onPlayerEnter = new UnityEvent();
 
     }
 
@@ -87,7 +87,7 @@ public class Room : MonoBehaviour
         Debug.Log("Collide!!!: " + name + " with: " + collision.name);
         if (collision.gameObject.CompareTag("Player"))
         {
-            OnPlayerEnter.Invoke();
+            onPlayerEnter.Invoke();
             Debug.Log("player enter room:" + gameObject.name);  
         }
             

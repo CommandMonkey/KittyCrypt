@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 956762716333393946}
   - component: {fileID: 9017895043833010652}
   - component: {fileID: 4632627371909203207}
-  - component: {fileID: 2157049190995732567}
+  - component: {fileID: 3959466128668725086}
   m_Layer: 3
-  m_Name: PickupPrefab
+  m_Name: ItemPickupPrefab
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,9 +129,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
---- !u!114 &2157049190995732567
+--- !u!114 &3959466128668725086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,8 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5068044822145740819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cc8002dfca175e4dbcd9105e57d25bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 655c3dbf04c22ee41ae48ccfa5e1ff06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  content: {fileID: 0}
+  item: {fileID: 0}

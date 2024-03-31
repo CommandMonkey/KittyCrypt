@@ -10,11 +10,12 @@ TagManager:
   - Pickup
   - Enemy
   - PowerUp
+  - InteractPromptText
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Weapons
+  - interactables
   - Water
   - UI
   - Wall
@@ -22,7 +23,7 @@ TagManager:
   - Bullet
   - Room
   - Enemy
-  - 
+  - PlayerInteraction
   - 
   - 
   - 
@@ -76,4 +77,7 @@ TagManager:
     locked: 0
   - name: Effects
     uniqueID: 2480439107
+    locked: 0
+  - name: WorldSpaceUI
+    uniqueID: 2718455215
     locked: 0

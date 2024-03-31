@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public bool spawnRooms = true;
     public LevelState state = LevelState.Loading;
 
-    [NonSerialized] public UnityEvent OnEnemyKill;
+    [NonSerialized] public UnityEvent onEnemyKill;
     [NonSerialized] public UnityEvent OnNewState;
 
     public enum LevelState
@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
         Running,
         Paused
     }
-    public SoundManager soundManager { get; private set; }
+    public MusicManager soundManager { get; private set; }
     public Camera mainCamera { get; private set; }
     public Player player;
     public Transform enemyContainer;
@@ -29,13 +29,13 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        OnEnemyKill = new UnityEvent();
+        onEnemyKill = new UnityEvent();
         OnNewState = new UnityEvent();
     }
 
     private void Start()
     {
-        soundManager = FindObjectOfType<SoundManager>();
+        soundManager = FindObjectOfType<MusicManager>();
         player = FindObjectOfType<Player>();
         mainCamera = Camera.main;
     }

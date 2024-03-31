@@ -85,7 +85,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         hp -= damage;
         if (hp < 0)
         {
-            levelManager.OnEnemyKill.Invoke();
+            levelManager.onEnemyKill.Invoke();
             Destroy(gameObject);
         }
     }

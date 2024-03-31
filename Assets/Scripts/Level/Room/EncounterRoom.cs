@@ -23,8 +23,8 @@ public class EncounterRoom : Room
         roomCollider = GetComponent<BoxCollider2D>();
         levelManager = FindObjectOfType<LevelManager>();
 
-        OnPlayerEnter.AddListener(PlayerEnter);
-        levelManager.OnEnemyKill.AddListener(EnemyKill);
+        base.onPlayerEnter.AddListener(OnPlayerEnter);
+        levelManager.onEnemyKill.AddListener(OnEnemyKill);
     }
 
     private void Update()
@@ -32,7 +32,7 @@ public class EncounterRoom : Room
 
     }
 
-    void EnemyKill()
+    void OnEnemyKill()
     {
         if (!isActive || isRoomDefeated) return;
         int _enemiesAlive = enemies.Count-1;
@@ -50,7 +50,7 @@ public class EncounterRoom : Room
     }
 
 
-    void PlayerEnter()
+    void OnPlayerEnter()
     {
         Debug.Log("Palyer Enter");
         if (isRoomDefeated) return;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9bf95a2d8be144a8e8b3835c456403, type: 3}
   m_Name: Crossbow_Settings
   m_EditorClassIdentifier: 
-  weaponType: 2
+  weaponType: 0
   fireAudio: {fileID: 0}
   reloadAudio: {fileID: 0}
   fireRate: 1.5

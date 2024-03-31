@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -5,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class UserInput : MonoBehaviour
 {
-    public UnityEvent<Vector2> onMove;
-    public UnityEvent<Vector2> onAiming;
-    public UnityEvent<float> onScroll;
-    public UnityEvent onFire;
-    public UnityEvent onDash;
-    public UnityEvent onInteract;
-    public UnityEvent onTogglePause;
+    [NonSerialized] public UnityEvent<Vector2> onMove;
+    [NonSerialized] public UnityEvent<Vector2> onAiming;
+    [NonSerialized] public UnityEvent<float> onScroll;
+    [NonSerialized] public UnityEvent onFire;
+    [NonSerialized] public UnityEvent onDash;
+    [NonSerialized] public UnityEvent onInteract;
+    [NonSerialized] public UnityEvent onTogglePause;
 
     private void Awake()
     {
@@ -39,32 +40,32 @@ public class UserInput : MonoBehaviour
         onInteract.RemoveAllListeners();
     }
 
-    public void OnMove(InputValue value)
+    void OnMove(InputValue value)
     {
         onMove.Invoke(value.Get<Vector2>());
     }
 
-    public void OnAiming(InputValue value)
+    void OnAiming(InputValue value)
     {
         onAiming.Invoke(value.Get<Vector2>());
     }
 
-    public void OnScroll(InputValue value)
+    void OnScroll(InputValue value)
     {
         onScroll.Invoke(value.Get<float>());
     }
 
-    public void OnFire()
+    void OnFire()
     {
         onFire.Invoke();
     }
 
-    public void OnDash()
+    void OnDash()
     {
         onDash.Invoke();
     }
 
-    public void OnInteract()
+    void OnInteract()
     {
         onInteract.Invoke();
     }

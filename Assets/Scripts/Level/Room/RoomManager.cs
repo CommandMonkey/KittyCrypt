@@ -7,8 +7,10 @@ using UnityEngine.Events;
 
 public class RoomManager : MonoBehaviour
 {
-    [Header("Rooms")]
-    [SerializeField]  Transform grid;
+    [Header("General")]
+    [SerializeField] Transform grid;
+    [SerializeField] AudioClip closeDoorAudio;
+    [SerializeField] AudioClip openDoorAudio;
 
     [Header("Room Spawning Prefabs")]
     [SerializeField] internal LevelDataObject levelData;
@@ -23,13 +25,15 @@ public class RoomManager : MonoBehaviour
 
     // Cached refs
     LevelManager levelManager;
+    AudioSource audioScource;
 
     void Start()
     {
         OnSpawnRoomDone = new UnityEvent();
         levelManager = FindObjectOfType<LevelManager>();
+        audioScource = levelManager.GetComponent<AudioSource>();
 
-        
+
 
         if (levelManager.spawnRooms)
             StartRoomSpawning();
@@ -159,7 +163,7 @@ public class RoomManager : MonoBehaviour
 
         Debug.Log("Room Spawning Done ---------------------------------");
         levelManager.state = LevelManager.LevelState.Running;
-        CloseDoors();
+        CloseDoors(true);
         OnSpawnRoomDone.Invoke();
     }
 
@@ -242,19 +246,21 @@ public class RoomManager : MonoBehaviour
         return (Direction)invertedValue;
     }
 
-    public void CloseDoors()
+    public void CloseDoors(bool silent = false)
     {
         foreach (Entrance entrance in entrances)
         {
             entrance.CloseDoor();
         }
+        if (!silent) audioScource.PlayOneShot(closeDoorAudio);
     }
-    public void OpenDoors()
+    public void OpenDoors(bool silent = false)
     {
         foreach (Entrance entrance in entrances)
         {
             Debug.Log("manager closing door");
             entrance.OpenDoor();
         }
+        if (!silent) audioScource.PlayOneShot(openDoorAudio);
     }
 }
