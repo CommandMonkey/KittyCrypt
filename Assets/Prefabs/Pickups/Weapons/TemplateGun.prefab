@@ -149,8 +149,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -757988771
-  m_SortingLayer: 6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cda40561cd89cda478860195418472b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -239,25 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 0
-  fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
-  reloadAudio: {fileID: 0}
-  fireRate: 0.5
-  reloadTime: 1
-  damagePerBullet: 1
-  bulletsBeforeReload: 5
-  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
-  destroyHitEffectAfter: 1.5
-  knockback: 2
-  ignoreLayerMask:
-    serializedVersion: 2
-    m_Bits: 904
-  projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 1
-  projectileSpeed: 5
-  projectileVanishAfter: 3
-  bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
-  destroyTrailAfter: 0.1
+  settings: {fileID: 0}
 --- !u!114 &264496823960170481
 MonoBehaviour:
   m_ObjectHideFlags: 0
