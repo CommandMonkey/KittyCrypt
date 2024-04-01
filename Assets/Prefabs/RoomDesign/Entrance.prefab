@@ -159,7 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7313173846076229986}
   - component: {fileID: 4680539801033800476}
-  m_Layer: 12
+  m_Layer: 6
   m_Name: DoorCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

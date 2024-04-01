@@ -3297,8 +3297,7 @@ MonoBehaviour:
   - {fileID: 3997974298972901596, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
   noEnemyLayers:
     serializedVersion: 2
-    m_Bits: 64
-  TEST_MARKER: {fileID: 9210700487414521221, guid: 0fbc0afb5defde349a73f8ceff75863a, type: 3}
+    m_Bits: 2112
 --- !u!61 &2939126284320088402
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public class EncounterRoom : Room
 {
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
-    [SerializeField] GameObject TEST_MARKER;
+    //[SerializeField] GameObject spawnAnimPrefab;
 
     bool isActive = false; // if the player has entered and the encounter is active
     bool isRoomDefeated = false; // if the room has been defeted

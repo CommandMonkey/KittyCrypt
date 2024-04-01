@@ -1,6 +1,3 @@
-
-
-using System;
 using UnityEngine;
 
 public class ItemPickupInteractable : MonoBehaviour, IInteractable
@@ -8,6 +5,8 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
     public GameObject item;
     public string interactPrompt { get; set; }
     public bool canInteract { get; set; } = true;
+
+    [SerializeField] GameObject popVFX;
 
     private void Start()
     {
@@ -37,6 +36,15 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
     {
         FindObjectOfType<PlayerInventory>().AddWeapon(item);
         FindObjectOfType<PlayerInteraction>().UnRegisterInteractable(gameObject);
+        Destroy(gameObject);
+    }
+
+    public void PopAndDie()
+    {
+        Destroy(Instantiate(popVFX, transform.position, Quaternion.identity), 2f);
+
+        canInteract = false;
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 }

@@ -30,13 +30,13 @@ public class TimeManager : MonoBehaviour
     // Pausing
     //-------------------------------------------------------------------------------------------------------------------
 
-    public void Pause()
+    public void Pause(float delay = 0)
     {
-        if (!gamePaused) TogglePause();
+        if (!gamePaused) Invoke("TogglePause", delay);
     }
-    public void UnPause()
+    public void UnPause(float delay = 0)
     {
-        if (gamePaused) TogglePause();
+        if (gamePaused) Invoke("TogglePause", delay);
     }
 
     void TogglePause()
