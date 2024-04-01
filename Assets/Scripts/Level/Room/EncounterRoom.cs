@@ -17,7 +17,7 @@ public class EncounterRoom : Room
     BoxCollider2D roomCollider;
     LevelManager levelManager;
     // Start is called before the first frame update
-    void Start()
+    protected override void RoomStart()
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
@@ -52,25 +52,15 @@ public class EncounterRoom : Room
 
     void OnPlayerEnter()
     {
-        Debug.Log("Palyer Enter");
-        if (isRoomDefeated || !isActive) return;
-        
-        StartCoroutine(PlayerEnterRoutine());
-    }
+        if (isRoomDefeated || isActive) return;
 
-
-    IEnumerator PlayerEnterRoutine()
-    {
         isActive = true;
-        yield return new WaitForSeconds(1f);
-        
-        if (base.IsPlayerInside())
-        {
-            thisRoomManager.CloseDoors();
-            SpawnEnemies();
-        }
-        
+        thisRoomManager.CloseDoors();
+        SpawnEnemies();
     }
+
+
+
 
     void SpawnEnemies()
     {

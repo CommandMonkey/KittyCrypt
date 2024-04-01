@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] internal LevelDataObject levelData;
 
     // public fields
-    [NonSerialized] internal UnityEvent OnSpawnRoomDone;
+    [NonSerialized] internal UnityEvent OnRoomSpawningDone;
     [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
 
     // private fields
@@ -27,9 +27,13 @@ public class RoomManager : MonoBehaviour
     LevelManager levelManager;
     AudioSource audioScource;
 
+    private void Awake()
+    {
+        OnRoomSpawningDone = new UnityEvent();
+    }
+
     void Start()
     {
-        OnSpawnRoomDone = new UnityEvent();
         levelManager = FindObjectOfType<LevelManager>();
         audioScource = levelManager.GetComponent<AudioSource>();
 
@@ -67,6 +71,7 @@ public class RoomManager : MonoBehaviour
         while (roomsToSpawn.Count > 0)
         {
             waveCount++;
+            Debug.Log("Wave: " + waveCount);
 
             // Check termination condition
             if (waveCount > 10 && roomsToSpawn.Count == previousRoomCount)
@@ -162,7 +167,7 @@ public class RoomManager : MonoBehaviour
 
         levelManager.state = LevelManager.LevelState.Running;
         CloseDoors(true);
-        OnSpawnRoomDone.Invoke();
+        OnRoomSpawningDone.Invoke();
     }
 
 
@@ -210,6 +215,7 @@ public class RoomManager : MonoBehaviour
             _roomMeetingEntrance.Die();
         }
         _entrance.hasConnectedRoom = true;
+        _entrance.OnConnectedRoomSpawned();
     }
 
 

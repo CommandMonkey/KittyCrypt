@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public enum Direction
 {
@@ -12,12 +13,12 @@ public enum Direction
     Right
 }
 
+
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
 
     [NonSerialized] public Entrance previousRoomEntrance;
-    [NonSerialized] public GameObject thisRoomPrefab;
     [NonSerialized] protected UnityEvent onPlayerEnter;
 
     // Cached references
@@ -26,7 +27,6 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         onPlayerEnter = new UnityEvent();
-
     }
 
     void Start()
@@ -35,43 +35,15 @@ public class Room : MonoBehaviour
 
         entrances = new List<Entrance>(FindObjectsByType<Entrance>(FindObjectsSortMode.None));
 
-        //Invoke("CheckSpawningConditions", .01f);
+        // subscribe to entrances exit events
+        foreach (Entrance entr in entrances)
+        {
+            Debug.Log(entr.name);
+            entr.onEntranceExit.AddListener(OnPlayerLeftEntrance);
+        }
+
+        RoomStart();
     }
-
-
-    //private bool IsOverlapping()
-    //{
-    //    ContactFilter2D filter = new ContactFilter2D();
-    //    filter.layerMask = LayerMask.GetMask("Room");
-    //    filter.useTriggers = true;
-
-    //    Collider2D[] results = new Collider2D[10];
-    //    int numColliders = boxCollider.OverlapCollider(filter, results);
-
-    //    // Check if any colliders are detected
-    //    if (numColliders > 0)
-    //    {
-    //        for (int i = 0; i < numColliders; i++)
-    //        {
-    //            Collider2D collider = results[i];
-    //            if (collider != null)
-    //            {
-    //                if (collider.gameObject.CompareTag("Room"))
-    //                {
-    //                    Debug.Log("COLLIDING with Room: " + collider.gameObject.name);
-    //                    return true;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("No overlapping colliders found.");
-    //    }
-
-    //    return false;
-    //}
-
 
     private void Die()
     {
@@ -79,23 +51,23 @@ public class Room : MonoBehaviour
         Destroy(gameObject);
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnPlayerLeftEntrance()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (IsPlayerInside())
         {
             onPlayerEnter.Invoke();
         }
-            
     }
 
     protected bool IsPlayerInside()
     {
-        if (player.GetRoom() == gameObject)
+        if (player.IsOverlapping<Room>(gameObject))
         {
             return true;
         }
         return false;
     }
+
+    protected virtual void RoomStart() { }
 
 }

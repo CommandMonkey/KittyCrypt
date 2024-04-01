@@ -81,7 +81,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(GetRoom().name);  
         if (isDead)
         {
             myRigidbody.velocity = Vector2.zero;
@@ -211,10 +210,9 @@ public class Player : MonoBehaviour
         return health;
     }
 
-    public GameObject GetRoom()
+    public bool IsOverlapping<T>(GameObject toCompare) where T : Component
     {
-        GameObject result = null;
-
+        Debug.Log("AAAAAA----: " + toCompare.name + "parent: " + toCompare.transform.parent.name);
         // Get colliders
         Collider2D[] colliders = new Collider2D[10];
         Physics2D.OverlapCollider(boxCollider, noFilter, colliders);
@@ -224,23 +222,14 @@ public class Player : MonoBehaviour
         {
             if (c != null)
             {
-                Room roomComponent = c.GetComponent<Room>();
-                Debug.Log(c.name);
-                if (roomComponent != null)
+                if (c.gameObject == toCompare)
                 {
-                    result = c.gameObject;
-                }
-                else
-                {
-                    Entrance entranceComponent = c.GetComponent<Entrance>();
-                    if (entranceComponent != null)
-                    {
-                        return c.gameObject;
-                    }
+                    return true;
                 }
             }
         }
-        return result;
+
+        return false; // No matching component found
     }
 
 

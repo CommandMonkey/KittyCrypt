@@ -67,7 +67,6 @@ public class PlayerInteraction : MonoBehaviour
             anyInteractablesInRange = true;
             // set any interactables in range
             interactablesInRange.Add(other.gameObject);
-            Debug.Log("interactable count: " + interactablesInRange.Count);
         }
     }
 
@@ -78,7 +77,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             interactablesInRange.Remove(other.gameObject);
             // set any interactables in range
-            Debug.Log("interactable count: " + interactablesInRange.Count);
             if (interactablesInRange.Count <= 0)
             {
                 anyInteractablesInRange = false;
