@@ -15,22 +15,28 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null )
         {
-            sr.sprite = GetItemSprite();
+            sr.sprite = FindSpriteRendererInChildren(transform)?.sprite;
         }
     }
 
-    private Sprite GetItemSprite()
+    private SpriteRenderer FindSpriteRendererInChildren(Transform parent)
     {
-
-        SpriteRenderer result = item.GetComponent<SpriteRenderer>();
-        Transform child = item.transform.GetChild(0);
-        while (result == null)
+        SpriteRenderer spriteRenderer = parent.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
         {
-            if (child == null) return null;
-            result = child.GetComponent<SpriteRenderer>();
-            child = child.GetChild(0);
+            return spriteRenderer;
         }
-        return result.sprite;
+
+        foreach (Transform child in parent)
+        {
+            SpriteRenderer childSpriteRenderer = FindSpriteRendererInChildren(child);
+            if (childSpriteRenderer != null)
+            {
+                return childSpriteRenderer;
+            }
+        }
+
+        return null;
     }
 
     public void Interact()

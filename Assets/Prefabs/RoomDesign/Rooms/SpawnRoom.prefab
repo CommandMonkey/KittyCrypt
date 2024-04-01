@@ -2782,7 +2782,7 @@ MonoBehaviour:
   - {x: 33, y: -12, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 55256
+  m_InstanceId: 40194
   m_LocalBounds:
     m_Center: {x: 10.5, y: 10.5, z: 0}
     m_Extent: {x: 22.5, y: 22.5, z: 0}
@@ -3627,7 +3627,7 @@ MonoBehaviour:
   - {x: 32.125, y: -11.125, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 55238
+  m_InstanceId: 40176
   m_LocalBounds:
     m_Center: {x: 10.5, y: 8, z: 0}
     m_Extent: {x: 21.625, y: 19.125, z: 0}
@@ -3642,7 +3642,6 @@ GameObject:
   - component: {fileID: 3478328682861642060}
   - component: {fileID: 5758522881409344658}
   - component: {fileID: 2939126284320088402}
-  - component: {fileID: 2362264319371896719}
   m_Layer: 9
   m_Name: SpawnRoom
   m_TagString: Room
@@ -3732,36 +3731,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 22.9, y: 22.9}
   m_EdgeRadius: 0
---- !u!114 &2362264319371896719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3722623101364078196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 0
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 000000006540b64e61b1efa80b276ea7337639695d02d2d2a9dc459d27313936437fd893
-  m_ShapePath:
-  - {x: -10.95, y: -10.95, z: 0}
-  - {x: -10.95, y: 11.95, z: 0}
-  - {x: 11.95, y: 11.95, z: 0}
-  - {x: 11.95, y: -10.95, z: 0}
-  m_ShapePathHash: 0
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 55240
-  m_LocalBounds:
-    m_Center: {x: 0.5, y: 0.5, z: 0}
-    m_Extent: {x: 11.45, y: 11.45, z: 0}
 --- !u!1 &7645753694609595624
 GameObject:
   m_ObjectHideFlags: 0

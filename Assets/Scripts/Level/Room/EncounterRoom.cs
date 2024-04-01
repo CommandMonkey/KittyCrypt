@@ -53,17 +53,23 @@ public class EncounterRoom : Room
     void OnPlayerEnter()
     {
         Debug.Log("Palyer Enter");
-        if (isRoomDefeated) return;
+        if (isRoomDefeated || !isActive) return;
         
         StartCoroutine(PlayerEnterRoutine());
     }
 
+
     IEnumerator PlayerEnterRoutine()
     {
-        yield return new WaitForSeconds(1f);
-        thisRoomManager.CloseDoors();
-        SpawnEnemies();
         isActive = true;
+        yield return new WaitForSeconds(1f);
+        
+        if (base.IsPlayerInside())
+        {
+            thisRoomManager.CloseDoors();
+            SpawnEnemies();
+        }
+        
     }
 
     void SpawnEnemies()

@@ -67,7 +67,6 @@ public class RoomManager : MonoBehaviour
         while (roomsToSpawn.Count > 0)
         {
             waveCount++;
-            Debug.Log("Wave: " + waveCount);
 
             // Check termination condition
             if (waveCount > 10 && roomsToSpawn.Count == previousRoomCount)
@@ -161,7 +160,6 @@ public class RoomManager : MonoBehaviour
                 entrance.SpawnDoorCover();
         }
 
-        Debug.Log("Room Spawning Done ---------------------------------");
         levelManager.state = LevelManager.LevelState.Running;
         CloseDoors(true);
         OnSpawnRoomDone.Invoke();

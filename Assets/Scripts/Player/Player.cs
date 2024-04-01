@@ -40,12 +40,15 @@ public class Player : MonoBehaviour
     Vector2 moveInput;
     Vector2 AimDirection;
 
+    ContactFilter2D noFilter;
+
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
     private SceneLoader loader;
     private LevelManager levelManager;
     private UserInput userInput;
+    private BoxCollider2D boxCollider;
 
 
     private void Awake()
@@ -60,20 +63,25 @@ public class Player : MonoBehaviour
         loader = FindObjectOfType<SceneLoader>();
         levelManager = FindObjectOfType<LevelManager>();
         userInput = FindObjectOfType<UserInput>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
         // Input Events
         userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
 
+        // Create a contact filter that includes triggers
+        noFilter = new ContactFilter2D();
+        noFilter.useTriggers = true;
+
 
         state = State.normal;
         rollResetTime = rolldelay;
 
-        
     }
 
     private void Update()
     {
+        Debug.Log(GetRoom().name);  
         if (isDead)
         {
             myRigidbody.velocity = Vector2.zero;
@@ -101,6 +109,7 @@ public class Player : MonoBehaviour
         RollDelay();
         Aim();
     }
+
     private void FixedUpdate()
     {
         if (isDead)
@@ -123,6 +132,7 @@ public class Player : MonoBehaviour
 
         exteriorVelocity *= drag;
     }
+
     // flip 
     private void Flip()
     {
@@ -200,6 +210,39 @@ public class Player : MonoBehaviour
     {
         return health;
     }
+
+    public GameObject GetRoom()
+    {
+        GameObject result = null;
+
+        // Get colliders
+        Collider2D[] colliders = new Collider2D[10];
+        Physics2D.OverlapCollider(boxCollider, noFilter, colliders);
+
+        // Find Room or entrance Colliders
+        foreach (Collider2D c in colliders)
+        {
+            if (c != null)
+            {
+                Room roomComponent = c.GetComponent<Room>();
+                Debug.Log(c.name);
+                if (roomComponent != null)
+                {
+                    result = c.gameObject;
+                }
+                else
+                {
+                    Entrance entranceComponent = c.GetComponent<Entrance>();
+                    if (entranceComponent != null)
+                    {
+                        return c.gameObject;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 
 
     void Aim()

@@ -21,8 +21,7 @@ public class Room : MonoBehaviour
     [NonSerialized] protected UnityEvent onPlayerEnter;
 
     // Cached references
-    RoomManager roomManager;
-    BoxCollider2D boxCollider;
+    Player player;
 
     private void Awake()
     {
@@ -32,8 +31,7 @@ public class Room : MonoBehaviour
 
     void Start()
     {
-        roomManager = FindObjectOfType<RoomManager>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        player = FindObjectOfType<Player>();
 
         entrances = new List<Entrance>(FindObjectsByType<Entrance>(FindObjectsSortMode.None));
 
@@ -84,18 +82,20 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collide!!!: " + name + " with: " + collision.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             onPlayerEnter.Invoke();
-            Debug.Log("player enter room:" + gameObject.name);  
         }
             
     }
 
-    bool IsPlayerInside()
+    protected bool IsPlayerInside()
     {
-        throw new NotImplementedException();
+        if (player.GetRoom() == gameObject)
+        {
+            return true;
+        }
+        return false;
     }
 
 }
