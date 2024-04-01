@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponType: 0
   fireAudio: {fileID: 0}
   reloadAudio: {fileID: 0}
-  fireRate: 1.5
+  fireRate: 0.1
   reloadTime: 0
   damagePerBullet: 15
   bulletsBeforeReload: 1
