@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "8fa8972e-102d-473c-b0f9-92b4a74606bf",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Aiming",
+                    "type": "Value",
+                    "id": "3812d97e-d884-48c5-981b-64f8b90015e9",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Fire",
                     "type": "Button",
                     "id": "7c921319-9a06-4bda-b4b4-b6af48434126",
@@ -33,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Scroll",
-                    "type": "Value",
-                    "id": "8fa8972e-102d-473c-b0f9-92b4a74606bf",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "f2222337-77e2-46a2-b6c9-f0c36f61d4f9",
@@ -51,13 +60,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aiming",
-                    "type": "Value",
-                    "id": "3812d97e-d884-48c5-981b-64f8b90015e9",
-                    "expectedControlType": "Stick",
+                    "name": "TogglePause",
+                    "type": "Button",
+                    "id": "7427500a-e856-4480-b705-6c1524f52d20",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -173,28 +182,6 @@
                 },
                 {
                     "name": "",
-                    "id": "92a72043-6b8d-4066-bac1-a122537c36f5",
-                    "path": "<Mouse>/scroll/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scroll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "00965d5b-1cc2-4cb6-9256-83cc37734b06",
-                    "path": "<XInputController>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scroll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9d9d71fc-8a1b-4743-9d7c-49bb27e33424",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -280,6 +267,50 @@
                     "action": "Aiming",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "92a72043-6b8d-4066-bac1-a122537c36f5",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00965d5b-1cc2-4cb6-9256-83cc37734b06",
+                    "path": "<XInputController>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e84ad60-8a14-499f-ac68-e8ea9ae1e507",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogglePause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d157d0c1-dc68-4e9d-9573-301f4dbbe2b3",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogglePause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
