@@ -75,10 +75,10 @@ public class RushingEnemyBehavior : MonoBehaviour
         CheckMeleeRange();
     }
 
-    private void OnDestroy()
-    {
-        PlayVFX();
-    }
+    //private void OnDestroy()
+    //{
+    //    PlayVFX();
+    //}
 
     public void TakeDamage(float damage)
     {
@@ -86,6 +86,7 @@ public class RushingEnemyBehavior : MonoBehaviour
         if (hp < 0)
         {
             levelManager.onEnemyKill.Invoke();
+            PlayVFX();
             Destroy(gameObject);
         }
     }

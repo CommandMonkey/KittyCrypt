@@ -12,7 +12,7 @@ public class Entrance : MonoBehaviour
     [SerializeField] Sprite sideOpenDoorSprite;
 
     [NonSerialized] public GameObject roomToSpawn;
-    [NonSerialized] public List<string> roomTriesNames = new List<string>();
+    [NonSerialized] public List<string> roomFailNames = new List<string>();
     [NonSerialized] public bool hasConnectedRoom;
     [NonSerialized] public UnityEvent onEntranceExit;
 
@@ -38,7 +38,7 @@ public class Entrance : MonoBehaviour
         
         SetDoorCollisionSize();
 
-        roomManager.entrances.Add(this);
+        roomManager.unconnectedEntrances.Add(this);
 
         collisionCollider.gameObject.SetActive(!doorOpen);
         UpdateSprite();
@@ -47,6 +47,8 @@ public class Entrance : MonoBehaviour
     public void OnConnectedRoomSpawned()
     {
         triggerCollider.enabled = true;
+        hasConnectedRoom = true;
+        if (roomManager != null) roomManager.unconnectedEntrances.Remove(this);
     }
 
     private void SetDoorCollisionSize()
@@ -67,7 +69,7 @@ public class Entrance : MonoBehaviour
     public void Die()
     {
         gameObject.SetActive(false);
-        if (roomManager != null) roomManager.entrances.Remove(this);
+        if (roomManager != null) roomManager.unconnectedEntrances.Remove(this);
         Destroy(gameObject);
     }
 

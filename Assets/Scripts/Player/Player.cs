@@ -233,6 +233,15 @@ public class Player : MonoBehaviour
     }
 
 
+    public Vector3 PredictFuturePosition(float timeInFuture)
+    {
+        // Calculate future position based on current velocity and time
+        Vector3 futurePosition = myRigidbody.position + myRigidbody.velocity * timeInFuture;
+
+        return futurePosition;
+    }
+
+
 
     void Aim()
     {

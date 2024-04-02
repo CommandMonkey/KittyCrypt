@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3170857091692594128}
   - component: {fileID: 601631470903119754}
-  - component: {fileID: 760283273146055542}
+  - component: {fileID: 2435242243308510008}
   m_Layer: 0
-  m_Name: RaycastLine
+  m_Name: RatBossLazer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.05
@@ -108,8 +108,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.8704395, b: 0.34276712, a: 0.54901963}
-      key1: {r: 1, g: 0.8704395, b: 0.34276712, a: 0.9411765}
+      key0: {r: 0.836478, g: 0.25687432, b: 0.24989116, a: 0.54901963}
+      key1: {r: 0.9622642, g: 0.08775356, b: 0.09568112, a: 0.9411765}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 1, g: 1, b: 1, a: 0}
       key4: {r: 1, g: 1, b: 1, a: 0}
@@ -147,7 +147,7 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &760283273146055542
+--- !u!114 &2435242243308510008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,6 +156,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9181747754686250940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25f6f7962c53ae4fbe54c51751359fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c05572743bded648bbaabb8cfc6955e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

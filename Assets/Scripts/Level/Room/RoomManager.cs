@@ -17,11 +17,12 @@ public class RoomManager : MonoBehaviour
 
     // public fields
     [NonSerialized] internal UnityEvent OnRoomSpawningDone;
-    [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
+    [NonSerialized] internal List<Entrance> unconnectedEntrances = new List<Entrance>();
 
     // private fields
     List<GameObject> roomsToSpawn = new List<GameObject>();
     List<Room> spawnedRooms = new List<Room>();
+    Dictionary<Entrance, List<string>> entranceRoomFailNames = new Dictionary<Entrance, List<string>>();
 
     // Cached refs
     LevelManager levelManager;
@@ -58,13 +59,7 @@ public class RoomManager : MonoBehaviour
 
     IEnumerator SpawnRoomsRoutine()
     {
-        // Define the contact filter for room colliders
-        ContactFilter2D roomsFilter = new ContactFilter2D
-        {
-            layerMask = LayerMask.GetMask("Room"),
-            useTriggers = true
-        };
-
+        ContactFilter2D roomsFilter = CreateRoomsFilter();
         int previousRoomCount = 0;
         int waveCount = 0;
 
@@ -73,67 +68,132 @@ public class RoomManager : MonoBehaviour
             waveCount++;
             Debug.Log("Wave: " + waveCount);
 
-            // Check termination condition
-            if (waveCount > 10 && roomsToSpawn.Count == previousRoomCount)
+            if (ShouldTerminateRoomSpawning(waveCount, previousRoomCount))
             {
-                LogWarningPerRooms("TERMINATING ROOM SPAWNING, can't spawn room: ");
-                DestroyAllRooms();
-                StartRoomSpawning();
+                TerminateRoomSpawning();
                 yield break;
             }
-            previousRoomCount = roomsToSpawn.Count;
 
-            // Shuffle the list of rooms to spawn
-            List<GameObject> shuffledRooms = GameHelper.ShuffleList(roomsToSpawn);
+            List<GameObject> shuffledRooms = ShuffleRoomsToSpawn();
             yield return new WaitForEndOfFrame();
 
-            // Iterate over entrances
-            foreach (Entrance entrance in GameHelper.ShuffleList(entrances))
+            foreach (Entrance entrance in GetShuffledUnconnectedEntrances())
             {
-                Direction invDirection = InvertDirection(entrance.direction);
-                Vector3 entrancePosition = entrance.gameObject.transform.position;
-
-                // Check if the entrance has a connected room
-                if (!entrance.hasConnectedRoom)
-                {
-                    foreach (GameObject roomObj in shuffledRooms)
-                    {
-                        Room roomComponent = roomObj.GetComponent<Room>();
-                        Entrance roomEntrance = GetEntranceOfDir(roomComponent, invDirection);
-
-                        // Check if the room can be spawned at this entrance
-                        if (roomEntrance != null)
-                        {
-                            Vector3 entranceToZero = Vector3.zero - roomEntrance.transform.localPosition;
-                            Vector3 spawnPosition = entrancePosition + entranceToZero;
-
-                            // Check if the room collider would touch anything at the spawn position
-                            bool isTouchingRoom = GameHelper.IsBoxColliderTouching(spawnPosition, roomObj.GetComponent<BoxCollider2D>(), roomsFilter);
-
-                            // If the room collider doesn't touch anything, spawn the room
-                            if (!isTouchingRoom)
-                            {
-                                SpawnRoom(roomObj, spawnPosition, entrance);
-                                shuffledRooms.Remove(roomObj);
-                                roomsToSpawn.Remove(roomObj);
-                                break;
-                            }
-                        }
-                    }
-                    yield return new WaitForEndOfFrame();
-
-
-                }
-
-
+                if (TrySpawnRoomAtEntrance(shuffledRooms, entrance, roomsFilter))
+                    break;
             }
-
-
         }
-        // Get entrance that is furthest away
+
+        SpawnEndRoom();
+        yield return new WaitForEndOfFrame();
+
+        SpawnDoorCoversForUnconnectedEntrances();
+        levelManager.state = LevelManager.LevelState.Running;
+        CloseDoors(true);
+        OnRoomSpawningDone.Invoke();
+    }
+
+    bool ShouldTerminateRoomSpawning(int waveCount, int previousRoomCount)
+    {
+        return waveCount > 10 && roomsToSpawn.Count == previousRoomCount;
+    }
+
+    void TerminateRoomSpawning()
+    {
+        LogWarningPerRooms("TERMINATING ROOM SPAWNING, can't spawn room: ");
+        DestroyAllRooms();
+        StartRoomSpawning();
+    }
+
+    bool TrySpawnRoomAtEntrance(List<GameObject> shuffledRooms, Entrance entrance, ContactFilter2D roomsFilter)
+    {
+        Direction invDirection = InvertDirection(entrance.direction);
+        Vector3 entrancePosition = entrance.gameObject.transform.position;
+
+        foreach (GameObject roomObj in shuffledRooms)
+        {
+            Room roomComponent = roomObj.GetComponent<Room>();
+            Entrance roomEntrance = GetEntranceOfDir(roomComponent, invDirection);
+
+            if (roomEntrance != null &&
+               (!entranceRoomFailNames.ContainsKey(entrance) || !entranceRoomFailNames[entrance].Contains(roomObj.name)))
+            {
+                Vector3 entranceToZero = Vector3.zero - roomEntrance.transform.localPosition;
+                Vector3 spawnPosition = entrancePosition + entranceToZero;
+
+                bool isTouchingRoom = GameHelper.IsBoxColliderTouching(spawnPosition, roomObj.GetComponent<BoxCollider2D>(), roomsFilter);
+
+                if (!isTouchingRoom)
+                {
+                    SpawnRoom(roomObj, spawnPosition, entrance);
+                    shuffledRooms.Remove(roomObj);
+                    roomsToSpawn.Remove(roomObj);
+                    return true;
+                }
+                else
+                {
+                    HandleFailedRoomSpawn(entrance, roomObj);
+                }
+            }
+        }
+        return false;
+    }
+
+    void HandleFailedRoomSpawn(Entrance entrance, GameObject roomObj)
+    {
+        if (entranceRoomFailNames.ContainsKey(entrance))
+        {
+            entranceRoomFailNames[entrance].Add(roomObj.name);
+        }
+        else
+        {
+            entranceRoomFailNames.Add(entrance, new List<string>() { roomObj.name });
+        }
+    }
+
+    void SpawnEndRoom()
+    {
+        Entrance furthestAway = GetFurthestUnconnectedEntrance();
+        if (furthestAway != null)
+        {
+            Room endRoomComponent = levelData.endRoom.GetComponent<Room>();
+            Entrance endRoomEntrance = GetEntranceOfDir(endRoomComponent, InvertDirection(furthestAway.direction));
+            Vector3 endSpawnPosition = furthestAway.transform.position + (Vector3.zero - endRoomEntrance.transform.localPosition);
+            SpawnRoom(levelData.endRoom, endSpawnPosition, furthestAway);
+        }
+    }
+
+    void SpawnDoorCoversForUnconnectedEntrances()
+    {
+        foreach (Entrance entrance in unconnectedEntrances)
+        {
+            if (!entrance.hasConnectedRoom)
+                entrance.SpawnDoorCover();
+        }
+    }
+
+
+    // /////// ================= /////// //
+    // ///////  HELPER FUNCTION  /////// //
+    // /////// ================= /////// //
+
+
+    List<GameObject> ShuffleRoomsToSpawn()
+    {
+        return GameHelper.ShuffleList(roomsToSpawn);
+    }
+
+    IEnumerable<Entrance> GetShuffledUnconnectedEntrances()
+    {
+        return GameHelper.ShuffleList(unconnectedEntrances);
+    }
+
+    Entrance GetFurthestUnconnectedEntrance()
+    {
         Entrance furthestAway = null;
         float furthestAwayDistance = 0;
-        foreach (Entrance entr in entrances)
+
+        foreach (Entrance entr in unconnectedEntrances)
         {
             if (!entr.hasConnectedRoom)
             {
@@ -145,35 +205,18 @@ public class RoomManager : MonoBehaviour
                 }
             }
         }
-        if (furthestAway != null)
-        {
-            // spawn endroom
-            Room endRoomComponent = levelData.endRoom.GetComponent<Room>();
-            Entrance endRoomEntrance = GetEntranceOfDir(endRoomComponent, InvertDirection(furthestAway.direction));
 
-            Vector3 endEentranceToZero = Vector3.zero - endRoomEntrance.transform.localPosition;
-            Vector3 endSpawnPosition = furthestAway.transform.position + endEentranceToZero;
-            SpawnRoom(levelData.endRoom, endSpawnPosition, furthestAway);
-        }
-
-        yield return new WaitForEndOfFrame();
-
-        // Spawn door covers for entrances without connected rooms
-        foreach (Entrance entrance in entrances)
-        {
-            if (!entrance.hasConnectedRoom)
-                entrance.SpawnDoorCover();
-        }
-
-        levelManager.state = LevelManager.LevelState.Running;
-        CloseDoors(true);
-        OnRoomSpawningDone.Invoke();
+        return furthestAway;
     }
 
-
-    // /////// ================= /////// //
-    // ///////  HELPER FUNCTION  /////// //
-    // /////// ================= /////// //
+    ContactFilter2D CreateRoomsFilter()
+    {
+        return new ContactFilter2D
+        {
+            layerMask = LayerMask.GetMask("Room"),
+            useTriggers = true
+        };
+    }
 
     void DestroyAllRooms()
     {
@@ -214,7 +257,6 @@ public class RoomManager : MonoBehaviour
             newRoomInstance.entrances.Remove(_roomMeetingEntrance);
             _roomMeetingEntrance.Die();
         }
-        _entrance.hasConnectedRoom = true;
         _entrance.OnConnectedRoomSpawned();
     }
 
@@ -238,7 +280,6 @@ public class RoomManager : MonoBehaviour
     }
 
 
-
     public static Direction InvertDirection(Direction _originalDirection)
     {
         int enumLength = Enum.GetValues(typeof(Direction)).Length;
@@ -250,17 +291,20 @@ public class RoomManager : MonoBehaviour
         return (Direction)invertedValue;
     }
 
+
     public void CloseDoors(bool silent = false)
     {
-        foreach (Entrance entrance in entrances)
+        foreach (Entrance entrance in unconnectedEntrances)
         {
             entrance.CloseDoor();
         }
         if (!silent) audioScource.PlayOneShot(closeDoorAudio);
     }
+
+
     public void OpenDoors(bool silent = false)
     {
-        foreach (Entrance entrance in entrances)
+        foreach (Entrance entrance in unconnectedEntrances)
         {
             Debug.Log("manager closing door");
             entrance.OpenDoor();
