@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,18 @@ public class RatBossBehaviour : MonoBehaviour
     [Header("General")]
     [SerializeField] float moveSpeed = 1f;
     [SerializeField] float timeBetweenAttacks = 4f;
-    [SerializeField] LayerMask obsticleLayer;
+    [SerializeField] LayerMask hitLayerMask;
     [Header("Attack - shoot")]
-    [SerializeField] float shootAimTime;
+    [SerializeField] float shootAimTime = 3f;
     [SerializeField] GameObject aimLineVFX;
     [SerializeField] GameObject shootLineVFX;
+    [SerializeField] Transform weaponTransform; // The transform of the weapon
+    public float maxRotationSpeed = 5f; // The maximum rotation speed of the weapon
+    public float rotationAcceleration = 10f; // The rotation acceleration towards the target direction
+    public float maxAngularVelocity = 10f; // The maximum angular velocity of the weapon
+
+    [Header("Test")]
+    [SerializeField] Transform testMarker;
 
     enum RatState
     {
@@ -20,15 +28,25 @@ public class RatBossBehaviour : MonoBehaviour
         attacking,
         dead
     }
+    bool weaponAimActive = false;
+
+    float timeToNextShot;
+    Vector3 target;
+    RaycastHit2D aimRayHit;
 
     RatState state = RatState.paused;
 
     Player player;
+    LineRenderer aimLineRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>();
+
+        aimLineRenderer = GetComponent<LineRenderer>();
+
+        StartBoss();
     }
 
     public void StartBoss()
@@ -42,52 +60,64 @@ public class RatBossBehaviour : MonoBehaviour
     void Update()
     {
         if (state == RatState.paused) return;
-        
+
+        target = player.transform.position;
+        DetermineTargetGunDirection();
+        if (weaponAimActive)
+        {
+            aimLineRenderer.enabled = true;
+            AimLineVFX();
+        }
+        else
+        {
+            aimLineRenderer.enabled = false;
+        }
+
     }
+
+
 
     IEnumerator BossAttackLoopRoutine()
     {
         while (state != RatState.dead)
         {
             // 3 shoot attacks then one rat spawn
+            weaponAimActive = true;
+            for (int i = 0; i < 3; i++)
+            {
+                timeToNextShot = shootAimTime;
+                while (timeToNextShot > 0)
+                {
+                    timeToNextShot -= Time.deltaTime;
+                    yield return new WaitForFixedUpdate();
+                }
+                StartCoroutine(ShootAttackRoutine());
+            }
+            weaponAimActive = false;
 
-            StartCoroutine(ShootAttackRoutine());
             yield return new WaitForSeconds(timeBetweenAttacks);
-            StartCoroutine(ShootAttackRoutine());
-            yield return new WaitForSeconds(timeBetweenAttacks);
-            StartCoroutine(ShootAttackRoutine());
-            yield return new WaitForSeconds(timeBetweenAttacks);
-
-            StartCoroutine(SpawnRatAttackRoutine());
+            //StartCoroutine(SpawnRatAttackRoutine());
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
     }
 
     IEnumerator ShootAttackRoutine()
     {
-        Vector3 shootPos = player.PredictFuturePosition(shootAimTime);
-
-        AimLineVFX(shootPos);
-        yield return new WaitForSeconds(shootAimTime);
-        
-        RaycastHit2D rayHit = Physics2D.Raycast(
-            transform.position, 
-            shootPos - transform.position, 
-            30f, 
-            obsticleLayer
-        );
+        Debug.Log("PANG");
+        yield break;    
         
     }
 
-    void AimLineVFX(Vector3 target)
+
+    void AimLineVFX()
     {
-        Vector3 toTarget = target - transform.position;
+        aimRayHit = Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
+        
 
-        LineRenderer line = Instantiate(aimLineVFX).GetComponent<LineRenderer>();
-        Destroy(line.gameObject);
+        aimLineRenderer.SetPosition(0, weaponTransform.position);
+        aimLineRenderer.SetPosition(1, aimRayHit.point);   
 
-        line.SetPosition(0, transform.position);
-        line.SetPosition(0, toTarget*10);   
+
 
     }
 
@@ -95,4 +125,37 @@ public class RatBossBehaviour : MonoBehaviour
     {
         yield break;
     }
+
+
+    // /// Gun /// //
+
+    //private void DetermineTargetGunDirection()
+    //{
+    //    Debug.Log(timeToNextShot);
+    //    Vector3 targetPos = player.PredictFuturePosition(timeToNextShot);
+    //    testMarker.position = targetPos;
+
+    //    targetDirection = (targetPos - weaponTransform.position).normalized;
+    //}
+
+    private void DetermineTargetGunDirection()
+    {
+        // Get the direction between weaponTransform and targetPos
+        Vector2 targetDirection = (target - weaponTransform.position).normalized;
+
+        // Calculate the angle between the current forward direction and the target direction
+        float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+
+        // Calculate the difference in angle between current rotation and target angle
+        float angleDifference = Mathf.DeltaAngle(weaponTransform.eulerAngles.z, targetAngle);
+
+        // Calculate the desired rotation speed based on the angle difference
+        float desiredRotationSpeed = Mathf.Clamp(angleDifference * rotationAcceleration, -maxRotationSpeed, maxRotationSpeed);
+
+        // Apply rotation speed to the weapon
+        float newRotationSpeed = Mathf.MoveTowards(weaponTransform.GetComponent<Rigidbody2D>().angularVelocity, desiredRotationSpeed, Time.deltaTime * rotationAcceleration);
+        newRotationSpeed = Mathf.Clamp(newRotationSpeed, -maxAngularVelocity, maxAngularVelocity);
+        weaponTransform.GetComponent<Rigidbody2D>().angularVelocity = newRotationSpeed;
+    }
+
 }
