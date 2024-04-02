@@ -60,8 +60,6 @@ public class EncounterRoom : Room
     }
 
 
-
-
     void SpawnEnemies()
     {
         enemies = new List<GameObject>();

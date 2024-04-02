@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineManager : MonoBehaviour
+public class RaycastGunLine : MonoBehaviour
 {
     Vector3[] linePositions = new Vector3[2];
     LineRenderer gunLineRenderer;

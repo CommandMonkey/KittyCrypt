@@ -29,12 +29,12 @@ public class GameCamera : MonoBehaviour
 
     public void SetPrimaryTarget(ref Transform transform)
     {
-
+        primaryTarget = transform;
     }
 
     public void SetSecondaryTarget(ref Transform transform)
     {
-
+        secondaryTarget = transform;
         onlyPrimary = false;
     }
 }
