@@ -19,6 +19,7 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
     [SerializeField] float maxAngularVelocity = 10f; // The maximum angular velocity of the weapon
     [Header("Attack - spawnRats")]
     [SerializeField] List<GameObject> ratsToSummon;
+    [SerializeField] AudioClip CaneBoomSFX;
 
     enum RatState
     {
@@ -39,6 +40,7 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
     BoxCollider2D roomCollider;
     Animator animator;
     GameCamera cam;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,7 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
         roomCollider = transform.parent.GetComponent<BoxCollider2D>();
         animator = GetComponentInChildren<Animator>();
         cam = FindObjectOfType<GameCamera>();
+        audioSource = GetComponent<AudioSource>();
 
         StartBoss();
     }
@@ -93,10 +96,7 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
             }
             aimLineRenderer.enabled = false;
 
-            animator.SetTrigger("summon");
-            yield return new WaitForSeconds(1);
-            cam.DoCameraShake();
-            yield return new WaitForSeconds(.3f);
+
             yield return StartCoroutine(SpawnRatsRoutine());
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
@@ -140,8 +140,18 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
 
     IEnumerator SpawnRatsRoutine()
     {
+        animator.SetTrigger("summon");
+        yield return new WaitForSeconds(1); // Wait for Käpp to hit the ground
+        cam.DoCameraShake();
+        PlayBoomSFX();
+        yield return new WaitForSeconds(.3f); 
         EncounterRoom.SpawnEnemies(roomCollider, ratsToSummon, LayerMask.GetMask("Wall"));
         yield break;
+    }
+
+    void PlayBoomSFX()
+    {
+        audioSource.PlayOneShot(CaneBoomSFX);
     }
 
 
