@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] float Move_speed = 30f;
-    [SerializeField] float rollSpeedMinimum = 50f;
+    //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
     [SerializeField] int health = 9;
 
@@ -22,10 +23,9 @@ public class Player : MonoBehaviour
     [NonSerialized] public Vector2 exteriorVelocity;
 
 
-    public GameObject Crosshair;
-
-
+    public GameObject crosshair;
     public bool isDead = false;
+    public UnityEvent onInteract;
 
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
@@ -38,15 +38,23 @@ public class Player : MonoBehaviour
 
 
     Vector2 moveInput;
-    Vector2 AimDirr;
+    Vector2 AimDirection;
+
+    ContactFilter2D noFilter;
 
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
     private SceneLoader loader;
-    LevelManager levelManager;
-    PlayerInventory inventory;
+    private LevelManager levelManager;
+    private UserInput userInput;
+    private BoxCollider2D boxCollider;
 
+
+    private void Awake()
+    {
+        onInteract = new UnityEvent();
+    }
 
     private void Start()
     {
@@ -54,12 +62,21 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         loader = FindObjectOfType<SceneLoader>();
         levelManager = FindObjectOfType<LevelManager>();
-        inventory = GetComponentInChildren<PlayerInventory>();
+        userInput = FindObjectOfType<UserInput>();
+        boxCollider = GetComponent<BoxCollider2D>();
+
+        // Input Events
+        userInput.onMove.AddListener(OnMove);
+        userInput.onAiming.AddListener(OnAim);
+
+        // Create a contact filter that includes triggers
+        noFilter = new ContactFilter2D();
+        noFilter.useTriggers = true;
+
 
         state = State.normal;
         rollResetTime = rolldelay;
 
-        
     }
 
     private void Update()
@@ -91,6 +108,7 @@ public class Player : MonoBehaviour
         RollDelay();
         Aim();
     }
+
     private void FixedUpdate()
     {
         if (isDead)
@@ -113,6 +131,7 @@ public class Player : MonoBehaviour
 
         exteriorVelocity *= drag;
     }
+
     // flip 
     private void Flip()
     {
@@ -126,21 +145,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnInteract()
-    {
-        inventory.OnInteract();
-    }
-
-    void OnMove(InputValue value)
+    public void OnMove(Vector2 moveVector)
     {
         if (levelManager.state != LevelManager.LevelState.Running) return;
-        moveInput = value.Get<Vector2>();
+        moveInput = moveVector;
         
     }
 
-    void OnAim(InputValue value)
+    void OnAim(Vector2 aimDirection)
     {
-        AimDirr = value.Get<Vector2>();
+        AimDirection = aimDirection;
+;
     }
 
     void OnDash()
@@ -173,6 +188,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             isDead = true;
+            animator.SetTrigger("IsDead");
             Invoke("BackToMenu", 1f);
         }
     }
@@ -194,10 +210,42 @@ public class Player : MonoBehaviour
         return health;
     }
 
+    public bool IsOverlapping<T>(GameObject toCompare) where T : Component
+    {
+        Debug.Log("AAAAAA----: " + toCompare.name + "parent: " + toCompare.transform.parent.name);
+        // Get colliders
+        Collider2D[] colliders = new Collider2D[10];
+        Physics2D.OverlapCollider(boxCollider, noFilter, colliders);
+
+        // Find Room or entrance Colliders
+        foreach (Collider2D c in colliders)
+        {
+            if (c != null)
+            {
+                if (c.gameObject == toCompare)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false; // No matching component found
+    }
+
+
+    public Vector3 PredictFuturePosition(float timeInFuture)
+    {
+        // Calculate future position based on current velocity and time
+        Vector3 futurePosition = myRigidbody.position + myRigidbody.velocity * timeInFuture;
+
+        return futurePosition;
+    }
+
+
 
     void Aim()
     {
-        if(Crosshair == null) { return; }
-        Crosshair.transform.localPosition = AimDirr * Crosshair_distance;
+        if(crosshair == null) { return; }
+        crosshair.transform.localPosition = AimDirection * Crosshair_distance;
     }
 }

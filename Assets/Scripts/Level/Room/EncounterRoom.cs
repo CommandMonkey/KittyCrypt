@@ -7,7 +7,7 @@ public class EncounterRoom : Room
 {
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
-    [SerializeField] GameObject TEST_MARKER;
+    //[SerializeField] GameObject spawnAnimPrefab;
 
     bool isActive = false; // if the player has entered and the encounter is active
     bool isRoomDefeated = false; // if the room has been defeted
@@ -17,14 +17,14 @@ public class EncounterRoom : Room
     BoxCollider2D roomCollider;
     LevelManager levelManager;
     // Start is called before the first frame update
-    void Start()
+    protected override void RoomStart()
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
         levelManager = FindObjectOfType<LevelManager>();
 
-        OnPlayerEnter.AddListener(PlayerEnter);
-        levelManager.OnEnemyKill.AddListener(EnemyKill);
+        base.onPlayerEnter.AddListener(OnPlayerEnter);
+        levelManager.onEnemyKill.AddListener(OnEnemyKill);
     }
 
     private void Update()
@@ -32,7 +32,7 @@ public class EncounterRoom : Room
 
     }
 
-    void EnemyKill()
+    void OnEnemyKill()
     {
         if (!isActive || isRoomDefeated) return;
         int _enemiesAlive = enemies.Count-1;
@@ -50,21 +50,15 @@ public class EncounterRoom : Room
     }
 
 
-    void PlayerEnter()
+    void OnPlayerEnter()
     {
-        Debug.Log("Palyer Enter");
-        if (isRoomDefeated) return;
-        
-        StartCoroutine(PlayerEnterRoutine());
-    }
+        if (isRoomDefeated || isActive) return;
 
-    IEnumerator PlayerEnterRoutine()
-    {
-        yield return new WaitForSeconds(0f);
+        isActive = true;
         thisRoomManager.CloseDoors();
         SpawnEnemies();
-        isActive = true;
     }
+
 
     void SpawnEnemies()
     {

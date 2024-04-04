@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9bf95a2d8be144a8e8b3835c456403, type: 3}
+  m_Name: Shotgun_Settings
+  m_EditorClassIdentifier: 
+  weaponType: 1
+  fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
+  reloadAudio: {fileID: 0}
+  fireRate: 1
+  reloadTime: 1.5
+  damagePerBullet: 4
+  bulletsBeforeReload: 10
+  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
+  destroyHitEffectAfter: 1.5
+  knockback: 15
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 7048
+  projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
+  bulletSpreadRange: 20
+  projectileSpeed: 40
+  projectileVanishAfter: 3
+  bulletTrail: {fileID: 0}
+  destroyTrailAfter: 0.1

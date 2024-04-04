@@ -1,19 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SpawnRoom : Room
 {
-    [SerializeField] GameObject startWeaponPickup;
-    
+    [SerializeField] ItemPickupInteractable[] startWeaponPickups;
+    [SerializeField] TMP_Text pickUpWeaponText;
+
+    bool popAll = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (startWeaponPickup == null)
+        foreach (ItemPickupInteractable weapon in startWeaponPickups)
         {
-            FindObjectOfType<RoomManager>().OpenDoors();
-            Destroy(this);
+            if (weapon == null)
+            {
+                FindObjectOfType<RoomManager>().OpenDoors();
+                popAll = true;
+                Destroy(this);
+                Destroy(pickUpWeaponText);
+            }
+        }
+        if (popAll)
+        {
+            foreach (ItemPickupInteractable weapon in startWeaponPickups)
+            {
+                if (weapon != null)
+                    weapon.PopAndDie();
+            }
         }
     }
 }

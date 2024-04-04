@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class Entrance : MonoBehaviour
 {
@@ -12,39 +12,52 @@ public class Entrance : MonoBehaviour
     [SerializeField] Sprite sideOpenDoorSprite;
 
     [NonSerialized] public GameObject roomToSpawn;
-    [NonSerialized] public List<string> roomTriesNames = new List<string>();
-     public bool hasConnectedRoom;
+    [NonSerialized] public List<string> roomFailNames = new List<string>();
+    [NonSerialized] public bool hasConnectedRoom;
+    [NonSerialized] public UnityEvent onEntranceExit;
 
-    [SerializeField] bool doorOpen = true;
+    bool doorOpen = true;
 
     RoomManager roomManager;
-    BoxCollider2D doorBoxCollision;
+    BoxCollider2D collisionCollider;
+    BoxCollider2D triggerCollider;
     SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        onEntranceExit = new UnityEvent();
+    }
 
     private void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
-        doorBoxCollision = GetComponentInChildren<BoxCollider2D>();
+        collisionCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        triggerCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        //animator = GetComponent<Animator>();
 
-        //animator.SetInteger("direction", (int)direction);
-
+        
         SetDoorCollisionSize();
 
-        roomManager.entrances.Add(this);
+        roomManager.unconnectedEntrances.Add(this);
 
-        doorBoxCollision.gameObject.SetActive(!doorOpen);
-        //animator.SetBool("doorOpen", doorOpen);
+        collisionCollider.gameObject.SetActive(!doorOpen);
         UpdateSprite();
+    }
 
+    public void OnConnectedRoomSpawned()
+    {
+        triggerCollider.enabled = true;
+        hasConnectedRoom = true;
+        if (roomManager != null) roomManager.unconnectedEntrances.Remove(this);
     }
 
     private void SetDoorCollisionSize()
     {
         int numDir = (int)direction;
-        doorBoxCollision.size =
-            numDir == 0 || numDir == 2 ? new Vector2(3, 1) : new Vector2(1, 3);
+        collisionCollider.size =
+            numDir == 0 || numDir == 2 ? new Vector2(3, 3) : new Vector2(1, 3);
+        collisionCollider.offset =
+            numDir == 0 || numDir == 2 ? new Vector2(0, -1) : Vector2.zero;
     }
 
     public void SpawnDoorCover()
@@ -56,7 +69,7 @@ public class Entrance : MonoBehaviour
     public void Die()
     {
         gameObject.SetActive(false);
-        if (roomManager != null) roomManager.entrances.Remove(this);
+        if (roomManager != null) roomManager.unconnectedEntrances.Remove(this);
         Destroy(gameObject);
     }
 
@@ -79,7 +92,7 @@ public class Entrance : MonoBehaviour
     {   
         doorOpen = !doorOpen;
 
-        doorBoxCollision.gameObject.SetActive(!doorOpen);
+        collisionCollider.gameObject.SetActive(!doorOpen);
         //animator.SetBool("doorOpen", doorOpen);
         UpdateSprite();
     }
@@ -96,4 +109,8 @@ public class Entrance : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        onEntranceExit.Invoke();
+    }
 }

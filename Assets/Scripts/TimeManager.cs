@@ -16,6 +16,11 @@ public class TimeManager : MonoBehaviour
         pauseMenuContainer.SetActive(false);
     }
 
+    private void Start()
+    {
+        FindObjectOfType<UserInput>().onTogglePause.AddListener(OnTogglePause);
+    }
+
     private void OnTogglePause()
     {
         TogglePause();
@@ -25,13 +30,13 @@ public class TimeManager : MonoBehaviour
     // Pausing
     //-------------------------------------------------------------------------------------------------------------------
 
-    public void Pause()
+    public void Pause(float delay = 0)
     {
-        if (!gamePaused) TogglePause();
+        if (!gamePaused) Invoke("TogglePause", delay);
     }
-    public void UnPause()
+    public void UnPause(float delay = 0)
     {
-        if (gamePaused) TogglePause();
+        if (gamePaused) Invoke("TogglePause", delay);
     }
 
     void TogglePause()
