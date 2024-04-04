@@ -4,42 +4,34 @@ using UnityEngine;
 
 public class RatBossGunLine : MonoBehaviour
 {
-    [SerializeField] int sampleRate = 15;
-    [SerializeField] float startWidth = 1f;
-    public float timeToZero = 1f;
-
-    [SerializeField] float decreaseFactor = 0;
-    [SerializeField] float sampleWaitTime = 0;
-
     LineRenderer lineRenderer;
 
-    // Start is called before the first frame update
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();    
 
-        lineRenderer.startWidth = startWidth;
-        lineRenderer.endWidth = startWidth;
-
-        decreaseFactor = startWidth / sampleRate * timeToZero;
-        sampleWaitTime = 1f / sampleRate;
-
-        StartCoroutine(DecreaseWidth());
+        StartCoroutine(IncreaseWidth());
     }
 
-    // Update is called once per frame
-    void Update()
+
+    IEnumerator IncreaseWidth()
     {
-        
+        for (int i = 0; i < 5; i++)
+        {
+            lineRenderer.startWidth += .01f;
+            lineRenderer.endWidth += .025f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return StartCoroutine(DecreaseWidth());
     }
 
     IEnumerator DecreaseWidth()
     {
-        while (lineRenderer.endWidth > 0)
+        for (int i = 0; i < 5; i++)
         {
-            lineRenderer.startWidth -= decreaseFactor;
-            lineRenderer.endWidth -= decreaseFactor;
-            yield return new WaitForSeconds(sampleWaitTime);
+            lineRenderer.startWidth -= .01f;
+            lineRenderer.endWidth -= .025f;
+            yield return new WaitForSeconds(0.01f);
         }
     }
 }

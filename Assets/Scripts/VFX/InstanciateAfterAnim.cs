@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class InstanciateAfterAnim : MonoBehaviour
 {
-    Transform content;
+    [SerializeField] GameObject content;
 
-    void Start()
-    {
-        content = transform.GetChild(0);
-    }
 
     public void OnAnimDone()
     {
-        content.SetParent(transform.parent);
+        Instantiate(content, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

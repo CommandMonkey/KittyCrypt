@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RatBossBehaviour : MonoBehaviour
+public class RatBossBehaviour : MonoBehaviour, IEnemy
 {
     [Header("General")]
     [SerializeField] float moveSpeed = 1f;
@@ -14,18 +14,16 @@ public class RatBossBehaviour : MonoBehaviour
     [SerializeField] GameObject aimLineVFX;
     [SerializeField] GameObject shootLineVFX;
     [SerializeField] Transform weaponTransform; // The transform of the weapon
-    public float maxRotationSpeed = 5f; // The maximum rotation speed of the weapon
-    public float rotationAcceleration = 10f; // The rotation acceleration towards the target direction
-    public float maxAngularVelocity = 10f; // The maximum angular velocity of the weapon
-
-    [Header("Test")]
-    [SerializeField] Transform testMarker;
+    [SerializeField] float maxRotationSpeed = 5f; // The maximum rotation speed of the weapon
+    [SerializeField] float rotationAcceleration = 10f; // The rotation acceleration towards the target direction
+    [SerializeField] float maxAngularVelocity = 10f; // The maximum angular velocity of the weapon
+    [Header("Attack - spawnRats")]
+    [SerializeField] List<GameObject> ratsToSummon;
 
     enum RatState
     {
         paused,
-        idle,
-        attacking,
+        alive,
         dead
     }
     bool weaponAimActive = false;
@@ -38,20 +36,25 @@ public class RatBossBehaviour : MonoBehaviour
 
     Player player;
     LineRenderer aimLineRenderer;
+    BoxCollider2D roomCollider;
+    Animator animator;
+    GameCamera cam;
 
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>();
-
         aimLineRenderer = GetComponent<LineRenderer>();
+        roomCollider = transform.parent.GetComponent<BoxCollider2D>();
+        animator = GetComponentInChildren<Animator>();
+        cam = FindObjectOfType<GameCamera>();
 
         StartBoss();
     }
 
     public void StartBoss()
     {
-        state = RatState.idle;
+        state = RatState.alive;
         StartCoroutine(BossAttackLoopRoutine());
         
     }
@@ -63,15 +66,9 @@ public class RatBossBehaviour : MonoBehaviour
 
         target = player.transform.position;
         DetermineTargetGunDirection();
-        if (weaponAimActive)
-        {
-            aimLineRenderer.enabled = true;
-            AimLineVFX();
-        }
-        else
-        {
-            aimLineRenderer.enabled = false;
-        }
+
+        AimLineVFX();
+
 
     }
 
@@ -82,7 +79,7 @@ public class RatBossBehaviour : MonoBehaviour
         while (state != RatState.dead)
         {
             // 3 shoot attacks then one rat spawn
-            weaponAimActive = true;
+            aimLineRenderer.enabled = true;
             for (int i = 0; i < 3; i++)
             {
                 timeToNextShot = shootAimTime;
@@ -91,19 +88,39 @@ public class RatBossBehaviour : MonoBehaviour
                     timeToNextShot -= Time.deltaTime;
                     yield return new WaitForFixedUpdate();
                 }
-                StartCoroutine(ShootAttackRoutine());
+                aimLineRenderer.enabled = false;
+                yield return StartCoroutine(ShootAttackRoutine());
             }
-            weaponAimActive = false;
+            aimLineRenderer.enabled = false;
 
-            yield return new WaitForSeconds(timeBetweenAttacks);
-            //StartCoroutine(SpawnRatAttackRoutine());
+            animator.SetTrigger("summon");
+            yield return new WaitForSeconds(1);
+            cam.DoCameraShake();
+            yield return new WaitForSeconds(.3f);
+            yield return StartCoroutine(SpawnRatsRoutine());
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
     }
 
     IEnumerator ShootAttackRoutine()
     {
-        Debug.Log("PANG");
+        
+        for (int i = 0; i < 5; i++)
+        {
+            RaycastHit2D shootHit = Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
+
+            LineRenderer shootLine = Instantiate(shootLineVFX).GetComponent<LineRenderer>();
+            shootLine.SetPosition(0, weaponTransform.position);
+            shootLine.SetPosition(1, shootHit.point);
+
+            if (shootHit.collider.CompareTag("Player"))
+            {
+                player.TakeDamage(1);
+            }
+            yield return new WaitForSeconds(.1f);
+        }
+        yield return new WaitForSeconds(.3f);
+        aimLineRenderer.enabled = true;
         yield break;    
         
     }
@@ -111,18 +128,19 @@ public class RatBossBehaviour : MonoBehaviour
 
     void AimLineVFX()
     {
-        aimRayHit = Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
-        
-
-        aimLineRenderer.SetPosition(0, weaponTransform.position);
-        aimLineRenderer.SetPosition(1, aimRayHit.point);   
+        if (aimLineRenderer.enabled)
+        {
+            aimRayHit = Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
 
 
-
+            aimLineRenderer.SetPosition(0, weaponTransform.position);
+            aimLineRenderer.SetPosition(1, aimRayHit.point);
+        }
     }
 
-    IEnumerator SpawnRatAttackRoutine()
+    IEnumerator SpawnRatsRoutine()
     {
+        EncounterRoom.SpawnEnemies(roomCollider, ratsToSummon, LayerMask.GetMask("Wall"));
         yield break;
     }
 
@@ -158,4 +176,8 @@ public class RatBossBehaviour : MonoBehaviour
         weaponTransform.GetComponent<Rigidbody2D>().angularVelocity = newRotationSpeed;
     }
 
+    public void TakeDamage(float damage)
+    {
+        throw new NotImplementedException();
+    }
 }

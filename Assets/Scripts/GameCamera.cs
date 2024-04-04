@@ -14,7 +14,7 @@ public class GameCamera : MonoBehaviour
 
     private void Start()
     {
-        virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        virtualCamera = transform.parent.GetComponentInChildren<CinemachineVirtualCamera>();
 
         if (secondaryTarget == null) onlyPrimary = true;
     }
@@ -36,5 +36,10 @@ public class GameCamera : MonoBehaviour
     {
         secondaryTarget = transform;
         onlyPrimary = false;
+    }
+
+    public void DoCameraShake()
+    {
+        virtualCamera.GetComponent<Animator>().SetTrigger("CameraShake");
     }
 }

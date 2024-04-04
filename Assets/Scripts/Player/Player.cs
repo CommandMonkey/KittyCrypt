@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
         // Input Events
         userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
+        userInput.onDash.AddListener(OnDash);
 
         // Create a contact filter that includes triggers
         noFilter = new ContactFilter2D();

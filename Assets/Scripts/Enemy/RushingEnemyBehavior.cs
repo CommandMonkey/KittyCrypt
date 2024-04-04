@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RushingEnemyBehavior : MonoBehaviour
+public class RushingEnemyBehavior : MonoBehaviour, IEnemy
 {
 
     //variables
@@ -14,6 +15,9 @@ public class RushingEnemyBehavior : MonoBehaviour
     [SerializeField, Range(0, 100)] private int enemyDMG = 1;
     [Header("The Lower the number the faster the attack")]
     [SerializeField, Range(0.1f, 3)] private float attackSpeed = 0.1f;
+    [Header("VFX")]
+    [SerializeField] GameObject BloodSplatVFX;
+    [SerializeField] GameObject BloodStainVFX;
 
     private Transform target;
 
@@ -36,7 +40,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     Rigidbody2D rigidBody2D;
     Player player;
     Animator animator;
-    [SerializeField] GameObject EnemyBlood;
+    
 
     void Start()
     {
@@ -80,8 +84,18 @@ public class RushingEnemyBehavior : MonoBehaviour
     //    PlayVFX();
     //}
 
+    void HitPlayer()
+    {
+        animator.SetBool("isAttacking", true);
+        if (!IsMeleeOnCooldown) return;
+        player.TakeDamage(enemyDMG);
+        
+        StartCoroutine(MeleeCooldownRoutine());
+    }
+
     public void TakeDamage(float damage)
     {
+        DoBloodStainVFX();
         hp -= damage;
         if (hp < 0)
         {
@@ -91,19 +105,15 @@ public class RushingEnemyBehavior : MonoBehaviour
         }
     }
 
-    void PlayVFX()
+    private void DoBloodStainVFX()
     {
-        GameObject Blood = Instantiate(EnemyBlood, transform.position, transform.rotation);
-        Destroy(Blood, 1f);
+        Instantiate(BloodStainVFX, transform.position, Quaternion.identity);
     }
 
-    void HitPlayer()
+    void PlayVFX()
     {
-        animator.SetBool("isAttacking", true);
-        if (!IsMeleeOnCooldown) return;
-        player.TakeDamage(enemyDMG);
-        
-        StartCoroutine(MeleeCooldownRoutine());
+        GameObject Blood = Instantiate(BloodSplatVFX, transform.position, transform.rotation);
+        Destroy(Blood, 1f);
     }
 
     IEnumerator MeleeCooldownRoutine()
