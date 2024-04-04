@@ -20,7 +20,7 @@ MonoBehaviour:
   - roomPrefab: {fileID: 3722623101364078196, guid: e55d434f63e9b3e4b948f6651a66ff89, type: 3}
     spawnProbability: 0.5
     maxAmount: 50
-  amountOfRandomRooms: 50
+  amountOfRandomRooms: 10
   setRooms:
   - {fileID: 3722623101364078196, guid: 4f1dcd60de97ac846b4310f3116b4768, type: 3}
   endRoom: {fileID: 3722623101364078196, guid: 2e91485884941024bb2ab76a98976c9c, type: 3}

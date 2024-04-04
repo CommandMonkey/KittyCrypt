@@ -4,6 +4,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
+using UnityEngine.UI;
 
 public class GunFire : MonoBehaviour
 {
@@ -32,10 +33,12 @@ public class GunFire : MonoBehaviour
     RaycastHit2D bulletHit;
     AudioSource gunSource;
     Light2D nuzzleLight;
+    Image reloadImage;
 
     private void Start()
     {
-        ammoUI = FindObjectOfType<AmmoUI>().GetComponent<TMP_Text>();
+        ammoUI = GameObject.FindGameObjectWithTag("AmmoRemainingText").GetComponent<TMP_Text>();
+        
         reloadTimer = settings.reloadTime;
         fireRateCooldownTimer = settings.fireRate;
         playerInput = GetComponent<PlayerInput>();
@@ -43,6 +46,7 @@ public class GunFire : MonoBehaviour
         gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
         player = FindObjectOfType<Player>();
         nuzzleLight = GetComponent<Light2D>();
+        reloadImage = player.reloadCircle.GetComponent<Image>();
         if (nuzzleLight != null)
         {
             nuzzleLight.enabled = false;
@@ -59,7 +63,11 @@ public class GunFire : MonoBehaviour
         Reload();
         CheckBulletsFired();
         FireRateCooldown();
-        SetAmmoUI();
+    }
+
+    private void OnDisable()
+    {
+        player.reloadCircle.gameObject.SetActive(false);
     }
 
     void ProjectileFire()
@@ -74,6 +82,7 @@ public class GunFire : MonoBehaviour
             fireRateCoolingDown = true;
             bulletsFired++;
         }
+        SetAmmoUI();
     }
 
     void BurstFire()
@@ -90,6 +99,7 @@ public class GunFire : MonoBehaviour
             }
             GunFeedbackEffects();
         }
+        SetAmmoBurstUI();   
     }
 
     void RaycastFire()
@@ -119,6 +129,7 @@ public class GunFire : MonoBehaviour
                 }
             }
         }
+        SetAmmoUI();
     }
 
     void GunFeedbackEffects()
@@ -163,6 +174,8 @@ public class GunFire : MonoBehaviour
             reloadAudioPlayed = true;
         }
 
+        player.reloadCircle.SetActive(true);
+        reloadImage.fillAmount = (settings.reloadTime / settings.reloadTime) - (reloadTimer / settings.reloadTime);
         reloadTimer -= Time.deltaTime;
         if(reloadTimer <= 0)
         {
@@ -170,6 +183,7 @@ public class GunFire : MonoBehaviour
             reloading = false;
             reloadAudioPlayed = false;
             reloadTimer = settings.reloadTime;
+            player.reloadCircle.SetActive(false);
         }
     }
 
@@ -185,6 +199,10 @@ public class GunFire : MonoBehaviour
         ammoUI.text = (settings.bulletsBeforeReload - bulletsFired).ToString() + "/" + settings.bulletsBeforeReload.ToString() ;
     }
 
+    void SetAmmoBurstUI()
+    {
+        ammoUI.text = (settings.bulletsBeforeReload / settings.bulletsBeforeReload - bulletsFired / settings.bulletsBeforeReload).ToString() + "/" + (settings.bulletsBeforeReload / settings.bulletsBeforeReload).ToString();
+    }
     public float GetProjectileSpeed()
     {
         return settings.projectileSpeed;

@@ -49,11 +49,14 @@ public class Player : MonoBehaviour
     private LevelManager levelManager;
     private UserInput userInput;
     private BoxCollider2D boxCollider;
+    public GameObject reloadCircle;
 
 
     private void Awake()
     {
         onInteract = new UnityEvent();
+        reloadCircle = GameObject.FindGameObjectWithTag("ReloadCircle");
+        reloadCircle.SetActive(false);
     }
 
     private void Start()

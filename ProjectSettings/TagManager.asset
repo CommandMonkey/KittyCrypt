@@ -11,6 +11,8 @@ TagManager:
   - Enemy
   - PowerUp
   - InteractPromptText
+  - ReloadCircle
+  - AmmoRemainingText
   layers:
   - Default
   - TransparentFX

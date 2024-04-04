@@ -18,8 +18,11 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
     [Header("VFX")]
     [SerializeField] GameObject BloodSplatVFX;
     [SerializeField] GameObject BloodStainVFX;
+    [Header("SFX")]
+    [SerializeField] AudioClip hitSound;
 
     private Transform target;
+    [SerializeField] GameObject enemyHitAudio;
 
     //variblues
 
@@ -79,11 +82,6 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
         CheckMeleeRange();
     }
 
-    //private void OnDestroy()
-    //{
-    //    PlayVFX();
-    //}
-
     void HitPlayer()
     {
         animator.SetBool("isAttacking", true);
@@ -96,6 +94,7 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
     public void TakeDamage(float damage)
     {
         PlayHurtVFX();
+        PlayHurtSFX();
         hp -= damage;
         if (hp < 0)
         {
@@ -103,6 +102,11 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
             PlayDeathVFX();
             Destroy(gameObject);
         }
+    }
+
+    void PlayHurtSFX()
+    {
+        Instantiate(enemyHitAudio);
     }
 
     private void PlayHurtVFX()
