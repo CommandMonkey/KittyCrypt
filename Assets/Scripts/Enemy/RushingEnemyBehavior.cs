@@ -98,10 +98,15 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
         hp -= damage;
         if (hp < 0)
         {
-            levelManager.onEnemyKill.Invoke();
-            PlayDeathVFX();
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        levelManager.onEnemyKill.Invoke();
+        PlayDeathVFX();
+        Destroy(gameObject);
     }
 
     void PlayHurtSFX()

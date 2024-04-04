@@ -145,7 +145,7 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
         cam.DoCameraShake();
         PlayBoomSFX();
         yield return new WaitForSeconds(.3f); 
-        EncounterRoom.SpawnEnemies(roomCollider, ratsToSummon, LayerMask.GetMask("Wall"));
+        GameHelper.InstanciateInCollider(roomCollider, ratsToSummon, LayerMask.GetMask("Wall"));
         yield break;
     }
 

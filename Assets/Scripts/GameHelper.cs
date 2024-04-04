@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameHelper
+public class GameHelper : MonoBehaviour
 {
     public static Vector2 GetRandomPosInCollider(BoxCollider2D collider, LayerMask filter = new LayerMask())
     {
@@ -42,5 +42,18 @@ public class GameHelper
             shuffledList[n] = value;
         }
         return shuffledList;
+    }
+
+
+    public static List<GameObject> InstanciateInCollider(BoxCollider2D roomCollider, List<GameObject> toSpawn, LayerMask noEnemyLayer)
+    {
+        List<GameObject> instances = new List<GameObject>();
+
+        for (int i = 0; i < toSpawn.Count; i++)
+        {
+            Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider, noEnemyLayer);
+            instances.Add(Instantiate(toSpawn[i], pos, Quaternion.identity));
+        }
+        return instances;
     }
 }
