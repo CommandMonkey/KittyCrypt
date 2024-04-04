@@ -71,8 +71,6 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
         DetermineTargetGunDirection();
 
         AimLineVFX();
-
-
     }
 
 
@@ -122,7 +120,6 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
         yield return new WaitForSeconds(.3f);
         aimLineRenderer.enabled = true;
         yield break;    
-        
     }
 
 

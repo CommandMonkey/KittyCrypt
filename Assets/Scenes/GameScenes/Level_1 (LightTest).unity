@@ -396,6 +396,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8017914383874881742, guid: 42d6675b90c45fd4c98d457b2ef9c3c2, type: 3}
+      propertyPath: Priority
+      value: 256
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -445,6 +449,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 98631491592881280, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 98631491592881280, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c48059870e722274daccb9f88993b4de, type: 3}
+    - target: {fileID: 98631491592881280, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 98631491592881280, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_FillOrigin
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 98631491592881280, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_FillClockwise
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482083321484361834, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482083321484361834, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5939864187684484325, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
       propertyPath: m_Pivot.x
       value: 0

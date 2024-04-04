@@ -69,10 +69,9 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
         }
 
         if (IsMeleeOnCooldown && inMeleeRange) 
+        {
             HitPlayer();
-        else 
-            animator.SetBool("isAttacking", false);
-
+        }
 
         if (lineOfSight) 
             HowFarFromTarget();
@@ -84,7 +83,7 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
 
     void HitPlayer()
     {
-        animator.SetBool("isAttacking", true);
+        animator.SetTrigger("isAttacking");
         if (!IsMeleeOnCooldown) return;
         player.TakeDamage(enemyDMG);
         
