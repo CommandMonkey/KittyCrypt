@@ -3,11 +3,10 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
 using System.Collections;
+using TMPro;
 
 public class GunFire : MonoBehaviour
 {
-
-
     //Configurable parameters damage
     [Header("General Options")]
     [SerializeField] WeaponSettingsObject settings;
@@ -15,6 +14,8 @@ public class GunFire : MonoBehaviour
 
 
     //Cached references
+
+    TMP_Text ammoUI;
 
     //Private variables
     int bulletsFired;
@@ -34,6 +35,7 @@ public class GunFire : MonoBehaviour
 
     private void Start()
     {
+        ammoUI = FindObjectOfType<AmmoUI>().GetComponent<TMP_Text>();
         reloadTimer = settings.reloadTime;
         fireRateCooldownTimer = settings.fireRate;
         playerInput = GetComponent<PlayerInput>();
@@ -57,6 +59,7 @@ public class GunFire : MonoBehaviour
         Reload();
         CheckBulletsFired();
         FireRateCooldown();
+        SetAmmoUI();
     }
 
     void ProjectileFire()
@@ -95,8 +98,6 @@ public class GunFire : MonoBehaviour
 
         if (playerInput.actions["Fire"].IsPressed())
         {
-            randomBulletSpread = GetBulletSpread();
-
             bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
             if (bulletHit)
             {
@@ -177,6 +178,11 @@ public class GunFire : MonoBehaviour
         nuzzleLight.enabled = true;
         yield return new WaitForSeconds(0.05f);
         nuzzleLight.enabled = false;
+    }
+
+    void SetAmmoUI()
+    {
+        ammoUI.text = (settings.bulletsBeforeReload - bulletsFired).ToString() + "/" + settings.bulletsBeforeReload.ToString() ;
     }
 
     public float GetProjectileSpeed()

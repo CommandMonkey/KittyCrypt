@@ -95,22 +95,23 @@ public class RushingEnemyBehavior : MonoBehaviour, IEnemy
 
     public void TakeDamage(float damage)
     {
-        DoBloodStainVFX();
+        PlayHurtVFX();
         hp -= damage;
         if (hp < 0)
         {
             levelManager.onEnemyKill.Invoke();
-            PlayVFX();
+            PlayDeathVFX();
             Destroy(gameObject);
         }
     }
 
-    private void DoBloodStainVFX()
+    private void PlayHurtVFX()
     {
+        animator.SetTrigger("WasHurt");
         Instantiate(BloodStainVFX, transform.position, Quaternion.identity);
     }
 
-    void PlayVFX()
+    void PlayDeathVFX()
     {
         GameObject Blood = Instantiate(BloodSplatVFX, transform.position, transform.rotation);
         Destroy(Blood, 1f);
