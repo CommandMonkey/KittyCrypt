@@ -71,10 +71,15 @@ public class RushingEnemyBehavior : Enemy
         hp -= damage;
         if (hp < 0)
         {
-            levelManager.onEnemyKill.Invoke();
-            PlayDeathVFX();
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        levelManager.onEnemyKill.Invoke();
+        PlayDeathVFX();
+        Destroy(gameObject);
     }
 
     void PlayHurtSFX()

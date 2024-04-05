@@ -71,8 +71,6 @@ public class RatBossBehaviour : Enemy
         DetermineTargetGunDirection();
 
         AimLineVFX();
-
-
     }
 
 
@@ -122,7 +120,6 @@ public class RatBossBehaviour : Enemy
         yield return new WaitForSeconds(.3f);
         aimLineRenderer.enabled = true;
         yield break;    
-        
     }
 
 
@@ -145,7 +142,7 @@ public class RatBossBehaviour : Enemy
         cam.DoCameraShake();
         PlayBoomSFX();
         yield return new WaitForSeconds(.3f); 
-        EncounterRoom.SpawnEnemies(roomCollider, ratsToSummon, LayerMask.GetMask("Wall"));
+        GameHelper.InstanciateInCollider(roomCollider, ratsToSummon, LayerMask.GetMask("Wall"));
         yield break;
     }
 

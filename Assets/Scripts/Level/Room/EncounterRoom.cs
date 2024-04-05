@@ -27,6 +27,8 @@ public class EncounterRoom : Room
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         levelManager.onEnemyKill.AddListener(OnEnemyKill);
+
+        enemies = new List<GameObject>();
     }
 
     private void Update()
@@ -58,20 +60,23 @@ public class EncounterRoom : Room
 
         isActive = true;
         thisRoomManager.CloseDoors();
-        enemies = SpawnEnemies(roomCollider, enemiesToSpawn, noEnemyLayers);
+        SpawnEnemies();
+    }
+
+    void SpawnEnemies()
+    {
+        for (int i = 0; i < enemiesToSpawn.Count; i++)
+        {
+            Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider, noEnemyLayers);
+            InstanciateAfterAnim spawner = Instantiate(enemiesToSpawn[i], pos, Quaternion.identity).GetComponent<InstanciateAfterAnim>();
+
+            spawner.Initialize(this);
+        }
     }
 
 
-    public static List<GameObject> SpawnEnemies(BoxCollider2D roomCollider, List<GameObject> enemiesToSpawn, LayerMask noEnemyLayer)
+    public void RegisterEnemy(GameObject enemy)
     {
-        List<GameObject> enemies = new List<GameObject>();
-
-        for(int i = 0; i < enemiesToSpawn.Count; i++)
-        { 
-            Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider, noEnemyLayer);
-
-            enemies.Add( Instantiate(enemiesToSpawn[i], pos, Quaternion.identity));
-        }
-        return enemies;
+        enemies.Add(enemy);
     }
 }
