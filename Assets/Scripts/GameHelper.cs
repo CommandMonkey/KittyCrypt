@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameHelper : MonoBehaviour
+public static class GameHelper 
 {
     public static Vector2 GetRandomPosInCollider(BoxCollider2D collider, LayerMask filter = new LayerMask())
     {
@@ -51,9 +51,21 @@ public class GameHelper : MonoBehaviour
 
         for (int i = 0; i < toSpawn.Count; i++)
         {
-            Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider, noEnemyLayer);
-            instances.Add(Instantiate(toSpawn[i], pos, Quaternion.identity));
+            Vector2 pos = GetRandomPosInCollider(roomCollider, noEnemyLayer);
+            instances.Add(GameObject.Instantiate(toSpawn[i], pos, Quaternion.identity));
         }
         return instances;
+    }
+
+    public static GameObject GetChildWithTag(this GameObject parent, string tag)
+    {
+        foreach (Transform child in parent.transform)
+        {
+            if (child.CompareTag(tag))
+            {
+                return child.gameObject;
+            }
+        }
+        return null; // No child with the specified tag found
     }
 }

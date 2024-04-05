@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
 
     public bool IsOverlapping<T>(GameObject toCompare) where T : Component
     {
-        Debug.Log("AAAAAA----: " + toCompare.name + "parent: " + toCompare.transform.parent.name);
+        Debug.Log("AAAAAA----: " + toCompare.name + "parent: " + toCompare.transform.parent.name);  
         // Get colliders
         Collider2D[] colliders = new Collider2D[10];
         Physics2D.OverlapCollider(boxCollider, noFilter, colliders);
