@@ -13,6 +13,7 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public UnityEvent onDash;
     [NonSerialized] public UnityEvent onInteract;
     [NonSerialized] public UnityEvent onTogglePause;
+    [NonSerialized] public UnityEvent onReload;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class UserInput : MonoBehaviour
         onDash = new UnityEvent();
         onInteract = new UnityEvent();
         onTogglePause = new UnityEvent();
+        onReload = new UnityEvent();
     }
 
     private void Start()
@@ -38,6 +40,7 @@ public class UserInput : MonoBehaviour
         onFire.RemoveAllListeners();
         onDash.RemoveAllListeners();
         onInteract.RemoveAllListeners();
+        onReload.RemoveAllListeners();
     }
 
     void OnMove(InputValue value)
@@ -73,5 +76,10 @@ public class UserInput : MonoBehaviour
     void OnTogglePause()
     {
         onTogglePause.Invoke();
+    }
+
+    void OnReload()
+    {
+        onReload.Invoke();
     }
 }

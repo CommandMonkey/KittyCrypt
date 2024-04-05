@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class RatBossBehaviour : MonoBehaviour, IEnemy
+public class RatBossBehaviour : Enemy
 {
     [Header("General")]
     [SerializeField] float moveSpeed = 1f;
