@@ -22,6 +22,7 @@ public class Room : MonoBehaviour
 
     // Cached references
     Player player;
+    GameObject fogOfWarObject;
 
     private void Awake()
     {
@@ -31,13 +32,13 @@ public class Room : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<Player>();
+        fogOfWarObject = GameHelper.GetChildWithTag(gameObject, "FogOfWar");
 
         entrances = new List<Entrance>(FindObjectsByType<Entrance>(FindObjectsSortMode.None));
 
         // subscribe to entrances exit events
         foreach (Entrance entr in entrances)
         {
-            Debug.Log(entr.name);
             entr.onEntranceExit.AddListener(OnPlayerLeftEntrance);
         }
 
@@ -54,6 +55,12 @@ public class Room : MonoBehaviour
     {
         if (IsPlayerInside())
         {
+            if (fogOfWarObject != null)
+            {
+                fogOfWarObject.GetComponent<Animation>().Play();
+                Destroy(fogOfWarObject, 2f);
+            }
+
             onPlayerEnter.Invoke();
         }
     }

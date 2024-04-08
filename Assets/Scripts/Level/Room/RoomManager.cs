@@ -73,6 +73,7 @@ public class RoomManager : MonoBehaviour
                 TerminateRoomSpawning();
                 yield break;
             }
+            previousRoomCount = roomsToSpawn.Count;
 
             List<GameObject> shuffledRooms = ShuffleRoomsToSpawn();
             yield return new WaitForEndOfFrame();

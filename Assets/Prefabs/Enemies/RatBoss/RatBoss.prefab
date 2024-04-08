@@ -32,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7793231369099613659}
+  - {fileID: 5410748414546813523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8523343474304546337
@@ -47,8 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  changeDirectionInterval: 2
+  followRange: 3
   timeBetweenAttacks: 4
-  obsticleLayer:
+  hitLayerMask:
     serializedVersion: 2
     m_Bits: 0
   shootAimTime: 5
@@ -58,7 +61,10 @@ MonoBehaviour:
   maxRotationSpeed: 1000
   rotationAcceleration: 200
   maxAngularVelocity: 1000
-  testMarker: {fileID: 0}
+  facingLeftWeaponPoint: {x: -1.3, y: 2.1}
+  facingRightWeaponPoint: {x: 1.4, y: 2.1}
+  ratsToSummon: []
+  CaneBoomSFX: {fileID: 0}
 --- !u!120 &1627186473189343508
 LineRenderer:
   serializedVersion: 2
@@ -189,12 +195,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5033474142777115155}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.32, y: -0.63, z: 0}
-  m_LocalScale: {x: 0.225, y: 0.225, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.6202942, w: -0.7843693}
+  m_LocalPosition: {x: -1.3, y: 2.1, z: 0}
+  m_LocalScale: {x: 0.112500004, y: 0.112500004, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4733968445858454600}
+  m_Father: {fileID: 6088779872391937189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1454371307698005747
 SpriteRenderer:
@@ -359,6 +365,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4471907555651159371, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9173001526340834769, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7849339
@@ -381,17 +391,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1104469690252501259, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5410748414546813523}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
---- !u!4 &4733968445858454600 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1104469690252501259, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
-  m_PrefabInstance: {fileID: 5684020384494697795}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7793231369099613659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2505880249456109720, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
