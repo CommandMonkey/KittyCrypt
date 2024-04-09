@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bcc58e830c0fa2c46a7d305a296dd13a
+guid: 8ca1a4fbe71fe42478d147434990b5ab
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 500
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "skatt st\xE4ngd_0"
+      name: "skatt \xF6ppen_0"
       rect:
         serializedVersion: 2
         x: 541
@@ -118,14 +118,14 @@ TextureImporter:
         width: 902
         height: 948
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7f16ecc942526647946140933a0d816
-      internalID: 1138109970
+      spriteID: d12880d545a5a2c41a75d4130e1b09eb
+      internalID: -714310872
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "skatt st\xE4ngd_0": 1138109970
+      "skatt \xF6ppen_0": -714310872
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
