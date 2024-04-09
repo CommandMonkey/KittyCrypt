@@ -7814,6 +7814,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EntranceTop
       objectReference: {fileID: 0}
+    - target: {fileID: 8730022895284073506, guid: 00eb5479371c4d043ad9c1fec3b4730b, type: 3}
+      propertyPath: direction
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8102,7 +8106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5133969300615888992, guid: 852793c2b14f04f45ba34e6c97998b78, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7044535385007083061, guid: 852793c2b14f04f45ba34e6c97998b78, type: 3}
       propertyPath: m_CullingType
