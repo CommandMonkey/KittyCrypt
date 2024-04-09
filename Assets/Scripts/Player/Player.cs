@@ -56,7 +56,10 @@ public class Player : MonoBehaviour
     {
         onInteract = new UnityEvent();
         reloadCircle = GameObject.FindGameObjectWithTag("ReloadCircle");
-        reloadCircle.SetActive(false);
+        if(reloadCircle != null )
+        {
+            reloadCircle.SetActive(false);
+        }
     }
 
     private void Start()
