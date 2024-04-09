@@ -1,11 +1,9 @@
-using System.Collections;
-using UnityEditor.Rendering;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     private float speed;
-    private float damage;
+    private int damage;
     private GameObject hitEffect;
     private float destroyHitEffectAfter;
     private float vanishAfter;
@@ -22,7 +20,7 @@ public class Bullet : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         Destroy(gameObject, vanishAfter);
     }
-    public void Initialize(float speed, float damage, GameObject hitEffect, float destroyHitEffectAfter = 2f, float vanishAfter = 4f)
+    public void Initialize(float speed, int damage, GameObject hitEffect, float destroyHitEffectAfter = 2f, float vanishAfter = 4f)
     {
         this.speed = speed;
         this.damage = damage;
@@ -38,12 +36,12 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Player"))
         {
-            Enemy enemyScript = other.gameObject.GetComponent<Enemy>();
+            Player playerScript = other.gameObject.GetComponent<Player>();
 
-            enemyScript.GetComponent<Rigidbody2D>().velocity += -(Vector2)transform.forward * 100;
-            enemyScript.TakeDamage(damage);
+            playerScript.GetComponent<Rigidbody2D>().velocity += -(Vector2)transform.forward * 100;
+            playerScript.TakeDamage(damage);
         }
 
         var ffxInstance = Instantiate(hitEffect, transform.position, Quaternion.identity);

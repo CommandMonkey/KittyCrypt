@@ -32,7 +32,7 @@ public class PlayerInventory : MonoBehaviour
         GameObject cHotbarSpot = itemInventory[currentHotbarPos];
         if (cHotbarSpot != null)
         {
-            SpawnItemPickup(cHotbarSpot, PickupType.Weapon);
+            SpawnItemPickup(cHotbarSpot);
             cHotbarSpot.SetActive(false);
         }
         
@@ -104,7 +104,7 @@ public class PlayerInventory : MonoBehaviour
 
     // Pickup Helper
 
-    void SpawnItemPickup(GameObject item, PickupType type)
+    void SpawnItemPickup(GameObject item)
     {
         GameObject itemPickup = Instantiate(itemPickupPrefab, transform.position, Quaternion.identity);
         itemPickup.name = item.name;
