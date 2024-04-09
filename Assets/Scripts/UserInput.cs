@@ -15,6 +15,10 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public UnityEvent onTogglePause;
     [NonSerialized] public UnityEvent onReload;
 
+    UserInputActions userInput;
+
+    bool firing = false;
+
     private void Awake()
     {
         onMove = new UnityEvent<Vector2>();
@@ -25,11 +29,25 @@ public class UserInput : MonoBehaviour
         onInteract = new UnityEvent();
         onTogglePause = new UnityEvent();
         onReload = new UnityEvent();
+
+        userInput = new UserInputActions();
     }
 
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+
+
+    }
+
+    private void Update()
+    {
+
+        if (Input.GetMouseButton(0))
+        {
+            onFire.Invoke();
+        }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -58,11 +76,6 @@ public class UserInput : MonoBehaviour
         onScroll.Invoke(value.Get<float>());
     }
 
-    void OnFire()
-    {
-        onFire.Invoke();
-    }
-
     void OnDash()
     {
         onDash.Invoke();
@@ -82,4 +95,5 @@ public class UserInput : MonoBehaviour
     {
         onReload.Invoke();
     }
+
 }
