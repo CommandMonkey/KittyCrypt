@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ItemPickupInteractable : MonoBehaviour, IInteractable
 {
+    [SerializeField] GameObject[] randomWeapon; 
+
     public GameObject item;
     public string interactPrompt { get; set; }
     public bool canInteract { get; set; } = true;
@@ -10,6 +12,11 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        if (item == null)
+        {
+            item = randomWeapon[Random.Range(0, randomWeapon.Length)];
+        }
+
         interactPrompt = "E to pickup " + item.name;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null )

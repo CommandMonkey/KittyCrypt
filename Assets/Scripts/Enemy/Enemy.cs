@@ -81,7 +81,8 @@ public class Enemy : MonoBehaviour
 
     void PlayHurtSFX()
     {
-        Instantiate(enemyHitAudio);
+        GameObject sfxInstance = Instantiate(enemyHitAudio);
+        Destroy(sfxInstance, 2f);
     }
 
     private void PlayHurtVFX()
