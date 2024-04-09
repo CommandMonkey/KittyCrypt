@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -9,6 +10,7 @@ public class ChestInteractable : MonoBehaviour, IInteractable
     public bool canInteract { get; set; } = true;
 
     [SerializeField] Sprite openChest;
+    [SerializeField] GameObject pickUpPrefab;
     SpriteRenderer mySpriteRenderer;
 
 
@@ -22,5 +24,7 @@ public class ChestInteractable : MonoBehaviour, IInteractable
     public void Interact()
     {
         mySpriteRenderer.sprite = openChest;
+        Instantiate(pickUpPrefab, GetComponent<Transform>());
+        canInteract = false;
     }
 }
