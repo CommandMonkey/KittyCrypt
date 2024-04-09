@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 5448624960009787811}
   - component: {fileID: 5110593887869287197}
   - component: {fileID: 3763955644099479781}
-  - component: {fileID: 8225980211696084977}
   m_Layer: 10
   m_Name: RatEnemy
   m_TagString: Enemy
@@ -157,7 +156,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 8634053150640929787}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 56abaad954f44684db3487ac9be7c869, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -205,22 +204,6 @@ MonoBehaviour:
   obsticleLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!111 &8225980211696084977
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8634053150640929787}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 965b27760866fb0439caa7e054ade1fd, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 965b27760866fb0439caa7e054ade1fd, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1001 &1141357308562322582
 PrefabInstance:
   m_ObjectHideFlags: 0
