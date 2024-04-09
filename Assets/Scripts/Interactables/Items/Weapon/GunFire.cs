@@ -18,13 +18,23 @@ public class GunFire : MonoBehaviour
 
     TMP_Text ammoUI;
 
+    public class GunFireRuntimeData
+    {
+        public GunFireRuntimeData(int bulletsFired, float reloadTimer)
+        {
+            this.bulletsFired = bulletsFired;
+        }
+        public int bulletsFired;
+        public float reloadTimer;
+        public float fireRateCooldownTimer;
+        public bool fireRateCoolingDown;
+        public bool reloading;
+    }
+
     //Private variables
-    int bulletsFired;
-    float reloadTimer;
-    float fireRateCooldownTimer;
-    bool fireRateCoolingDown = false;
-    bool reloading = false;
-    bool reloadAudioPlayed = false;
+    GunFireRuntimeData runtimeData;
+
+    
 
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
