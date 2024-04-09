@@ -7,35 +7,14 @@ using UnityEngine.Rendering;
 public class RushingEnemyBehavior : Enemy
 {
 
-    //variables
-
-
-    //variblues
+    //Private Variables
     private bool IsMeleeOnCooldown = true;
-
     private Vector3 previousPosition;
 
-    //LayerMasks
-
-    //declerations
-    LevelManager levelManager;
-    Rigidbody2D rigidBody2D;
-    Player player;
-    Animator animator;
-    
-
-    void Start()
+    // called from baseClass
+    protected override void EnemyStart()
     {
-        levelManager = FindObjectOfType<LevelManager>();
-        rigidBody2D = GetComponent<Rigidbody2D>();
-
         previousPosition = transform.position;
-
-        target = levelManager.player.transform;
-
-        player = target.GetComponent<Player>();
-
-        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -64,40 +43,7 @@ public class RushingEnemyBehavior : Enemy
         StartCoroutine(MeleeCooldownRoutine());
     }
 
-    public void TakeDamage(float damage)
-    {
-        PlayHurtVFX();
-        PlayHurtSFX();
-        hp -= damage;
-        if (hp < 0)
-        {
-            Die();
-        }
-    }
 
-    void Die()
-    {
-        levelManager.onEnemyKill.Invoke();
-        PlayDeathVFX();
-        Destroy(gameObject);
-    }
-
-    void PlayHurtSFX()
-    {
-        Instantiate(enemyHitAudio);
-    }
-
-    private void PlayHurtVFX()
-    {
-        animator.SetTrigger("WasHurt");
-        Instantiate(BloodStainVFX, transform.position, Quaternion.identity);
-    }
-
-    void PlayDeathVFX()
-    {
-        GameObject Blood = Instantiate(BloodSplatVFX, transform.position, transform.rotation);
-        Destroy(Blood, 1f);
-    }
 
     IEnumerator MeleeCooldownRoutine()
     {
@@ -123,9 +69,9 @@ public class RushingEnemyBehavior : Enemy
     void MoveTowardsTarget()
     {
 
-        if (playerPosition == Vector3.zero) return;
+        if (targetPosition == Vector3.zero) return;
         // Calculate the direction from the current position to the target position
-        Vector3 direction = playerPosition - base.transform.position;
+        Vector3 direction = targetPosition - transform.position;
 
         // Normalize the direction vector to ensure consistent speed in all directions
         direction.Normalize();

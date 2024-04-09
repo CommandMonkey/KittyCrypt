@@ -18,11 +18,32 @@ public class Enemy : MonoBehaviour
 
     public LayerMask obsticleLayer;
 
-    protected Transform target;
-    protected bool lineOfSight = true;
-    protected Vector3 playerPosition = Vector3.zero;
 
-    protected void ShootLineOfSightRay()
+    protected bool lineOfSight = true;
+    protected Vector3 targetPosition = Vector3.zero;
+
+    protected LevelManager levelManager;
+    protected Animator animator;
+    protected Rigidbody2D rigidBody2D;
+    protected Transform target;
+    protected Player player;
+
+
+    private void Start()
+    {
+        levelManager = FindObjectOfType<LevelManager>();
+        animator = GetComponentInChildren<Animator>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
+        target = levelManager.player.transform;
+        player = target.GetComponent<Player>();
+
+        
+        if (player == null) { Debug.Log("PLAYER FOUND"); }
+
+        EnemyStart();
+    }
+
+    protected bool ShootLineOfSightRay()
     {
         Vector2 direction = target.position - transform.position;
         float distance = direction.magnitude;
@@ -35,7 +56,45 @@ public class Enemy : MonoBehaviour
         else
         {
             lineOfSight = true;
-            playerPosition = target.position;
+            targetPosition = target.position;
+        }
+        return lineOfSight;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        PlayHurtVFX();
+        PlayHurtSFX();
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Die();
         }
     }
+
+    void Die()
+    {
+        levelManager.onEnemyKill.Invoke();
+        PlayDeathVFX();
+        Destroy(gameObject);
+    }
+
+    void PlayHurtSFX()
+    {
+        Instantiate(enemyHitAudio);
+    }
+
+    private void PlayHurtVFX()
+    {
+        animator.SetTrigger("WasHurt");
+        Instantiate(BloodStainVFX, transform.position, Quaternion.identity);
+    }
+
+    void PlayDeathVFX()
+    {
+        GameObject Blood = Instantiate(BloodSplatVFX, transform.position, transform.rotation);
+        Destroy(Blood, 1f);
+    }
+
+    protected virtual void EnemyStart() { }
 }

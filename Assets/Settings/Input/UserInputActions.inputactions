@@ -1,5 +1,5 @@
 {
-    "name": "Player_InputActions",
+    "name": "UserInputActions",
     "maps": [
         {
             "name": "Player",
@@ -39,7 +39,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Dash",

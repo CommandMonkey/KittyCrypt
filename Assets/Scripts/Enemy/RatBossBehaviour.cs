@@ -36,7 +36,6 @@ public class RatBossBehaviour : Enemy
     bool isSummoning = false;
 
     float timeToNextShot;
-    Vector3 target;
     Vector3 toTarget;
     RaycastHit2D aimRayHit;
 
@@ -47,21 +46,17 @@ public class RatBossBehaviour : Enemy
     private Vector3 targetMovePosition;
     private float elapsedTime;
 
-    Player player;
     LineRenderer aimLineRenderer;
     BoxCollider2D roomCollider;
-    Animator animator;
     GameCamera cam;
     AudioSource audioSource;
     SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void EnemyStart()
     {
-        player = FindObjectOfType<Player>();
         aimLineRenderer = GetComponent<LineRenderer>();
         roomCollider = transform.parent.GetComponent<BoxCollider2D>();
-        animator = GetComponentInChildren<Animator>();
         cam = FindObjectOfType<GameCamera>();
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>(); 
@@ -82,8 +77,7 @@ public class RatBossBehaviour : Enemy
     {
         if (state == RatState.paused) return;
 
-        target = player.transform.position;
-        toTarget = target - transform.position;
+        toTarget = target.position - transform.position;
 
         if (isSummoning)
         {
@@ -232,7 +226,7 @@ public class RatBossBehaviour : Enemy
     private void DetermineTargetGunDirection()
     {
         // Get the direction between weaponTransform and targetPos
-        Vector2 targetDirection = toTarget.normalized;
+        Vector2 targetDirection = (target.position - weaponTransform.position).normalized;
 
         // Calculate the angle between the current forward direction and the target direction
         float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
