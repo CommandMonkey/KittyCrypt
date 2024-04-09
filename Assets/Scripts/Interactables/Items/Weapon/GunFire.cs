@@ -150,6 +150,7 @@ public class GunFire : MonoBehaviour
 
     void ShootBullet()
     {
+        Debug.Log("SHOOOOOOT HAJ");
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);
@@ -189,7 +190,6 @@ public class GunFire : MonoBehaviour
         }
     }
 
-    int Times = 0;
     void Reload()
     {
         if (!reloading && bulletsFired != 0)
@@ -252,7 +252,7 @@ public class GunFire : MonoBehaviour
 
     void SetAmmoBurstUI()
     {
-        ammoUI.text = (settings.bulletsBeforeReload / settings.bulletsBeforeReload - bulletsFired / settings.bulletsBeforeReload).ToString() + "/" + (settings.bulletsBeforeReload / settings.bulletsBeforeReload).ToString();
+        ammoUI.text = Mathf.Max(0, (1 - bulletsFired / settings.bulletsBeforeReload)).ToString() + "/" + 1.ToString();
     }
 
     public Vector3 GetBulletHitPoint()
