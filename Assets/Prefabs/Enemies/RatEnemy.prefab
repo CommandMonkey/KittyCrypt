@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 5448624960009787811}
   - component: {fileID: 5110593887869287197}
   - component: {fileID: 3763955644099479781}
-  - component: {fileID: 8225980211696084977}
   m_Layer: 10
   m_Name: RatEnemy
   m_TagString: Enemy
@@ -157,7 +156,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 8634053150640929787}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 56abaad954f44684db3487ac9be7c869, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -196,34 +195,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  distanceToTarget: 5
-  meleeRange: 0.75
   hp: 20
   enemyDMG: 1
   attackSpeed: 0.1
   BloodSplatVFX: {fileID: 5376875274643884105, guid: 4bca45e73eabc0e42b0708aed64270a1, type: 3}
   BloodStainVFX: {fileID: 1158836865863372884, guid: 807a4a5b91ffe6e43ae4fb6e3b2fd86a, type: 3}
-  hitSound: {fileID: 8300000, guid: 795866b8017e72a47aa6768f5b17f6c5, type: 3}
   enemyHitAudio: {fileID: 8095866884428330632, guid: f54f9b69a5a8dac4d8f573bcddcc35da, type: 3}
   obsticleLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!111 &8225980211696084977
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8634053150640929787}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 965b27760866fb0439caa7e054ade1fd, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 965b27760866fb0439caa7e054ade1fd, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1001 &1141357308562322582
 PrefabInstance:
   m_ObjectHideFlags: 0
