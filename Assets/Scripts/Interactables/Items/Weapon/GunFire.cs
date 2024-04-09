@@ -52,8 +52,7 @@ namespace Interactables.Items.Weapon
         private void Start()
         {
             ammoUI = GameObject.FindGameObjectWithTag("AmmoRemainingText").GetComponent<TMP_Text>();
-
-
+            
             userInput = FindObjectOfType<UserInput>();
             player = FindObjectOfType<Player>();
             virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
@@ -217,7 +216,6 @@ namespace Interactables.Items.Weapon
 
         IEnumerator ReloadRoutine()
         {
-
             // Play Reload SFX
             gunSource.PlayOneShot(settings.reloadAudio);
 
