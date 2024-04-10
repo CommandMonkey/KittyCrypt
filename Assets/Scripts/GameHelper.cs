@@ -68,4 +68,17 @@ public static class GameHelper
         }
         return null; // No child with the specified tag found
     }
+    
+    public static T GetComponentInAllChildren<T>(this GameObject parent)
+    {
+        foreach (Transform child in parent.transform)
+        {
+            T comp = child.GetComponent<T>();
+            if (comp != null)
+            {
+                return comp;
+            }
+        }
+        return default(T); 
+    }
 }
