@@ -68,7 +68,7 @@ public class PlayerInventory : MonoBehaviour
         IItem newItem = GameHelper.GetComponentInAllChildren<IItem>(cHotbarItem);
         if (newItem != null)
         {
-            Debug.Log("Found OldItem IItem");
+            Debug.Log("Found NewItem IItem");
             newItem.Activate();
         }
         

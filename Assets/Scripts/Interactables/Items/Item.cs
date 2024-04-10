@@ -1,6 +1,15 @@
 
-public interface IItem
+using UnityEngine;
+
+public class IItem : MonoBehaviour
 {
-    public void Activate();
-    public void DeActivate();
+    public virtual void Activate()
+    {
+        
+    }
+
+    public virtual void DeActivate()
+    {
+        
+    }
 }

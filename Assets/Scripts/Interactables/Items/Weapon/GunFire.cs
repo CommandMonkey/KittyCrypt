@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-public class GunFire : MonoBehaviour, IItem
+public class GunFire : IItem
 {
     //Configurable parameters damage
     [Header("General Options")] [SerializeField]
@@ -17,6 +17,7 @@ public class GunFire : MonoBehaviour, IItem
     //Cached reference
     TMP_Text ammoUI;
 
+    [System.Serializable]
     public class GunFireRuntimeData
     {
         public GunFireRuntimeData(int bulletsFired, float reloadTimer, float fireRateCooldownTimer,
@@ -319,20 +320,26 @@ public class GunFire : MonoBehaviour, IItem
         return Quaternion.Euler(newAngles);
     }
 
-    public void Activate()
+    public override void Activate()
     {
-        Debug.Log("Activating");
-        active = true;
+        if (userInput == null) userInput = FindObjectOfType<UserInput>();
         userInput.onReload.AddListener(Reload);
         userInput.onFire.AddListener(OnFire);
     }
 
-    public void DeActivate()
+    public override void DeActivate()
     {
-        Debug.Log("Deactivating");
-        active = false;
+        ResetReloading();
         userInput.onFire.RemoveListener(OnFire);
         userInput.onReload.RemoveListener(Reload);
+    }
+
+    void ResetReloading()
+    {
+        StopCoroutine(ReloadRoutine());
+        runtimeData.isReloading = false;
+        runtimeData.reloadTimer = settings.reloadTime;
+        player.reloadCircle.SetActive(false);
     }
 }
 
