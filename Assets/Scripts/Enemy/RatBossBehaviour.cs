@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class RatBossBehaviour : MonoBehaviour, IEnemy
+public class RatBossBehaviour : Enemy
 {
     [Header("General")]
     [SerializeField] float moveSpeed = 1f;
+    [SerializeField] float changeDirectionInterval = 2f;
+    [SerializeField] float followRange = 3f;
     [SerializeField] float timeBetweenAttacks = 4f;
     [SerializeField] LayerMask hitLayerMask;
     [Header("Attack - shoot")]
@@ -17,6 +20,8 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
     [SerializeField] float maxRotationSpeed = 5f; // The maximum rotation speed of the weapon
     [SerializeField] float rotationAcceleration = 10f; // The rotation acceleration towards the target direction
     [SerializeField] float maxAngularVelocity = 10f; // The maximum angular velocity of the weapon
+    [SerializeField] Vector2 facingLeftWeaponPoint;
+    [SerializeField] Vector2 facingRightWeaponPoint;
     [Header("Attack - spawnRats")]
     [SerializeField] List<GameObject> ratsToSummon;
     [SerializeField] AudioClip CaneBoomSFX;
@@ -28,29 +33,34 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
         dead
     }
     bool weaponAimActive = false;
+    bool isSummoning = false;
 
     float timeToNextShot;
-    Vector3 target;
+    Vector3 toTarget;
     RaycastHit2D aimRayHit;
 
     RatState state = RatState.paused;
 
-    Player player;
+
+
+    private Vector3 targetMovePosition;
+    private float elapsedTime;
+
     LineRenderer aimLineRenderer;
     BoxCollider2D roomCollider;
-    Animator animator;
     GameCamera cam;
     AudioSource audioSource;
+    SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void EnemyStart()
     {
-        player = FindObjectOfType<Player>();
         aimLineRenderer = GetComponent<LineRenderer>();
         roomCollider = transform.parent.GetComponent<BoxCollider2D>();
-        animator = GetComponentInChildren<Animator>();
         cam = FindObjectOfType<GameCamera>();
         audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>(); 
+
 
         StartBoss();
     }
@@ -67,9 +77,20 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
     {
         if (state == RatState.paused) return;
 
-        target = player.transform.position;
-        DetermineTargetGunDirection();
+        toTarget = target.position - transform.position;
 
+        if (isSummoning)
+        {
+            animator.SetBool("isMoving", false);
+        }
+        else
+        {
+            animator.SetBool("isMoving", true);
+            Movement();
+            Flip();
+
+        }
+        DetermineTargetGunDirection();
         AimLineVFX();
     }
 
@@ -94,15 +115,15 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
             }
             aimLineRenderer.enabled = false;
 
-
+            isSummoning = true;
             yield return StartCoroutine(SpawnRatsRoutine());
             yield return new WaitForSeconds(timeBetweenAttacks);
+            isSummoning = false;
         }
     }
 
     IEnumerator ShootAttackRoutine()
     {
-        
         for (int i = 0; i < 5; i++)
         {
             RaycastHit2D shootHit = Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
@@ -111,15 +132,40 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
             shootLine.SetPosition(0, weaponTransform.position);
             shootLine.SetPosition(1, shootHit.point);
 
-            if (shootHit.collider.CompareTag("Player"))
+            if (shootHit.collider.CompareTag("Player")) 
             {
                 player.TakeDamage(1);
             }
             yield return new WaitForSeconds(.1f);
+
+
         }
         yield return new WaitForSeconds(.3f);
         aimLineRenderer.enabled = true;
-        yield break;    
+        yield break;
+    }
+
+
+    void Movement()
+    {
+        if (toTarget.magnitude > followRange)
+            // Move towards the target position
+            transform.position += (Vector3)toTarget.normalized * moveSpeed * Time.deltaTime;
+
+        // Change target position after a certain interval
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime >= changeDirectionInterval)
+        {
+            SetRandomTargetPosition();
+            elapsedTime = 0f;
+        }
+
+    }
+
+    void SetRandomTargetPosition()
+    {
+        // Generate random target position within a range from the current position
+        targetMovePosition = player.transform.position + new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0f);
     }
 
 
@@ -138,7 +184,7 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
     IEnumerator SpawnRatsRoutine()
     {
         animator.SetTrigger("summon");
-        yield return new WaitForSeconds(1); // Wait for Käpp to hit the ground
+        yield return new WaitForSeconds(1.5f); // Wait for Kï¿½pp to hit the ground
         cam.DoCameraShake();
         PlayBoomSFX();
         yield return new WaitForSeconds(.3f); 
@@ -149,6 +195,20 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
     void PlayBoomSFX()
     {
         audioSource.PlayOneShot(CaneBoomSFX);
+    }
+
+    void Flip()
+    {
+        if (toTarget.x < 0f)
+        {
+            spriteRenderer.flipX = false;
+            weaponTransform.localPosition = facingLeftWeaponPoint;
+        }
+        else if (toTarget.x > 0f)
+        {
+            spriteRenderer.flipX = true;
+            weaponTransform.localPosition = facingRightWeaponPoint;
+        }
     }
 
 
@@ -166,7 +226,7 @@ public class RatBossBehaviour : MonoBehaviour, IEnemy
     private void DetermineTargetGunDirection()
     {
         // Get the direction between weaponTransform and targetPos
-        Vector2 targetDirection = (target - weaponTransform.position).normalized;
+        Vector2 targetDirection = (target.position - weaponTransform.position).normalized;
 
         // Calculate the angle between the current forward direction and the target direction
         float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;

@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRooms: 1
+  state: 0
   player: {fileID: 0}
+  enemyContainer: {fileID: 0}
   gamePaused: 0
 --- !u!82 &8017914383874881742
 AudioSource:
@@ -66,7 +68,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

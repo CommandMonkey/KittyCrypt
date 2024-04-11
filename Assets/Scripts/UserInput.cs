@@ -13,6 +13,11 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public UnityEvent onDash;
     [NonSerialized] public UnityEvent onInteract;
     [NonSerialized] public UnityEvent onTogglePause;
+    [NonSerialized] public UnityEvent onReload;
+
+    UserInputActions userInput;
+
+    bool firing = false;
 
     private void Awake()
     {
@@ -23,11 +28,26 @@ public class UserInput : MonoBehaviour
         onDash = new UnityEvent();
         onInteract = new UnityEvent();
         onTogglePause = new UnityEvent();
+        onReload = new UnityEvent();
+
+        userInput = new UserInputActions();
     }
 
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+
+
+    }
+
+    private void Update()
+    {
+
+        if (Input.GetMouseButton(0))
+        {
+            onFire.Invoke();
+        }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -38,6 +58,7 @@ public class UserInput : MonoBehaviour
         onFire.RemoveAllListeners();
         onDash.RemoveAllListeners();
         onInteract.RemoveAllListeners();
+        onReload.RemoveAllListeners();
     }
 
     void OnMove(InputValue value)
@@ -55,11 +76,6 @@ public class UserInput : MonoBehaviour
         onScroll.Invoke(value.Get<float>());
     }
 
-    void OnFire()
-    {
-        onFire.Invoke();
-    }
-
     void OnDash()
     {
         onDash.Invoke();
@@ -74,4 +90,10 @@ public class UserInput : MonoBehaviour
     {
         onTogglePause.Invoke();
     }
+
+    void OnReload()
+    {
+        onReload.Invoke();
+    }
+
 }

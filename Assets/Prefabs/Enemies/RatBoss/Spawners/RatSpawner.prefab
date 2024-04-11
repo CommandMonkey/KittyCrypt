@@ -15,7 +15,7 @@ GameObject:
   m_Layer: 0
   m_Name: RatSpawner
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -95,9 +95,10 @@ Animation:
   m_GameObject: {fileID: 8727124918570381137}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 8bc1d836982d543498ed5e191153faa4, type: 2}
+  m_Animation: {fileID: 7400000, guid: abc60d5884360514bbcb400ede63bbcb, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 8bc1d836982d543498ed5e191153faa4, type: 2}
+  - {fileID: 7400000, guid: abc60d5884360514bbcb400ede63bbcb, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
