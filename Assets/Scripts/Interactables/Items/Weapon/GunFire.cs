@@ -159,10 +159,10 @@ public class GunFire : IItem
             var line = Instantiate(settings.bulletTrail, transform.position, Quaternion.identity);
             Destroy(line, settings.destroyTrailAfter);
 
-            if (bulletHit.collider.gameObject.transform.tag == "Enemy")
-            {
-                RushingEnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<RushingEnemyBehavior>();
+            Enemy enemyScript = bulletHit.collider.gameObject.GetComponent<Enemy>();
 
+            if (enemyScript != null)
+            {
                 enemyScript.TakeDamage(settings.bulletDamage);
             }
         }

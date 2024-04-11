@@ -69,16 +69,42 @@ public static class GameHelper
         return null; // No child with the specified tag found
     }
     
-    public static T GetComponentInAllChildren<T>(this GameObject parent)
+    public static T GetComponentInAllChildren<T>(this GameObject parent) where T : Component
     {
+        // Check if the parent itself has the component
+        T comp = parent.GetComponent<T>();
+        if (comp != null)
+        {
+            return comp;
+        }
+
+        // Iterate through all children and their descendants
         foreach (Transform child in parent.transform)
         {
-            T comp = child.GetComponent<T>();
+            // Recursively search for the component in the child
+            comp = child.gameObject.GetComponentInAllChildren<T>();
             if (comp != null)
             {
                 return comp;
             }
         }
-        return default(T); 
+
+        // If no component found in children, return null
+        return null;
+    }
+    
+    public static float MapValue(float value, float inputMin, float inputMax, float outputMin, float outputMax)
+    {
+        // Calculate the width of each range
+        float inputSpan = inputMax - inputMin;
+        float outputSpan = outputMax - outputMin;
+
+        // Normalize the input value to a 0-1 range
+        float normalizedValue = (value - inputMin) / inputSpan;
+
+        // Map the normalized value to the output range
+        float mappedValue = outputMin + (normalizedValue * outputSpan);
+
+        return mappedValue;
     }
 }

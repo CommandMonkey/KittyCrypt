@@ -27,19 +27,33 @@ public class GameCamera : MonoBehaviour
             transform.position = primaryTarget.position + (secondaryTarget.position - primaryTarget.position) / 2;
     }
 
-    public void SetPrimaryTarget(ref Transform transform)
-    {
+    public void SetPrimaryTarget(Transform transform)
+    { 
         primaryTarget = transform;
     }
 
-    public void SetSecondaryTarget(ref Transform transform)
+    public void SetSecondaryTarget(Transform transform)
     {
-        secondaryTarget = transform;
+        if (transform != null)
+            secondaryTarget = transform;
+        else
+            secondaryTarget = null;
         onlyPrimary = false;
     }
 
     public void DoCameraShake()
     {
         virtualCamera.GetComponent<Animator>().SetTrigger("CameraShake");
+    }
+
+    public void focusOnBoss()
+    {
+        SetPrimaryTarget(GameObject.FindGameObjectWithTag("Boss").transform);
+    }
+    
+    public void focusOnBossAndPlayer()
+    {
+        SetSecondaryTarget(GameObject.FindGameObjectWithTag("Boss").transform);
+        SetPrimaryTarget(FindObjectOfType<Player>().transform);
     }
 }
