@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RushingEnemyBehavior : MonoBehaviour
+public class RushingEnemyBehavior : MonoBehaviour, IEnemy
 {
 
     //variables
@@ -14,8 +15,14 @@ public class RushingEnemyBehavior : MonoBehaviour
     [SerializeField, Range(0, 100)] private int enemyDMG = 1;
     [Header("The Lower the number the faster the attack")]
     [SerializeField, Range(0.1f, 3)] private float attackSpeed = 0.1f;
+    [Header("VFX")]
+    [SerializeField] GameObject BloodSplatVFX;
+    [SerializeField] GameObject BloodStainVFX;
+    [Header("SFX")]
+    [SerializeField] AudioClip hitSound;
 
     private Transform target;
+    [SerializeField] GameObject enemyHitAudio;
 
     //variblues
 
@@ -36,7 +43,7 @@ public class RushingEnemyBehavior : MonoBehaviour
     Rigidbody2D rigidBody2D;
     Player player;
     Animator animator;
-    [SerializeField] GameObject EnemyBlood;
+    
 
     void Start()
     {
@@ -62,10 +69,9 @@ public class RushingEnemyBehavior : MonoBehaviour
         }
 
         if (IsMeleeOnCooldown && inMeleeRange) 
+        {
             HitPlayer();
-        else 
-            animator.SetBool("isAttacking", false);
-
+        }
 
         if (lineOfSight) 
             HowFarFromTarget();
@@ -75,35 +81,48 @@ public class RushingEnemyBehavior : MonoBehaviour
         CheckMeleeRange();
     }
 
-    //private void OnDestroy()
-    //{
-    //    PlayVFX();
-    //}
-
-    public void TakeDamage(float damage)
-    {
-        hp -= damage;
-        if (hp < 0)
-        {
-            levelManager.onEnemyKill.Invoke();
-            PlayVFX();
-            Destroy(gameObject);
-        }
-    }
-
-    void PlayVFX()
-    {
-        GameObject Blood = Instantiate(EnemyBlood, transform.position, transform.rotation);
-        Destroy(Blood, 1f);
-    }
-
     void HitPlayer()
     {
-        animator.SetBool("isAttacking", true);
+        animator.SetTrigger("isAttacking");
         if (!IsMeleeOnCooldown) return;
         player.TakeDamage(enemyDMG);
         
         StartCoroutine(MeleeCooldownRoutine());
+    }
+
+    public void TakeDamage(float damage)
+    {
+        PlayHurtVFX();
+        PlayHurtSFX();
+        hp -= damage;
+        if (hp < 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        levelManager.onEnemyKill.Invoke();
+        PlayDeathVFX();
+        Destroy(gameObject);
+    }
+
+    void PlayHurtSFX()
+    {
+        Instantiate(enemyHitAudio);
+    }
+
+    private void PlayHurtVFX()
+    {
+        animator.SetTrigger("WasHurt");
+        Instantiate(BloodStainVFX, transform.position, Quaternion.identity);
+    }
+
+    void PlayDeathVFX()
+    {
+        GameObject Blood = Instantiate(BloodSplatVFX, transform.position, transform.rotation);
+        Destroy(Blood, 1f);
     }
 
     IEnumerator MeleeCooldownRoutine()

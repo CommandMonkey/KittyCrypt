@@ -17,7 +17,7 @@ public class RoomManager : MonoBehaviour
 
     // public fields
     [NonSerialized] internal UnityEvent OnRoomSpawningDone;
-    [NonSerialized] internal List<Entrance> unconnectedEntrances = new List<Entrance>();
+    [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
 
     // private fields
     List<GameObject> roomsToSpawn = new List<GameObject>();
@@ -165,7 +165,7 @@ public class RoomManager : MonoBehaviour
 
     void SpawnDoorCoversForUnconnectedEntrances()
     {
-        foreach (Entrance entrance in unconnectedEntrances)
+        foreach (Entrance entrance in entrances)
         {
             if (!entrance.hasConnectedRoom)
                 entrance.SpawnDoorCover();
@@ -185,7 +185,7 @@ public class RoomManager : MonoBehaviour
 
     IEnumerable<Entrance> GetShuffledUnconnectedEntrances()
     {
-        return GameHelper.ShuffleList(unconnectedEntrances);
+        return GameHelper.ShuffleList(entrances);
     }
 
     Entrance GetFurthestUnconnectedEntrance()
@@ -193,7 +193,7 @@ public class RoomManager : MonoBehaviour
         Entrance furthestAway = null;
         float furthestAwayDistance = 0;
 
-        foreach (Entrance entr in unconnectedEntrances)
+        foreach (Entrance entr in entrances)
         {
             if (!entr.hasConnectedRoom)
             {
@@ -294,7 +294,7 @@ public class RoomManager : MonoBehaviour
 
     public void CloseDoors(bool silent = false)
     {
-        foreach (Entrance entrance in unconnectedEntrances)
+        foreach (Entrance entrance in entrances)
         {
             entrance.CloseDoor();
         }
@@ -304,7 +304,7 @@ public class RoomManager : MonoBehaviour
 
     public void OpenDoors(bool silent = false)
     {
-        foreach (Entrance entrance in unconnectedEntrances)
+        foreach (Entrance entrance in entrances)
         {
             Debug.Log("manager closing door");
             entrance.OpenDoor();

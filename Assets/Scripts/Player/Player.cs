@@ -49,11 +49,14 @@ public class Player : MonoBehaviour
     private LevelManager levelManager;
     private UserInput userInput;
     private BoxCollider2D boxCollider;
+    public GameObject reloadCircle;
 
 
     private void Awake()
     {
         onInteract = new UnityEvent();
+        reloadCircle = GameObject.FindGameObjectWithTag("ReloadCircle");
+        reloadCircle.SetActive(false);
     }
 
     private void Start()
@@ -68,6 +71,7 @@ public class Player : MonoBehaviour
         // Input Events
         userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
+        userInput.onDash.AddListener(OnDash);
 
         // Create a contact filter that includes triggers
         noFilter = new ContactFilter2D();

@@ -1,19 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InstanciateAfterAnim : MonoBehaviour
 {
-    Transform content;
+    [SerializeField] GameObject content;
+    private EncounterRoom encounterRoom; // Reference to the EncounterRoom script
 
-    void Start()
+    // Method to initialize the InstanciateAfterAnim script with a reference to the EncounterRoom
+    public void Initialize(EncounterRoom room)
     {
-        content = transform.GetChild(0);
+        encounterRoom = room;
     }
 
     public void OnAnimDone()
     {
-        content.SetParent(transform.parent);
+        GameObject instance = Instantiate(content, transform.position, Quaternion.identity);
+
+        // Register the enemy to the EncounterRoom enemies list
+        if (encounterRoom != null) encounterRoom.RegisterEnemy(instance);
+
         Destroy(gameObject);
     }
 }

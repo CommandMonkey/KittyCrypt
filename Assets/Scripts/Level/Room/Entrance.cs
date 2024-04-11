@@ -38,7 +38,8 @@ public class Entrance : MonoBehaviour
         
         SetDoorCollisionSize();
 
-        roomManager.unconnectedEntrances.Add(this);
+        roomManager.entrances.Add(this);
+        
 
         collisionCollider.gameObject.SetActive(!doorOpen);
         UpdateSprite();
@@ -48,7 +49,6 @@ public class Entrance : MonoBehaviour
     {
         triggerCollider.enabled = true;
         hasConnectedRoom = true;
-        if (roomManager != null) roomManager.unconnectedEntrances.Remove(this);
     }
 
     private void SetDoorCollisionSize()
@@ -69,7 +69,7 @@ public class Entrance : MonoBehaviour
     public void Die()
     {
         gameObject.SetActive(false);
-        if (roomManager != null) roomManager.unconnectedEntrances.Remove(this);
+        if (roomManager != null) roomManager.entrances.Remove(this);
         Destroy(gameObject);
     }
 

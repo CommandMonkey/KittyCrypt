@@ -16,6 +16,8 @@ public class EncounterRoom : Room
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
     LevelManager levelManager;
+
+
     // Start is called before the first frame update
     protected override void RoomStart()
     {
@@ -25,6 +27,8 @@ public class EncounterRoom : Room
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         levelManager.onEnemyKill.AddListener(OnEnemyKill);
+
+        enemies = new List<GameObject>();
     }
 
     private void Update()
@@ -59,16 +63,20 @@ public class EncounterRoom : Room
         SpawnEnemies();
     }
 
-
     void SpawnEnemies()
     {
-        enemies = new List<GameObject>();
-
-        for(int i = 0; i < enemiesToSpawn.Count; i++)
-        { 
+        for (int i = 0; i < enemiesToSpawn.Count; i++)
+        {
             Vector2 pos = GameHelper.GetRandomPosInCollider(roomCollider, noEnemyLayers);
+            InstanciateAfterAnim spawner = Instantiate(enemiesToSpawn[i], pos, Quaternion.identity).GetComponent<InstanciateAfterAnim>();
 
-            enemies.Add( Instantiate(enemiesToSpawn[i], pos, Quaternion.identity, levelManager.enemyContainer));
+            spawner.Initialize(this);
         }
+    }
+
+
+    public void RegisterEnemy(GameObject enemy)
+    {
+        enemies.Add(enemy);
     }
 }

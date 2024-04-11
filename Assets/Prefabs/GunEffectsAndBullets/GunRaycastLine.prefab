@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 601631470903119754}
   - component: {fileID: 760283273146055542}
   m_Layer: 0
-  m_Name: RaycastLine
+  m_Name: GunRaycastLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
