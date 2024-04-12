@@ -70,8 +70,8 @@ MonoBehaviour:
   shootLineVFX: {fileID: 0}
   startAimColor: {r: 1, g: 0, b: 0, a: 0}
   endAimColor: {r: 1, g: 0, b: 0, a: 1}
-  startAimWidth: 0.1
-  endAimWidth: 0
+  startAimWidth: 0.15
+  endAimWidth: 0.01
   gunShotSFX: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
   weaponTransform: {fileID: 5410748414546813523}
   startMaxRotationSpeed: 5

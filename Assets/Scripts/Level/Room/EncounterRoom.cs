@@ -11,6 +11,7 @@ public class EncounterRoom : Room
 
     bool isActive = false; // if the player has entered and the encounter is active
     bool isRoomDefeated = false; // if the room has been defeted
+    bool enemiesSpawned = false;
     List<GameObject> enemies;
 
     RoomManager thisRoomManager;
@@ -26,23 +27,18 @@ public class EncounterRoom : Room
         levelManager = FindObjectOfType<LevelManager>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
-        levelManager.onEnemyKill.AddListener(OnEnemyKill);
+        //levelManager.onEnemyKill.AddListener(OnEnemyKill);
 
         enemies = new List<GameObject>();
     }
 
     private void Update()
     {
-
-    }
-
-    void OnEnemyKill()
-    {
         if (!isActive || isRoomDefeated) return;
-        int _enemiesAlive = enemies.Count-1;
-        foreach(GameObject obj in enemies)
+        int _enemiesAlive = enemies.Count;
+        foreach (GameObject obj in enemies)
         {
-            if (obj == null) _enemiesAlive--; 
+            if (obj == null) _enemiesAlive--;
         }
         Debug.Log(_enemiesAlive);
         if (_enemiesAlive == 0)
@@ -53,14 +49,37 @@ public class EncounterRoom : Room
         }
     }
 
+    //void OnEnemyKill()
+    //{
+    //    if (!isActive || isRoomDefeated) return;
+    //    int _enemiesAlive = enemies.Count-1;
+    //    foreach(GameObject obj in enemies)
+    //    {
+    //        if (obj == null) _enemiesAlive--; 
+    //    }
+    //    Debug.Log(_enemiesAlive);
+    //    if (_enemiesAlive == 0)
+    //    {
+    //        isRoomDefeated = true;
+    //        isActive = false;
+    //        thisRoomManager.OpenDoors();
+    //    }
+    //}
+
 
     void OnPlayerEnter()
     {
-        if (isRoomDefeated || isActive) return;
+        if (isRoomDefeated || isActive || enemiesSpawned) return;
 
-        isActive = true;
+        enemiesSpawned = true;
+        Invoke("SetActive", 3f);
         thisRoomManager.CloseDoors();
         SpawnEnemies();
+    }
+
+    private void SetActive()
+    {
+        isActive = true;
     }
 
     void SpawnEnemies()

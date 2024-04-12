@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Entrance : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Entrance : MonoBehaviour
     BoxCollider2D collisionCollider;
     BoxCollider2D triggerCollider;
     SpriteRenderer spriteRenderer;
+    SpriteMask mask;
 
     private void Awake()
     {
@@ -34,8 +36,10 @@ public class Entrance : MonoBehaviour
         collisionCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         triggerCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        mask = GetComponentInChildren<SpriteMask>();
 
-        
+
+
         SetDoorCollisionSize();
 
         roomManager.entrances.Add(this);
@@ -106,6 +110,7 @@ public class Entrance : MonoBehaviour
         else
         {
             spriteRenderer.sprite = doorOpen ? sideOpenDoorSprite : sideClosedDoorSprite;
+            mask.transform.localPosition = new Vector3(0, 2, 0);
         }
     }
 

@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     private SceneLoader loader;
     private LevelManager levelManager;
     private UserInput userInput;
-    private BoxCollider2D boxCollider;
+    private Collider2D myCollider;
     public GameObject reloadCircle;
 
 
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         loader = FindObjectOfType<SceneLoader>();
         levelManager = FindObjectOfType<LevelManager>();
         userInput = FindObjectOfType<UserInput>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        myCollider = GetComponent<Collider2D>();
 
         // Input Events
         userInput.onMove.AddListener(OnMove);
@@ -234,7 +234,7 @@ public class Player : MonoBehaviour
         Debug.Log("AAAAAA----: " + toCompare.name + "parent: " + toCompare.transform.parent.name);  
         // Get colliders
         Collider2D[] colliders = new Collider2D[10];
-        Physics2D.OverlapCollider(boxCollider, noFilter, colliders);
+        Physics2D.OverlapCollider(myCollider, noFilter, colliders);
 
         // Find Room or entrance Colliders
         foreach (Collider2D c in colliders)

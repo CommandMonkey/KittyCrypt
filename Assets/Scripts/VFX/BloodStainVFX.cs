@@ -5,6 +5,7 @@ using UnityEngine;
 public class BloodStainVFX : MonoBehaviour
 {
     [SerializeField] float sizeIncrease = 0.1f;
+    [SerializeField] float maxSize = 7f;
     static List<Collider2D> activeInstances = new List<Collider2D>();
 
     Collider2D collider2d;
@@ -27,6 +28,7 @@ public class BloodStainVFX : MonoBehaviour
             if (activeInstances.Contains(col))
             {
                 col.transform.localScale += new Vector3(sizeIncrease, sizeIncrease, sizeIncrease);
+                col.transform.localScale = Vector3.Min(col.transform.localScale, new Vector3(maxSize, maxSize, maxSize));
                 Destroy(gameObject);
                 return;
             }

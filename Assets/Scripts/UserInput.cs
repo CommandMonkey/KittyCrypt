@@ -6,16 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class UserInput : MonoBehaviour
 {
+    [SerializeField] float fireCooldown = .1f;
+
     [NonSerialized] public UnityEvent<Vector2> onMove;
     [NonSerialized] public UnityEvent<Vector2> onAiming;
     [NonSerialized] public UnityEvent<float> onScroll;
-    [NonSerialized] public UnityEvent onFire;
+    [NonSerialized] public UnityEvent onFireEvent;
     [NonSerialized] public UnityEvent onDash;
     [NonSerialized] public UnityEvent onInteract;
     [NonSerialized] public UnityEvent onTogglePause;
     [NonSerialized] public UnityEvent onReload;
 
     UserInputActions userInput;
+    float lastFireTime = 0f;
 
     bool firing = false;
 
@@ -24,7 +27,7 @@ public class UserInput : MonoBehaviour
         onMove = new UnityEvent<Vector2>();
         onAiming = new UnityEvent<Vector2>();
         onScroll = new UnityEvent<float>();
-        onFire = new UnityEvent();
+        onFireEvent = new UnityEvent();
         onDash = new UnityEvent();
         onInteract = new UnityEvent();
         onTogglePause = new UnityEvent();
@@ -43,10 +46,12 @@ public class UserInput : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetMouseButton(0))
+        //Debug.Log("delta: " + (Time.time - lastFireTime));
+        if (Time.time - lastFireTime > fireCooldown && Input.GetMouseButton(0))
         {
-            onFire.Invoke();
+            Debug.Log("YE BOIIIIII");
+            onFireEvent.Invoke();
+            lastFireTime = Time.time;
         }
     }
 
@@ -55,7 +60,7 @@ public class UserInput : MonoBehaviour
         onMove.RemoveAllListeners();
         onAiming.RemoveAllListeners();
         onScroll.RemoveAllListeners();
-        onFire.RemoveAllListeners();
+        onFireEvent.RemoveAllListeners();
         onDash.RemoveAllListeners();
         onInteract.RemoveAllListeners();
         onReload.RemoveAllListeners();

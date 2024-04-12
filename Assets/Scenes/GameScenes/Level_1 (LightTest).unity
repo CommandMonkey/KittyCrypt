@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77658a473bf8b24b803b7f2926abba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireCooldown: 0.1
 --- !u!4 &495376144
 Transform:
   m_ObjectHideFlags: 0
@@ -822,7 +823,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2547807500268521881, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1377,3 +1379,4 @@ SceneRoots:
   - {fileID: 1931346293}
   - {fileID: 1138645002}
   - {fileID: 1320397995}
+  - {fileID: 1994963999}

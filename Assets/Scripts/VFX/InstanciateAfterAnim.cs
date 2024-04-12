@@ -20,7 +20,11 @@ public class InstanciateAfterAnim : MonoBehaviour
         GameObject instance = Instantiate(content, transform.position, Quaternion.identity);
 
         // Register the enemy to the EncounterRoom enemies list
-        if (encounterRoom != null) encounterRoom.RegisterEnemy(instance);
+        if (encounterRoom != null)
+        {
+            encounterRoom.RegisterEnemy(instance);
+        }
+
 
         Destroy(gameObject);
     }

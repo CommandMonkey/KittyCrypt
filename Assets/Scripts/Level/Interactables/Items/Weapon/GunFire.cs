@@ -325,13 +325,13 @@ public class GunFire : IItem
     {
         if (userInput == null) userInput = FindObjectOfType<UserInput>();
         userInput.onReload.AddListener(Reload);
-        userInput.onFire.AddListener(OnFire);
+        userInput.onFireEvent.AddListener(OnFire);
     }
 
     public override void DeActivate()
     {
         ResetReloading();
-        userInput.onFire.RemoveListener(OnFire);
+        userInput.onFireEvent.RemoveListener(OnFire);
         userInput.onReload.RemoveListener(Reload);
     }
 
