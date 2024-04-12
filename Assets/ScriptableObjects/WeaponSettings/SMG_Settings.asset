@@ -17,7 +17,7 @@ MonoBehaviour:
   reloadAudio: {fileID: 0}
   fireRate: 0.06
   reloadTime: 2
-  damagePerBullet: 3
+  bulletDamage: 1
   bulletsBeforeReload: 50
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
@@ -26,8 +26,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 7048
   projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 5
-  projectileSpeed: 40
+  bulletSpreadRange: 10
+  bulletSpeed: 10
   projectileVanishAfter: 3
   bulletTrail: {fileID: 0}
   destroyTrailAfter: 0.1
