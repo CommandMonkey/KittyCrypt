@@ -14,7 +14,11 @@ public class SceneLoader : MonoBehaviour
     {
         transitionAnimator = GetComponentInChildren<Animator>();
         generationScreen = GameObject.Find("GeneratingScreen");
-        StartCoroutine(LoadLevel());
+        transitionAnimator.SetBool("isLoading", false);
+        if (generationScreen != null)
+        {
+            StartCoroutine(LoadLevel());
+        }
     }
 
 
@@ -56,6 +60,7 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator LoadLevel()
     {
+        transitionAnimator.SetBool("isLoading", true);
         yield return new WaitForSeconds(Random.Range(2f, 5f));
         transitionAnimator.SetBool("isLoading", false);
         generationScreen.gameObject.SetActive(false);
