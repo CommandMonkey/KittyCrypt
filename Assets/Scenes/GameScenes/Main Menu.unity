@@ -1593,7 +1593,8 @@ PrefabInstance:
       value: SceneLoader
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5619559959430248026, guid: d2e76cfa0ffd6bf4398e432b0941850d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2e76cfa0ffd6bf4398e432b0941850d, type: 3}
