@@ -25,7 +25,7 @@ public class RoomManager : MonoBehaviour
     Dictionary<Entrance, List<string>> entranceRoomFailNames = new Dictionary<Entrance, List<string>>();
 
     // Cached refs
-    LevelManager levelManager;
+    GameSession levelManager;
     AudioSource audioScource;
 
     private void Awake()
@@ -35,7 +35,7 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
         audioScource = levelManager.GetComponent<AudioSource>();
 
 
@@ -46,7 +46,7 @@ public class RoomManager : MonoBehaviour
 
     public void StartRoomSpawning()
     {
-        levelManager.state = LevelManager.LevelState.Loading;
+        levelManager.state = GameSession.LevelState.Loading;
 
         roomsToSpawn = levelData.GetRoomsList();
         spawnedRooms.Clear();
@@ -89,7 +89,7 @@ public class RoomManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         SpawnDoorCoversForUnconnectedEntrances();
-        levelManager.state = LevelManager.LevelState.Running;
+        levelManager.state = GameSession.LevelState.Running;
         CloseDoors(true);
         OnRoomSpawningDone.Invoke();
     }

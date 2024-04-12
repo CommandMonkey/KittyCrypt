@@ -1,20 +1,19 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameHelper 
 {
-    public static Vector2 GetRandomPosInCollider(BoxCollider2D collider, LayerMask filter = new LayerMask())
+    public static Vector2 GetRandomPosInCollider(BoxCollider2D collider, LayerMask filter = new())
     {
         Vector2 min = collider.bounds.min;
         Vector2 max = collider.bounds.max;
 
-        float randomX = UnityEngine.Random.Range(min.x, max.x);
-        float randomY = UnityEngine.Random.Range(min.y, max.y);
+        float randomX = Random.Range(min.x, max.x);
+        float randomY = Random.Range(min.y, max.y);
 
         Vector2 pos = new Vector2(randomX, randomY);
 
-        if (Physics2D.OverlapCircle(pos, 1f, filter))
+        if (Physics2D.OverlapCircle(pos, 1.3f, filter))
             return GetRandomPosInCollider(collider, filter);
         else
             return pos;
@@ -49,10 +48,10 @@ public static class GameHelper
     {
         List<GameObject> instances = new List<GameObject>();
 
-        for (int i = 0; i < toSpawn.Count; i++)
+        foreach (var t in toSpawn)
         {
             Vector2 pos = GetRandomPosInCollider(roomCollider, noEnemyLayer);
-            instances.Add(GameObject.Instantiate(toSpawn[i], pos, Quaternion.identity));
+            instances.Add(GameObject.Instantiate(t, pos, Quaternion.identity));
         }
         return instances;
     }

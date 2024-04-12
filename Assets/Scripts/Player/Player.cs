@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private Animator animator;
     private SceneLoader loader;
-    private LevelManager levelManager;
+    private GameSession levelManager;
     private UserInput userInput;
     private Collider2D myCollider;
     public GameObject reloadCircle;
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         loader = FindObjectOfType<SceneLoader>();
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
         userInput = FindObjectOfType<UserInput>();
         myCollider = GetComponent<Collider2D>();
 
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (isDead || levelManager.state != LevelManager.LevelState.Running)
+        if (isDead || levelManager.state != GameSession.LevelState.Running)
         {
             myRigidbody.velocity = Vector2.zero;
             animator.SetBool("IsWalking", false);
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
-        if (levelManager.state != LevelManager.LevelState.Running)
+        if (levelManager.state != GameSession.LevelState.Running)
         {
             moveInput = Vector2.zero;
             return;
@@ -179,7 +179,7 @@ public class Player : MonoBehaviour
 
     void OnDash()
     {
-        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
+        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || levelManager.state != GameSession.LevelState.Running) { return; }
 
         animator.SetTrigger("Dash");
         rollSpeed = 50f;

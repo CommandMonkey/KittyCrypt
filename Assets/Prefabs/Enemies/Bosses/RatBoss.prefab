@@ -68,8 +68,8 @@ MonoBehaviour:
   shootAimTime: 5
   aimLineVFX: {fileID: 9181747754686250940, guid: 65899a98ec85d6a459a1ccd48e37e441, type: 3}
   shootLineVFX: {fileID: 0}
-  startAimColor: {r: 1, g: 0, b: 0, a: 0}
-  endAimColor: {r: 1, g: 0, b: 0, a: 1}
+  startAimColor: {r: 0, g: 0.048901558, b: 1, a: 0.27058825}
+  endAimColor: {r: 0, g: 0.047058582, b: 1, a: 1}
   startAimWidth: 0.15
   endAimWidth: 0.01
   gunShotSFX: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}

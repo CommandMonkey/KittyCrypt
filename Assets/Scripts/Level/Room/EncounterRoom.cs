@@ -16,7 +16,7 @@ public class EncounterRoom : Room
 
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
-    LevelManager levelManager;
+    GameSession levelManager;
 
 
     // Start is called before the first frame update
@@ -24,7 +24,7 @@ public class EncounterRoom : Room
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         //levelManager.onEnemyKill.AddListener(OnEnemyKill);

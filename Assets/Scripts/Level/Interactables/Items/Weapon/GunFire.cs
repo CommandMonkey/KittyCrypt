@@ -44,7 +44,7 @@ public class GunFire : IItem
     RaycastHit2D bulletHit;
 
     UserInput userInput;
-    LevelManager levelManager;
+    GameSession levelManager;
     Player player;
     Animator virtualCameraAnimator;
     AudioSource gunSource;
@@ -57,10 +57,10 @@ public class GunFire : IItem
         ammoUI = GameObject.FindGameObjectWithTag("AmmoRemainingText").GetComponent<TMP_Text>();
 
         userInput = FindObjectOfType<UserInput>();
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
         player = levelManager.player;
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
-        gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
+        gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
         reloadImage = player.reloadCircle.GetComponent<Image>();
 
@@ -87,7 +87,7 @@ public class GunFire : IItem
 
     void OnFire()
     {
-        if (levelManager.state != LevelManager.LevelState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;   
+        if (levelManager.state != GameSession.LevelState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;   
         else if (ProjectileFire()) return;
         else if (BurstFire()) return;
         else if (RaycastFire()) return;

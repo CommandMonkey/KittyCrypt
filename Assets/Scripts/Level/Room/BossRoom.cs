@@ -10,7 +10,7 @@ public class BossRoom : Room
     RatBossBehaviour bossScript;
     
     private GameCamera gameCamera;
-    private LevelManager levelManager;
+    private GameSession levelManager;
 
     bool started = false;
 
@@ -19,7 +19,7 @@ public class BossRoom : Room
         gameCamera = FindObjectOfType<GameCamera>();
         onPlayerEnter.AddListener(OnPlayerEnter);
         bossScript = boss.GetComponent<RatBossBehaviour>();
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
     }
 
     private void OnPlayerEnter()
@@ -45,7 +45,7 @@ public class BossRoom : Room
         if (started) yield break;
         started = true;
 
-        levelManager.SetState(LevelManager.LevelState.Paused);
+        levelManager.SetState(GameSession.LevelState.Paused);
         levelManager.musicManager.StopMusic();
 
         focusCamOnBoss();
@@ -72,7 +72,7 @@ public class BossRoom : Room
         yield return new WaitForSeconds(2f);
 
         focusCamOnBossAndPlayer();
-        levelManager.SetState(LevelManager.LevelState.Running);
+        levelManager.SetState(GameSession.LevelState.Running);
         bossScript.StartBoss();
     }
 }
