@@ -15,6 +15,7 @@ public class PlayerInteraction : MonoBehaviour
 
     // cached references
     Camera mainCamera;
+    LevelManager levelManager;
 
 
     private void Start()
@@ -22,13 +23,14 @@ public class PlayerInteraction : MonoBehaviour
         interactablePromptText = GameObject.FindGameObjectWithTag("InteractPromptText").GetComponent<TMP_Text>();
         UserInput userInput = FindObjectOfType<UserInput>();
         mainCamera = Camera.main;
+        levelManager = FindObjectOfType<LevelManager>();
         // Setup Input
         userInput.onInteract.AddListener(OnInteract);
     }
 
     private void Update()
     {
-        if (!anyInteractablesInRange)
+        if (!anyInteractablesInRange || levelManager.state != LevelManager.LevelState.Running)
         {
             interactablePromptText.text = "";
             return;
@@ -87,7 +89,7 @@ public class PlayerInteraction : MonoBehaviour
     // ////// Interact ////// //
     void OnInteract()
     {
-        if (!anyInteractablesInRange) return;
+        if (!anyInteractablesInRange && levelManager.state == LevelManager.LevelState.Running) return;
         closestInteractable.GetComponent<IInteractable>().Interact();
     } 
 

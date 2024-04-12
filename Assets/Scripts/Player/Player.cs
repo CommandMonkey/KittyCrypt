@@ -92,9 +92,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (isDead)
+        if (isDead || levelManager.state != LevelManager.LevelState.Running)
         {
             myRigidbody.velocity = Vector2.zero;
+            animator.SetBool("IsWalking", false);
             return;
         }
         if (state == State.rolling)
@@ -161,7 +162,11 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
-        if (levelManager.state != LevelManager.LevelState.Running) return;
+        if (levelManager.state != LevelManager.LevelState.Running)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
         moveInput = moveVector;
         
     }
