@@ -1,30 +1,44 @@
+using System.Collections;
 using Cinemachine;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.InputSystem;
-using System.Collections;
-using TMPro;
 using UnityEngine.UI;
 
-public class GunFire : MonoBehaviour
+public class GunFire : IItem
 {
     //Configurable parameters damage
-    [Header("General Options")]
-    [SerializeField] WeaponSettingsObject settings;
+    [Header("General Options")] [SerializeField]
+    WeaponSettingsObject settings;
+
+    public bool active = false;
 
 
-
-    //Cached references
-
+    //Cached reference
     TMP_Text ammoUI;
 
+    [System.Serializable]
+    public class GunFireRuntimeData
+    {
+        public GunFireRuntimeData(int bulletsFired, float reloadTimer, float fireRateCooldownTimer,
+            bool isFireRateCoolingDown, bool isReloading)
+        {
+            this.bulletsFired = bulletsFired;
+            this.reloadTimer = reloadTimer;
+            this.fireRateCooldownTimer = fireRateCooldownTimer;
+            this.isFireRateCoolingDown = isFireRateCoolingDown;
+            this.isReloading = isReloading;
+        }
+
+        public int bulletsFired;
+        public float reloadTimer;
+        public float fireRateCooldownTimer;
+        public bool isFireRateCoolingDown;
+        public bool isReloading;
+    }
+
     //Private variables
-    int bulletsFired;
-    float reloadTimer;
-    float fireRateCooldownTimer;
-    bool fireRateCoolingDown = false;
-    bool reloading = false;
-    bool reloadAudioPlayed = false;
+    public GunFireRuntimeData runtimeData;
 
     Quaternion randomBulletSpread;
     RaycastHit2D bulletHit;
@@ -39,9 +53,6 @@ public class GunFire : MonoBehaviour
     private void Start()
     {
         ammoUI = GameObject.FindGameObjectWithTag("AmmoRemainingText").GetComponent<TMP_Text>();
-        
-        reloadTimer = settings.reloadTime;
-        fireRateCooldownTimer = settings.fireRate;
 
         userInput = FindObjectOfType<UserInput>();
         player = FindObjectOfType<Player>();
@@ -50,21 +61,24 @@ public class GunFire : MonoBehaviour
         nuzzleLight = GetComponent<Light2D>();
         reloadImage = player.reloadCircle.GetComponent<Image>();
 
-        userInput.onReload.AddListener(Reload);
-        userInput.onFire.AddListener(OnFire);
+        Activate();
+
+        if (runtimeData == null)
+        {
+            runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
+        }
 
         if (nuzzleLight != null)
         {
             nuzzleLight.enabled = false;
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player.isDead) {  return; }
-        if (ShouldReload() && !reloading) Reload();
+        //if (player.isDead) {  return; }
+        if (ShouldReload() && !runtimeData.isReloading) Reload();
         FireRateCooldown();
     }
 
@@ -82,13 +96,18 @@ public class GunFire : MonoBehaviour
 
     bool ProjectileFire()
     {
-        if(settings.weaponType != WeaponSettingsObject.WeaponType.ProjectileFire || fireRateCoolingDown || reloading) { return false; }
+        if (settings.weaponType != WeaponSettingsObject.WeaponType.ProjectileFire ||
+            runtimeData.isFireRateCoolingDown || runtimeData.isReloading)
+        {
+            return false;
+        }
+
         Debug.Log("Fire");
 
         // Fire
         ShootBullet();
         GunFeedbackEffects();
-        fireRateCoolingDown = true;
+        runtimeData.isFireRateCoolingDown = true;
 
 
         // Ammo
@@ -99,14 +118,15 @@ public class GunFire : MonoBehaviour
 
     bool BurstFire()
     {
-        if(settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire || fireRateCoolingDown || reloading) { return false; }
-        Debug.Log("Fire");
+        if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire || runtimeData.isFireRateCoolingDown ||
+            runtimeData.isReloading) return false;
 
         // Fire
         for (int i = 0; i < settings.bulletsBeforeReload || settings.bulletsBeforeReload == 0; i++)
         {
             ShootBullet();
         }
+
         GunFeedbackEffects();
 
         //Ammo
@@ -117,16 +137,21 @@ public class GunFire : MonoBehaviour
 
     bool RaycastFire()
     {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.RaycastFire || fireRateCoolingDown || reloading) { return false; }
+        if (settings.weaponType != WeaponSettingsObject.WeaponType.RaycastFire || runtimeData.isFireRateCoolingDown ||
+            runtimeData.isReloading)
+        {
+            return false;
+        }
+
         Debug.Log("Fire");
 
         // Fire
         bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
         if (bulletHit)
         {
-            bulletsFired++;
+            runtimeData.bulletsFired++;
             GunFeedbackEffects();
-            fireRateCoolingDown = true;
+            runtimeData.isFireRateCoolingDown = true;
 
             var smoke = Instantiate(settings.hitEffect, bulletHit.point, Quaternion.identity);
             Destroy(smoke, settings.destroyHitEffectAfter);
@@ -134,10 +159,10 @@ public class GunFire : MonoBehaviour
             var line = Instantiate(settings.bulletTrail, transform.position, Quaternion.identity);
             Destroy(line, settings.destroyTrailAfter);
 
-            if (bulletHit.collider.gameObject.transform.tag == "Enemy")
-            {
-                RushingEnemyBehavior enemyScript = bulletHit.collider.gameObject.GetComponent<RushingEnemyBehavior>();
+            Enemy enemyScript = bulletHit.collider.gameObject.GetComponent<Enemy>();
 
+            if (enemyScript != null)
+            {
                 enemyScript.TakeDamage(settings.bulletDamage);
             }
         }
@@ -154,7 +179,7 @@ public class GunFire : MonoBehaviour
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);
-        bulletsFired++;
+        runtimeData.bulletsFired++;
     }
 
     void GunFeedbackEffects()
@@ -163,16 +188,23 @@ public class GunFire : MonoBehaviour
         virtualCameraAnimator.SetTrigger("CameraShake");
         player.exteriorVelocity += -(Vector2)transform.right * settings.knockback;
 
-        if (nuzzleLight == null) { return; }
+        if (nuzzleLight == null)
+        {
+            return;
+        }
+
         StopCoroutine(NuzzleFlash());
         StartCoroutine(NuzzleFlash());
     }
 
     bool ShouldReload()
     {
-        if(settings.bulletsBeforeReload == 0) { return false; }
+        if (settings.bulletsBeforeReload == 0)
+        {
+            return false;
+        }
 
-        if (bulletsFired >= settings.bulletsBeforeReload)
+        if (runtimeData.bulletsFired >= settings.bulletsBeforeReload)
             return true;
         else
             return false;
@@ -180,54 +212,55 @@ public class GunFire : MonoBehaviour
 
     void FireRateCooldown()
     {
-        if(!fireRateCoolingDown) { return; }
-
-        fireRateCooldownTimer -= Time.deltaTime;
-        if(fireRateCooldownTimer <= 0 )
+        if (!runtimeData.isFireRateCoolingDown)
         {
-            fireRateCoolingDown = false;
-            fireRateCooldownTimer = settings.fireRate;
+            return;
+        }
+
+        runtimeData.fireRateCooldownTimer -= Time.deltaTime;
+        if (runtimeData.fireRateCooldownTimer <= 0)
+        {
+            runtimeData.isFireRateCoolingDown = false;
+            runtimeData.fireRateCooldownTimer = settings.fireRate;
         }
     }
 
     void Reload()
     {
-        if (!reloading && bulletsFired != 0)
+        if (!runtimeData.isReloading && runtimeData.bulletsFired != 0)
         {
-            reloading = true;
+            runtimeData.isReloading = true;
             StartCoroutine(ReloadRoutine());
         }
-
     }
 
     IEnumerator ReloadRoutine()
     {
-
         // Play Reload SFX
         gunSource.PlayOneShot(settings.reloadAudio);
-        reloadAudioPlayed = true;
 
         // Update Reload Animation circle
-        while (reloading) 
+        while (runtimeData.isReloading)
         {
             player.reloadCircle.SetActive(true);
-            reloadImage.fillAmount = 1f - (reloadTimer / settings.reloadTime);
-            reloadTimer -= Time.deltaTime;
-            if (reloadTimer <= 0)
+            reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
+            runtimeData.reloadTimer -= Time.deltaTime;
+            if (runtimeData.reloadTimer <= 0)
             {
                 OnReloadDone();
                 break;
             }
-            yield return new WaitForEndOfFrame();  
+
+            yield return new WaitForEndOfFrame();
         }
 
 
         void OnReloadDone()
         {
             // Reset Values
-            bulletsFired = 0;
-            reloading = false;
-            reloadTimer = settings.reloadTime;
+            runtimeData.bulletsFired = 0;
+            runtimeData.isReloading = false;
+            runtimeData.reloadTimer = settings.reloadTime;
             player.reloadCircle.SetActive(false);
 
             // Ammo Text
@@ -247,12 +280,14 @@ public class GunFire : MonoBehaviour
 
     void SetAmmoUI()
     {
-        ammoUI.text = (settings.bulletsBeforeReload - bulletsFired).ToString() + "/" + settings.bulletsBeforeReload.ToString() ;
+        ammoUI.text = (settings.bulletsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
+                      settings.bulletsBeforeReload.ToString();
     }
 
     void SetAmmoBurstUI()
     {
-        ammoUI.text = Mathf.Max(0, (1 - bulletsFired / settings.bulletsBeforeReload)).ToString() + "/" + 1.ToString();
+        ammoUI.text = Mathf.Max(0, (1 - runtimeData.bulletsFired / settings.bulletsBeforeReload)).ToString() + "/" +
+                      1.ToString();
     }
 
     public Vector3 GetBulletHitPoint()
@@ -284,4 +319,27 @@ public class GunFire : MonoBehaviour
             angles.z + Random.Range(-settings.bulletSpreadRange, settings.bulletSpreadRange));
         return Quaternion.Euler(newAngles);
     }
+
+    public override void Activate()
+    {
+        if (userInput == null) userInput = FindObjectOfType<UserInput>();
+        userInput.onReload.AddListener(Reload);
+        userInput.onFire.AddListener(OnFire);
+    }
+
+    public override void DeActivate()
+    {
+        ResetReloading();
+        userInput.onFire.RemoveListener(OnFire);
+        userInput.onReload.RemoveListener(Reload);
+    }
+
+    void ResetReloading()
+    {
+        StopCoroutine(ReloadRoutine());
+        runtimeData.isReloading = false;
+        runtimeData.reloadTimer = settings.reloadTime;
+        player.reloadCircle.SetActive(false);
+    }
 }
+

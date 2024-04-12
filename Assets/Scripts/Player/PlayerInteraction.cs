@@ -36,7 +36,7 @@ public class PlayerInteraction : MonoBehaviour
 
         closestInteractable = GetClosestInteractable()?.transform;
 
-        if (closestInteractable != null )
+        if (closestInteractable != null)
         {
             UpdateInteractPromptText();
             UpdateInteractPromptPos();
@@ -107,7 +107,7 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
     }
-
+    
     private GameObject GetClosestInteractable()
     {
         GameObject closestInteractable = null;

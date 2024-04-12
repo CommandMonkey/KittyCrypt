@@ -3,54 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RatBossBehaviour : Enemy
 {
-    [Header("General")]
-    [SerializeField] float moveSpeed = 1f;
+    [Header("General")] [SerializeField] float moveSpeed = 1f;
     [SerializeField] float changeDirectionInterval = 2f;
     [SerializeField] float followRange = 3f;
     [SerializeField] float timeBetweenAttacks = 4f;
     [SerializeField] LayerMask hitLayerMask;
-    [Header("Attack - shoot")]
-    [SerializeField] float shootAimTime = 3f;
+
+    [Header("Health Display")]
+    [SerializeField] GameObject healthBarPrefab;
+
+    [Header("Attack - shoot")] [SerializeField]
+    float shootAimTime = 3f;
+
     [SerializeField] GameObject aimLineVFX;
     [SerializeField] GameObject shootLineVFX;
+    [SerializeField] Color startAimColor;
+    [SerializeField] Color endAimColor;
+    [SerializeField] float startAimWidth;
+    [SerializeField] float endAimWidth;
     [SerializeField] Transform weaponTransform; // The transform of the weapon
     [SerializeField] float maxRotationSpeed = 5f; // The maximum rotation speed of the weapon
     [SerializeField] float rotationAcceleration = 10f; // The rotation acceleration towards the target direction
     [SerializeField] float maxAngularVelocity = 10f; // The maximum angular velocity of the weapon
     [SerializeField] Vector2 facingLeftWeaponPoint;
     [SerializeField] Vector2 facingRightWeaponPoint;
-    [Header("Attack - spawnRats")]
-    [SerializeField] List<GameObject> ratsToSummon;
+
+    [Header("Attack - spawnRats")] [SerializeField]
+    List<GameObject> ratsToSummon;
     [SerializeField] AudioClip CaneBoomSFX;
 
-    enum RatState
+    private enum RatState
     {
         paused,
         alive,
         dead
     }
-    bool weaponAimActive = false;
-    bool isSummoning = false;
 
-    float timeToNextShot;
-    Vector3 toTarget;
-    RaycastHit2D aimRayHit;
-
-    RatState state = RatState.paused;
-
-
-
+    private bool isSummoning = false;
+    private float timeToNextShot;
+    private Vector3 toTarget;
+    private RaycastHit2D aimRayHit;
+    private RatState state = RatState.paused;
     private Vector3 targetMovePosition;
     private float elapsedTime;
+    private Image healthBar;
 
-    LineRenderer aimLineRenderer;
-    BoxCollider2D roomCollider;
-    GameCamera cam;
-    AudioSource audioSource;
-    SpriteRenderer spriteRenderer;
+    private LineRenderer aimLineRenderer;
+    private BoxCollider2D roomCollider;
+    private GameCamera cam;
+    private AudioSource audioSource;
+    private SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     protected override void EnemyStart()
@@ -59,9 +65,13 @@ public class RatBossBehaviour : Enemy
         roomCollider = transform.parent.GetComponent<BoxCollider2D>();
         cam = FindObjectOfType<GameCamera>();
         audioSource = GetComponent<AudioSource>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>(); 
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
 
+        aimLineRenderer.endColor = startAimColor;
+        aimLineRenderer.startColor = startAimColor;
+
+        SpawnHealthBar();
         StartBoss();
     }
 
@@ -69,7 +79,7 @@ public class RatBossBehaviour : Enemy
     {
         state = RatState.alive;
         StartCoroutine(BossAttackLoopRoutine());
-        
+
     }
 
     // Update is called once per frame
@@ -77,7 +87,9 @@ public class RatBossBehaviour : Enemy
     {
         if (state == RatState.paused) return;
 
-        toTarget = target.position - transform.position;
+        ShootLineOfSightRay();
+        toTarget = targetPosition - transform.position;
+        
 
         if (isSummoning)
         {
@@ -90,6 +102,7 @@ public class RatBossBehaviour : Enemy
             Flip();
 
         }
+
         DetermineTargetGunDirection();
         AimLineVFX();
     }
@@ -108,11 +121,25 @@ public class RatBossBehaviour : Enemy
                 while (timeToNextShot > 0)
                 {
                     timeToNextShot -= Time.deltaTime;
+
+                    // Calculate the interpolation factor (t) based on time
+                    float t = 1f - (timeToNextShot / shootAimTime);
+
+                    // Interpolate the color gradually
+                    aimLineRenderer.endColor = Color.Lerp(startAimColor, endAimColor, t);
+                    aimLineRenderer.startColor = Color.Lerp(startAimColor, endAimColor, t);
+
+                    // Interpolate the width gradually
+                    aimLineRenderer.startWidth = Mathf.Lerp(startAimWidth, endAimWidth, t);
+                    aimLineRenderer.endWidth = Mathf.Lerp(startAimWidth, endAimWidth, t);
+
                     yield return new WaitForFixedUpdate();
                 }
+
                 aimLineRenderer.enabled = false;
                 yield return StartCoroutine(ShootAttackRoutine());
             }
+
             aimLineRenderer.enabled = false;
 
             isSummoning = true;
@@ -126,20 +153,23 @@ public class RatBossBehaviour : Enemy
     {
         for (int i = 0; i < 5; i++)
         {
-            RaycastHit2D shootHit = Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
+            RaycastHit2D shootHit =
+                Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
 
             LineRenderer shootLine = Instantiate(shootLineVFX).GetComponent<LineRenderer>();
             shootLine.SetPosition(0, weaponTransform.position);
             shootLine.SetPosition(1, shootHit.point);
 
-            if (shootHit.collider.CompareTag("Player")) 
+            if (shootHit.collider.CompareTag("Player"))
             {
                 player.TakeDamage(1);
             }
+
             yield return new WaitForSeconds(.1f);
 
 
         }
+
         yield return new WaitForSeconds(.3f);
         aimLineRenderer.enabled = true;
         yield break;
@@ -165,7 +195,8 @@ public class RatBossBehaviour : Enemy
     void SetRandomTargetPosition()
     {
         // Generate random target position within a range from the current position
-        targetMovePosition = player.transform.position + new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0f);
+        targetMovePosition = player.transform.position +
+                             new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0f);
     }
 
 
@@ -173,6 +204,7 @@ public class RatBossBehaviour : Enemy
     {
         if (aimLineRenderer.enabled)
         {
+            
             aimRayHit = Physics2D.Raycast(weaponTransform.position, weaponTransform.right, 200f, hitLayerMask);
 
 
@@ -187,7 +219,7 @@ public class RatBossBehaviour : Enemy
         yield return new WaitForSeconds(1.5f); // Wait for K�pp to hit the ground
         cam.DoCameraShake();
         PlayBoomSFX();
-        yield return new WaitForSeconds(.3f); 
+        yield return new WaitForSeconds(.3f);
         GameHelper.InstanciateInCollider(roomCollider, ratsToSummon, LayerMask.GetMask("Wall"));
         yield break;
     }
@@ -211,22 +243,36 @@ public class RatBossBehaviour : Enemy
         }
     }
 
+    protected override void OnDamageTaken()
+    {
+        UpdateHealthBar();
+    }
+
+    private void SpawnHealthBar()
+    {
+        healthBar = GameHelper.GetComponentInAllChildren<Image>(Instantiate(healthBarPrefab));
+        healthBar.fillAmount = health / maxHealth;
+
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthBar.fillAmount = health / maxHealth;
+    }
+
+    protected override void Die()
+    {
+        
+    }
+
 
     // /// Gun /// //
 
-    //private void DetermineTargetGunDirection()
-    //{
-    //    Debug.Log(timeToNextShot);
-    //    Vector3 targetPos = player.PredictFuturePosition(timeToNextShot);
-    //    testMarker.position = targetPos;
-
-    //    targetDirection = (targetPos - weaponTransform.position).normalized;
-    //}
 
     private void DetermineTargetGunDirection()
     {
         // Get the direction between weaponTransform and targetPos
-        Vector2 targetDirection = (target.position - weaponTransform.position).normalized;
+        Vector2 targetDirection = (targetPosition - weaponTransform.position).normalized;
 
         // Calculate the angle between the current forward direction and the target direction
         float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
@@ -235,16 +281,14 @@ public class RatBossBehaviour : Enemy
         float angleDifference = Mathf.DeltaAngle(weaponTransform.eulerAngles.z, targetAngle);
 
         // Calculate the desired rotation speed based on the angle difference
-        float desiredRotationSpeed = Mathf.Clamp(angleDifference * rotationAcceleration, -maxRotationSpeed, maxRotationSpeed);
+        float desiredRotationSpeed =
+            Mathf.Clamp(angleDifference * rotationAcceleration, -maxRotationSpeed, maxRotationSpeed);
 
         // Apply rotation speed to the weapon
-        float newRotationSpeed = Mathf.MoveTowards(weaponTransform.GetComponent<Rigidbody2D>().angularVelocity, desiredRotationSpeed, Time.deltaTime * rotationAcceleration);
+        float newRotationSpeed = Mathf.MoveTowards(weaponTransform.GetComponent<Rigidbody2D>().angularVelocity,
+            desiredRotationSpeed, Time.deltaTime * rotationAcceleration);
         newRotationSpeed = Mathf.Clamp(newRotationSpeed, -maxAngularVelocity, maxAngularVelocity);
         weaponTransform.GetComponent<Rigidbody2D>().angularVelocity = newRotationSpeed;
     }
 
-    public void TakeDamage(float damage)
-    {
-        throw new NotImplementedException();
-    }
 }

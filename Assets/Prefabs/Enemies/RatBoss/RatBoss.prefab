@@ -47,6 +47,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15817e00cdc03e4ba298db125ff9cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  health: 1
+  enemyDMG: 1
+  attackSpeed: 0.1
+  BloodSplatVFX: {fileID: 5376875274643884105, guid: 4bca45e73eabc0e42b0708aed64270a1, type: 3}
+  BloodStainVFX: {fileID: 1158836865863372884, guid: 807a4a5b91ffe6e43ae4fb6e3b2fd86a, type: 3}
+  enemyHitAudio: {fileID: 8095866884428330632, guid: f54f9b69a5a8dac4d8f573bcddcc35da, type: 3}
+  obsticleLayer:
+    serializedVersion: 2
+    m_Bits: 0
   moveSpeed: 1
   changeDirectionInterval: 2
   followRange: 3
@@ -54,9 +64,14 @@ MonoBehaviour:
   hitLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  healthBarPrefab: {fileID: 0}
   shootAimTime: 5
   aimLineVFX: {fileID: 9181747754686250940, guid: 65899a98ec85d6a459a1ccd48e37e441, type: 3}
   shootLineVFX: {fileID: 0}
+  startAimColor: {r: 1, g: 0, b: 0, a: 0}
+  endAimColor: {r: 1, g: 0, b: 0, a: 1}
+  startAimWidth: 0.1
+  endAimWidth: 0
   weaponTransform: {fileID: 5410748414546813523}
   maxRotationSpeed: 1000
   rotationAcceleration: 200

@@ -29,20 +29,29 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddWeapon(GameObject weapon)
     {
-        GameObject cHotbarSpot = itemInventory[currentHotbarPos];
-        if (cHotbarSpot != null)
+        GameObject cHotbarItem = itemInventory[currentHotbarPos];
+        
+        // drop item if holding one
+        if (cHotbarItem != null)
         {
-            SpawnItemPickup(cHotbarSpot);
-            cHotbarSpot.SetActive(false);
+            SpawnItemPickup(cHotbarItem);
+            IItem oldItem = GameHelper.GetComponentInAllChildren<IItem>(cHotbarItem);
+            if (oldItem != null)
+            {
+                Debug.Log("Found OldItem IItem");
+                oldItem.DeActivate();
+            }
+            cHotbarItem.SetActive(false);
         }
         
-
+        
+        // Add new weapon to current hotbar pos
+        
         if(weapon.transform.IsChildOf(holdableItemAnchor))
         {
             //Debug.Log("Found pickup Content in hierarchy, Rebasing");
 
             weapon.transform.SetParent(holdableItemAnchor);
-            weapon.SetActive(true);
             itemInventory[currentHotbarPos] = weapon;
         }
         else
@@ -50,7 +59,19 @@ public class PlayerInventory : MonoBehaviour
             //Debug.Log("Pickup Content not in hierarchy, Spawning new");
             itemInventory[currentHotbarPos] = Instantiate(weapon, holdableItemAnchor);
         }
+        
+        // initiate weapon
+        cHotbarItem = itemInventory[currentHotbarPos];
+        
+        cHotbarItem.SetActive(true);
 
+        IItem newItem = GameHelper.GetComponentInAllChildren<IItem>(cHotbarItem);
+        if (newItem != null)
+        {
+            Debug.Log("Found NewItem IItem");
+            newItem.Activate();
+        }
+        
         // reset local pos (cus had some problem or smthn)
         itemInventory[currentHotbarPos].transform.localPosition = Vector3.zero;
     }
@@ -106,14 +127,13 @@ public class PlayerInventory : MonoBehaviour
 
     void SpawnItemPickup(GameObject item)
     {
-        GameObject itemPickup = Instantiate(itemPickupPrefab, transform.position, Quaternion.identity);
-        itemPickup.name = item.name;
+        GameObject pickupObject = Instantiate(itemPickupPrefab, transform.position, Quaternion.identity);
+        pickupObject.name = item.name;
 
         // make weapon child of pickup
         //content.transform.SetParent(pickup.transform);
 
-        ItemPickupInteractable pickupScript = itemPickup.GetComponent<ItemPickupInteractable>();
+        ItemPickupInteractable pickupScript = pickupObject.GetComponent<ItemPickupInteractable>();
         pickupScript.item = item;
     }
-
 }

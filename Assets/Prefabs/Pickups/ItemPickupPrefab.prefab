@@ -143,5 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655c3dbf04c22ee41ae48ccfa5e1ff06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomWeapon:
+  - {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
+  - {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+  - {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+  - {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
   item: {fileID: 0}
   popVFX: {fileID: 8728437339403494189, guid: 80c87044e3c0a2445b4a5962dc4a6b06, type: 3}

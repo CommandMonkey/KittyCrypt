@@ -72,3 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Assets/Scripts/LineManager.cs
 Assets/Scripts/LineManager.cs.meta
+.idea

@@ -24,7 +24,7 @@ public class ChestInteractable : MonoBehaviour, IInteractable
     public void Interact()
     {
         mySpriteRenderer.sprite = openChest;
-        Instantiate(pickUpPrefab, GetComponent<Transform>());
+        Instantiate(pickUpPrefab, new Vector2(transform.position.x, transform.position.y + .5f), Quaternion.identity);
         canInteract = false;
     }
 }
