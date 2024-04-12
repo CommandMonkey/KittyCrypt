@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
         rolling,
     }
 
+    [SerializeField] LayerMask ignoreOnDash;
     [SerializeField] float Move_speed = 30f;
     //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] float drag = 0.9f;
     [SerializeField] float invinsibilityLenght = 1f;
+    [SerializeField] float invisibilityLengthDash = 0.2f;
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
     public GameObject crosshair;
     public bool isDead = false;
     public UnityEvent onInteract;
+    Animator catAnimator;
 
     private float rollSpeed;
     float rollSpeedDropMultiplier = 8f;
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        catAnimator = GetComponentInChildren<Animator>();
         onInteract = new UnityEvent();
         reloadCircle = GameObject.FindGameObjectWithTag("ReloadCircle");
         if(reloadCircle != null )
@@ -94,14 +98,18 @@ public class Player : MonoBehaviour
             animator.SetBool("IsWalking", false);
             return;
         }
-        if (state == State.rolling) { 
-            // dash/roll range
-            
+        if (state == State.rolling)
+        {
+            int dashLayer = LayerMask.NameToLayer("PlayerDash");
+            int playerLayer = LayerMask.NameToLayer("Player");
             rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
-
+            gameObject.layer = dashLayer;
 
             if (rollSpeed < Move_speed)
             {
+                catAnimator.SetTrigger("DashInvisibility");
+                StartCoroutine(InvisibilityDelayRoutine(invisibilityLengthDash));
+                gameObject.layer = playerLayer;
                 state = State.normal;
             }
         }
@@ -114,7 +122,6 @@ public class Player : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
         RollDelay();
-        Aim();
     }
 
     private void FixedUpdate()
@@ -197,7 +204,7 @@ public class Player : MonoBehaviour
         if (invinsibility || state == State.rolling) { return; }
         animator.SetTrigger("WasHurt");
         health -= damage;
-        StartCoroutine(InvisibilityDelayRoutine());
+        StartCoroutine(InvisibilityDelayRoutine(invinsibilityLenght));
         if (health <= 0)
         {
             isDead = true;
@@ -211,10 +218,10 @@ public class Player : MonoBehaviour
         loader.LoadMainMenu();
     }
 
-    IEnumerator InvisibilityDelayRoutine()
+    IEnumerator InvisibilityDelayRoutine(float invinsibilityLength)
     {
         invinsibility = true;
-        yield return new WaitForSeconds(invinsibilityLenght);
+        yield return new WaitForSeconds(invinsibilityLength);
         invinsibility = false;
     }
 
@@ -254,11 +261,4 @@ public class Player : MonoBehaviour
         return futurePosition;
     }
 
-
-
-    void Aim()
-    {
-        if(crosshair == null) { return; }
-        crosshair.transform.localPosition = AimDirection * Crosshair_distance;
-    }
 }
