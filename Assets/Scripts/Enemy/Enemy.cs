@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Enemy stats")]
     [SerializeField, Range(0, 10)] protected float speed = 5f;
-    [SerializeField, Range(0, 1000)] protected float hp = 1f;
+    [SerializeField, Range(0, 1000)] protected float health = 1f;
     [SerializeField, Range(0, 100)] protected int enemyDMG = 1;
     [Header("The Lower the number the faster the attack")]
     [SerializeField, Range(0.1f, 3)] protected float attackSpeed = 0.1f;
@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
 
     public LayerMask obsticleLayer;
 
-
+    protected float maxHealth;
     protected bool lineOfSight = true;
     protected Vector3 targetPosition = Vector3.zero;
 
@@ -37,7 +37,9 @@ public class Enemy : MonoBehaviour
         target = levelManager.player.transform;
         player = target.GetComponent<Player>();
 
-        
+        maxHealth = health;
+
+
         if (player == null) { Debug.Log("PLAYER FOUND"); }
 
         EnemyStart();
@@ -65,16 +67,18 @@ public class Enemy : MonoBehaviour
     {
         PlayHurtVFX();
         PlayHurtSFX();
-        hp -= damage;
-        if (hp <= 0)
+        health -= damage;
+        Debug.Log(health);  
+        if (health <= 0)
         {
+            levelManager.onEnemyKill.Invoke();
             Die();
         }
+        OnDamageTaken();
     }
 
-    void Die()
+    protected virtual void Die()
     {
-        levelManager.onEnemyKill.Invoke();
         PlayDeathVFX();
         Destroy(gameObject);
     }
@@ -97,5 +101,6 @@ public class Enemy : MonoBehaviour
         Destroy(Blood, 1f);
     }
 
+    protected virtual void OnDamageTaken() { }
     protected virtual void EnemyStart() { }
 }

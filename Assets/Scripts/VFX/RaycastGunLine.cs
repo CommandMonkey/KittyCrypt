@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Interactables.Items.Weapon;
 using UnityEngine;
 
 public class RaycastGunLine : MonoBehaviour

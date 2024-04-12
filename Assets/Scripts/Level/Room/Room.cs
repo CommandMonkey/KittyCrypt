@@ -21,7 +21,7 @@ public class Room : MonoBehaviour
     [NonSerialized] protected UnityEvent onPlayerEnter;
 
     // Cached references
-    Player player;
+    protected Player player;
     GameObject fogOfWarObject;
 
     private void Awake()
