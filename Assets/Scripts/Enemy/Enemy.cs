@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
     protected Transform target;
     protected Player player;
 
+    bool isDead = false;
+
 
     private void Start()
     {
@@ -69,7 +71,7 @@ public class Enemy : MonoBehaviour
         PlayHurtSFX();
         health -= damage;
         Debug.Log(health);  
-        if (health <= 0)
+        if (!isDead && health <= 0)
         {
             levelManager.onEnemyKill.Invoke();
             Die();

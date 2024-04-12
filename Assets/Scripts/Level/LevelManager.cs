@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour
     public Camera mainCamera { get; private set; }
     public Player player;
     public Transform enemyContainer;
+    public MusicManager musicManager { get; private set; }
 
     public bool gamePaused = false;
 
@@ -37,6 +38,7 @@ public class LevelManager : MonoBehaviour
     {
         soundManager = FindObjectOfType<MusicManager>();
         player = FindObjectOfType<Player>();
+        musicManager = FindObjectOfType<MusicManager>();
         mainCamera = Camera.main;
     }
 
@@ -48,6 +50,12 @@ public class LevelManager : MonoBehaviour
             OnNewState.Invoke();
         }
         previousState = state;
+    }
+
+
+    public void SetState(LevelState state)
+    {
+        this.state = state;
     }
 }
 

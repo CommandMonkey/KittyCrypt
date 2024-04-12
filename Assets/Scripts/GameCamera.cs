@@ -5,22 +5,27 @@ public class GameCamera : MonoBehaviour
 {
 
     // Cached References
-    CinemachineVirtualCamera virtualCamera;
+    
 
     [SerializeField] Transform primaryTarget;
     [SerializeField] Transform secondaryTarget;
 
     bool onlyPrimary = false;
+    CinemachineVirtualCamera virtualCamera;
+    Animator camAnimator;
+
 
     private void Start()
     {
         virtualCamera = transform.parent.GetComponentInChildren<CinemachineVirtualCamera>();
+        camAnimator = virtualCamera.GetComponent<Animator>();
 
         if (secondaryTarget == null) onlyPrimary = true;
     }
 
     private void Update()
     {
+        if (secondaryTarget == null) onlyPrimary = true;
         if (onlyPrimary)
             transform.position = primaryTarget.position;
         else
@@ -41,19 +46,26 @@ public class GameCamera : MonoBehaviour
         onlyPrimary = false;
     }
 
-    public void DoCameraShake()
+    public void DoCameraShake(float duration = 0.1f)
     {
-        virtualCamera.GetComponent<Animator>().SetTrigger("CameraShake");
+        camAnimator.SetBool("cameraShake", true);
+        Invoke("StopCameraShake", duration);
+
+    }
+    private void StopCameraShake()
+    {
+        camAnimator.SetBool("cameraShake", false);
     }
 
-    public void focusOnBoss()
-    {
-        SetPrimaryTarget(GameObject.FindGameObjectWithTag("Boss").transform);
-    }
+    //public void focusOnBoss()
+    //{
+    //    SetPrimaryTarget(GameObject.FindGameObjectWithTag("Boss").transform);
+    //}
     
-    public void focusOnBossAndPlayer()
-    {
-        SetSecondaryTarget(GameObject.FindGameObjectWithTag("Boss").transform);
-        SetPrimaryTarget(FindObjectOfType<Player>().transform);
-    }
+    //public void focusOnBossAndPlayer()
+    //{
+    //    SetSecondaryTarget(GameObject.FindGameObjectWithTag("Boss").transform);
+    //    SetPrimaryTarget(FindObjectOfType<Player>().transform);
+    //}
+
 }
