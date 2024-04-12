@@ -44,18 +44,21 @@ public class GunFire : IItem
     RaycastHit2D bulletHit;
 
     UserInput userInput;
+    LevelManager levelManager;
     Player player;
     Animator virtualCameraAnimator;
     AudioSource gunSource;
     Light2D nuzzleLight;
     Image reloadImage;
+    
 
     private void Start()
     {
         ammoUI = GameObject.FindGameObjectWithTag("AmmoRemainingText").GetComponent<TMP_Text>();
 
         userInput = FindObjectOfType<UserInput>();
-        player = FindObjectOfType<Player>();
+        levelManager = FindObjectOfType<LevelManager>();
+        player = levelManager.player;
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
         gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
@@ -84,7 +87,8 @@ public class GunFire : IItem
 
     void OnFire()
     {
-        if (ProjectileFire()) return;
+        if (levelManager.state != LevelManager.LevelState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;   
+        else if (ProjectileFire()) return;
         else if (BurstFire()) return;
         else if (RaycastFire()) return;
     }
@@ -96,8 +100,7 @@ public class GunFire : IItem
 
     bool ProjectileFire()
     {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.ProjectileFire ||
-            runtimeData.isFireRateCoolingDown || runtimeData.isReloading)
+        if (settings.weaponType != WeaponSettingsObject.WeaponType.ProjectileFire)
         {
             return false;
         }
@@ -118,8 +121,7 @@ public class GunFire : IItem
 
     bool BurstFire()
     {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire || runtimeData.isFireRateCoolingDown ||
-            runtimeData.isReloading) return false;
+        if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) return false;
 
         // Fire
         for (int i = 0; i < settings.bulletsBeforeReload || settings.bulletsBeforeReload == 0; i++)
@@ -137,8 +139,7 @@ public class GunFire : IItem
 
     bool RaycastFire()
     {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.RaycastFire || runtimeData.isFireRateCoolingDown ||
-            runtimeData.isReloading)
+        if (settings.weaponType != WeaponSettingsObject.WeaponType.RaycastFire)
         {
             return false;
         }

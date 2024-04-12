@@ -38,13 +38,16 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            Enemy enemyScript = other.gameObject.GetComponent<Enemy>();
+        
+        Enemy enemyScript = other.gameObject.GetComponent<Enemy>();
 
+        if (enemyScript != null)
+        {
             enemyScript.GetComponent<Rigidbody2D>().velocity += -(Vector2)transform.forward * 100;
             enemyScript.TakeDamage(damage);
         }
+
+
 
         var ffxInstance = Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(ffxInstance, destroyHitEffectAfter);
