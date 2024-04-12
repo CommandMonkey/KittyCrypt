@@ -54,15 +54,10 @@ public class RushingEnemyBehavior : Enemy
 
     void CheckWalkDirection()
     {
-        Vector3 currentPosition = transform.position;
-
-        float deltaX = currentPosition.x - previousPosition.x;
-        if (deltaX > 0)
-        { transform.rotation = Quaternion.Euler(0f, 180f, 0f); }
-        else if (deltaX < 0)
+        if (rigidBody2D.velocity.x > 0)
+        { transform.rotation = Quaternion.Euler(0f, 178f, 0f); }
+        else if (rigidBody2D.velocity.x < 0)
         { transform.rotation = Quaternion.Euler(0f, 0f, 0f); }
-
-        previousPosition = currentPosition;
     }
  
 
