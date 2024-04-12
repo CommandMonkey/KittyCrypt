@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6088779872391937189}
   - component: {fileID: 8523343474304546337}
   - component: {fileID: 1627186473189343508}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RatBoss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   health: 1
-  enemyDMG: 1
+  enemyDMG: 2
   attackSpeed: 0.1
   BloodSplatVFX: {fileID: 5376875274643884105, guid: 4bca45e73eabc0e42b0708aed64270a1, type: 3}
   BloodStainVFX: {fileID: 1158836865863372884, guid: 807a4a5b91ffe6e43ae4fb6e3b2fd86a, type: 3}
@@ -72,14 +72,19 @@ MonoBehaviour:
   endAimColor: {r: 1, g: 0, b: 0, a: 1}
   startAimWidth: 0.1
   endAimWidth: 0
+  gunShotSFX: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
   weaponTransform: {fileID: 5410748414546813523}
-  maxRotationSpeed: 1000
-  rotationAcceleration: 200
-  maxAngularVelocity: 1000
+  startMaxRotationSpeed: 5
+  endMaxRotationSpeed: 10
+  startRotationAcceleration: 10
+  endRotationAcceleration: 150
+  startMaxAngularVelocity: 50
+  endMaxAngularVelocity: 100
   facingLeftWeaponPoint: {x: -1.3, y: 2.1}
   facingRightWeaponPoint: {x: 1.4, y: 2.1}
-  ratsToSummon: []
-  CaneBoomSFX: {fileID: 0}
+  ratsPrefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
+  amountOfRatsToSpawn: 5
+  CaneBoomSFX: {fileID: 8300000, guid: c3941fa804f250245a8a977c156df2d3, type: 3}
 --- !u!120 &1627186473189343508
 LineRenderer:
   serializedVersion: 2
@@ -383,6 +388,18 @@ PrefabInstance:
     - target: {fileID: 4471907555651159371, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
       propertyPath: m_FlipX
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471907555651159371, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
+      propertyPath: m_Color.b
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471907555651159371, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471907555651159371, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
+      propertyPath: m_Color.r
+      value: 0.29803923
       objectReference: {fileID: 0}
     - target: {fileID: 9173001526340834769, guid: 6ef84bf2511563048bf935dd920dea96, type: 3}
       propertyPath: m_LocalRotation.w

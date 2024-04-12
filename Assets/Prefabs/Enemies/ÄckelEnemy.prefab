@@ -111,14 +111,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1.82
-  distanceToTarget: 1
-  meleeRange: 1.25
-  hp: 30
+  health: 30
   enemyDMG: 1
   attackSpeed: 0.1
   BloodSplatVFX: {fileID: 5376875274643884105, guid: 4bca45e73eabc0e42b0708aed64270a1, type: 3}
   BloodStainVFX: {fileID: 1158836865863372884, guid: 807a4a5b91ffe6e43ae4fb6e3b2fd86a, type: 3}
-  hitSound: {fileID: 8300000, guid: 795866b8017e72a47aa6768f5b17f6c5, type: 3}
   enemyHitAudio: {fileID: 8095866884428330632, guid: f54f9b69a5a8dac4d8f573bcddcc35da, type: 3}
   obsticleLayer:
     serializedVersion: 2
