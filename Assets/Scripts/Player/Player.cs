@@ -172,8 +172,9 @@ public class Player : MonoBehaviour
 
     void OnDash()
     {
-        if (isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
+        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
 
+        animator.SetTrigger("Dash");
         rollSpeed = 50f;
         state = State.rolling;
         isRollDelaying = true;
