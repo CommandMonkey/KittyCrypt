@@ -98,7 +98,7 @@ public class GunFire : IItem
 
     void OnFire()
     {
-        if (levelManager.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;
+        if (levelManager.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         if (ProjectileFire()) return;
         if (BurstFire()) return;
         if (RaycastFire()) { Debug.Log("Raycast fire"); return;  }
@@ -189,7 +189,6 @@ public class GunFire : IItem
 
     void ShootBullet()
     {
-        Debug.Log("SHOOOOOOT HAJ");
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);

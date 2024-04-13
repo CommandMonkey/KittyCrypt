@@ -523,7 +523,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""devicePath"": ""<Keyboard>/{Back}"",
-                    ""isOptional"": false,
+                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
