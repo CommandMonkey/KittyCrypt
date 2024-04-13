@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -65,10 +66,11 @@ public class Player : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         myCollider = GetComponent<Collider2D>();
-        gameSession = GetComponentInParent<GameSession>();
-        userInput = transform.parent.GetComponentInChildren<UserInput>();
+        gameSession = GameSession.Instance;
+
         FetchExternalRefs();
 
+        Debug.Log("Player Start");
         // Input Events
         userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
@@ -83,19 +85,23 @@ public class Player : MonoBehaviour
         rollResetTime = rolldelay;
         
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
 
     private void FetchExternalRefs()
     {
         loader = FindObjectOfType<SceneLoader>();
+        userInput = FindObjectOfType<UserInput>();
     }
 
-    public void OnNewSceneLoaded()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("PlayerSceneLoaded");
         FetchExternalRefs();
-        userInput.onMove.AddListener(OnMove);
+/*        userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
-        userInput.onDash.AddListener(OnDash);
+        userInput.onDash.AddListener(OnDash);*/
         //transform.position = Vector3.zero;
     }
 
@@ -172,6 +178,7 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
+        Debug.Log("PlayerMove");
         if (gameSession.state != GameSession.GameState.Running)
         {
             moveInput = Vector2.zero;

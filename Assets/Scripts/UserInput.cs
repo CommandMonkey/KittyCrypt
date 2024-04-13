@@ -36,14 +36,8 @@ public class UserInput : MonoBehaviour
         onReload = new UnityEvent();
 
         userInput = new UserInputActions();
-    }
 
-    private void Start()
-    {Debug.Log("UserInput Start");
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-
-
+        ClearListeners();   
     }
 
     private void Update()
@@ -56,7 +50,7 @@ public class UserInput : MonoBehaviour
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void ClearListeners()
     {
         onMove.RemoveAllListeners();
         onAiming.RemoveAllListeners();
@@ -89,6 +83,7 @@ public class UserInput : MonoBehaviour
 
     void OnInteract()
     {
+        Debug.Log("Interact!!!");
         onInteract.Invoke();
     }
 

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3953508550966622439}
   - component: {fileID: 7222849806756744892}
   - component: {fileID: 6828217967736597935}
-  - component: {fileID: 8120363799011111310}
   m_Layer: 5
   m_Name: AmmoRemaining
   m_TagString: AmmoRemainingText
@@ -135,18 +134,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8120363799011111310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306110436611433550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e5049173c6bd3742bca5a9a88c9c49b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1458437506832522107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,8 +1727,9 @@ GameObject:
   - component: {fileID: 396066864376769421}
   - component: {fileID: 5848822361884733039}
   - component: {fileID: 6874494303563985607}
+  - component: {fileID: 8148368651603298506}
   m_Layer: 5
-  m_Name: MainCanvas
+  m_Name: UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1835,6 +1823,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8148368651603298506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7794644811549423877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4022c18f25895147b3c662768a17fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reloadCircle: {fileID: 98631491592881280}
+  ammoText: {fileID: 6828217967736597935}
+  pickupPromptText: {fileID: 3635999203126722561}
 --- !u!1 &8460649545028718464
 GameObject:
   m_ObjectHideFlags: 0
