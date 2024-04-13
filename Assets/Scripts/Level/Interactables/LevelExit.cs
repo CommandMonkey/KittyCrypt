@@ -16,7 +16,7 @@ public class LevelExit : MonoBehaviour
         {
             player = other.gameObject.transform;
             
-            gameSession.NextLevelLoad();
+            gameSession.LoadNextLevel();    
         } 
     }
     

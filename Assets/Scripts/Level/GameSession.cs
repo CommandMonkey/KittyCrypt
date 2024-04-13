@@ -96,7 +96,7 @@ public class GameSession : MonoBehaviour
         this.state = state;
     }
 
-    public void NextLevelLoad()
+    public void LoadNextLevel()
     {
         levelIndex++;
         sceneLoader.LoadLevel1();

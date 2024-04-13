@@ -30,7 +30,7 @@ public class BossRoom : Room
     {
         boss.gameObject.SetActive(true);
         StartCoroutine(BossCutsceneRoutine());
-        levelExit.SetUnInteractable();
+
     }
 
     public void OnBossDead()
@@ -55,6 +55,7 @@ public class BossRoom : Room
     {
         if (started) yield break;
         started = true;
+        levelExit.SetUnInteractable();
 
         levelManager.SetState(GameSession.GameState.Paused);
         levelManager.musicManager.StopMusic();
