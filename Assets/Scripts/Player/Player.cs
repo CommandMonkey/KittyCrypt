@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
 
         state = State.normal;
         rollResetTime = rolldelay;
+        Cursor.visible = false;
 
     }
 

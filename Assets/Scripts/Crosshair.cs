@@ -11,25 +11,46 @@ public class Crosshair : MonoBehaviour
 
     private Vector2 movementInput;
 
+    private bool isUsingMouse = true;
+
     void Update()
     {
-
-
-        movementInput = Gamepad.current.rightStick.ReadValue();
-        float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
-        Vector3 offset = Quaternion.Euler(0, 0, angle) * Vector3.right * distanceFtomPlayer;
-        transform.position = playerTransform.position + offset;
-
-
         if (Input.GetJoystickNames().Length > 0)
         {
-            Debug.Log("Controller detected");
+          isUsingMouse = false;
         }
         else
         {
-            Debug.Log("Keyboard/Mouse detected");
-
+           isUsingMouse= true;
         }
+
+
+        if (isUsingMouse)
+        {
+            Vector3 cursorScreenPosition = Input.mousePosition;
+            Vector3 cursorWorldPosition = Camera.main.ScreenToWorldPoint(cursorScreenPosition + Vector3.forward * 10f);
+            transform.position = cursorWorldPosition;
+        }
+        else
+        {
+            // Check for controller input
+            if (Gamepad.current != null)
+            {
+                movementInput = Gamepad.current.rightStick.ReadValue();
+                float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
+                Vector3 offset = Quaternion.Euler(0, 0, angle) * Vector3.right * distanceFtomPlayer;
+                transform.position = playerTransform.position + offset;
+            }
+            else
+            {
+                // If no controller is connected, fallback to mouse input
+                Vector3 cursorScreenPosition = Input.mousePosition;
+                Vector3 cursorWorldPosition = Camera.main.ScreenToWorldPoint(cursorScreenPosition + Vector3.forward * 10f);
+                transform.position = cursorWorldPosition;
+            }
+        }
+
+
 
     }
 }
