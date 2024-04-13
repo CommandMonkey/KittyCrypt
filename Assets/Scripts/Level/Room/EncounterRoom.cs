@@ -11,11 +11,13 @@ public class EncounterRoom : Room
 
     bool isActive = false; // if the player has entered and the encounter is active
     bool isRoomDefeated = false; // if the room has been defeted
+    bool enemiesSpawned = false;
+    Vector3 finalEnemyPos;
     List<GameObject> enemies;
 
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
-    LevelManager levelManager;
+    GameSession levelManager;
 
 
     // Start is called before the first frame update
@@ -23,44 +25,69 @@ public class EncounterRoom : Room
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
-        levelManager.onEnemyKill.AddListener(OnEnemyKill);
+        //levelManager.onEnemyKill.AddListener(OnEnemyKill);
 
         enemies = new List<GameObject>();
     }
 
     private void Update()
     {
-
-    }
-
-    void OnEnemyKill()
-    {
         if (!isActive || isRoomDefeated) return;
-        int _enemiesAlive = enemies.Count-1;
-        foreach(GameObject obj in enemies)
+        int _enemiesAlive = enemies.Count;
+        foreach (GameObject obj in enemies)
         {
-            if (obj == null) _enemiesAlive--; 
+            if (obj == null)
+                _enemiesAlive--;
+            else
+                finalEnemyPos = obj.transform.position;
         }
-        Debug.Log(_enemiesAlive);
         if (_enemiesAlive == 0)
         {
             isRoomDefeated = true;
             isActive = false;
             thisRoomManager.OpenDoors();
+            
         }
     }
 
+    //void OnEnemyKill()
+    //{
+    //    if (!isActive || isRoomDefeated) return;
+    //    int _enemiesAlive = enemies.Count-1;
+    //    foreach(GameObject obj in enemies)
+    //    {
+    //        if (obj == null) _enemiesAlive--; 
+    //    }
+    //    Debug.Log(_enemiesAlive);
+    //    if (_enemiesAlive == 0)
+    //    {
+    //        isRoomDefeated = true;
+    //        isActive = false;
+    //        thisRoomManager.OpenDoors();
+    //    }
+    //}
+
+    void SpawnHP_Pickups()
+    {
+
+    }
 
     void OnPlayerEnter()
     {
-        if (isRoomDefeated || isActive) return;
+        if (isRoomDefeated || isActive || enemiesSpawned) return;
 
-        isActive = true;
+        enemiesSpawned = true;
+        Invoke("SetActive", 3f);
         thisRoomManager.CloseDoors();
         SpawnEnemies();
+    }
+
+    private void SetActive()
+    {
+        isActive = true;
     }
 
     void SpawnEnemies()

@@ -6,56 +6,56 @@ using UnityEngine.SceneManagement;
 
 public class UserInput : MonoBehaviour
 {
+    [SerializeField] float fireCooldown = .1f;
+
     [NonSerialized] public UnityEvent<Vector2> onMove;
     [NonSerialized] public UnityEvent<Vector2> onAiming;
     [NonSerialized] public UnityEvent<float> onScroll;
-    [NonSerialized] public UnityEvent onFire;
+    [NonSerialized] public UnityEvent onFireEvent;
     [NonSerialized] public UnityEvent onDash;
     [NonSerialized] public UnityEvent onInteract;
     [NonSerialized] public UnityEvent onTogglePause;
     [NonSerialized] public UnityEvent onReload;
 
     UserInputActions userInput;
+    float lastFireTime = 0f;
+
 
     bool firing = false;
 
     private void Awake()
     {
+        Debug.Log("UserInput Awake");
         onMove = new UnityEvent<Vector2>();
         onAiming = new UnityEvent<Vector2>();
         onScroll = new UnityEvent<float>();
-        onFire = new UnityEvent();
+        onFireEvent = new UnityEvent();
         onDash = new UnityEvent();
         onInteract = new UnityEvent();
         onTogglePause = new UnityEvent();
         onReload = new UnityEvent();
 
         userInput = new UserInputActions();
-    }
 
-    private void Start()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-
-
+        ClearListeners();   
     }
 
     private void Update()
     {
-
-        if (Input.GetMouseButton(0))
+        //Debug.Log("delta: " + (Time.time - lastFireTime));
+        if (Time.time - lastFireTime > fireCooldown && Input.GetMouseButton(0))
         {
-            onFire.Invoke();
+            onFireEvent.Invoke();
+            lastFireTime = Time.time;
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void ClearListeners()
     {
         onMove.RemoveAllListeners();
         onAiming.RemoveAllListeners();
         onScroll.RemoveAllListeners();
-        onFire.RemoveAllListeners();
+        onFireEvent.RemoveAllListeners();
         onDash.RemoveAllListeners();
         onInteract.RemoveAllListeners();
         onReload.RemoveAllListeners();
@@ -83,6 +83,7 @@ public class UserInput : MonoBehaviour
 
     void OnInteract()
     {
+        Debug.Log("Interact!!!");
         onInteract.Invoke();
     }
 

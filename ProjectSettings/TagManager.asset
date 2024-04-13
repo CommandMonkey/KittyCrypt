@@ -30,8 +30,8 @@ TagManager:
   - PlayerInteraction
   - Entrance
   - Effects
-  - 
-  - 
+  - PlayerDash
+  - Crosshair
   - 
   - 
   - 

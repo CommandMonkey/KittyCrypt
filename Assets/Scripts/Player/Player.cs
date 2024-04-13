@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -12,13 +13,14 @@ public class Player : MonoBehaviour
         rolling,
     }
 
+    [SerializeField] LayerMask ignoreOnDash;
     [SerializeField] float Move_speed = 30f;
     //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
     [SerializeField] int health = 9;
-
     [SerializeField] float drag = 0.9f;
     [SerializeField] float invinsibilityLenght = 1f;
+    [SerializeField] float invisibilityLengthDash = 0.2f;
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
@@ -27,53 +29,50 @@ public class Player : MonoBehaviour
     public bool isDead = false;
     public UnityEvent onInteract;
 
+
     private float rollSpeed;
-    float rollSpeedDropMultiplier = 8f;
+    private float rollSpeedDropMultiplier = 8f;
     private State state;
-    float rollResetTime;
-    bool isRollDelaying = false;
-    float Crosshair_distance = 30f;
+    private float rollResetTime;
+    private bool isRollDelaying = false;
+    private float Crosshair_distance = 30f;
     
-    bool invinsibility = false;
+    private bool invinsibility = false;
 
 
-    Vector2 moveInput;
-    Vector2 AimDirection;
+    private Vector2 moveInput;
+    private Vector2 AimDirection;
 
-    ContactFilter2D noFilter;
+    private ContactFilter2D noFilter;
 
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
-    private SceneLoader loader;
-    private LevelManager levelManager;
+    private Collider2D myCollider;
+    private GameSession gameSession;
     private UserInput userInput;
-    private BoxCollider2D boxCollider;
-    public GameObject reloadCircle;
+
+    private SceneLoader loader;
+
 
 
     private void Awake()
     {
         onInteract = new UnityEvent();
-        reloadCircle = GameObject.FindGameObjectWithTag("ReloadCircle");
-        if(reloadCircle != null )
-        {
-            reloadCircle.SetActive(false);
-        }
     }
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
-        loader = FindObjectOfType<SceneLoader>();
-        levelManager = FindObjectOfType<LevelManager>();
-        userInput = FindObjectOfType<UserInput>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        myCollider = GetComponent<Collider2D>();
+        gameSession = GameSession.Instance;
 
+        FetchExternalRefs();
+
+        Debug.Log("Player Start");
         // Input Events
         userInput.onMove.AddListener(OnMove);
-        userInput.onAiming.AddListener(OnAim);
         userInput.onDash.AddListener(OnDash);
 
         // Create a contact filter that includes triggers
@@ -83,24 +82,49 @@ public class Player : MonoBehaviour
 
         state = State.normal;
         rollResetTime = rolldelay;
+        
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
 
+    private void FetchExternalRefs()
+    {
+        loader = FindObjectOfType<SceneLoader>();
+        userInput = FindObjectOfType<UserInput>();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("PlayerSceneLoaded");
+        FetchExternalRefs();
+/*        userInput.onMove.AddListener(OnMove);
+        userInput.onAiming.AddListener(OnAim);
+        userInput.onDash.AddListener(OnDash);*/
+        //transform.position = Vector3.zero;
+    }
+
+
     private void Update()
     {
-        if (isDead)
+        if (isDead || gameSession.state != GameSession.GameState.Running)
         {
             myRigidbody.velocity = Vector2.zero;
+            animator.SetBool("IsWalking", false);
             return;
         }
-        if (state == State.rolling) { 
-            // dash/roll range
-            
+        if (state == State.rolling)
+        {
+            int dashLayer = LayerMask.NameToLayer("PlayerDash");
+            int playerLayer = LayerMask.NameToLayer("Player");
             rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
-
+            gameObject.layer = dashLayer;
 
             if (rollSpeed < Move_speed)
             {
+                animator.SetTrigger("DashInvisibility");
+                StartCoroutine(InvisibilityDelayRoutine(invisibilityLengthDash));
+                gameObject.layer = playerLayer;
                 state = State.normal;
             }
         }
@@ -113,7 +137,6 @@ public class Player : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
         RollDelay();
-        Aim();
     }
 
     private void FixedUpdate()
@@ -154,21 +177,21 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
-        if (levelManager.state != LevelManager.LevelState.Running) return;
+        Debug.Log("PlayerMove");
+        if (gameSession.state != GameSession.GameState.Running)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
         moveInput = moveVector;
         
     }
 
-    void OnAim(Vector2 aimDirection)
-    {
-        AimDirection = aimDirection;
-;
-    }
-
     void OnDash()
     {
-        if (isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
+        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || gameSession.state != GameSession.GameState.Running) { return; }
 
+        animator.SetTrigger("Dash");
         rollSpeed = 50f;
         state = State.rolling;
         isRollDelaying = true;
@@ -191,7 +214,7 @@ public class Player : MonoBehaviour
         if (invinsibility || state == State.rolling) { return; }
         animator.SetTrigger("WasHurt");
         health -= damage;
-        StartCoroutine(InvisibilityDelayRoutine());
+        StartCoroutine(InvisibilityDelayRoutine(invinsibilityLenght));
         if (health <= 0)
         {
             isDead = true;
@@ -205,10 +228,10 @@ public class Player : MonoBehaviour
         loader.LoadMainMenu();
     }
 
-    IEnumerator InvisibilityDelayRoutine()
+    IEnumerator InvisibilityDelayRoutine(float invinsibilityLength)
     {
         invinsibility = true;
-        yield return new WaitForSeconds(invinsibilityLenght);
+        yield return new WaitForSeconds(invinsibilityLength);
         invinsibility = false;
     }
 
@@ -222,7 +245,7 @@ public class Player : MonoBehaviour
         Debug.Log("AAAAAA----: " + toCompare.name + "parent: " + toCompare.transform.parent.name);  
         // Get colliders
         Collider2D[] colliders = new Collider2D[10];
-        Physics2D.OverlapCollider(boxCollider, noFilter, colliders);
+        Physics2D.OverlapCollider(myCollider, noFilter, colliders);
 
         // Find Room or entrance Colliders
         foreach (Collider2D c in colliders)
@@ -248,11 +271,4 @@ public class Player : MonoBehaviour
         return futurePosition;
     }
 
-
-
-    void Aim()
-    {
-        if(crosshair == null) { return; }
-        crosshair.transform.localPosition = AimDirection * Crosshair_distance;
-    }
 }

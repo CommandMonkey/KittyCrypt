@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
     // Cached Component References
     Animator transitionAnimator;
+    GameObject generationScreen;
 
     private void Start()
     {
         transitionAnimator = GetComponentInChildren<Animator>();
-
+        generationScreen = GameObject.Find("GeneratingScreen");
         transitionAnimator.SetBool("isLoading", false);
+        if (generationScreen != null)
+        {
+            StartCoroutine(LoadLevel());
+        }
     }
 
     public void LoadNextScene()
@@ -51,4 +57,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
     }
 
+    IEnumerator LoadLevel()
+    {
+        transitionAnimator.SetBool("isLoading", true);
+        yield return new WaitForSeconds(Random.Range(2f, 5f));
+        transitionAnimator.SetBool("isLoading", false);
+        generationScreen.gameObject.SetActive(false);
+    }
 }

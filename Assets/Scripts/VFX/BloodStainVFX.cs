@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BloodStainVFX : MonoBehaviour
 {
     [SerializeField] float sizeIncrease = 0.1f;
+    [SerializeField] float maxSize = 7f;
     static List<Collider2D> activeInstances = new List<Collider2D>();
 
     Collider2D collider2d;
+
 
     private void Start()
     {
@@ -27,6 +31,7 @@ public class BloodStainVFX : MonoBehaviour
             if (activeInstances.Contains(col))
             {
                 col.transform.localScale += new Vector3(sizeIncrease, sizeIncrease, sizeIncrease);
+                col.transform.localScale = Vector3.Min(col.transform.localScale, new Vector3(maxSize, maxSize, maxSize));
                 Destroy(gameObject);
                 return;
             }
@@ -34,6 +39,8 @@ public class BloodStainVFX : MonoBehaviour
 
         // if is not touching other splat
         activeInstances.Add(collider2d);
+        float randomAngle = Random.Range(0f, 360f);
+        transform.rotation = Quaternion.Euler(0f, 0f, randomAngle);
     }
 
     private void OnDestroy()

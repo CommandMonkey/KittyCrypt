@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Entrance : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class Entrance : MonoBehaviour
     [NonSerialized] public GameObject roomToSpawn;
     [NonSerialized] public List<string> roomFailNames = new List<string>();
     [NonSerialized] public bool hasConnectedRoom;
-    [NonSerialized] public UnityEvent onEntranceExit;
 
     bool doorOpen = true;
 
@@ -22,11 +22,8 @@ public class Entrance : MonoBehaviour
     BoxCollider2D collisionCollider;
     BoxCollider2D triggerCollider;
     SpriteRenderer spriteRenderer;
+    SpriteMask mask;
 
-    private void Awake()
-    {
-        onEntranceExit = new UnityEvent();
-    }
 
     private void Start()
     {
@@ -34,13 +31,12 @@ public class Entrance : MonoBehaviour
         collisionCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         triggerCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        mask = GetComponentInChildren<SpriteMask>();
 
-        
         SetDoorCollisionSize();
 
         roomManager.entrances.Add(this);
         
-
         collisionCollider.gameObject.SetActive(!doorOpen);
         UpdateSprite();
     }
@@ -68,9 +64,10 @@ public class Entrance : MonoBehaviour
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        if (gameObject != null)
+            gameObject.SetActive(false);
         if (roomManager != null) roomManager.entrances.Remove(this);
-        Destroy(gameObject);
+            Destroy(gameObject);
     }
 
     public void CloseDoor()
@@ -106,11 +103,12 @@ public class Entrance : MonoBehaviour
         else
         {
             spriteRenderer.sprite = doorOpen ? sideOpenDoorSprite : sideClosedDoorSprite;
+            mask.transform.localPosition = new Vector3(0, 2, 0);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        onEntranceExit.Invoke();
+        roomManager.onEntranceExit.Invoke();
     }
 }

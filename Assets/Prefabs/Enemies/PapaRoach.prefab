@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7406614098392781976}
   - component: {fileID: 7792572867758684807}
   - component: {fileID: 1940235624596392305}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PapaRoach
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,50 +48,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  hp: 1
+  health: 1
   enemyDMG: 1
   attackSpeed: 0.1
-  BloodSplatVFX: {fileID: 0}
-  BloodStainVFX: {fileID: 0}
-  enemyHitAudio: {fileID: 0}
+  BloodSplatVFX: {fileID: 5376875274643884105, guid: 4bca45e73eabc0e42b0708aed64270a1, type: 3}
+  BloodStainVFX: {fileID: 1158836865863372884, guid: 807a4a5b91ffe6e43ae4fb6e3b2fd86a, type: 3}
+  enemyHitAudio: {fileID: 8095866884428330632, guid: f54f9b69a5a8dac4d8f573bcddcc35da, type: 3}
   obsticleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   guns:
-  - gunTransform: {fileID: 0}
-    gunCooldownTime: 1
-    bulletPrefab: {fileID: 0}
-    bulletSpeed: 2
+  - gunTransform: {fileID: 7819887436740749723}
+    gunCooldownTime: 0.1
+    bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
+    bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1
-  - gunTransform: {fileID: 0}
-    gunCooldownTime: 1
-    bulletPrefab: {fileID: 0}
-    bulletSpeed: 2
+  - gunTransform: {fileID: 4781741036668855007}
+    gunCooldownTime: 0.1
+    bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
+    bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1
-  - gunTransform: {fileID: 0}
-    gunCooldownTime: 1
-    bulletPrefab: {fileID: 0}
-    bulletSpeed: 2
+  - gunTransform: {fileID: 2796385890502640716}
+    gunCooldownTime: 0.1
+    bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
+    bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1
-  - gunTransform: {fileID: 0}
-    gunCooldownTime: 1
-    bulletPrefab: {fileID: 0}
-    bulletSpeed: 2
+  - gunTransform: {fileID: 2284136052061416681}
+    gunCooldownTime: 0.1
+    bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
+    bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1
-  bullethitVFX: {fileID: 0}
+  bullethitVFX: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   gunsChargeUpTime: 0.5
-  GunsCooldownTime: 2
+  GunsCooldownTime: 5
   GunsShootingDuration: 3
-  maxShootingDistance: 5
-  gunRotationSpeed: 1000
-  shootingGunRotationSpeed: 100
-  maxRotationSpeed: 50
-  maxAngularVelocity: 50
-  pointingThresholdAngle: 1
+  maxShootingDistance: 10
+  gunRotationSpeed: 5000
+  shootingGunRotationSpeed: 500
+  maxRotationSpeed: 300
+  maxAngularVelocity: 100
+  pointingThresholdAngle: 5
   state: 2
 --- !u!61 &7792572867758684807
 BoxCollider2D:
@@ -102,7 +102,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 7981245220381166137}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 56abaad954f44684db3487ac9be7c869, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.08781052, y: 2.755029}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -136,7 +136,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.5464826, y: 6.510058}
   m_EdgeRadius: 0
 --- !u!50 &1940235624596392305
 Rigidbody2D:
@@ -146,7 +146,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7981245220381166137}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -180,6 +180,14 @@ PrefabInstance:
     - target: {fileID: 30968595043241472, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
       propertyPath: m_LocalPosition.y
       value: 6.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526293218947803150, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1788821612347514715, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+      propertyPath: m_FlipX
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3085330664239745259, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -249,6 +257,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 5.49
       objectReference: {fileID: 0}
+    - target: {fileID: 7677266163551652875, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198854596462873034, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -269,6 +285,16 @@ PrefabInstance:
 --- !u!4 &896651763863290535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3085330664239745259, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+  m_PrefabInstance: {fileID: 2783444348038924876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2284136052061416681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4112391466350110373, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+  m_PrefabInstance: {fileID: 2783444348038924876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2796385890502640716 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 30968595043241472, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
   m_PrefabInstance: {fileID: 2783444348038924876}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3242170515591295411 stripped
@@ -303,6 +329,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!4 &4781741036668855007 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7276954707890006163, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+  m_PrefabInstance: {fileID: 2783444348038924876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5466322757206269831 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7889321895198463435, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
@@ -350,7 +381,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 6003049836430173755}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -399,3 +430,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!4 &7819887436740749723 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5342700524944040919, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
+  m_PrefabInstance: {fileID: 2783444348038924876}
+  m_PrefabAsset: {fileID: 0}

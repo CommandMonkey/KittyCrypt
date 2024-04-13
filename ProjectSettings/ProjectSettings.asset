@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: KittyProductions
   productName: KittyCrypt
-  defaultCursor: {fileID: 2800000, guid: c579429872403fc4f9d4a1127e6e3b56, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 47386bac693282b4cabe9897a9412e96, type: 3}
   cursorHotspot: {x: 512, y: 512}
   m_SplashScreenBackgroundColor: {r: 0.106918216, g: 0.090443395, b: 0.0945621, a: 1}
   m_ShowUnitySplashScreen: 1
