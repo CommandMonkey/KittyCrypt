@@ -73,7 +73,6 @@ public class Player : MonoBehaviour
         Debug.Log("Player Start");
         // Input Events
         userInput.onMove.AddListener(OnMove);
-        userInput.onAiming.AddListener(OnAim);
         userInput.onDash.AddListener(OnDash);
 
         // Create a contact filter that includes triggers
@@ -186,12 +185,6 @@ public class Player : MonoBehaviour
         }
         moveInput = moveVector;
         
-    }
-
-    void OnAim(Vector2 aimDirection)
-    {
-        AimDirection = aimDirection;
-;
     }
 
     void OnDash()
