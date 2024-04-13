@@ -11,7 +11,7 @@ public class BossRoom : Room
     
     private GameCamera gameCamera;
     private GameSession levelManager;
-    private LevelExit
+    private LevelExitInteractable levelExit;
 
     bool started = false;
 
