@@ -21,8 +21,10 @@ public class BossRoom : Room
         onPlayerEnter.AddListener(OnPlayerEnter);
         bossScript = boss.GetComponent<RatBossBehaviour>();
         levelManager = FindObjectOfType<GameSession>();
+        levelExit = GetComponentInChildren<LevelExitInteractable>();
 
         bossScript.bossRoom = this;
+        levelExit.SetUnInteractable();
     }
 
     private void OnPlayerEnter()
@@ -33,7 +35,7 @@ public class BossRoom : Room
 
     public void OnBossDead()
     {
-
+        levelExit.SetInteractable();
     }
 
 
