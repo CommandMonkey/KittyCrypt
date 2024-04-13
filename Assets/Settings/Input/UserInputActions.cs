@@ -507,7 +507,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<XInputController>/{Back}"",
-                    ""isOptional"": false,
+                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
@@ -517,12 +517,12 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             ""bindingGroup"": ""Keyboard and mouse"",
             ""devices"": [
                 {
-                    ""devicePath"": ""<Keyboard>/{Back}"",
+                    ""devicePath"": ""<Mouse>/{Back}"",
                     ""isOptional"": false,
                     ""isOR"": false
                 },
                 {
-                    ""devicePath"": ""<Mouse>/{Back}"",
+                    ""devicePath"": ""<Keyboard>/{Back}"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
