@@ -11,6 +11,7 @@ public class BossRoom : Room
     
     private GameCamera gameCamera;
     private GameSession levelManager;
+    private LevelExit
 
     bool started = false;
 
@@ -29,6 +30,12 @@ public class BossRoom : Room
         boss.gameObject.SetActive(true);
         StartCoroutine(BossCutsceneRoutine());
     }
+
+    public void OnBossDead()
+    {
+
+    }
+
 
     public void focusCamOnBoss()
     {

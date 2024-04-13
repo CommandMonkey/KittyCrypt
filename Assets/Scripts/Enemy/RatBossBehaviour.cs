@@ -319,7 +319,7 @@ public class RatBossBehaviour : Enemy
             animator.SetTrigger("die");
             musicManager.PlayExploringTheme();
 
-
+            bossRoom.OnBossDead();
         }
 
     }
