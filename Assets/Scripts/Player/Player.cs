@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -84,6 +85,8 @@ public class Player : MonoBehaviour
         rollResetTime = rolldelay;
         Cursor.visible = false;
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
 
     private void FetchExternalRefs()
@@ -92,13 +95,13 @@ public class Player : MonoBehaviour
         userInput = FindObjectOfType<UserInput>();
     }
 
-    public void OnNewSceneLoaded()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("PlayerSceneLoaded");
         FetchExternalRefs();
-        userInput.onMove.AddListener(OnMove);
+/*        userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
-        userInput.onDash.AddListener(OnDash);
+        userInput.onDash.AddListener(OnDash);*/
         //transform.position = Vector3.zero;
     }
 

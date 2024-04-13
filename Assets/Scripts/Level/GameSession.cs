@@ -36,14 +36,13 @@ public class GameSession : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else if (Instance != this)
+        {
             Destroy(gameObject);
-
+            return;
+        }
 
         DontDestroyOnLoad(gameObject);
-        foreach (Transform child in transform)
-        {
-            DontDestroyOnLoad(child.gameObject);
-        }
+
         onEnemyKill = new UnityEvent();
         OnNewState = new UnityEvent();
     }
@@ -73,8 +72,6 @@ public class GameSession : MonoBehaviour
         musicManager = FindObjectOfType<MusicManager>();
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
-
-        player.OnNewSceneLoaded();
     }
 
     GameState previousState;

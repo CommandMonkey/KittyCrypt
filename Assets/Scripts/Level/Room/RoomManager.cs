@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +25,7 @@ public class RoomManager : MonoBehaviour
     Dictionary<Entrance, List<string>> entranceRoomFailNames = new Dictionary<Entrance, List<string>>();
 
     // Cached refs
-    GameSession levelManager;
+    GameSession gameSession;
     AudioSource audioScource;
 
     private void Awake()
@@ -37,18 +36,16 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
-        levelManager = FindObjectOfType<GameSession>();
-        audioScource = levelManager.GetComponent<AudioSource>();
+        gameSession = FindObjectOfType<GameSession>();
+        audioScource = GetComponent<AudioSource>();
 
-
-
-        if (levelManager.spawnRooms)
+        if (gameSession.spawnRooms)
             StartRoomSpawning();
     }
 
     public void StartRoomSpawning()
     {
-        levelManager.state = GameSession.GameState.Loading;
+        gameSession.state = GameSession.GameState.Loading;
 
         roomsToSpawn = levelData.GetRoomsList();
         spawnedRooms.Clear();
@@ -91,7 +88,7 @@ public class RoomManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         SpawnDoorCoversForUnconnectedEntrances();
-        levelManager.state = GameSession.GameState.Running;
+        gameSession.state = GameSession.GameState.Running;
         CloseDoors(true);
         onRoomSpawningDone.Invoke();
         Debug.Log("------- RoomSpawning Done -------");
@@ -312,7 +309,6 @@ public class RoomManager : MonoBehaviour
     {
         foreach (Entrance entrance in entrances)
         {
-            Debug.Log("manager closing door");
             entrance.OpenDoor();
         }
         if (!silent) audioScource.PlayOneShot(openDoorAudio);
