@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
@@ -22,7 +23,9 @@ public class GameSession : MonoBehaviour
 
     public GameCamera gameCamera { get; private set; }
     public Player player;
+    public PlayerInput playerInput;
     public Transform enemyContainer;
+    public Crosshair crosshair;
     public MusicManager musicManager { get; private set; }
 
     SceneLoader sceneLoader;
@@ -50,9 +53,11 @@ public class GameSession : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
+        playerInput = FindObjectOfType<PlayerInput>();
         musicManager = FindObjectOfType<MusicManager>();
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
+        crosshair = FindObjectOfType<Crosshair>();
 
         gameCamera.SetPrimaryTarget(player.transform);
 

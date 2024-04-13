@@ -1,27 +1,50 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.WSA;
 
 public class GunRotation : MonoBehaviour
 {
     [SerializeField] Transform barrelExitPoint;
 
+    PlayerInput playerInput;
+    Crosshair crosshair;
     Vector3 mousePos;
+    Vector3 aimTarget;
     Vector3 gunPivotToExit;
     float angle;
+
+    private void Start()
+    {
+        playerInput = GameSession.Instance.playerInput;
+        crosshair = GameSession.Instance.crosshair;
+    }
 
     // Update is called once per frame
     void Update()
     {
         gunPivotToExit = transform.localPosition - transform.InverseTransformPoint(barrelExitPoint.position);
-        CalculateMousePos();
+        CalculateAimTarget();
         CalculateOffset();
         SetRotation();
         FlipGun();
     }
 
-    void CalculateMousePos()
+    void CalculateAimTarget()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
+        if (playerInput.currentControlScheme != "Keyboard and mouse")
+        {
+            UnityEngine.Cursor.visible = false;
+            crosshair.gameObject.SetActive(true);
+            aimTarget = crosshair.transform.position;
+        }
+        else
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            crosshair.gameObject.SetActive(false);
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            aimTarget = mousePos;
+            aimTarget.z = 0;
+        }
     }
 
     void CalculateOffset()
@@ -32,7 +55,8 @@ public class GunRotation : MonoBehaviour
 
     void SetRotation()
     {
-        Vector3 lookRotation = transform.position - mousePos;
+
+        Vector3 lookRotation = transform.position - aimTarget;
         Quaternion pivotToMouseRotation = Quaternion.FromToRotation(Vector3.left, lookRotation);
         Vector3 eulerAngles = pivotToMouseRotation.eulerAngles;
 
@@ -49,7 +73,20 @@ public class GunRotation : MonoBehaviour
 
     void FlipGun()
     {
-        //TODO make gun shoot right direction
+        if (playerInput.currentControlScheme != "Keyboard and mouse")
+        {
+            GunFlipController();
+        }
+        else
+        {
+            GunFlipMouse();
+        }
+
+        barrelExitPoint.localRotation = Quaternion.identity;
+    }
+
+    void GunFlipMouse()
+    {
         if (mousePos.x < transform.position.x)
         {
             transform.localScale = new Vector3(1, -1, 1);
@@ -58,7 +95,17 @@ public class GunRotation : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
+    }
 
-        barrelExitPoint.localRotation = Quaternion.identity;
+    void GunFlipController()
+    {
+        if (crosshair.transform.position.x < transform.position.x)
+        {
+            transform.localScale = new Vector3(1, -1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 }
