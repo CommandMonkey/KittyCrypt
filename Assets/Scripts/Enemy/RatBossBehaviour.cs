@@ -7,6 +7,13 @@ using UnityEngine.UI;
 
 public class RatBossBehaviour : Enemy
 {
+    [Serializable]
+    private struct StartAndEndValue<T>
+    {
+        public T startVal;
+        public T endVal;
+    }
+
     [Header("General")] [SerializeField] float moveSpeed = 1f;
     [SerializeField] float changeDirectionInterval = 2f;
     [SerializeField] float followRange = 3f;
@@ -29,12 +36,9 @@ public class RatBossBehaviour : Enemy
 
     [Header("Gun Rotation")]
     [SerializeField] Transform weaponTransform; // The transform of the weapon
-    [SerializeField] float startMaxRotationSpeed = 5f; // The maximum rotation speed of the weapon
-    [SerializeField] float endMaxRotationSpeed = 10f; // The maximum rotation speed of the weapon
-    [SerializeField] float startRotationAcceleration = 10f; // The rotation acceleration towards the target direction
-    [SerializeField] float endRotationAcceleration = 15f; // The rotation acceleration towards the target direction
-    [SerializeField] float startMaxAngularVelocity = 10f; // The maximum angular velocity of the weapon
-    [SerializeField] float endMaxAngularVelocity = 15f; // The maximum angular velocity of the weapon
+    [SerializeField] StartAndEndValue<float> maxRotationSpeed; // The rotation speed of the weapon
+    [SerializeField] StartAndEndValue<float> rotationAcceleration; // The rotation acceleration towards the target direction
+    [SerializeField] StartAndEndValue<float> maxAngularVelocity; // The angular velocity of the weapon
     [SerializeField] Vector2 facingLeftWeaponPoint;
     [SerializeField] Vector2 facingRightWeaponPoint;
 
@@ -44,9 +48,12 @@ public class RatBossBehaviour : Enemy
     [SerializeField] AudioClip CaneBoomSFX;
 
 
-    float maxRotationSpeed;
-    float rotationAcceleration;
-    float maxAngularVelocity;
+
+    public BossRoom bossRoom;
+
+    float currentMaxRotationSpeed;
+    float currentRotationAcceleration;
+    float currentMaxAngularVelocity;
 
     private enum RatState
     {
@@ -73,9 +80,9 @@ public class RatBossBehaviour : Enemy
 
     private void Awake()
     {
-        maxRotationSpeed = startMaxRotationSpeed;
-        rotationAcceleration = startRotationAcceleration;
-        maxAngularVelocity = startMaxAngularVelocity;
+        currentMaxRotationSpeed = maxRotationSpeed.startVal;
+        currentRotationAcceleration = rotationAcceleration.startVal;
+        currentMaxAngularVelocity = maxAngularVelocity.startVal;
     }
 
     // Start is called before the first frame update
@@ -87,7 +94,6 @@ public class RatBossBehaviour : Enemy
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         musicManager = FindObjectOfType<MusicManager>();
-
 
         aimLineRenderer.endColor = startAimColor;
         aimLineRenderer.startColor = startAimColor;
@@ -254,9 +260,11 @@ public class RatBossBehaviour : Enemy
         yield return new WaitForSeconds(0.6f);
         cam.DoCameraShake();
         yield return new WaitForSeconds(.3f);
+
         _rats.Clear();
         for (int i = 0; i < amountOfRatsToSpawn; i++)
             _rats.Add(ratsPrefab);
+
         GameHelper.InstanciateInCollider(roomCollider, _rats, LayerMask.GetMask("Wall"));
         yield break;
     }
@@ -302,21 +310,26 @@ public class RatBossBehaviour : Enemy
 
     protected override void Die()
     {
-        weaponTransform.gameObject.SetActive(false);
-        aimLineRenderer.enabled = false;
-        StopAllCoroutines();
-        animator.SetTrigger("die");
-        state = RatState.dead;
-        Debug.Log("Dead");
-        musicManager.PlayExploringTheme();
+        if (state != RatState.dead)
+        {
+            state = RatState.dead;
+            weaponTransform.gameObject.SetActive(false);
+            aimLineRenderer.enabled = false;
+            StopAllCoroutines();
+            animator.SetTrigger("die");
+            musicManager.PlayExploringTheme();
+
+            bossRoom.OnBossDead();
+        }
+
     }
 
 
     private void ScaleDifficulty(float t)
     {
-        maxRotationSpeed = GameHelper.MapValue(t, 0, 1, startMaxRotationSpeed, endMaxRotationSpeed);
-        rotationAcceleration = GameHelper.MapValue(t, 0, 1, startRotationAcceleration, endRotationAcceleration);
-        maxAngularVelocity = GameHelper.MapValue(t, 0, 1, startMaxAngularVelocity, endMaxAngularVelocity);
+        currentMaxRotationSpeed = GameHelper.MapValue(t, 0, 1, maxRotationSpeed.startVal, maxRotationSpeed.endVal);
+        currentRotationAcceleration = GameHelper.MapValue(t, 0, 1, rotationAcceleration.startVal, rotationAcceleration.endVal);
+        currentMaxAngularVelocity = GameHelper.MapValue(t, 0, 1, maxAngularVelocity.startVal, maxAngularVelocity.endVal);
     }
 
     // /// Gun /// //
@@ -334,12 +347,12 @@ public class RatBossBehaviour : Enemy
 
         // Calculate the desired rotation speed based on the angle difference
         float desiredRotationSpeed =
-            Mathf.Clamp(angleDifference * rotationAcceleration, -maxRotationSpeed, maxRotationSpeed);
+            Mathf.Clamp(angleDifference * currentRotationAcceleration, -currentMaxRotationSpeed, currentMaxRotationSpeed);
 
         // Apply rotation speed to the weapon
         float newRotationSpeed = Mathf.MoveTowards(weaponTransform.GetComponent<Rigidbody2D>().angularVelocity,
-            desiredRotationSpeed, Time.deltaTime * rotationAcceleration);
-        newRotationSpeed = Mathf.Clamp(newRotationSpeed, -maxAngularVelocity, maxAngularVelocity);
+            desiredRotationSpeed, Time.deltaTime * currentRotationAcceleration);
+        newRotationSpeed = Mathf.Clamp(newRotationSpeed, -currentMaxAngularVelocity, currentMaxAngularVelocity);
         weaponTransform.GetComponent<Rigidbody2D>().angularVelocity = newRotationSpeed;
     }
 

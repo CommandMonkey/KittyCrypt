@@ -20,10 +20,12 @@ public class UserInput : MonoBehaviour
     UserInputActions userInput;
     float lastFireTime = 0f;
 
+
     bool firing = false;
 
     private void Awake()
     {
+        Debug.Log("UserInput Awake");
         onMove = new UnityEvent<Vector2>();
         onAiming = new UnityEvent<Vector2>();
         onScroll = new UnityEvent<float>();
@@ -37,7 +39,7 @@ public class UserInput : MonoBehaviour
     }
 
     private void Start()
-    {
+    {Debug.Log("UserInput Start");
         SceneManager.sceneLoaded += OnSceneLoaded;
 
 
@@ -49,7 +51,6 @@ public class UserInput : MonoBehaviour
         //Debug.Log("delta: " + (Time.time - lastFireTime));
         if (Time.time - lastFireTime > fireCooldown && Input.GetMouseButton(0))
         {
-            Debug.Log("YE BOIIIIII");
             onFireEvent.Invoke();
             lastFireTime = Time.time;
         }

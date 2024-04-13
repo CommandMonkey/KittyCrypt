@@ -17,7 +17,7 @@ public class GunFire : IItem
     //Cached reference
     TMP_Text ammoUI;
 
-    [System.Serializable]
+
     public class GunFireRuntimeData
     {
         public GunFireRuntimeData(int bulletsFired, float reloadTimer, float fireRateCooldownTimer,
@@ -36,7 +36,6 @@ public class GunFire : IItem
         public bool isFireRateCoolingDown;
         public bool isReloading;
     }
-
     //Private variables
     public GunFireRuntimeData runtimeData;
 
@@ -44,7 +43,7 @@ public class GunFire : IItem
     RaycastHit2D bulletHit;
 
     UserInput userInput;
-    LevelManager levelManager;
+    GameSession levelManager;
     Player player;
     Animator virtualCameraAnimator;
     AudioSource gunSource;
@@ -57,18 +56,23 @@ public class GunFire : IItem
         ammoUI = GameObject.FindGameObjectWithTag("AmmoRemainingText").GetComponent<TMP_Text>();
 
         userInput = FindObjectOfType<UserInput>();
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
         player = levelManager.player;
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
-        gunSource = FindObjectOfType<LevelManager>().gameObject.GetComponent<AudioSource>();
+        gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
-        reloadImage = player.reloadCircle.GetComponent<Image>();
+        reloadImage = GameObject.FindGameObjectWithTag("ReloadCircle").GetComponent<Image>();
 
         Activate();
 
         if (runtimeData == null)
         {
+            Debug.Log("RuntimeData initialized");
             runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
+        }
+        else
+        {
+            Debug.Log("RuntimeData already exist");
         }
 
         if (nuzzleLight != null)
@@ -85,17 +89,22 @@ public class GunFire : IItem
         FireRateCooldown();
     }
 
+    private void OnDestroy()
+    {
+        DeActivate();
+    }
+
     void OnFire()
     {
-        if (levelManager.state != LevelManager.LevelState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;   
-        else if (ProjectileFire()) return;
-        else if (BurstFire()) return;
-        else if (RaycastFire()) return;
+        if (levelManager.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;
+        if (ProjectileFire()) return;
+        if (BurstFire()) return;
+        if (RaycastFire()) { Debug.Log("Raycast fire"); return;  }
     }
 
     private void OnDisable()
     {
-        player.reloadCircle.gameObject.SetActive(false);
+        reloadImage.gameObject.SetActive(false);
     }
 
     bool ProjectileFire()
@@ -122,6 +131,7 @@ public class GunFire : IItem
     bool BurstFire()
     {
         if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) return false;
+        Debug.Log("BurstFire");
 
         // Fire
         for (int i = 0; i < settings.bulletsBeforeReload || settings.bulletsBeforeReload == 0; i++)
@@ -130,7 +140,7 @@ public class GunFire : IItem
         }
 
         GunFeedbackEffects();
-
+        runtimeData.isFireRateCoolingDown = true;
         //Ammo
         SetAmmoBurstUI();
 
@@ -243,7 +253,7 @@ public class GunFire : IItem
         // Update Reload Animation circle
         while (runtimeData.isReloading)
         {
-            player.reloadCircle.SetActive(true);
+            reloadImage.gameObject.SetActive(true);
             reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
             runtimeData.reloadTimer -= Time.deltaTime;
             if (runtimeData.reloadTimer <= 0)
@@ -262,7 +272,7 @@ public class GunFire : IItem
             runtimeData.bulletsFired = 0;
             runtimeData.isReloading = false;
             runtimeData.reloadTimer = settings.reloadTime;
-            player.reloadCircle.SetActive(false);
+            reloadImage.gameObject.SetActive(false);
 
             // Ammo Text
             if (settings.weaponType == WeaponSettingsObject.WeaponType.BurstFire)
@@ -287,7 +297,7 @@ public class GunFire : IItem
 
     void SetAmmoBurstUI()
     {
-        ammoUI.text = Mathf.Max(0, (1 - runtimeData.bulletsFired / settings.bulletsBeforeReload)).ToString() + "/" +
+        ammoUI.text = (1 - runtimeData.bulletsFired / settings.bulletsBeforeReload).ToString() + "/" +
                       1.ToString();
     }
 
@@ -340,7 +350,7 @@ public class GunFire : IItem
         StopCoroutine(ReloadRoutine());
         runtimeData.isReloading = false;
         runtimeData.reloadTimer = settings.reloadTime;
-        player.reloadCircle.SetActive(false);
+        reloadImage.gameObject.SetActive(false);
     }
 }
 

@@ -16,7 +16,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField] internal LevelDataObject levelData;
 
     // public fields
-    [NonSerialized] internal UnityEvent OnRoomSpawningDone;
+    [NonSerialized] internal UnityEvent onRoomSpawningDone;
+    [NonSerialized] internal UnityEvent onEntranceExit;
     [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
 
     // private fields
@@ -25,17 +26,18 @@ public class RoomManager : MonoBehaviour
     Dictionary<Entrance, List<string>> entranceRoomFailNames = new Dictionary<Entrance, List<string>>();
 
     // Cached refs
-    LevelManager levelManager;
+    GameSession levelManager;
     AudioSource audioScource;
 
     private void Awake()
     {
-        OnRoomSpawningDone = new UnityEvent();
+        onRoomSpawningDone = new UnityEvent();
+        onEntranceExit = new UnityEvent();
     }
 
     void Start()
     {
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
         audioScource = levelManager.GetComponent<AudioSource>();
 
 
@@ -46,14 +48,14 @@ public class RoomManager : MonoBehaviour
 
     public void StartRoomSpawning()
     {
-        levelManager.state = LevelManager.LevelState.Loading;
+        levelManager.state = GameSession.GameState.Loading;
 
         roomsToSpawn = levelData.GetRoomsList();
         spawnedRooms.Clear();
 
         //Spawn first room (it will spawn more rooms)
         spawnedRooms.Add(Instantiate(levelData.startRoom, grid).GetComponent<Room>());
-
+        Debug.Log("------- RoomSpawning Begin -------");
         StartCoroutine(SpawnRoomsRoutine());
     }
 
@@ -66,7 +68,7 @@ public class RoomManager : MonoBehaviour
         while (roomsToSpawn.Count > 0)
         {
             waveCount++;
-            Debug.Log("Wave: " + waveCount);
+            Debug.Log("Room Wave: " + waveCount);
 
             if (ShouldTerminateRoomSpawning(waveCount, previousRoomCount))
             {
@@ -89,9 +91,10 @@ public class RoomManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         SpawnDoorCoversForUnconnectedEntrances();
-        levelManager.state = LevelManager.LevelState.Running;
+        levelManager.state = GameSession.GameState.Running;
         CloseDoors(true);
-        OnRoomSpawningDone.Invoke();
+        onRoomSpawningDone.Invoke();
+        Debug.Log("------- RoomSpawning Done -------");
     }
 
     bool ShouldTerminateRoomSpawning(int waveCount, int previousRoomCount)
@@ -101,8 +104,10 @@ public class RoomManager : MonoBehaviour
 
     void TerminateRoomSpawning()
     {
-        LogWarningPerRooms("TERMINATING ROOM SPAWNING, can't spawn room: ");
+        Debug.Log("TERMINATING ROOM SPAWNING");
+        LogWarningPerRooms("can't spawn room: ");
         DestroyAllRooms();
+        entrances.Clear();
         StartRoomSpawning();
     }
 
@@ -223,7 +228,7 @@ public class RoomManager : MonoBehaviour
     {
         foreach (Room room in spawnedRooms)
         {
-            foreach(Entrance entr in room.entrances) entr.Die();
+            //sforeach(Entrance entr in room.entrances) entr.Die();
             Destroy(room.gameObject);
         }
     }
