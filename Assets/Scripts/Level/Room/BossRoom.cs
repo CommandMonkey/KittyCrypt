@@ -20,6 +20,8 @@ public class BossRoom : Room
         onPlayerEnter.AddListener(OnPlayerEnter);
         bossScript = boss.GetComponent<RatBossBehaviour>();
         levelManager = FindObjectOfType<GameSession>();
+
+        bossScript.bossRoom = this;
     }
 
     private void OnPlayerEnter()

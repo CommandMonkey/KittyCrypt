@@ -18,10 +18,14 @@ public class GameSession : MonoBehaviour
         Running,
         Paused
     }
-    public Camera mainCamera { get; private set; }
+    public int levelIndex { get; private set; } = 0;
+
+    public GameCamera gameCamera { get; private set; }
     public Player player;
     public Transform enemyContainer;
     public MusicManager musicManager { get; private set; }
+
+    SceneLoader sceneLoader;
 
     
     private void Awake()
@@ -34,6 +38,10 @@ public class GameSession : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
+        foreach (Transform child in transform)
+        {
+            DontDestroyOnLoad(child.gameObject);
+        }
         onEnemyKill = new UnityEvent();
         OnNewState = new UnityEvent();
     }
@@ -42,7 +50,8 @@ public class GameSession : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
         musicManager = FindObjectOfType<MusicManager>();
-        mainCamera = Camera.main;
+        gameCamera = FindObjectOfType<GameCamera>();
+        sceneLoader = FindObjectOfType<SceneLoader>();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -50,6 +59,12 @@ public class GameSession : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         musicManager = FindObjectOfType<MusicManager>();
+        gameCamera = FindObjectOfType<GameCamera>();
+        sceneLoader = FindObjectOfType<SceneLoader>();
+
+        player.OnNewSceneLoaded();
+
+        gameCamera.SetPrimaryTarget(player.transform);
     }
 
     GameState previousState;
@@ -67,6 +82,14 @@ public class GameSession : MonoBehaviour
     {
         this.state = state;
     }
+
+    public void NextLevelLoad()
+    {
+        levelIndex++;
+        sceneLoader.LoadLevel1();
+    }
+
+
 }
 
 

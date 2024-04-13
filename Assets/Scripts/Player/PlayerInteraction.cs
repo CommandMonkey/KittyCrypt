@@ -20,7 +20,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Start()
     {
-        interactablePromptText = GameObject.FindGameObjectWithTag("InteractPromptText").GetComponent<TMP_Text>();
+        interactablePromptText = GameObject.FindGameObjectWithTag("InteractPromptText")?.GetComponent<TMP_Text>();
         UserInput userInput = FindObjectOfType<UserInput>();
         mainCamera = Camera.main;
         levelManager = FindObjectOfType<GameSession>();
@@ -30,6 +30,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (interactablePromptText == null) return;
         if (!anyInteractablesInRange || levelManager.state != GameSession.GameState.Running)
         {
             interactablePromptText.text = "";

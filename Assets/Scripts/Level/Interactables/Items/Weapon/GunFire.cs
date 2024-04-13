@@ -36,11 +36,6 @@ public class GunFire : IItem
         public bool isFireRateCoolingDown;
         public bool isReloading;
     }
-    public int bulletsFired;
-    public float reloadTimer;
-    public float fireRateCooldownTimer;
-    public bool isFireRateCoolingDown;
-    public bool isReloading;
     //Private variables
     public GunFireRuntimeData runtimeData;
 
@@ -66,7 +61,7 @@ public class GunFire : IItem
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
-        reloadImage = player.reloadCircle.GetComponent<Image>();
+        reloadImage = GameObject.FindGameObjectWithTag("ReloadCircle").GetComponent<Image>();
 
         Activate();
 
@@ -94,6 +89,11 @@ public class GunFire : IItem
         FireRateCooldown();
     }
 
+    private void OnDestroy()
+    {
+        DeActivate();
+    }
+
     void OnFire()
     {
         if (levelManager.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;
@@ -104,7 +104,7 @@ public class GunFire : IItem
 
     private void OnDisable()
     {
-        player.reloadCircle.gameObject.SetActive(false);
+        reloadImage.gameObject.SetActive(false);
     }
 
     bool ProjectileFire()
@@ -253,7 +253,7 @@ public class GunFire : IItem
         // Update Reload Animation circle
         while (runtimeData.isReloading)
         {
-            player.reloadCircle.SetActive(true);
+            reloadImage.gameObject.SetActive(true);
             reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
             runtimeData.reloadTimer -= Time.deltaTime;
             if (runtimeData.reloadTimer <= 0)
@@ -272,7 +272,7 @@ public class GunFire : IItem
             runtimeData.bulletsFired = 0;
             runtimeData.isReloading = false;
             runtimeData.reloadTimer = settings.reloadTime;
-            player.reloadCircle.SetActive(false);
+            reloadImage.gameObject.SetActive(false);
 
             // Ammo Text
             if (settings.weaponType == WeaponSettingsObject.WeaponType.BurstFire)
@@ -350,7 +350,7 @@ public class GunFire : IItem
         StopCoroutine(ReloadRoutine());
         runtimeData.isReloading = false;
         runtimeData.reloadTimer = settings.reloadTime;
-        player.reloadCircle.SetActive(false);
+        reloadImage.gameObject.SetActive(false);
     }
 }
 

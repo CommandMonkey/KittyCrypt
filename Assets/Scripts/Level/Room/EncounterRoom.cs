@@ -71,6 +71,10 @@ public class EncounterRoom : Room
     //    }
     //}
 
+    void SpawnHP_Pickups()
+    {
+
+    }
 
     void OnPlayerEnter()
     {

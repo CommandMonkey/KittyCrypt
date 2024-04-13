@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
     // Cached references
     protected Player player;
     GameObject fogOfWarObject;
+    protected RoomManager roomManager;
 
     private void Awake()
     {
@@ -33,14 +34,11 @@ public class Room : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
         fogOfWarObject = GameHelper.GetChildWithTag(gameObject, "FogOfWar");
+        roomManager = FindObjectOfType<RoomManager>();
 
-        entrances = new List<Entrance>(FindObjectsByType<Entrance>(FindObjectsSortMode.None));
+        entrances = transform.GetComponentsInAllChildren<Entrance>();
 
-        // subscribe to entrances exit events
-        foreach (Entrance entr in entrances)
-        {
-            entr.onEntranceExit.AddListener(OnPlayerLeftEntrance);
-        }
+        roomManager.onEntranceExit.AddListener(OnPlayerLeftEntrance);
 
         RoomStart();
     }

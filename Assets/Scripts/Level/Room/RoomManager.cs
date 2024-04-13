@@ -16,7 +16,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField] internal LevelDataObject levelData;
 
     // public fields
-    [NonSerialized] internal UnityEvent OnRoomSpawningDone;
+    [NonSerialized] internal UnityEvent onRoomSpawningDone;
+    [NonSerialized] internal UnityEvent onEntranceExit;
     [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
 
     // private fields
@@ -30,7 +31,8 @@ public class RoomManager : MonoBehaviour
 
     private void Awake()
     {
-        OnRoomSpawningDone = new UnityEvent();
+        onRoomSpawningDone = new UnityEvent();
+        onEntranceExit = new UnityEvent();
     }
 
     void Start()
@@ -53,7 +55,7 @@ public class RoomManager : MonoBehaviour
 
         //Spawn first room (it will spawn more rooms)
         spawnedRooms.Add(Instantiate(levelData.startRoom, grid).GetComponent<Room>());
-
+        Debug.Log("------- RoomSpawning Begin -------");
         StartCoroutine(SpawnRoomsRoutine());
     }
 
@@ -66,7 +68,7 @@ public class RoomManager : MonoBehaviour
         while (roomsToSpawn.Count > 0)
         {
             waveCount++;
-            Debug.Log("Wave: " + waveCount);
+            Debug.Log("Room Wave: " + waveCount);
 
             if (ShouldTerminateRoomSpawning(waveCount, previousRoomCount))
             {
@@ -91,7 +93,8 @@ public class RoomManager : MonoBehaviour
         SpawnDoorCoversForUnconnectedEntrances();
         levelManager.state = GameSession.GameState.Running;
         CloseDoors(true);
-        OnRoomSpawningDone.Invoke();
+        onRoomSpawningDone.Invoke();
+        Debug.Log("------- RoomSpawning Done -------");
     }
 
     bool ShouldTerminateRoomSpawning(int waveCount, int previousRoomCount)
@@ -101,8 +104,10 @@ public class RoomManager : MonoBehaviour
 
     void TerminateRoomSpawning()
     {
-        LogWarningPerRooms("TERMINATING ROOM SPAWNING, can't spawn room: ");
+        Debug.Log("TERMINATING ROOM SPAWNING");
+        LogWarningPerRooms("can't spawn room: ");
         DestroyAllRooms();
+        entrances.Clear();
         StartRoomSpawning();
     }
 
@@ -223,7 +228,7 @@ public class RoomManager : MonoBehaviour
     {
         foreach (Room room in spawnedRooms)
         {
-            foreach(Entrance entr in room.entrances) entr.Die();
+            //sforeach(Entrance entr in room.entrances) entr.Die();
             Destroy(room.gameObject);
         }
     }

@@ -92,6 +92,29 @@ public static class GameHelper
         return null;
     }
     
+    public static List<T> GetComponentsInAllChildren<T>(this Transform parent) where T : Component
+    {
+        // Initialize an empty list to store the components
+        List<T> components = new List<T>();
+
+        // Check if the parent itself has the component
+        T parentComponent = parent.GetComponent<T>();
+        if (parentComponent != null)
+        {
+            components.Add(parentComponent);
+        }
+
+        // Iterate through all children and their descendants
+        foreach (Transform child in parent)
+        {
+            // Recursively search for the component in the child
+            List<T> childComponents = child.transform.GetComponentsInAllChildren<T>();
+            components.AddRange(childComponents);
+        }
+
+        return components;
+    }
+
     public static float MapValue(float value, float inputMin, float inputMax, float outputMin, float outputMax)
     {
         // Calculate the width of each range
