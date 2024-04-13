@@ -70,7 +70,6 @@ public class Enemy : MonoBehaviour
         PlayHurtVFX();
         PlayHurtSFX();
         health -= damage;
-        Debug.Log(health);  
         if (!isDead && health <= 0)
         {
             levelManager.onEnemyKill.Invoke();
