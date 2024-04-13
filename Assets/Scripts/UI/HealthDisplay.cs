@@ -22,7 +22,17 @@ public class HealthDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerHealth = player.GetHealth();
+        try
+        {
+            playerHealth = player.GetHealth();
+            Debug.Log(playerHealth);
+        }
+        catch
+        {
+            Debug.Log("dont have ref to player, fetching one");
+            player = FindObjectOfType<Player>();
+        }
+
 
         for (int i = 0; i < heartsAmount.Length; i++) 
         {
