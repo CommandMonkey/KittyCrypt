@@ -30,7 +30,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (!anyInteractablesInRange || levelManager.state != GameSession.LevelState.Running)
+        if (!anyInteractablesInRange || levelManager.state != GameSession.GameState.Running)
         {
             interactablePromptText.text = "";
             return;
@@ -89,7 +89,7 @@ public class PlayerInteraction : MonoBehaviour
     // ////// Interact ////// //
     void OnInteract()
     {
-        if (!anyInteractablesInRange && levelManager.state == GameSession.LevelState.Running) return;
+        if (closestInteractable == null && levelManager.state == GameSession.GameState.Running) return;
         closestInteractable.GetComponent<IInteractable>().Interact();
     } 
 

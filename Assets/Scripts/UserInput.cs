@@ -49,7 +49,6 @@ public class UserInput : MonoBehaviour
         //Debug.Log("delta: " + (Time.time - lastFireTime));
         if (Time.time - lastFireTime > fireCooldown && Input.GetMouseButton(0))
         {
-            Debug.Log("YE BOIIIIII");
             onFireEvent.Invoke();
             lastFireTime = Time.time;
         }

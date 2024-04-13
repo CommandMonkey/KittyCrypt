@@ -12,6 +12,7 @@ public class EncounterRoom : Room
     bool isActive = false; // if the player has entered and the encounter is active
     bool isRoomDefeated = false; // if the room has been defeted
     bool enemiesSpawned = false;
+    Vector3 finalEnemyPos;
     List<GameObject> enemies;
 
     RoomManager thisRoomManager;
@@ -38,7 +39,10 @@ public class EncounterRoom : Room
         int _enemiesAlive = enemies.Count;
         foreach (GameObject obj in enemies)
         {
-            if (obj == null) _enemiesAlive--;
+            if (obj == null)
+                _enemiesAlive--;
+            else
+                finalEnemyPos = obj.transform.position;
         }
         Debug.Log(_enemiesAlive);
         if (_enemiesAlive == 0)
@@ -46,6 +50,7 @@ public class EncounterRoom : Room
             isRoomDefeated = true;
             isActive = false;
             thisRoomManager.OpenDoors();
+            
         }
     }
 

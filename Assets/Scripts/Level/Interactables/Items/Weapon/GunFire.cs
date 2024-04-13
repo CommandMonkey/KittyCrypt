@@ -17,7 +17,7 @@ public class GunFire : IItem
     //Cached reference
     TMP_Text ammoUI;
 
-    [System.Serializable]
+
     public class GunFireRuntimeData
     {
         public GunFireRuntimeData(int bulletsFired, float reloadTimer, float fireRateCooldownTimer,
@@ -36,7 +36,11 @@ public class GunFire : IItem
         public bool isFireRateCoolingDown;
         public bool isReloading;
     }
-
+    public int bulletsFired;
+    public float reloadTimer;
+    public float fireRateCooldownTimer;
+    public bool isFireRateCoolingDown;
+    public bool isReloading;
     //Private variables
     public GunFireRuntimeData runtimeData;
 
@@ -68,7 +72,12 @@ public class GunFire : IItem
 
         if (runtimeData == null)
         {
+            Debug.Log("RuntimeData initialized");
             runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
+        }
+        else
+        {
+            Debug.Log("RuntimeData already exist");
         }
 
         if (nuzzleLight != null)
@@ -87,10 +96,10 @@ public class GunFire : IItem
 
     void OnFire()
     {
-        if (levelManager.state != GameSession.LevelState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;   
-        else if (ProjectileFire()) return;
-        else if (BurstFire()) return;
-        else if (RaycastFire()) return;
+        if (levelManager.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading) return;
+        if (ProjectileFire()) return;
+        if (BurstFire()) return;
+        if (RaycastFire()) { Debug.Log("Raycast fire"); return;  }
     }
 
     private void OnDisable()
@@ -122,6 +131,7 @@ public class GunFire : IItem
     bool BurstFire()
     {
         if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) return false;
+        Debug.Log("BurstFire");
 
         // Fire
         for (int i = 0; i < settings.bulletsBeforeReload || settings.bulletsBeforeReload == 0; i++)
@@ -130,7 +140,7 @@ public class GunFire : IItem
         }
 
         GunFeedbackEffects();
-
+        runtimeData.isFireRateCoolingDown = true;
         //Ammo
         SetAmmoBurstUI();
 
@@ -287,7 +297,7 @@ public class GunFire : IItem
 
     void SetAmmoBurstUI()
     {
-        ammoUI.text = Mathf.Max(0, (1 - runtimeData.bulletsFired / settings.bulletsBeforeReload)).ToString() + "/" +
+        ammoUI.text = (1 - runtimeData.bulletsFired / settings.bulletsBeforeReload).ToString() + "/" +
                       1.ToString();
     }
 

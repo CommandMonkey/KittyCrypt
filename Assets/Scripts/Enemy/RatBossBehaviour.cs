@@ -302,13 +302,16 @@ public class RatBossBehaviour : Enemy
 
     protected override void Die()
     {
-        weaponTransform.gameObject.SetActive(false);
-        aimLineRenderer.enabled = false;
-        StopAllCoroutines();
-        animator.SetTrigger("die");
-        state = RatState.dead;
-        Debug.Log("Dead");
-        musicManager.PlayExploringTheme();
+        if (state != RatState.dead)
+        {
+            state = RatState.dead;
+            weaponTransform.gameObject.SetActive(false);
+            aimLineRenderer.enabled = false;
+            StopAllCoroutines();
+            animator.SetTrigger("die");
+            musicManager.PlayExploringTheme();
+        }
+
     }
 
 

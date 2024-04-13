@@ -45,7 +45,7 @@ public class BossRoom : Room
         if (started) yield break;
         started = true;
 
-        levelManager.SetState(GameSession.LevelState.Paused);
+        levelManager.SetState(GameSession.GameState.Paused);
         levelManager.musicManager.StopMusic();
 
         focusCamOnBoss();
@@ -72,7 +72,7 @@ public class BossRoom : Room
         yield return new WaitForSeconds(2f);
 
         focusCamOnBossAndPlayer();
-        levelManager.SetState(GameSession.LevelState.Running);
+        levelManager.SetState(GameSession.GameState.Running);
         bossScript.StartBoss();
     }
 }

@@ -46,7 +46,7 @@ public class RoomManager : MonoBehaviour
 
     public void StartRoomSpawning()
     {
-        levelManager.state = GameSession.LevelState.Loading;
+        levelManager.state = GameSession.GameState.Loading;
 
         roomsToSpawn = levelData.GetRoomsList();
         spawnedRooms.Clear();
@@ -89,7 +89,7 @@ public class RoomManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         SpawnDoorCoversForUnconnectedEntrances();
-        levelManager.state = GameSession.LevelState.Running;
+        levelManager.state = GameSession.GameState.Running;
         CloseDoors(true);
         OnRoomSpawningDone.Invoke();
     }

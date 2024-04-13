@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BloodStainVFX : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class BloodStainVFX : MonoBehaviour
     static List<Collider2D> activeInstances = new List<Collider2D>();
 
     Collider2D collider2d;
+
 
     private void Start()
     {
@@ -36,6 +39,8 @@ public class BloodStainVFX : MonoBehaviour
 
         // if is not touching other splat
         activeInstances.Add(collider2d);
+        float randomAngle = Random.Range(0f, 360f);
+        transform.rotation = Quaternion.Euler(0f, 0f, randomAngle);
     }
 
     private void OnDestroy()

@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Playables;
 
 public class TimeManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenuContainer;
 
     public bool gamePaused;
+
+    private GameSession gameSession;
 
     private void Awake()
     {
@@ -19,11 +16,12 @@ public class TimeManager : MonoBehaviour
     private void Start()
     {
         FindObjectOfType<UserInput>().onTogglePause.AddListener(OnTogglePause);
+        gameSession = FindObjectOfType<GameSession>();
     }
 
     private void OnTogglePause()
     {
-        TogglePause();
+        if (gameSession.state != GameSession.GameState.Loading) TogglePause();
     }
 
     //-------------------------------------------------------------------------------------------------------------------

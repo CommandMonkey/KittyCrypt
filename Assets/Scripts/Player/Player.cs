@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (isDead || levelManager.state != GameSession.LevelState.Running)
+        if (isDead || levelManager.state != GameSession.GameState.Running)
         {
             myRigidbody.velocity = Vector2.zero;
             animator.SetBool("IsWalking", false);
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
-        if (levelManager.state != GameSession.LevelState.Running)
+        if (levelManager.state != GameSession.GameState.Running)
         {
             moveInput = Vector2.zero;
             return;
@@ -179,7 +179,7 @@ public class Player : MonoBehaviour
 
     void OnDash()
     {
-        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || levelManager.state != GameSession.LevelState.Running) { return; }
+        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || levelManager.state != GameSession.GameState.Running) { return; }
 
         animator.SetTrigger("Dash");
         rollSpeed = 50f;
