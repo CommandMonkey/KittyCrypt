@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -14,24 +15,30 @@ public class PlayerInteraction : MonoBehaviour
     Transform preciousClosestInteractable;
 
     // cached references
-    Camera mainCamera;
-    GameSession levelManager;
+    UserInput userInput;
+    GameSession gameSession;
 
 
     private void Start()
     {
         interactablePromptText = GameObject.FindGameObjectWithTag("InteractPromptText")?.GetComponent<TMP_Text>();
-        UserInput userInput = FindObjectOfType<UserInput>();
-        mainCamera = Camera.main;
-        levelManager = FindObjectOfType<GameSession>();
+        userInput = FindObjectOfType<UserInput>();
+        gameSession = FindObjectOfType<GameSession>();
         // Setup Input
+        userInput.onInteract.AddListener(OnInteract);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         userInput.onInteract.AddListener(OnInteract);
     }
 
     private void Update()
     {
         if (interactablePromptText == null) return;
-        if (!anyInteractablesInRange || levelManager.state != GameSession.GameState.Running)
+        if (!anyInteractablesInRange || gameSession.state != GameSession.GameState.Running)
         {
             interactablePromptText.text = "";
             return;
@@ -90,7 +97,7 @@ public class PlayerInteraction : MonoBehaviour
     // ////// Interact ////// //
     void OnInteract()
     {
-        if (closestInteractable == null && levelManager.state == GameSession.GameState.Running) return;
+        if (closestInteractable == null && gameSession.state == GameSession.GameState.Running) return;
         closestInteractable.GetComponent<IInteractable>().Interact();
     } 
 

@@ -27,16 +27,18 @@ public class GameSession : MonoBehaviour
 
     SceneLoader sceneLoader;
 
+    public static GameSession Instance { get; private set; }
+
     
     private void Awake()
     {
-        GameSession[] gameSessions = FindObjectsByType<GameSession>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        if (gameSessions.Length > 1)
-        {
-            gameObject.SetActive(false);
+        // Ensure there's only one instance
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
             Destroy(gameObject);
-            return;
-        }
+
+
         DontDestroyOnLoad(gameObject);
         foreach (Transform child in transform)
         {
@@ -53,18 +55,26 @@ public class GameSession : MonoBehaviour
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
 
+        gameCamera.SetPrimaryTarget(player.transform);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.buildIndex == 0)
+        {
+            Debug.Log("Killing GameSession");
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+            return;
+        }
+
         musicManager = FindObjectOfType<MusicManager>();
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
 
         player.OnNewSceneLoaded();
-
-        gameCamera.SetPrimaryTarget(player.transform);
     }
 
     GameState previousState;
@@ -75,6 +85,11 @@ public class GameSession : MonoBehaviour
             OnNewState.Invoke();
         }
         previousState = state;
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
     }
 
 

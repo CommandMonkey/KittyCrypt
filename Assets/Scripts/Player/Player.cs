@@ -65,10 +65,11 @@ public class Player : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         myCollider = GetComponent<Collider2D>();
-        gameSession = GetComponentInParent<GameSession>();
-        userInput = transform.parent.GetComponentInChildren<UserInput>();
+        gameSession = GameSession.Instance;
+
         FetchExternalRefs();
 
+        Debug.Log("Player Start");
         // Input Events
         userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
@@ -87,10 +88,12 @@ public class Player : MonoBehaviour
     private void FetchExternalRefs()
     {
         loader = FindObjectOfType<SceneLoader>();
+        userInput = FindObjectOfType<UserInput>();
     }
 
     public void OnNewSceneLoaded()
     {
+        Debug.Log("PlayerSceneLoaded");
         FetchExternalRefs();
         userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
@@ -171,6 +174,7 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
+        Debug.Log("PlayerMove");
         if (gameSession.state != GameSession.GameState.Running)
         {
             moveInput = Vector2.zero;
