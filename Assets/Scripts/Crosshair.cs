@@ -13,6 +13,14 @@ public class Crosshair : MonoBehaviour
 
     private bool isUsingMouse = true;
 
+    SpriteRenderer spriteRenderer;
+
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     void Update()
     {
         if (Input.GetJoystickNames().Length > 0)
@@ -41,14 +49,15 @@ public class Crosshair : MonoBehaviour
                 float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
                 Vector3 offset = Quaternion.Euler(0, 0, angle) * Vector3.right * distanceFtomPlayer;
                 transform.position = playerTransform.position + offset;
+                spriteRenderer.enabled = true;
             }
             else
             {
                 Cursor.visible = true;
-                // If no controller is connected, fallback to mouse input
                 Vector3 cursorScreenPosition = Input.mousePosition;
                 Vector3 cursorWorldPosition = Camera.main.ScreenToWorldPoint(cursorScreenPosition + Vector3.forward * 10f);
                 transform.position = cursorWorldPosition;
+                spriteRenderer.enabled = false; 
             }
         }
 
