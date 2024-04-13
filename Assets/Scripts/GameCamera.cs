@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using UnityEngine;
 
@@ -25,11 +26,21 @@ public class GameCamera : MonoBehaviour
 
     private void Update()
     {
-        if (secondaryTarget == null) onlyPrimary = true;
-        if (onlyPrimary)
-            transform.position = primaryTarget.position;
-        else
-            transform.position = primaryTarget.position + (secondaryTarget.position - primaryTarget.position) / 2;
+        try
+        {
+            if (secondaryTarget == null) onlyPrimary = true;
+                if (onlyPrimary)
+                    transform.position = primaryTarget.position;
+                else
+                    transform.position = primaryTarget.position + (secondaryTarget.position - primaryTarget.position) / 2;
+        }
+        catch
+        {
+            Player player = FindObjectOfType<Player>();
+            if (player != null)
+                primaryTarget = player.transform;
+        }
+
     }
 
     public void SetPrimaryTarget(Transform transform)

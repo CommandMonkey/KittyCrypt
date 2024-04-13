@@ -44,7 +44,6 @@ public class EncounterRoom : Room
             else
                 finalEnemyPos = obj.transform.position;
         }
-        Debug.Log(_enemiesAlive);
         if (_enemiesAlive == 0)
         {
             isRoomDefeated = true;

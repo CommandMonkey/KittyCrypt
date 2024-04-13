@@ -36,6 +36,7 @@ public class Crosshair : MonoBehaviour
             // Check for controller input
             if (Gamepad.current != null)
             {
+                Cursor.visible = false;
                 movementInput = Gamepad.current.rightStick.ReadValue();
                 float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
                 Vector3 offset = Quaternion.Euler(0, 0, angle) * Vector3.right * distanceFtomPlayer;
@@ -43,6 +44,7 @@ public class Crosshair : MonoBehaviour
             }
             else
             {
+                Cursor.visible = true;
                 // If no controller is connected, fallback to mouse input
                 Vector3 cursorScreenPosition = Input.mousePosition;
                 Vector3 cursorWorldPosition = Camera.main.ScreenToWorldPoint(cursorScreenPosition + Vector3.forward * 10f);

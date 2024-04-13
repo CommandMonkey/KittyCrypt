@@ -15,7 +15,6 @@ public class GunFire : IItem
 
 
     //Cached reference
-    TMP_Text ammoUI;
 
 
     public class GunFireRuntimeData
@@ -48,20 +47,23 @@ public class GunFire : IItem
     Animator virtualCameraAnimator;
     AudioSource gunSource;
     Light2D nuzzleLight;
+    UICanvas uiCanvas;
+
     Image reloadImage;
+    TMP_Text ammoUI;
     
 
     private void Start()
     {
-        ammoUI = GameObject.FindGameObjectWithTag("AmmoRemainingText").GetComponent<TMP_Text>();
-
         userInput = FindObjectOfType<UserInput>();
         levelManager = FindObjectOfType<GameSession>();
         player = levelManager.player;
         virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
-        reloadImage = GameObject.FindGameObjectWithTag("ReloadCircle").GetComponent<Image>();
+        uiCanvas = FindObjectOfType<UICanvas>();
+        reloadImage = uiCanvas.reloadCircle;
+        ammoUI = uiCanvas.ammoText;
 
         Activate();
 
@@ -104,7 +106,8 @@ public class GunFire : IItem
 
     private void OnDisable()
     {
-        reloadImage.gameObject.SetActive(false);
+        if (reloadImage != null)
+            reloadImage.gameObject.SetActive(false);
     }
 
     bool ProjectileFire()
@@ -350,7 +353,8 @@ public class GunFire : IItem
         StopCoroutine(ReloadRoutine());
         runtimeData.isReloading = false;
         runtimeData.reloadTimer = settings.reloadTime;
-        reloadImage.gameObject.SetActive(false);
+        if (reloadImage != null)
+            reloadImage.gameObject.SetActive(false);
     }
 }
 
