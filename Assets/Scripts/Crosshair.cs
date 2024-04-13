@@ -13,6 +13,7 @@ public class Crosshair : MonoBehaviour
 
     private bool isUsingMouse = true;
 
+
     void Update()
     {
         if (Input.GetJoystickNames().Length > 0)
@@ -44,7 +45,7 @@ public class Crosshair : MonoBehaviour
             }
             else
             {
-                Cursor.visible = true;
+                Cursor.visible = false;
                 // If no controller is connected, fallback to mouse input
                 Vector3 cursorScreenPosition = Input.mousePosition;
                 Vector3 cursorWorldPosition = Camera.main.ScreenToWorldPoint(cursorScreenPosition + Vector3.forward * 10f);
