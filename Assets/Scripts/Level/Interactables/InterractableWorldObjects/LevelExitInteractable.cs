@@ -18,6 +18,7 @@ public class LevelExitInteractable : MonoBehaviour, IInteractable
     {
         gameSession = FindObjectOfType<GameSession>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        Debug.Log(spriteRenderer != null);
 
         UpdateSprite();
     }

@@ -24,13 +24,13 @@ public class BossRoom : Room
         levelExit = GetComponentInChildren<LevelExitInteractable>();
 
         bossScript.bossRoom = this;
-        levelExit.SetUnInteractable();
     }
 
     private void OnPlayerEnter()
     {
         boss.gameObject.SetActive(true);
         StartCoroutine(BossCutsceneRoutine());
+        levelExit.SetUnInteractable();
     }
 
     public void OnBossDead()

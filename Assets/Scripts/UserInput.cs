@@ -17,7 +17,7 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public UnityEvent onTogglePause;
     [NonSerialized] public UnityEvent onReload;
 
-    UserInputActions userInput;
+    PlayerInput playerInput;
     float lastFireTime = 0f;
 
 
@@ -35,15 +35,19 @@ public class UserInput : MonoBehaviour
         onTogglePause = new UnityEvent();
         onReload = new UnityEvent();
 
-        userInput = new UserInputActions();
-
         ClearListeners();   
+    }
+
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update()
     {
         //Debug.Log("delta: " + (Time.time - lastFireTime));
-        if (Time.time - lastFireTime > fireCooldown && Input.GetMouseButton(0))
+        var fire = playerInput.actions["Fire"];
+        if (Time.time - lastFireTime > fireCooldown && fire.IsPressed())
         {
             onFireEvent.Invoke();
             lastFireTime = Time.time;
@@ -75,6 +79,17 @@ public class UserInput : MonoBehaviour
     {
         onScroll.Invoke(value.Get<float>());
     }
+
+/*
+    void OnFire()
+    {
+        if (Time.time - lastFireTime > fireCooldown)
+        {
+            onFireEvent.Invoke();
+            lastFireTime = Time.time;
+        }
+    }
+*/
 
     void OnDash()
     {
