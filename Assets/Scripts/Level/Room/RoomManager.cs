@@ -171,7 +171,7 @@ public class RoomManager : MonoBehaviour
         foreach (Entrance entrance in entrances)
         {
             if (!entrance.hasConnectedRoom)
-                entrance.SpawnDoorCover()
+                entrance.SpawnDoorCover();
         }
     }
 
