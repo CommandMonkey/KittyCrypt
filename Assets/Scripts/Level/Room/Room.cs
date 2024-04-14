@@ -24,7 +24,7 @@ public class Room : MonoBehaviour
     protected GameSession gameSession;
     protected Player player;
     protected RoomManager roomManager;
-    GameObject fogOfWarObject;
+    FogOfWar fogOfWarObject;
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class Room : MonoBehaviour
         gameSession = GameSession.Instance;
         player = gameSession.player;
         roomManager = FindObjectOfType<RoomManager>();
-        fogOfWarObject = GameHelper.GetChildWithTag(gameObject, "FogOfWar");
+        fogOfWarObject = GetComponentInChildren<FogOfWar>();
 
         entrances = transform.GetComponentsInAllChildren<Entrance>();
 
@@ -57,8 +57,7 @@ public class Room : MonoBehaviour
         {
             if (fogOfWarObject != null)
             {
-                fogOfWarObject.GetComponent<Animation>().Play();
-                Destroy(fogOfWarObject, 2f);
+                fogOfWarObject.FadeAway();
             }
 
             onPlayerEnter.Invoke();
