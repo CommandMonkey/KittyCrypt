@@ -485,7 +485,7 @@
             "devices": [
                 {
                     "devicePath": "<XInputController>/{Back}",
-                    "isOptional": true,
+                    "isOptional": false,
                     "isOR": false
                 }
             ]
@@ -501,7 +501,7 @@
                 },
                 {
                     "devicePath": "<Keyboard>/{Back}",
-                    "isOptional": true,
+                    "isOptional": false,
                     "isOR": false
                 }
             ]

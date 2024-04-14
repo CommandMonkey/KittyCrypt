@@ -60,6 +60,7 @@ public class GameSession : MonoBehaviour
         crosshair = FindObjectOfType<Crosshair>();
 
         gameCamera.SetPrimaryTarget(player.transform);
+        crosshair.gameObject.SetActive(false);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -87,6 +88,8 @@ public class GameSession : MonoBehaviour
             OnNewState.Invoke();
         }
         previousState = state;
+
+        SetCursorOrCrosshair();
     }
 
     private void OnDestroy()
@@ -107,7 +110,21 @@ public class GameSession : MonoBehaviour
         sceneLoader.LoadLevel1();
     }
 
-
+    void SetCursorOrCrosshair()
+    {
+        if (playerInput.currentControlScheme != "Keyboard and mouse")
+        {
+            crosshair.gameObject.SetActive(true);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            crosshair.gameObject.SetActive(false);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 }
 
 

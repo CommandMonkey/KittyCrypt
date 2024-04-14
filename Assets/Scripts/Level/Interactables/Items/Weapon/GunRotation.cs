@@ -33,17 +33,15 @@ public class GunRotation : MonoBehaviour
     {
         if (playerInput.currentControlScheme != "Keyboard and mouse")
         {
-            UnityEngine.Cursor.visible = false;
-            crosshair.gameObject.SetActive(true);
             aimTarget = crosshair.transform.position;
+            Debug.Log("Controlling");
         }
         else
         {
-            UnityEngine.Cursor.lockState = CursorLockMode.None;
-            crosshair.gameObject.SetActive(false);
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             aimTarget = mousePos;
             aimTarget.z = 0;
+            Debug.Log("Mousing");
         }
     }
 
@@ -55,7 +53,6 @@ public class GunRotation : MonoBehaviour
 
     void SetRotation()
     {
-
         Vector3 lookRotation = transform.position - aimTarget;
         Quaternion pivotToMouseRotation = Quaternion.FromToRotation(Vector3.left, lookRotation);
         Vector3 eulerAngles = pivotToMouseRotation.eulerAngles;
