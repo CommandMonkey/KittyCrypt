@@ -81,7 +81,10 @@ public class GunFire : IItem
         {
             nuzzleLight.enabled = false;
         }
+    }
 
+    private void OnEnable()
+    {
         if (!BurstFire())
         {
             SetAmmoUI();
@@ -105,16 +108,12 @@ public class GunFire : IItem
         DeActivate();
     }
 
-    private void OnEnable()
-    {
-    }
-
     void OnFire()
     {
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         if (ProjectileFire()) return;
         if (BurstFire()) return;
-        if (RaycastFire()) { Debug.Log("Raycast fire"); return;  }
+        if (RaycastFire()) return; 
     }
 
     private void OnDisable()
@@ -146,7 +145,7 @@ public class GunFire : IItem
 
     bool BurstFire()
     {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) return false;
+        if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) { return false; }
         Debug.Log("BurstFire");
 
         // Fire
