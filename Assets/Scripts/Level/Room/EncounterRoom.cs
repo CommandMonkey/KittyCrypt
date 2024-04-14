@@ -18,6 +18,7 @@ public class EncounterRoom : Room
 
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
+    MusicManager musicManager;
 
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class EncounterRoom : Room
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
+        musicManager = FindObjectOfType<MusicManager>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         //levelManager.onEnemyKill.AddListener(OnEnemyKill);
@@ -49,8 +51,8 @@ public class EncounterRoom : Room
         {
             isRoomDefeated = true;
             isActive = false;
-            thisRoomManager.OpenDoors();
-            
+            thisRoomManager.OpenDoors();    
+            musicManager.PlayExploringTheme(false);
         }
     }
 
@@ -84,6 +86,9 @@ public class EncounterRoom : Room
         Invoke("SetActive", 3f);
         thisRoomManager.CloseDoors();
         SpawnEnemies();
+
+        musicManager.PlayBattleTheme(false);
+
     }
 
     private void SetActive()
