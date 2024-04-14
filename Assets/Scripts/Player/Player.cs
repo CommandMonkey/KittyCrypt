@@ -222,6 +222,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AddHealth(int hp)
+    {
+
+    }
+
     void BackToMenu()
     {
         loader.LoadMainMenu();
