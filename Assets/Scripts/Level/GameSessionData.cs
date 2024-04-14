@@ -2,16 +2,23 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "GameSessionData", menuName = "ScriptableObjects/GameSessionData")]
 public class GameSessionData : ScriptableObject
 {
     [Header("Continious Scaling")]
     [SerializeField] private float roomValueCapacityMultiplier;
+    [SerializeField] private float enemyHP_Multiplier;
 
     [Header("Set Level Scaling")]
     [Tooltip("if LevelIndex > LevelData.Count, it will defaut to the highest level in LevelData")]
-    public List<LevelSettings> LevelData;
+    public List<LevelSettings> levelData;
+
+    public void GetLevelData(int levelIndex)
+    {
+        LevelSettings resultSettings = levelData[Mathf.Min(levelIndex, levelData.Count)];
+    }
 
 
     [Serializable]
@@ -32,34 +39,43 @@ public class GameSessionData : ScriptableObject
 
             // Shuffle the enemy pool (optional but recommended for randomness)
             List<EnemyValue> shuffledEnemyPool = GameHelper.ShuffleList<EnemyValue>(new List<EnemyValue>(enemyPool));
-            
+
+            float totalWeight = 0f;
+            foreach (var enemy in shuffledEnemyPool)
+            {
+                totalWeight += enemy.probability;
+            }
+
             while (totalValue < targetValue)
             {
                 int enemiesThatDontFit = 0;
                 foreach (var enemy in shuffledEnemyPool)
                 {
-                    // Calculate the adjusted value based on the multiplier
-                    float value = enemy.value;
 
-                    // Check if adding this enemy exceeds the target value
-                    if (totalValue + value <= targetValue)
-                    {
-                        selectedEnemies.Add(enemy.prefab);
-                        totalValue += value;
+                    float randomValue = UnityEngine.Random.Range(0f, totalWeight) * (1 / totalWeight);
+
+                    if (randomValue < enemy.probability)
+                    { 
+
+                        if (totalValue + enemy.value <= targetValue)
+                        {
+                            selectedEnemies.Add(enemy.prefab);
+                            totalValue += enemy.value;
+                        }
+                        else
+                        {
+                            enemiesThatDontFit++;
+                        }
                     }
-                    else
-                    {
-                        enemiesThatDontFit++;
-                    }
+                    randomValue -= enemy.probability;
+
                 }
+
                 if (enemiesThatDontFit >= shuffledEnemyPool.Count)
                 {
                     break;
                 }
-
             }
-
-
             return selectedEnemies;
         }
 

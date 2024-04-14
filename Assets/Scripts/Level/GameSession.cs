@@ -8,7 +8,7 @@ public class GameSession : MonoBehaviour
 {
     [Header("Load Settings")]
     public bool spawnRooms = true;
-    public GameState state = GameState.Loading;
+    public static GameState state = GameState.Loading;
 
     [NonSerialized] public UnityEvent onEnemyKill;
     [NonSerialized] public UnityEvent OnNewState;
@@ -101,7 +101,7 @@ public class GameSession : MonoBehaviour
 
     public void SetState(GameState state)
     {
-        this.state = state;
+        GameSession.state = state;
     }
 
     public void LoadNextLevel()
