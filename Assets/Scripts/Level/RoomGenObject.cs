@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "LevelData", menuName = "ScriptableObjects/LevelData")]
-public class LevelDataObject : ScriptableObject
+public class RoomGenObject : ScriptableObject
 {
     [Header("Room Prefabs")]
     public GameObject startRoom;

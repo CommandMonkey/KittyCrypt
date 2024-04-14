@@ -8,7 +8,7 @@ public class GameSession : MonoBehaviour
 {
     [Header("Load Settings")]
     public bool spawnRooms = true;
-    public GameState state = GameState.Loading;
+    public static GameState state = GameState.Loading;
 
     [NonSerialized] public UnityEvent onEnemyKill;
     [NonSerialized] public UnityEvent OnNewState;
@@ -33,6 +33,8 @@ public class GameSession : MonoBehaviour
     public static GameSession Instance { get; private set; }
 
     
+    bool killYourself = false;
+
     private void Awake()
     {
         // Ensure there's only one instance
@@ -66,11 +68,10 @@ public class GameSession : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log(scene.buildIndex);
         if (scene.buildIndex == 0)
         {
-            Debug.Log("Killing GameSession");
-            gameObject.SetActive(false);
-            Destroy(gameObject);
+            killYourself = true;
             return;
         }
 
@@ -82,6 +83,10 @@ public class GameSession : MonoBehaviour
     GameState previousState;
     private void Update()
     {
+        if (killYourself)
+        {
+            Die();
+        }
         if (state != previousState)
         {
             OnNewState.Invoke();
@@ -98,7 +103,7 @@ public class GameSession : MonoBehaviour
 
     public void SetState(GameState state)
     {
-        this.state = state;
+        GameSession.state = state;
     }
 
     public void LoadNextLevel()
@@ -107,7 +112,12 @@ public class GameSession : MonoBehaviour
         sceneLoader.LoadLevel1();
     }
 
-
+    void Die()
+    {
+        Debug.Log("Killing GameSession");
+        gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
 }
 
 

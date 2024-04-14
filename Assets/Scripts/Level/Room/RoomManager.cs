@@ -12,7 +12,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] AudioClip openDoorAudio;
 
     [Header("Room Spawning Prefabs")]
-    [SerializeField] internal LevelDataObject levelData;
+    [SerializeField] internal RoomGenObject levelData;
 
     // public fields
     [NonSerialized] internal UnityEvent onRoomSpawningDone;
@@ -45,7 +45,7 @@ public class RoomManager : MonoBehaviour
 
     public void StartRoomSpawning()
     {
-        gameSession.state = GameSession.GameState.Loading;
+        GameSession.state = GameSession.GameState.Loading;
 
         roomsToSpawn = levelData.GetRoomsList();
         spawnedRooms.Clear();
@@ -88,7 +88,7 @@ public class RoomManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         SpawnDoorCoversForUnconnectedEntrances();
-        gameSession.state = GameSession.GameState.Running;
+        GameSession.state = GameSession.GameState.Running;
         CloseDoors(true);
         onRoomSpawningDone.Invoke();
         Debug.Log("------- RoomSpawning Done -------");

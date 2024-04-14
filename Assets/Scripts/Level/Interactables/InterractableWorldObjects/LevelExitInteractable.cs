@@ -10,6 +10,7 @@ public class LevelExitInteractable : MonoBehaviour, IInteractable
 
     public string interactPrompt { get; set; }
     public bool canInteract { get; set; }
+    public bool interactable;
 
     GameSession gameSession;
     SpriteRenderer spriteRenderer;
@@ -41,12 +42,14 @@ public class LevelExitInteractable : MonoBehaviour, IInteractable
     public void SetInteractable()
     {
         canInteract = true;
+        interactable = true;
         UpdateSprite();
     }
 
     public void SetUnInteractable()
     {
         canInteract = false;
+        interactable = false;
         UpdateSprite();
     }
 

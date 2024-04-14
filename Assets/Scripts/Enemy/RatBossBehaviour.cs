@@ -312,10 +312,10 @@ public class RatBossBehaviour : Enemy
     {
         if (state != RatState.dead)
         {
+            StopAllCoroutines();
             state = RatState.dead;
             weaponTransform.gameObject.SetActive(false);
             aimLineRenderer.enabled = false;
-            StopAllCoroutines();
             animator.SetTrigger("die");
             musicManager.PlayExploringTheme();
 

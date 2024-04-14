@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 453845e9d0284934091243b8c5da5fb2, type: 3}
-  m_Name: LevelData_Test
+  m_Name: RoomGenData_Lvl_1
   m_EditorClassIdentifier: 
   startRoom: {fileID: 3722623101364078196, guid: eabfd13b394f5284fadcff6ae3609e63, type: 3}
   randomRoomProbabilities:

@@ -98,7 +98,7 @@ public class GunFire : IItem
 
     void OnFire()
     {
-        if (levelManager.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
+        if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         if (ProjectileFire()) return;
         if (BurstFire()) return;
         if (RaycastFire()) { Debug.Log("Raycast fire"); return;  }
