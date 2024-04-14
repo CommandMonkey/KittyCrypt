@@ -24,6 +24,7 @@ public class RoomManager : MonoBehaviour
     List<GameObject> roomsToSpawn = new List<GameObject>();
     List<Room> spawnedRooms = new List<Room>();
     Dictionary<Entrance, List<string>> entranceRoomFailNames = new Dictionary<Entrance, List<string>>();
+    ContactFilter2D roomsFilter;
 
     // Cached refs
     GameSession gameSession;
@@ -41,9 +42,9 @@ public class RoomManager : MonoBehaviour
         audioScource = GetComponent<AudioSource>();
 
         roomGenSettings = gameSession.levelSettings.roomGenSettings;
+        roomsFilter = CreateRoomsFilter();
 
-        if (gameSession.spawnRooms)
-            StartRoomSpawning();
+        StartRoomSpawning();
     }
 
     public void StartRoomSpawning()
@@ -57,11 +58,11 @@ public class RoomManager : MonoBehaviour
         spawnedRooms.Add(Instantiate(roomGenSettings.startRoom, grid).GetComponent<Room>());
         Debug.Log("------- RoomSpawning Begin -------");
         StartCoroutine(SpawnRoomsRoutine());
+        
     }
 
     IEnumerator SpawnRoomsRoutine()
     {
-        ContactFilter2D roomsFilter = CreateRoomsFilter();
         int previousRoomCount = 0;
         int waveCount = 0;
 
@@ -82,12 +83,13 @@ public class RoomManager : MonoBehaviour
 
             foreach (Entrance entrance in GetShuffledUnconnectedEntrances())
             {
-                if (TrySpawnRoomAtEntrance(shuffledRooms, entrance, roomsFilter))
+                if (TrySpawnRoomsAtEntrance(shuffledRooms, entrance, roomsFilter))
                     break;
             }
         }
-
-        SpawnEndRoom();
+        yield return null;
+        yield return null;
+        SpawnEndRooms();
         yield return new WaitForEndOfFrame();
 
         SpawnDoorCoversForUnconnectedEntrances();
@@ -111,10 +113,10 @@ public class RoomManager : MonoBehaviour
         StartRoomSpawning();
     }
 
-    bool TrySpawnRoomAtEntrance(List<GameObject> shuffledRooms, Entrance entrance, ContactFilter2D roomsFilter)
+    bool TrySpawnRoomsAtEntrance(List<GameObject> shuffledRooms, Entrance entrance, ContactFilter2D roomsFilter)
     {
         Direction invDirection = InvertDirection(entrance.direction);
-        Vector3 entrancePosition = entrance.gameObject.transform.position;
+        Vector3 entrancePosition = entrance.transform.position;
 
         foreach (GameObject roomObj in shuffledRooms)
         {
@@ -157,15 +159,48 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    void SpawnEndRoom()
+    void SpawnEndRooms()
     {
-        Entrance furthestAway = GetFurthestUnconnectedEntrance();
-        if (furthestAway != null)
+        List<GameObject> endRooms = new List<GameObject>(roomGenSettings.endRooms);
+        List<Vector2> avoidPositions = new List<Vector2>() { Vector2.zero };
+
+        foreach (GameObject _room in endRooms)
         {
-            Room endRoomComponent = roomGenSettings.endRoom.GetComponent<Room>();
-            Entrance endRoomEntrance = GetEntranceOfDir(endRoomComponent, InvertDirection(furthestAway.direction));
-            Vector3 endSpawnPosition = furthestAway.transform.position + (Vector3.zero - endRoomEntrance.transform.localPosition);
-            SpawnRoom(roomGenSettings.endRoom, endSpawnPosition, furthestAway);
+            bool hasSpawned = false;
+            List<Entrance> furthestAway = GetUnconnectedEntrancesSortedByDistance(avoidPositions);
+            if (furthestAway == null || furthestAway.Count < 0)
+            {
+                TerminateRoomSpawning();
+                break;
+            }
+
+            furthestAway.Reverse();
+
+            foreach (Entrance entr in furthestAway)
+            {
+                Direction invDirection = InvertDirection(entr.direction);
+                Room roomComponent = _room.GetComponent<Room>();
+                Entrance roomEntrance = GetEntranceOfDir(roomComponent, invDirection);
+                if (roomEntrance != null)
+                {
+                    Vector3 entranceToZero = Vector3.zero - roomEntrance.transform.localPosition;
+                    Vector3 spawnPosition = entr.transform.position + entranceToZero;
+
+                    bool isTouchingRoom = GameHelper.IsBoxColliderTouching(spawnPosition, _room.GetComponent<BoxCollider2D>(), roomsFilter);
+                    if (!isTouchingRoom)
+                    {
+                        SpawnRoom(_room, spawnPosition, entr);
+                        avoidPositions.Add(spawnPosition);
+                        hasSpawned = true;
+                        break;
+                    }
+                }
+            }
+            if (!hasSpawned)
+            {
+                TerminateRoomSpawning();
+                break;
+            }
         }
     }
 
@@ -194,25 +229,30 @@ public class RoomManager : MonoBehaviour
         return GameHelper.ShuffleList(entrances);
     }
 
-    Entrance GetFurthestUnconnectedEntrance()
+    public List<Entrance> GetUnconnectedEntrancesSortedByDistance(List<Vector2> avoidPositions)
     {
-        Entrance furthestAway = null;
-        float furthestAwayDistance = 0;
+        Dictionary<Entrance, float> entranceDistances = new Dictionary<Entrance, float>();
 
         foreach (Entrance entr in entrances)
         {
             if (!entr.hasConnectedRoom)
             {
-                float distance = (Vector3.zero - entr.transform.position).magnitude;
-                if (distance > furthestAwayDistance)
+                float totalDistance = 0f;
+                foreach (Vector2 avoidPos in avoidPositions)
                 {
-                    furthestAway = entr;
-                    furthestAwayDistance = distance;
+                    float distance = Vector2.Distance(entr.transform.position, avoidPos);
+                    totalDistance += distance;
                 }
+                entranceDistances.Add(entr, totalDistance);
             }
         }
 
-        return furthestAway;
+        // Sort the anslutna entréer baserat på avståndet från avoidPositions
+        List<Entrance> sortedEntrances = new List<Entrance>(entranceDistances.Keys);
+        sortedEntrances.Sort((entr1, entr2) =>
+            entranceDistances[entr1].CompareTo(entranceDistances[entr2]));
+
+        return sortedEntrances;
     }
 
     ContactFilter2D CreateRoomsFilter()

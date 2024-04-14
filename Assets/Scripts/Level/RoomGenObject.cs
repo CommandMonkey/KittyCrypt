@@ -11,7 +11,10 @@ public class RoomGenObject : ScriptableObject
     [SerializeField] List<RoomProbability> randomRoomProbabilities;
     [SerializeField] int amountOfRandomRooms;
     [SerializeField] List<GameObject> setRooms;
-    public GameObject endRoom = null;
+
+    [Tooltip("spawned furthest away from each other, in order of list")] 
+    public List<GameObject> endRooms = null;
+
     [Header("EntranceBlockers")]
     public List<DirectionGameObjectPair> entranceBlockers;
     [Header("Doors")]

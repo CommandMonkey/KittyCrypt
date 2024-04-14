@@ -14,16 +14,18 @@ public class GameSession : MonoBehaviour
     }
 
     [Header("Load Settings")]
-    public bool spawnRooms = true;
     public static GameState state = GameState.Loading;
-    public GameSessionData gameSessionData;
+
     public GameSessionData.LevelSettings levelSettings;
 
+    public GameSessionData gameSessionData;
     [NonSerialized] public UnityEvent onEnemyKill;
     [NonSerialized] public UnityEvent OnNewState;
 
 
     public int levelIndex = 0;
+    
+    bool killYourself = false;
 
     public GameCamera gameCamera { get; private set; }
     public Player player;
@@ -37,7 +39,6 @@ public class GameSession : MonoBehaviour
 
     public static GameSession Instance { get; private set; }
 
-    bool killYourself = false;
     
     private void Awake()
     {
