@@ -100,7 +100,6 @@ public class UserInput : MonoBehaviour
 
     void OnInteract()
     {
-        Debug.Log("Interact!!!");
         onInteract.Invoke();
     }
 

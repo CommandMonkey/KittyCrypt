@@ -6,8 +6,9 @@ public class TimeManager : MonoBehaviour
 
     public bool gamePaused;
 
-    private UserInput userInput;
     private GameSession gameSession;
+    private UserInput userInput;
+
 
     private void Awake()
     {
@@ -16,15 +17,19 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
-        userInput = FindObjectOfType<UserInput>();
         gameSession = GameSession.Instance;
+        userInput = gameSession.userInput;
 
         userInput.onTogglePause.AddListener(OnTogglePause);
     }
 
     private void OnTogglePause()
     {
-        if (GameSession.state != GameSession.GameState.Loading) TogglePause();
+        if (GameSession.state != GameSession.GameState.Loading)
+        {
+            Debug.Log("TimeManager toggle pause");
+            TogglePause();
+        }
     }
 
     //-------------------------------------------------------------------------------------------------------------------

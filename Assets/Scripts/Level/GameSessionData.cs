@@ -15,37 +15,50 @@ public class GameSessionData : ScriptableObject
     [Tooltip("if LevelIndex > LevelData.Count, it will defaut to the highest level in LevelData")]
     public List<LevelSettings> levelData;
 
-    public void GetLevelData(int levelIndex)
+    public LevelSettings GetLevelData(int levelIndex)
     {
-        LevelSettings resultSettings = levelData[Mathf.Min(levelIndex, levelData.Count)];
+        LevelSettings resultSettings = levelData[Mathf.Min(levelIndex, levelData.Count-1)];
+
+        float power = levelIndex + 1;
+
+        resultSettings.roomValueCapacityMultiplier = Mathf.Ceil(Mathf.Pow(roomValueCapacityMultiplier, power));
+        resultSettings.enemyHP_Multiplier = Mathf.Pow(enemyHP_Multiplier, power);   
+
+        return resultSettings;
     }
 
 
     [Serializable]
     public struct LevelSettings
     {
+        // Inspector variables
         public RoomGenObject roomGenSettings;
         public EnemyValue[] enemyPool;
         public ItemProbability[] itemPool;
 
         // non serialized
+        // (depend on general scaling, Set in GameSessionSettings.GetLevelData())
         [NonSerialized] public float roomValueCapacityMultiplier;
         [NonSerialized] public float enemyHP_Multiplier;
+
+
+        // /// Get Functions /// //
 
         public List<GameObject> GetEnemyList(float targetValue)
         {
             List<GameObject> selectedEnemies = new List<GameObject>();
+
+            targetValue = targetValue * roomValueCapacityMultiplier;
             float totalValue = 0f;
+            float totalWeight = 0f;
 
             // Shuffle the enemy pool (optional but recommended for randomness)
             List<EnemyValue> shuffledEnemyPool = GameHelper.ShuffleList<EnemyValue>(new List<EnemyValue>(enemyPool));
 
-            float totalWeight = 0f;
             foreach (var enemy in shuffledEnemyPool)
             {
                 totalWeight += enemy.probability;
             }
-
             while (totalValue < targetValue)
             {
                 int enemiesThatDontFit = 0;
