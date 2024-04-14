@@ -19,7 +19,7 @@ MonoBehaviour:
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 1
-      value: 5
+      value: 7
     itemPool: []
   - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
     enemyPool:
