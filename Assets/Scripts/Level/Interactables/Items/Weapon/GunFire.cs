@@ -81,10 +81,7 @@ public class GunFire : IItem
         {
             nuzzleLight.enabled = false;
         }
-    }
 
-    private void OnEnable()
-    {
         if (!BurstFire())
         {
             SetAmmoUI();

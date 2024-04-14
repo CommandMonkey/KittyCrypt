@@ -24,7 +24,7 @@ MonoBehaviour:
   knockback: 10
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 15240
+    m_Bits: 31624
   projectile: {fileID: 0}
   bulletSpreadRange: 1
   bulletSpeed: 5
