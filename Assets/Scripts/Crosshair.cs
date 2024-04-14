@@ -7,7 +7,7 @@ public class Crosshair : MonoBehaviour
 {
     public Transform playerTransform; // Reference to the player's Transform
     public float orbitSpeed = 5f; // Speed of orbit
-    public float distanceFtomPlayer = 3f;
+    public float distanceFromPlayer = 3f;
 
     private Vector2 movementInput;
 
@@ -44,9 +44,12 @@ public class Crosshair : MonoBehaviour
             // Check for controller input
             if (Gamepad.current != null)
             {
-                movementInput = Gamepad.current.rightStick.ReadValue();
+                if (Gamepad.current.rightStick.ReadValue() != Vector2.zero)
+                {
+                    movementInput = Gamepad.current.rightStick.ReadValue();
+                }
                 float angle = Mathf.Atan2(movementInput.y, movementInput.x) * Mathf.Rad2Deg;
-                Vector3 offset = Quaternion.Euler(0, 0, angle) * Vector3.right * distanceFtomPlayer;
+                Vector3 offset = Quaternion.Euler(0, 0, angle) * Vector3.right * distanceFromPlayer;
                 transform.position = playerTransform.position + offset;
                 spriteRenderer.enabled = true;
             }
@@ -58,9 +61,6 @@ public class Crosshair : MonoBehaviour
                 spriteRenderer.enabled = false; 
             }
         }
-
-
-
     }
 }
 

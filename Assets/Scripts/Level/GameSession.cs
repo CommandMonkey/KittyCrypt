@@ -6,26 +6,33 @@ using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
-    [Header("Load Settings")]
-    public bool spawnRooms = true;
-    public GameState state = GameState.Loading;
-
-    [NonSerialized] public UnityEvent onEnemyKill;
-    [NonSerialized] public UnityEvent OnNewState;
-
     public enum GameState
     {
         Loading,
         Running,
         Paused
     }
-    public int levelIndex { get; private set; } = 0;
+
+    [Header("Load Settings")]
+    public static GameState state = GameState.Loading;
+
+    public GameSessionData.LevelSettings levelSettings;
+
+    public GameSessionData gameSessionData;
+    [NonSerialized] public UnityEvent onEnemyKill;
+    [NonSerialized] public UnityEvent OnNewState;
+
+
+    public int levelIndex = 0;
+    
+    bool killYourself = false;
 
     public GameCamera gameCamera { get; private set; }
     public Player player;
     public PlayerInput playerInput;
     public Transform enemyContainer;
     public Crosshair crosshair;
+    public UserInput userInput { get; private set; }
     public MusicManager musicManager { get; private set; }
 
     SceneLoader sceneLoader;
@@ -58,8 +65,12 @@ public class GameSession : MonoBehaviour
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
         crosshair = FindObjectOfType<Crosshair>();
+        userInput = GetComponentInChildren<UserInput>();
 
         gameCamera.SetPrimaryTarget(player.transform);
+        crosshair.gameObject.SetActive(false);
+
+        levelSettings = gameSessionData.GetLevelData(levelIndex);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -68,11 +79,11 @@ public class GameSession : MonoBehaviour
     {
         if (scene.buildIndex == 0)
         {
-            Debug.Log("Killing GameSession");
-            gameObject.SetActive(false);
-            Destroy(gameObject);
+            killYourself = true;
             return;
         }
+
+        levelSettings = gameSessionData.GetLevelData(levelIndex);
 
         musicManager = FindObjectOfType<MusicManager>();
         gameCamera = FindObjectOfType<GameCamera>();
@@ -82,11 +93,30 @@ public class GameSession : MonoBehaviour
     GameState previousState;
     private void Update()
     {
+        if (killYourself)
+        {
+            Die();
+            return;
+        }
+
         if (state != previousState)
         {
             OnNewState.Invoke();
         }
         previousState = state;
+
+        SetCursorOrCrosshair();
+    }
+
+    private void Die()
+    {
+        crosshair.gameObject.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        Debug.Log("Killing GameSession");
+        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private void OnDestroy()
@@ -98,16 +128,30 @@ public class GameSession : MonoBehaviour
 
     public void SetState(GameState state)
     {
-        this.state = state;
+        GameSession.state = state;
     }
 
-    public void NextLevelLoad()
+    public void LoadNextLevel()
     {
         levelIndex++;
         sceneLoader.LoadLevel1();
     }
 
-
+    void SetCursorOrCrosshair()
+    {
+        if (playerInput.currentControlScheme != "Keyboard and mouse")
+        {
+            crosshair.gameObject.SetActive(true);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            crosshair.gameObject.SetActive(false);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 }
 
 

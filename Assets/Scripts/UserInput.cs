@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public UnityEvent onReload;
 
     PlayerInput playerInput;
+    Crosshair crosshair;
     float lastFireTime = 0f;
 
 
@@ -98,7 +100,6 @@ public class UserInput : MonoBehaviour
 
     void OnInteract()
     {
-        Debug.Log("Interact!!!");
         onInteract.Invoke();
     }
 

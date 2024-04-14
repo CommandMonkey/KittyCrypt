@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EncounterRoom : Room
 {
+    [SerializeField] int enemyValueCapacity = 30;
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
     //[SerializeField] GameObject spawnAnimPrefab;
@@ -17,7 +18,6 @@ public class EncounterRoom : Room
 
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
-    GameSession levelManager;
 
 
     // Start is called before the first frame update
@@ -25,10 +25,11 @@ public class EncounterRoom : Room
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
-        levelManager = FindObjectOfType<GameSession>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         //levelManager.onEnemyKill.AddListener(OnEnemyKill);
+
+        enemiesToSpawn = gameSession.levelSettings.GetEnemyList(enemyValueCapacity);
 
         enemies = new List<GameObject>();
     }

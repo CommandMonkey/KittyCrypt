@@ -6,7 +6,7 @@ public class FollowKey : MonoBehaviour
 {
     public Transform target; // The target GameObject to follow
     public float followSpeed = 5f; // The speed at which this GameObject follows the target
-    public float maxDistance = 10f; // The maximum distance between this GameObject and the target
+    public float maxDistance = 2f; // The maximum distance between this GameObject and the target
 
     void Update()
     {

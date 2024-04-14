@@ -39,7 +39,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Update()
     {
         if (interactablePromptText == null) return;
-        if (!anyInteractablesInRange || gameSession.state != GameSession.GameState.Running)
+        if (!anyInteractablesInRange || GameSession.state != GameSession.GameState.Running)
         {
             interactablePromptText.text = "";
             return;
@@ -99,7 +99,7 @@ public class PlayerInteraction : MonoBehaviour
     void OnInteract()
     {
         Debug.Log("PlayerInteract");
-        if (closestInteractable == null || gameSession.state != GameSession.GameState.Running) return;
+        if (closestInteractable == null || GameSession.state != GameSession.GameState.Running) return;
         closestInteractable.GetComponent<IInteractable>().Interact();
     } 
 

@@ -4,14 +4,17 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "LevelData", menuName = "ScriptableObjects/LevelData")]
-public class LevelDataObject : ScriptableObject
+public class RoomGenObject : ScriptableObject
 {
     [Header("Room Prefabs")]
     public GameObject startRoom;
     [SerializeField] List<RoomProbability> randomRoomProbabilities;
     [SerializeField] int amountOfRandomRooms;
     [SerializeField] List<GameObject> setRooms;
-    public GameObject endRoom = null;
+
+    [Tooltip("spawned furthest away from each other, in order of list")] 
+    public List<GameObject> endRooms = null;
+
     [Header("EntranceBlockers")]
     public List<DirectionGameObjectPair> entranceBlockers;
     [Header("Doors")]

@@ -6943,6 +6943,7 @@ MonoBehaviour:
   entrances:
   - {fileID: 704406598136818880}
   - {fileID: 2786364493597687691}
+  enemyValueCapacity: 30
   enemiesToSpawn:
   - {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
   - {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}

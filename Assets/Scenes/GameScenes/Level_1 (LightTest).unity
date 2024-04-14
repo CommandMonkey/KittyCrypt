@@ -751,7 +751,6 @@ MonoBehaviour:
   grid: {fileID: 1138645002}
   closeDoorAudio: {fileID: 8300000, guid: 563fd7cbb5bef0c498d96da8696be146, type: 3}
   openDoorAudio: {fileID: 8300000, guid: 512e4b29888b83c4e92e4188c0abb305, type: 3}
-  levelData: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
 --- !u!82 &1931346295
 AudioSource:
   m_ObjectHideFlags: 0
@@ -931,6 +930,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSessionPoop
       objectReference: {fileID: 0}
+    - target: {fileID: 6846608642815445389, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846608642815445389, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: orbitSpeed
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1026,6 +1033,18 @@ PrefabInstance:
     - target: {fileID: 730335966286728086, guid: d2e76cfa0ffd6bf4398e432b0941850d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659193371775966537, guid: d2e76cfa0ffd6bf4398e432b0941850d, type: 3}
+      propertyPath: possibleTooltips.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659193371775966537, guid: d2e76cfa0ffd6bf4398e432b0941850d, type: 3}
+      propertyPath: possibleTooltips.Array.data[7]
+      value: REPAIRING FLOORS
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713471998451177054, guid: d2e76cfa0ffd6bf4398e432b0941850d, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5619559959430248026, guid: d2e76cfa0ffd6bf4398e432b0941850d, type: 3}
       propertyPath: m_IsActive

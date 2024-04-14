@@ -14,14 +14,14 @@ public class LoadingScreen : MonoBehaviour
         levelManager = FindObjectOfType<GameSession>();
         animator = GetComponent<Animator>();
 
-        animator.SetInteger("levelState", (int)levelManager.state);
+        animator.SetInteger("levelState", (int)GameSession.state);
 
         levelManager.OnNewState.AddListener(OnNewState);
     }
 
     private void OnNewState()
     {
-        animator.SetInteger("levelState", (int)levelManager.state);
+        animator.SetInteger("levelState", (int)GameSession.state);
     }
 
     // Update is called once per frame
