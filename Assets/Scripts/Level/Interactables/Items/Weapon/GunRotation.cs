@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class GunRotation : MonoBehaviour
 {
@@ -33,20 +34,20 @@ public class GunRotation : MonoBehaviour
         if (playerInput.currentControlScheme != "Keyboard and mouse")
         {
             aimTarget = crosshair.transform.position;
-            Debug.Log("Controlling");
+            Debug.Log("Controlling " + aimTarget);
         }
         else
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             aimTarget = mousePos;
             aimTarget.z = 0;
-            Debug.Log("Mousing");
+            Debug.Log("Mousing " + aimTarget);
         }
     }
 
     void CalculateOffset()
     {
-        Vector3 gunPivotToMouse = transform.localPosition - transform.InverseTransformPoint(mousePos);
+        Vector3 gunPivotToMouse = transform.localPosition - transform.InverseTransformPoint(aimTarget);
         angle = Mathf.Atan(gunPivotToExit.y / gunPivotToMouse.x) * Mathf.Rad2Deg;
     }
 

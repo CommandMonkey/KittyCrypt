@@ -177,7 +177,6 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
-        Debug.Log("PlayerMove");
         if (GameSession.state != GameSession.GameState.Running)
         {
             moveInput = Vector2.zero;
