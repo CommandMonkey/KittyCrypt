@@ -81,6 +81,15 @@ public class GunFire : IItem
         {
             nuzzleLight.enabled = false;
         }
+
+        if (!BurstFire())
+        {
+            SetAmmoUI();
+        }
+        else
+        {
+            SetAmmoBurstUI();
+        }
     }
 
     // Update is called once per frame
@@ -94,6 +103,10 @@ public class GunFire : IItem
     private void OnDestroy()
     {
         DeActivate();
+    }
+
+    private void OnEnable()
+    {
     }
 
     void OnFire()

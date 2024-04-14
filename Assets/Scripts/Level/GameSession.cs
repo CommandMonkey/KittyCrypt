@@ -8,7 +8,7 @@ public class GameSession : MonoBehaviour
 {
     [Header("Load Settings")]
     public bool spawnRooms = true;
-    public static GameState state = GameState.Loading;
+    public GameState state = GameState.Loading;
 
     [NonSerialized] public UnityEvent onEnemyKill;
     [NonSerialized] public UnityEvent OnNewState;
@@ -33,8 +33,6 @@ public class GameSession : MonoBehaviour
     public static GameSession Instance { get; private set; }
 
     
-    bool killYourself = false;
-
     private void Awake()
     {
         // Ensure there's only one instance
@@ -62,16 +60,18 @@ public class GameSession : MonoBehaviour
         crosshair = FindObjectOfType<Crosshair>();
 
         gameCamera.SetPrimaryTarget(player.transform);
+        crosshair.gameObject.SetActive(false);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log(scene.buildIndex);
         if (scene.buildIndex == 0)
         {
-            killYourself = true;
+            Debug.Log("Killing GameSession");
+            gameObject.SetActive(false);
+            Destroy(gameObject);
             return;
         }
 
@@ -83,15 +83,13 @@ public class GameSession : MonoBehaviour
     GameState previousState;
     private void Update()
     {
-        if (killYourself)
-        {
-            Die();
-        }
         if (state != previousState)
         {
             OnNewState.Invoke();
         }
         previousState = state;
+
+        SetCursorOrCrosshair();
     }
 
     private void OnDestroy()
@@ -103,7 +101,7 @@ public class GameSession : MonoBehaviour
 
     public void SetState(GameState state)
     {
-        GameSession.state = state;
+        this.state = state;
     }
 
     public void LoadNextLevel()
@@ -112,11 +110,20 @@ public class GameSession : MonoBehaviour
         sceneLoader.LoadLevel1();
     }
 
-    void Die()
+    void SetCursorOrCrosshair()
     {
-        Debug.Log("Killing GameSession");
-        gameObject.SetActive(false);
-        Destroy(gameObject);
+        if (playerInput.currentControlScheme != "Keyboard and mouse")
+        {
+            crosshair.gameObject.SetActive(true);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            crosshair.gameObject.SetActive(false);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }
 

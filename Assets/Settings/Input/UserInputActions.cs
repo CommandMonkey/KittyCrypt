@@ -507,7 +507,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<XInputController>/{Back}"",
-                    ""isOptional"": true,
+                    ""isOptional"": false,
                     ""isOR"": false
                 }
             ]
@@ -523,7 +523,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""devicePath"": ""<Keyboard>/{Back}"",
-                    ""isOptional"": true,
+                    ""isOptional"": false,
                     ""isOR"": false
                 }
             ]
