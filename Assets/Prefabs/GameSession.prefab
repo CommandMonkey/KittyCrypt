@@ -50,9 +50,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRooms: 1
-  state: 1
+  gameSessionData: {fileID: 11400000, guid: 2dbcf30d29d89a942ba89ba94e2f9d32, type: 2}
+  levelSettings:
+    roomGenSettings: {fileID: 0}
+    enemyPool: []
+    itemPool: []
+  levelIndex: 0
   player: {fileID: 0}
+  playerInput: {fileID: 0}
   enemyContainer: {fileID: 0}
+  crosshair: {fileID: 0}
 --- !u!82 &6246352843894296377
 AudioSource:
   m_ObjectHideFlags: 0

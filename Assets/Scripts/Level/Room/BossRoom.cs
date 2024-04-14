@@ -7,8 +7,6 @@ public class BossRoom : Room
 {
     [SerializeField] private Transform boss;
 
-
-    
     private GameCamera gameCamera;
     private RatBossBehaviour bossScript;
     private LevelExitInteractable levelExit;

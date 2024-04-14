@@ -23,7 +23,7 @@ public class LevelExitInteractable : MonoBehaviour, IInteractable
         gameSession = GameSession.Instance;
         spriteRenderer = GetComponent<SpriteRenderer>();
         Debug.Log(spriteRenderer != null);
-
+        SetInteractable();
         UpdateSprite();
     }
 
@@ -32,10 +32,12 @@ public class LevelExitInteractable : MonoBehaviour, IInteractable
         if (hasWarned)
         {
             gameSession.LoadNextLevel();
+            interactPrompt = "";
         }
         else
         {
             interactPrompt = "Are you sure?(E)";
+            hasWarned = true;
         }
     }
 

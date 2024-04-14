@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour 
 {
@@ -13,7 +14,8 @@ public class MusicManager : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        PlayExploringTheme(false);
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+            PlayExploringTheme(false);
     }
 
     public void PlayExploringTheme(bool fade = true)

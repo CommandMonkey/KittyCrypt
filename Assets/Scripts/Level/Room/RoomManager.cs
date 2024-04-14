@@ -12,9 +12,10 @@ public class RoomManager : MonoBehaviour
     [SerializeField] AudioClip openDoorAudio;
 
     [Header("Room Spawning Prefabs")]
-    [SerializeField] internal RoomGenObject levelData;
+
 
     // public fields
+    [NonSerialized] internal RoomGenObject roomGenSettings;
     [NonSerialized] internal UnityEvent onRoomSpawningDone;
     [NonSerialized] internal UnityEvent onEntranceExit;
     [NonSerialized] internal List<Entrance> entrances = new List<Entrance>();
@@ -36,8 +37,10 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
-        gameSession = FindObjectOfType<GameSession>();
+        gameSession = GameSession.Instance;
         audioScource = GetComponent<AudioSource>();
+
+        roomGenSettings = gameSession.levelSettings.roomGenSettings;
 
         if (gameSession.spawnRooms)
             StartRoomSpawning();
@@ -47,11 +50,11 @@ public class RoomManager : MonoBehaviour
     {
         GameSession.state = GameSession.GameState.Loading;
 
-        roomsToSpawn = levelData.GetRoomsList();
+        roomsToSpawn = roomGenSettings.GetRoomsList();
         spawnedRooms.Clear();
 
         //Spawn first room (it will spawn more rooms)
-        spawnedRooms.Add(Instantiate(levelData.startRoom, grid).GetComponent<Room>());
+        spawnedRooms.Add(Instantiate(roomGenSettings.startRoom, grid).GetComponent<Room>());
         Debug.Log("------- RoomSpawning Begin -------");
         StartCoroutine(SpawnRoomsRoutine());
     }
@@ -159,10 +162,10 @@ public class RoomManager : MonoBehaviour
         Entrance furthestAway = GetFurthestUnconnectedEntrance();
         if (furthestAway != null)
         {
-            Room endRoomComponent = levelData.endRoom.GetComponent<Room>();
+            Room endRoomComponent = roomGenSettings.endRoom.GetComponent<Room>();
             Entrance endRoomEntrance = GetEntranceOfDir(endRoomComponent, InvertDirection(furthestAway.direction));
             Vector3 endSpawnPosition = furthestAway.transform.position + (Vector3.zero - endRoomEntrance.transform.localPosition);
-            SpawnRoom(levelData.endRoom, endSpawnPosition, furthestAway);
+            SpawnRoom(roomGenSettings.endRoom, endSpawnPosition, furthestAway);
         }
     }
 
@@ -266,7 +269,7 @@ public class RoomManager : MonoBehaviour
 
     public void SpawnDoorCover(Direction _dir, Vector3 _pos)
     {
-        GameObject roomBlocker = levelData.GetEntranceBlockerOfDir(_dir);
+        GameObject roomBlocker = roomGenSettings.GetEntranceBlockerOfDir(_dir);
         Instantiate(roomBlocker, _pos, Quaternion.identity, grid);
     }
 

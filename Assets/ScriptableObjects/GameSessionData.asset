@@ -12,19 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff03ebf9ca3314f4fbdc7ddd9681b861, type: 3}
   m_Name: GameSessionData
   m_EditorClassIdentifier: 
-  roomValueCapacityMultiplier: 0
-  LevelData:
+  roomValueCapacityMultiplier: 1.1
+  enemyHP_Multiplier: 0
+  levelData:
   - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
-      probability: 0
-      value: 10
+      probability: 1
+      value: 5
+    itemPool: []
+  - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
+    enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
-      probability: 0
+      probability: 1
       value: 10
-    itemPool:
-    - prefab: {fileID: 0}
-      probability: 0
-  - roomGenSettings: {fileID: 0}
-    enemyPool: []
     itemPool: []
