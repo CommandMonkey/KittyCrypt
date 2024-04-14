@@ -81,7 +81,7 @@ public class GunFire : IItem
         {
             nuzzleLight.enabled = false;
         }
-    }
+    
 
         if (settings.weaponType == WeaponSettingsObject.WeaponType.BurstFire)
         {
