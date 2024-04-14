@@ -750,7 +750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 1138645002}
   closeDoorAudio: {fileID: 8300000, guid: 563fd7cbb5bef0c498d96da8696be146, type: 3}
-  openDoorAudio: {fileID: 8300000, guid: 512e4b29888b83c4e92e4188c0abb305, type: 3}
+  openDoorAudio: {fileID: 8300000, guid: 31ea1731086ba9c47b06d3597e18d4b8, type: 3}
 --- !u!82 &1931346295
 AudioSource:
   m_ObjectHideFlags: 0
