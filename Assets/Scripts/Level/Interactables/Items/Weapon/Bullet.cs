@@ -32,10 +32,6 @@ public class Bullet : MonoBehaviour
         this.vanishAfter = vanishAfter;
     }
 
-    void FixedUpdate()
-    {
-    }
-
     public float GetDamage()
     {
         return damage;

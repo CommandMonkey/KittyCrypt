@@ -8,6 +8,7 @@ public class Arrow : MonoBehaviour
     private float damage;
     private GameObject hitEffect;
     private float destroyHitEffectAfter;
+    bool inWall = false;
 
     //Cached references
     Rigidbody2D myRigidbody;
@@ -23,12 +24,13 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Entrance"))
+        if (other.gameObject.CompareTag("Wall"))
         {
-            Debug.Log("HITTING WALL");
             myRigidbody.velocity = Vector3.zero;
-            { return; }
+            inWall = true;
         }
+
+        if(inWall) { return; }
 
         Enemy enemyScript = other.gameObject.GetComponent<Enemy>();
 
