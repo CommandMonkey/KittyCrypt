@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class Player : MonoBehaviour
     //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
     [SerializeField] int health = 9;
-
     [SerializeField] float drag = 0.9f;
     [SerializeField] float invinsibilityLenght = 1f;
     [SerializeField] float invisibilityLengthDash = 0.2f;
@@ -28,58 +28,51 @@ public class Player : MonoBehaviour
     public GameObject crosshair;
     public bool isDead = false;
     public UnityEvent onInteract;
-    Animator catAnimator;
+
 
     private float rollSpeed;
-    float rollSpeedDropMultiplier = 8f;
+    private float rollSpeedDropMultiplier = 8f;
     private State state;
-    float rollResetTime;
-    bool isRollDelaying = false;
-    float Crosshair_distance = 30f;
+    private float rollResetTime;
+    private bool isRollDelaying = false;
+    private float Crosshair_distance = 30f;
     
-    bool invinsibility = false;
+    private bool invinsibility = false;
 
 
-    Vector2 moveInput;
-    Vector2 AimDirection;
+    private Vector2 moveInput;
+    private Vector2 AimDirection;
 
-    ContactFilter2D noFilter;
+    private ContactFilter2D noFilter;
 
     // refs
     private Rigidbody2D myRigidbody;
     private Animator animator;
-    private SceneLoader loader;
-    private LevelManager levelManager;
-    private UserInput userInput;
     private Collider2D myCollider;
-    public GameObject reloadCircle;
-    public CatEchoSpawner dashingEchoSpawner;
+    private GameSession gameSession;
+    private UserInput userInput;
+
+    private SceneLoader loader;
+
 
 
     private void Awake()
     {
-        catAnimator = GetComponentInChildren<Animator>();
         onInteract = new UnityEvent();
-        reloadCircle = GameObject.FindGameObjectWithTag("ReloadCircle");
-        if(reloadCircle != null )
-        {
-            reloadCircle.SetActive(false);
-        }
     }
 
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
-        loader = FindObjectOfType<SceneLoader>();
-        levelManager = FindObjectOfType<LevelManager>();
-        userInput = FindObjectOfType<UserInput>();
         myCollider = GetComponent<Collider2D>();
-        dashingEchoSpawner = GetComponentInChildren<CatEchoSpawner>();
+        gameSession = GameSession.Instance;
 
+        FetchExternalRefs();
+
+        Debug.Log("Player Start");
         // Input Events
         userInput.onMove.AddListener(OnMove);
-        userInput.onAiming.AddListener(OnAim);
         userInput.onDash.AddListener(OnDash);
 
         // Create a contact filter that includes triggers
@@ -89,11 +82,32 @@ public class Player : MonoBehaviour
 
         state = State.normal;
         rollResetTime = rolldelay;
+        
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
+
+    private void FetchExternalRefs()
+    {
+        loader = FindObjectOfType<SceneLoader>();
+        userInput = FindObjectOfType<UserInput>();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("PlayerSceneLoaded");
+        FetchExternalRefs();
+/*        userInput.onMove.AddListener(OnMove);
+        userInput.onAiming.AddListener(OnAim);
+        userInput.onDash.AddListener(OnDash);*/
+        //transform.position = Vector3.zero;
+    }
+
 
     private void Update()
     {
-        if (isDead || levelManager.state != LevelManager.LevelState.Running)
+        if (isDead || GameSession.state != GameSession.GameState.Running)
         {
             myRigidbody.velocity = Vector2.zero;
             animator.SetBool("IsWalking", false);
@@ -108,7 +122,7 @@ public class Player : MonoBehaviour
 
             if (rollSpeed < Move_speed)
             {
-                catAnimator.SetTrigger("DashInvisibility");
+                animator.SetTrigger("DashInvisibility");
                 StartCoroutine(InvisibilityDelayRoutine(invisibilityLengthDash));
                 gameObject.layer = playerLayer;
                 state = State.normal;
@@ -164,7 +178,7 @@ public class Player : MonoBehaviour
 
     public void OnMove(Vector2 moveVector)
     {
-        if (levelManager.state != LevelManager.LevelState.Running)
+        if (GameSession.state != GameSession.GameState.Running)
         {
             moveInput = Vector2.zero;
             return;
@@ -173,15 +187,9 @@ public class Player : MonoBehaviour
         
     }
 
-    void OnAim(Vector2 aimDirection)
-    {
-        AimDirection = aimDirection;
-;
-    }
-
     void OnDash()
     {
-        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
+        if (myRigidbody.velocity == Vector2.zero || isRollDelaying || GameSession.state != GameSession.GameState.Running) { return; }
 
         dashingEchoSpawner.StrartingDashTrail(transform.rotation);
         animator.SetTrigger("Dash");
@@ -214,6 +222,11 @@ public class Player : MonoBehaviour
             animator.SetTrigger("IsDead");
             Invoke("BackToMenu", 1f);
         }
+    }
+
+    public void AddHealth(int hp)
+    {
+
     }
 
     void BackToMenu()

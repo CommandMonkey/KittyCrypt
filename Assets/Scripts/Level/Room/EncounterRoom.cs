@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EncounterRoom : Room
 {
+    [SerializeField] int enemyValueCapacity = 30;
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
     //[SerializeField] GameObject spawnAnimPrefab;
@@ -12,11 +13,12 @@ public class EncounterRoom : Room
     bool isActive = false; // if the player has entered and the encounter is active
     bool isRoomDefeated = false; // if the room has been defeted
     bool enemiesSpawned = false;
+    Vector3 finalEnemyPos;
     List<GameObject> enemies;
 
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
-    LevelManager levelManager;
+    MusicManager musicManager;
 
 
     // Start is called before the first frame update
@@ -24,10 +26,12 @@ public class EncounterRoom : Room
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
-        levelManager = FindObjectOfType<LevelManager>();
+        musicManager = FindObjectOfType<MusicManager>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         //levelManager.onEnemyKill.AddListener(OnEnemyKill);
+
+        enemiesToSpawn = gameSession.levelSettings.GetEnemyList(enemyValueCapacity);
 
         enemies = new List<GameObject>();
     }
@@ -38,14 +42,17 @@ public class EncounterRoom : Room
         int _enemiesAlive = enemies.Count;
         foreach (GameObject obj in enemies)
         {
-            if (obj == null) _enemiesAlive--;
+            if (obj == null)
+                _enemiesAlive--;
+            else
+                finalEnemyPos = obj.transform.position;
         }
-        Debug.Log(_enemiesAlive);
         if (_enemiesAlive == 0)
         {
             isRoomDefeated = true;
             isActive = false;
-            thisRoomManager.OpenDoors();
+            thisRoomManager.OpenDoors();    
+            musicManager.PlayExploringTheme(false);
         }
     }
 
@@ -66,6 +73,10 @@ public class EncounterRoom : Room
     //    }
     //}
 
+    void SpawnHP_Pickups()
+    {
+
+    }
 
     void OnPlayerEnter()
     {
@@ -75,6 +86,9 @@ public class EncounterRoom : Room
         Invoke("SetActive", 3f);
         thisRoomManager.CloseDoors();
         SpawnEnemies();
+
+        musicManager.PlayBattleTheme(false);
+
     }
 
     private void SetActive()

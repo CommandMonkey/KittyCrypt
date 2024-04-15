@@ -29,11 +29,13 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddWeapon(GameObject weapon)
     {
+        Debug.Log("AddingWeapon");
         GameObject cHotbarItem = itemInventory[currentHotbarPos];
         
         // drop item if holding one
         if (cHotbarItem != null)
         {
+            Debug.Log(cHotbarItem.name);
             SpawnItemPickup(cHotbarItem);
             IItem oldItem = GameHelper.GetComponentInAllChildren<IItem>(cHotbarItem);
             if (oldItem != null)

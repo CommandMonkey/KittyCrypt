@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -17,13 +18,16 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public UnityEvent onTogglePause;
     [NonSerialized] public UnityEvent onReload;
 
-    UserInputActions userInput;
+    PlayerInput playerInput;
+    Crosshair crosshair;
     float lastFireTime = 0f;
+
 
     bool firing = false;
 
     private void Awake()
     {
+        Debug.Log("UserInput Awake");
         onMove = new UnityEvent<Vector2>();
         onAiming = new UnityEvent<Vector2>();
         onScroll = new UnityEvent<float>();
@@ -33,29 +37,26 @@ public class UserInput : MonoBehaviour
         onTogglePause = new UnityEvent();
         onReload = new UnityEvent();
 
-        userInput = new UserInputActions();
+        ClearListeners();   
     }
 
     private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-
-
+        playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update()
     {
         //Debug.Log("delta: " + (Time.time - lastFireTime));
-        if (Time.time - lastFireTime > fireCooldown && Input.GetMouseButton(0))
+        var fire = playerInput.actions["Fire"];
+        if (Time.time - lastFireTime > fireCooldown && fire.IsPressed())
         {
-            Debug.Log("YE BOIIIIII");
             onFireEvent.Invoke();
             lastFireTime = Time.time;
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void ClearListeners()
     {
         onMove.RemoveAllListeners();
         onAiming.RemoveAllListeners();
@@ -80,6 +81,17 @@ public class UserInput : MonoBehaviour
     {
         onScroll.Invoke(value.Get<float>());
     }
+
+/*
+    void OnFire()
+    {
+        if (Time.time - lastFireTime > fireCooldown)
+        {
+            onFireEvent.Invoke();
+            lastFireTime = Time.time;
+        }
+    }
+*/
 
     void OnDash()
     {

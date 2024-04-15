@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff03ebf9ca3314f4fbdc7ddd9681b861, type: 3}
+  m_Name: GameSessionData
+  m_EditorClassIdentifier: 
+  roomValueCapacityMultiplier: 1.3
+  enemyHP_Multiplier: 0
+  levelData:
+  - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
+    enemyPool:
+    - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
+      probability: 1
+      value: 7
+    - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
+      probability: 0.64
+      value: 15
+    itemPool: []
+  - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
+    enemyPool:
+    - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
+      probability: 1
+      value: 10
+    itemPool: []

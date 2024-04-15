@@ -7,33 +7,49 @@ public class BossRoom : Room
 {
     [SerializeField] private Transform boss;
 
-    RatBossBehaviour bossScript;
-    
     private GameCamera gameCamera;
-    private LevelManager levelManager;
+    private RatBossBehaviour bossScript;
+    private LevelExitInteractable levelExit;
 
     bool started = false;
 
     protected override void RoomStart()
     {
         gameCamera = FindObjectOfType<GameCamera>();
-        onPlayerEnter.AddListener(OnPlayerEnter);
         bossScript = boss.GetComponent<RatBossBehaviour>();
-        levelManager = FindObjectOfType<LevelManager>();
+        levelExit = GetComponentInChildren<LevelExitInteractable>();
+
+        onPlayerEnter.AddListener(OnPlayerEnter);
+
+        bossScript.bossRoom = this;
     }
 
     private void OnPlayerEnter()
     {
         boss.gameObject.SetActive(true);
         StartCoroutine(BossCutsceneRoutine());
+
     }
+
+    public void OnBossDead()
+    {
+        levelExit.SetInteractable();
+        Invoke("focusCamOnPlayer", 1f);
+    }
+
 
     public void focusCamOnBoss()
     {
         gameCamera.SetPrimaryTarget(boss);
         gameCamera.SetSecondaryTarget(null);
     }
-    
+
+    public void focusCamOnPlayer()
+    {
+        gameCamera.SetPrimaryTarget(player.transform);
+        gameCamera.SetSecondaryTarget(null);
+    }
+
     public void focusCamOnBossAndPlayer()
     {
         gameCamera.SetPrimaryTarget(player.transform);
@@ -44,9 +60,10 @@ public class BossRoom : Room
     {
         if (started) yield break;
         started = true;
+        levelExit.SetUnInteractable();
 
-        levelManager.SetState(LevelManager.LevelState.Paused);
-        levelManager.musicManager.StopMusic();
+        gameSession.SetState(GameSession.GameState.Paused);
+        gameSession.musicManager.StopMusic();
 
         focusCamOnBoss();
         yield return new WaitForSeconds(2f);
@@ -72,7 +89,7 @@ public class BossRoom : Room
         yield return new WaitForSeconds(2f);
 
         focusCamOnBossAndPlayer();
-        levelManager.SetState(LevelManager.LevelState.Running);
+        gameSession.SetState(GameSession.GameState.Running);
         bossScript.StartBoss();
     }
 }

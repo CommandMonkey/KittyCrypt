@@ -15,14 +15,23 @@ public class HealthDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = GameSession.Instance.player;
         playerHealth = player.GetHealth();
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerHealth = player.GetHealth();
+        try
+        {
+            playerHealth = player.GetHealth();
+        }
+        catch
+        {
+            Debug.Log("dont have ref to player, fetching one");
+            player = FindObjectOfType<Player>();
+        }
+
 
         for (int i = 0; i < heartsAmount.Length; i++) 
         {

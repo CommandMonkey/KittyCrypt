@@ -1,40 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour 
 {
     [SerializeField] AudioClip exploringTheme;
     [SerializeField] AudioClip ratBossTheme;
+    [SerializeField] AudioClip battleTheme;
     [SerializeField] float fadeDuration = 2f; // Duration of fade (in seconds)
 
     AudioSource audioSource;
 
+    float exploringThemePauseTime = 0f;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        PlayExploringTheme(false);
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+            PlayExploringTheme(false);
     }
 
     public void PlayExploringTheme(bool fade = true)
     {
-        if (fade)
-            StartCoroutine(FadeAndPlayTheme(exploringTheme));
-        else
-        {
-            audioSource.clip = exploringTheme;
-            audioSource.Play();
-        }
+        StartTheme(exploringTheme, fade);
     }
 
     public void PlayRatBossTheme(bool fade = true)
     {
+        StartTheme(ratBossTheme, fade);
+    }
+
+    public void PlayBattleTheme(bool fade = true)
+    {
+        StartTheme(battleTheme, fade);
+    }
+
+    private void StartTheme(AudioClip theme, bool fade)
+    {
+        if (audioSource.clip == exploringTheme && theme != exploringTheme)
+        {
+            exploringThemePauseTime = audioSource.time;
+        }
+
         if (fade)
-            StartCoroutine(FadeAndPlayTheme(ratBossTheme));
+            StartCoroutine(FadeAndPlayTheme(theme));
         else
         {
-            audioSource.clip = ratBossTheme;
+            audioSource.clip = theme;
             audioSource.Play();
+        }
+
+        if (theme == exploringTheme) 
+        { 
+            audioSource.time = exploringThemePauseTime;
         }
     }
 

@@ -1,38 +1,59 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class GunRotation : MonoBehaviour
 {
     [SerializeField] Transform barrelExitPoint;
 
+    PlayerInput playerInput;
+    Crosshair crosshair;
     Vector3 mousePos;
+    Vector3 aimTarget;
     Vector3 gunPivotToExit;
     float angle;
+
+    private void Start()
+    {
+        playerInput = GameSession.Instance.playerInput;
+        crosshair = GameSession.Instance.crosshair;
+    }
 
     // Update is called once per frame
     void Update()
     {
         gunPivotToExit = transform.localPosition - transform.InverseTransformPoint(barrelExitPoint.position);
-        CalculateMousePos();
+        CalculateAimTarget();
         CalculateOffset();
         SetRotation();
         FlipGun();
     }
 
-    void CalculateMousePos()
+    void CalculateAimTarget()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
+        if (playerInput.currentControlScheme != "Keyboard and mouse")
+        {
+            aimTarget = crosshair.transform.position;
+            Debug.Log("Controlling " + aimTarget);
+        }
+        else
+        {
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            aimTarget = mousePos;
+            aimTarget.z = 0;
+            Debug.Log("Mousing " + aimTarget);
+        }
     }
 
     void CalculateOffset()
     {
-        Vector3 gunPivotToMouse = transform.localPosition - transform.InverseTransformPoint(mousePos);
+        Vector3 gunPivotToMouse = transform.localPosition - transform.InverseTransformPoint(aimTarget);
         angle = Mathf.Atan(gunPivotToExit.y / gunPivotToMouse.x) * Mathf.Rad2Deg;
     }
 
     void SetRotation()
     {
-        Vector3 lookRotation = transform.position - mousePos;
+        Vector3 lookRotation = transform.position - aimTarget;
         Quaternion pivotToMouseRotation = Quaternion.FromToRotation(Vector3.left, lookRotation);
         Vector3 eulerAngles = pivotToMouseRotation.eulerAngles;
 
@@ -49,7 +70,20 @@ public class GunRotation : MonoBehaviour
 
     void FlipGun()
     {
-        //TODO make gun shoot right direction
+        if (playerInput.currentControlScheme != "Keyboard and mouse")
+        {
+            GunFlipController();
+        }
+        else
+        {
+            GunFlipMouse();
+        }
+
+        barrelExitPoint.localRotation = Quaternion.identity;
+    }
+
+    void GunFlipMouse()
+    {
         if (mousePos.x < transform.position.x)
         {
             transform.localScale = new Vector3(1, -1, 1);
@@ -58,7 +92,17 @@ public class GunRotation : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
+    }
 
-        barrelExitPoint.localRotation = Quaternion.identity;
+    void GunFlipController()
+    {
+        if (crosshair.transform.position.x < transform.position.x)
+        {
+            transform.localScale = new Vector3(1, -1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 }

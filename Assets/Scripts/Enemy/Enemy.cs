@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     protected bool lineOfSight = true;
     protected Vector3 targetPosition = Vector3.zero;
 
-    protected LevelManager levelManager;
+    protected GameSession levelManager;
     protected Animator animator;
     protected Rigidbody2D rigidBody2D;
     protected Transform target;
@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
         animator = GetComponentInChildren<Animator>();
         rigidBody2D = GetComponent<Rigidbody2D>();
         target = levelManager.player.transform;
@@ -70,7 +70,6 @@ public class Enemy : MonoBehaviour
         PlayHurtVFX();
         PlayHurtSFX();
         health -= damage;
-        Debug.Log(health);  
         if (!isDead && health <= 0)
         {
             levelManager.onEnemyKill.Invoke();

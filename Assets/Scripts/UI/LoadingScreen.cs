@@ -6,22 +6,22 @@ using UnityEngine.Events;
 
 public class LoadingScreen : MonoBehaviour
 {
-    LevelManager levelManager;
+    GameSession levelManager;
     Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<GameSession>();
         animator = GetComponent<Animator>();
 
-        animator.SetInteger("levelState", (int)levelManager.state);
+        animator.SetInteger("levelState", (int)GameSession.state);
 
         levelManager.OnNewState.AddListener(OnNewState);
     }
 
     private void OnNewState()
     {
-        animator.SetInteger("levelState", (int)levelManager.state);
+        animator.SetInteger("levelState", (int)GameSession.state);
     }
 
     // Update is called once per frame

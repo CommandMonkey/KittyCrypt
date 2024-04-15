@@ -21,8 +21,10 @@ public class Room : MonoBehaviour
     [NonSerialized] protected UnityEvent onPlayerEnter;
 
     // Cached references
+    protected GameSession gameSession;
     protected Player player;
-    GameObject fogOfWarObject;
+    protected RoomManager roomManager;
+    FogOfWar fogOfWarObject;
 
     private void Awake()
     {
@@ -31,16 +33,14 @@ public class Room : MonoBehaviour
 
     void Start()
     {
-        player = FindObjectOfType<Player>();
-        fogOfWarObject = GameHelper.GetChildWithTag(gameObject, "FogOfWar");
+        gameSession = GameSession.Instance;
+        player = gameSession.player;
+        roomManager = FindObjectOfType<RoomManager>();
+        fogOfWarObject = GetComponentInChildren<FogOfWar>();
 
-        entrances = new List<Entrance>(FindObjectsByType<Entrance>(FindObjectsSortMode.None));
+        entrances = transform.GetComponentsInAllChildren<Entrance>();
 
-        // subscribe to entrances exit events
-        foreach (Entrance entr in entrances)
-        {
-            entr.onEntranceExit.AddListener(OnPlayerLeftEntrance);
-        }
+        roomManager.onEntranceExit.AddListener(OnPlayerLeftEntrance);
 
         RoomStart();
     }
@@ -57,8 +57,7 @@ public class Room : MonoBehaviour
         {
             if (fogOfWarObject != null)
             {
-                fogOfWarObject.GetComponent<Animation>().Play();
-                Destroy(fogOfWarObject, 2f);
+                fogOfWarObject.FadeAway();
             }
 
             onPlayerEnter.Invoke();
