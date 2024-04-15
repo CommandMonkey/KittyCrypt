@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +22,7 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
     BoxCollider2D triggerCollider;
     SpriteRenderer spriteRenderer;
     RoomManager roomManager;
+    UICanvas uiCanvas;
     Player player;
 
     // Start is called before the first frame update
@@ -32,6 +32,7 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         triggerCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         roomManager = FindObjectOfType<RoomManager>();
+        uiCanvas = FindObjectOfType<UICanvas>();
         player = GameSession.Instance.player;
 
         canInteract = true;
@@ -53,11 +54,19 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         {
             OpenDoor();
             player.hasKey = false;
-            canInteract = false;
+            FollowKey followKey = FindObjectOfType<FollowKey>();
+            if (followKey != null) 
+            {
+                Destroy(followKey.gameObject);
+            }
+            canInteract = false;    
         }
         else
         {
             interactPrompt = "Locked.. Get the key first";
+            Transform keyPickup = FindObjectOfType<KeyPickupInteractable>().transform;
+            uiCanvas.directionPointer.gameObject.SetActive(true);
+            uiCanvas.directionPointer.target = keyPickup;
 
             Invoke("ResetPromptText", 2f);
         }

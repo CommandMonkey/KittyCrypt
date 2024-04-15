@@ -12,6 +12,8 @@ public class BossRoom : Room
     private RatBossBehaviour bossScript;
     private LevelExitInteractable levelExit;
 
+    private BossDoorInteractable bossDoor;
+
     bool started = false;
 
     protected override void RoomStart()
@@ -29,15 +31,15 @@ public class BossRoom : Room
     private void OnPlayerEnter()
     {
         boss.gameObject.SetActive(true);
+        bossDoor.CloseDoor();
         StartCoroutine(BossCutsceneRoutine());
-        roomManager.CloseDoors();
     }
 
     public void OnBossDead()
     {
         levelExit.SetInteractable();
         Invoke("focusCamOnPlayer", 1f);
-        roomManager.OpenDoors();
+        bossDoor.CloseDoor();
     }
 
     void OnRoomSpawningDone()
@@ -46,6 +48,7 @@ public class BossRoom : Room
         BossDoorInteractable bossDoor =  Instantiate(bossDoorPrefab, previousRoomEntrance.transform.position, Quaternion.identity).GetComponent<BossDoorInteractable>();
         bossDoor.direction = previousRoomEntrance.direction;
         previousRoomEntrance.Die();
+        this.bossDoor = bossDoor;
     }
 
 
