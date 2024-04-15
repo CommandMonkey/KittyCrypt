@@ -6957,6 +6957,7 @@ MonoBehaviour:
   noEnemyLayers:
     serializedVersion: 2
     m_Bits: 2112
+  healthPrefab: {fileID: 4317062860953269516, guid: 8234473345199d84bb952fd2cefef13a, type: 3}
 --- !u!61 &2939126284320088402
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
     private GameSession gameSession;
     private UserInput userInput;
 
+    private CatEchoSpawner dashingEchoSpawner;
+
     private SceneLoader loader;
 
 
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         myCollider = GetComponent<Collider2D>();
         gameSession = GameSession.Instance;
+        dashingEchoSpawner = GetComponentInChildren<CatEchoSpawner>();
 
         FetchExternalRefs();
 
@@ -126,6 +129,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(InvisibilityDelayRoutine(invisibilityLengthDash));
                 gameObject.layer = playerLayer;
                 state = State.normal;
+                dashingEchoSpawner.StopDashTrail();
             }
         }
 
@@ -190,6 +194,7 @@ public class Player : MonoBehaviour
     {
         if (myRigidbody.velocity == Vector2.zero || isRollDelaying || GameSession.state != GameSession.GameState.Running) { return; }
 
+        dashingEchoSpawner.StrartingDashTrail(transform.rotation);
         animator.SetTrigger("Dash");
         rollSpeed = 50f;
         state = State.rolling;
@@ -224,7 +229,10 @@ public class Player : MonoBehaviour
 
     public void AddHealth(int hp)
     {
-
+        Debug.Log("Adding HP: " + hp);
+        health += hp;
+        health = Mathf.Clamp(health, 0, 9);
+        animator.SetTrigger("WasHealed");
     }
 
     void BackToMenu()

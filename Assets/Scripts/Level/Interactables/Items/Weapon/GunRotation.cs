@@ -34,14 +34,14 @@ public class GunRotation : MonoBehaviour
         if (playerInput.currentControlScheme != "Keyboard and mouse")
         {
             aimTarget = crosshair.transform.position;
-            Debug.Log("Controlling " + aimTarget);
+            //Debug.Log("Controlling " + aimTarget);
         }
         else
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             aimTarget = mousePos;
             aimTarget.z = 0;
-            Debug.Log("Mousing " + aimTarget);
+            //Debug.Log("Mousing " + aimTarget);
         }
     }
 

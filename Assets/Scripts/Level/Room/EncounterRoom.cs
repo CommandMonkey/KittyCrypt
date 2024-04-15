@@ -8,6 +8,7 @@ public class EncounterRoom : Room
     [SerializeField] int enemyValueCapacity = 30;
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
+    [SerializeField] GameObject healthPrefab;
     //[SerializeField] GameObject spawnAnimPrefab;
 
     bool isActive = false; // if the player has entered and the encounter is active
@@ -18,6 +19,7 @@ public class EncounterRoom : Room
 
     RoomManager thisRoomManager;
     BoxCollider2D roomCollider;
+    MusicManager musicManager;
 
 
     // Start is called before the first frame update
@@ -25,6 +27,7 @@ public class EncounterRoom : Room
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
+        musicManager = FindObjectOfType<MusicManager>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         //levelManager.onEnemyKill.AddListener(OnEnemyKill);
@@ -49,8 +52,9 @@ public class EncounterRoom : Room
         {
             isRoomDefeated = true;
             isActive = false;
-            thisRoomManager.OpenDoors();
-            
+            SpawnHP_Pickups();
+            thisRoomManager.OpenDoors();    
+            musicManager.PlayExploringTheme(false);
         }
     }
 
@@ -73,7 +77,11 @@ public class EncounterRoom : Room
 
     void SpawnHP_Pickups()
     {
-
+        int amountOfHealth = UnityEngine.Random.Range(1, 3); 
+        for (int i = 0; i < amountOfHealth; i++)
+        {
+            Instantiate(healthPrefab, finalEnemyPos, Quaternion.identity);
+        }
     }
 
     void OnPlayerEnter()
@@ -84,6 +92,9 @@ public class EncounterRoom : Room
         Invoke("SetActive", 3f);
         thisRoomManager.CloseDoors();
         SpawnEnemies();
+
+        musicManager.PlayBattleTheme(false);
+
     }
 
     private void SetActive()

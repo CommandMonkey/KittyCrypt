@@ -29,6 +29,7 @@ public class RoomManager : MonoBehaviour
     // Cached refs
     GameSession gameSession;
     AudioSource audioScource;
+    Player player;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class RoomManager : MonoBehaviour
     {
         gameSession = GameSession.Instance;
         audioScource = GetComponent<AudioSource>();
+        player = gameSession.player;
 
         roomGenSettings = gameSession.levelSettings.roomGenSettings;
         roomsFilter = CreateRoomsFilter();
@@ -96,6 +98,7 @@ public class RoomManager : MonoBehaviour
         GameSession.state = GameSession.GameState.Running;
         CloseDoors(true);
         onRoomSpawningDone.Invoke();
+        player.transform.position = Vector3.zero;
         Debug.Log("------- RoomSpawning Done -------");
     }
 
