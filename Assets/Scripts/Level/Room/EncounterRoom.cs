@@ -8,6 +8,7 @@ public class EncounterRoom : Room
     [SerializeField] int enemyValueCapacity = 30;
     [SerializeField] List<GameObject> enemiesToSpawn;
     [SerializeField] LayerMask noEnemyLayers;
+    [SerializeField] GameObject healthPrefab;
     //[SerializeField] GameObject spawnAnimPrefab;
 
     bool isActive = false; // if the player has entered and the encounter is active
@@ -51,6 +52,7 @@ public class EncounterRoom : Room
         {
             isRoomDefeated = true;
             isActive = false;
+            SpawnHP_Pickups();
             thisRoomManager.OpenDoors();    
             musicManager.PlayExploringTheme(false);
         }
@@ -75,7 +77,11 @@ public class EncounterRoom : Room
 
     void SpawnHP_Pickups()
     {
-
+        int amountOfHealth = UnityEngine.Random.Range(1, 3); 
+        for (int i = 0; i < amountOfHealth; i++)
+        {
+            Instantiate(healthPrefab, finalEnemyPos, Quaternion.identity);
+        }
     }
 
     void OnPlayerEnter()
