@@ -126,6 +126,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(InvisibilityDelayRoutine(invisibilityLengthDash));
                 gameObject.layer = playerLayer;
                 state = State.normal;
+                dashingEchoSpawner.StopDashTrail();
             }
         }
 
@@ -190,6 +191,7 @@ public class Player : MonoBehaviour
     {
         if (myRigidbody.velocity == Vector2.zero || isRollDelaying || GameSession.state != GameSession.GameState.Running) { return; }
 
+        dashingEchoSpawner.StrartingDashTrail(transform.rotation);
         animator.SetTrigger("Dash");
         rollSpeed = 50f;
         state = State.rolling;

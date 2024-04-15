@@ -2,27 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class catEcho : MonoBehaviour
+public class CatEcho : MonoBehaviour
 {
-    public float timeBetweenSpawns;
-    public float startTimeBetweenSpawns;
-
-    public GameObject echo;
-
-    private void Update()
+    [SerializeField] float trailsTimeInThisWorld = 0.45f;
+    void Start()
     {
-        if (timeBetweenSpawns <= 0)
-        {
-            //spawngame obj
-            Instantiate(echo, transform.position, Quaternion.identity);
-            timeBetweenSpawns = startTimeBetweenSpawns;
-        }
-        else
-        {
-            timeBetweenSpawns -= Time.deltaTime;
-        }
+        StartCoroutine(DelayedDestroyRoutine());
     }
-
-
-
+    IEnumerator DelayedDestroyRoutine()
+    {
+        yield return new WaitForSeconds(trailsTimeInThisWorld);
+        Destroy(gameObject);
+    }
 }

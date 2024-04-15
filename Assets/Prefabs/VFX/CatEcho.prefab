@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1451742481281783275}
   - component: {fileID: 1067684070728204877}
   - component: {fileID: 5874182887706826656}
-  - component: {fileID: 2904573727589300804}
-  m_Layer: 0
+  - component: {fileID: 2528093153573326587}
+  m_Layer: 7
   m_Name: CatEcho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,9 +95,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 79b99f7c8f9df064d9daf6d60942edb4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7294118}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2904573727589300804
+--- !u!114 &2528093153573326587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,9 +116,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1178006519186075670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 404dbb532ab100441aa423ecd8542d75, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f07ed227a323124cb5f9c54462d95bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenSpawns: 0.3
-  startTimeBetweenSpawns: 0
-  echo: {fileID: 1178006519186075670}
+  trailsTimeInThisWorld: 1
