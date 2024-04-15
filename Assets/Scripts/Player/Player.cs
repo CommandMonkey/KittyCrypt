@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     private UserInput userInput;
     private Collider2D myCollider;
     public GameObject reloadCircle;
+    public CatEchoSpawner dashingEchoSpawner;
 
 
     private void Awake()
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         userInput = FindObjectOfType<UserInput>();
         myCollider = GetComponent<Collider2D>();
+        dashingEchoSpawner = GetComponentInChildren<CatEchoSpawner>();
 
         // Input Events
         userInput.onMove.AddListener(OnMove);
@@ -87,7 +89,6 @@ public class Player : MonoBehaviour
 
         state = State.normal;
         rollResetTime = rolldelay;
-
     }
 
     private void Update()
@@ -111,6 +112,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(InvisibilityDelayRoutine(invisibilityLengthDash));
                 gameObject.layer = playerLayer;
                 state = State.normal;
+                dashingEchoSpawner.StopDashTrail();
             }
         }
 
@@ -181,6 +183,7 @@ public class Player : MonoBehaviour
     {
         if (myRigidbody.velocity == Vector2.zero || isRollDelaying || levelManager.state != LevelManager.LevelState.Running) { return; }
 
+        dashingEchoSpawner.StrartingDashTrail(transform.rotation);
         animator.SetTrigger("Dash");
         rollSpeed = 50f;
         state = State.rolling;

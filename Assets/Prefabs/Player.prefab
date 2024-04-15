@@ -164,6 +164,53 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &3537041531998824995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4641091504373223350}
+  - component: {fileID: 4213407410410701865}
+  m_Layer: 0
+  m_Name: DashingEchoSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4641091504373223350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537041531998824995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7857143, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3507956081393271340}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4213407410410701865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537041531998824995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404dbb532ab100441aa423ecd8542d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTimeBetweenSpawns: 0.05
+  dashing: 0
+  echoPrefab: {fileID: 1178006519186075670, guid: 6495f48039de37e4991ce41cad206a90, type: 3}
 --- !u!1 &3865313931253725056
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +248,7 @@ Transform:
   - {fileID: 7261892003396207799}
   - {fileID: 2432879231802117738}
   - {fileID: 137258324056783081}
+  - {fileID: 4641091504373223350}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8537134451574017292
@@ -292,6 +340,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   reloadCircle: {fileID: 0}
+  dashingEchoSpawner: {fileID: 0}
 --- !u!1 &5398213958659527685
 GameObject:
   m_ObjectHideFlags: 0
