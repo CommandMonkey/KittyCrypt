@@ -8,8 +8,12 @@ public class KeyPickupInteractable : MonoBehaviour, IInteractable
     public string interactPrompt { get; set; }
     public bool canInteract { get; set; }
 
+    Player player;
+
     private void Start()
     {
+        player = GameSession.Instance.player;
+
         interactPrompt = "Rat Key";
         canInteract = true;
     }
@@ -17,7 +21,10 @@ public class KeyPickupInteractable : MonoBehaviour, IInteractable
     public void Interact()
     {
         gameObject.SetActive(false);
-        Instantiate(replacementPrefab, transform.position, transform.rotation);
+        FollowKey key = Instantiate(replacementPrefab, transform.position, transform.rotation).GetComponent<FollowKey>();
+        key.target = player.transform;
+
+        player.hasKey = true;
     }
 
 }

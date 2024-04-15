@@ -3946,7 +3946,7 @@ MonoBehaviour:
   - {x: 33, y: -12, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 87470
+  m_InstanceId: 55322
   m_LocalBounds:
     m_Center: {x: 10.5, y: 10.5, z: 0}
     m_Extent: {x: 22.5, y: 22.5, z: 0}
@@ -5259,7 +5259,7 @@ MonoBehaviour:
   - {x: 32.125, y: -11.125, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 87454
+  m_InstanceId: 55306
   m_LocalBounds:
     m_Center: {x: 10.5, y: 8, z: 0}
     m_Extent: {x: 21.625, y: 19.125, z: 0}
@@ -5322,8 +5322,8 @@ MonoBehaviour:
   entrances:
   - {fileID: 7502734693209204236}
   startWeaponPickups:
-  - {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-  - {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
+  - {fileID: 6279342946748679483}
+  - {fileID: 6708866686081343314}
   pickUpWeaponText: {fileID: 6598570967107883043}
 --- !u!61 &2939126284320088402
 BoxCollider2D:
@@ -5386,7 +5386,7 @@ GameObject:
   - component: {fileID: 2987257519523017397}
   m_Layer: 6
   m_Name: OuterWalls
-  m_TagString: Wall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13466,6 +13466,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
+--- !u!114 &6279342946748679483 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
+  m_PrefabInstance: {fileID: 7049941371518634597}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655c3dbf04c22ee41ae48ccfa5e1ff06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7823164647637320319 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
@@ -13519,10 +13530,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: item
-      value: 
-      objectReference: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
     - target: {fileID: 5068044822145740819, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
       propertyPath: m_Name
       value: ItemPickupPrefab
@@ -13532,6 +13539,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
+--- !u!114 &6708866686081343314 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
+  m_PrefabInstance: {fileID: 7775596440187375628}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655c3dbf04c22ee41ae48ccfa5e1ff06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7399252958577874966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}

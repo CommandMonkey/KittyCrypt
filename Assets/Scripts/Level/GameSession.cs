@@ -82,6 +82,8 @@ public class GameSession : MonoBehaviour
             return;
         }
 
+        onEnemyKill = new UnityEvent();
+        OnNewState = new UnityEvent();
         levelSettings = gameSessionData.GetLevelData(levelIndex);
 
         musicManager = FindObjectOfType<MusicManager>();
