@@ -28,13 +28,14 @@ public class BossRoom : Room
     {
         boss.gameObject.SetActive(true);
         StartCoroutine(BossCutsceneRoutine());
-
+        roomManager.CloseDoors();
     }
 
     public void OnBossDead()
     {
         levelExit.SetInteractable();
         Invoke("focusCamOnPlayer", 1f);
+        roomManager.OpenDoors();
     }
 
 
