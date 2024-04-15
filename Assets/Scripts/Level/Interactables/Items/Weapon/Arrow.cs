@@ -36,7 +36,6 @@ public class Arrow : MonoBehaviour
 
         if (enemyScript != null)
         {
-            enemyScript.GetComponent<Rigidbody2D>().velocity += -(Vector2)transform.forward * 100;
             enemyScript.TakeDamage(damage);
         }
 

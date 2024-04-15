@@ -10,8 +10,6 @@ public class Bullet : MonoBehaviour
     private float destroyHitEffectAfter;
     private float vanishAfter;
 
-
-
     //Cached references
     Rigidbody2D myRigidbody;
 
