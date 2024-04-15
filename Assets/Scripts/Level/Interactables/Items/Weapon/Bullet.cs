@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         Destroy(gameObject, vanishAfter);
+        myRigidbody.velocity = transform.right * speed;
     }
     public void Initialize(float speed, float damage, GameObject hitEffect, float destroyHitEffectAfter = 2f, float vanishAfter = 4f)
     {
@@ -33,26 +34,20 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        myRigidbody.velocity = transform.right * speed;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public float GetDamage()
     {
-        
-        Enemy enemyScript = other.gameObject.GetComponent<Enemy>();
-
-        if (enemyScript != null)
-        {
-            enemyScript.GetComponent<Rigidbody2D>().velocity += -(Vector2)transform.forward * 100;
-            enemyScript.TakeDamage(damage);
-        }
-
-
-
-        var ffxInstance = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        Destroy(ffxInstance, destroyHitEffectAfter);
-        Destroy(gameObject);
+        return damage;
     }
 
+    public GameObject GetHitEffect()
+    {
+        return hitEffect;
+    }
 
+    public float GetDestroyHitEffectAfter()
+    {
+        return destroyHitEffectAfter;
+    }
 }

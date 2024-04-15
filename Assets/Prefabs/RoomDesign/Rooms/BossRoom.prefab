@@ -5417,7 +5417,7 @@ GameObject:
   - component: {fileID: 7048956467449106261}
   m_Layer: 6
   m_Name: OuterWalls
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
