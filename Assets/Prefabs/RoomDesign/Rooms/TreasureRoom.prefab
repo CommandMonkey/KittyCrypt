@@ -2661,6 +2661,7 @@ MonoBehaviour:
   itemSpawns:
   - {fileID: 5699954848933881258}
   - {fileID: 7771448046828111232}
+  pickupPrefab: {fileID: 5068044822145740819, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
 --- !u!1 &4682133950107252391
 GameObject:
   m_ObjectHideFlags: 0

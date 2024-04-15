@@ -6,6 +6,7 @@ using UnityEngine;
 public class TressureRoom : Room
 {
     [SerializeField] List<Transform> itemSpawns;
+    [SerializeField] GameObject pickupPrefab;
 
     // Start is called before the first frame update
     protected override void RoomStart()
@@ -20,7 +21,8 @@ public class TressureRoom : Room
     private void SpawnItem(Transform t)
     {
         GameObject item = gameSession.levelSettings.GetRandomItem();
-        Instantiate(item, t);
+        ItemPickupInteractable pickup = Instantiate(pickupPrefab, t).GetComponent<ItemPickupInteractable>();
+        pickup.item = item;
     }
 
     // Update is called once per frame
