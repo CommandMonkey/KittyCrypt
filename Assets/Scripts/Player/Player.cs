@@ -226,6 +226,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Adding HP: " + hp);
         health += hp;
+        health = Mathf.Clamp(health, 0, 9);
         animator.SetTrigger("WasHealed");
     }
 
