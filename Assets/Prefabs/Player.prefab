@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404dbb532ab100441aa423ecd8542d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeBetweenSpawns: 0.05
+  startTimeBetweenSpawns: 0.01
   dashing: 0
   echoPrefab: {fileID: 1178006519186075670, guid: 6495f48039de37e4991ce41cad206a90, type: 3}
 --- !u!1 &3865313931253725056
@@ -339,8 +339,6 @@ MonoBehaviour:
   onInteract:
     m_PersistentCalls:
       m_Calls: []
-  reloadCircle: {fileID: 0}
-  dashingEchoSpawner: {fileID: 0}
 --- !u!1 &5398213958659527685
 GameObject:
   m_ObjectHideFlags: 0
