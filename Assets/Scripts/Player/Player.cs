@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
     private GameSession gameSession;
     private UserInput userInput;
 
+    private CatEchoSpawner dashingEchoSpawner;
+
     private SceneLoader loader;
 
 
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         myCollider = GetComponent<Collider2D>();
         gameSession = GameSession.Instance;
+        dashingEchoSpawner = GetComponentInChildren<CatEchoSpawner>();
 
         FetchExternalRefs();
 
