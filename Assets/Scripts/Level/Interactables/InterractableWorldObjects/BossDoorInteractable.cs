@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,18 +20,25 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
 
 
     BoxCollider2D collisionCollider;
+    BoxCollider2D triggerCollider;
     SpriteRenderer spriteRenderer;
+    RoomManager roomManager;
     Player player;
 
     // Start is called before the first frame update
     void Start()
     {
-        collisionCollider = GetComponent<BoxCollider2D>();
+        collisionCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        triggerCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        roomManager = FindObjectOfType<RoomManager>();
         player = GameSession.Instance.player;
+
+        canInteract = true;
 
         ResetPromptText();
         CloseDoor();
+        SetDoorCollisionSize();
     }
 
     // Update is called once per frame
@@ -45,6 +53,7 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         {
             OpenDoor();
             player.hasKey = false;
+            canInteract = false;
         }
         else
         {
@@ -98,5 +107,10 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         {
             spriteRenderer.sprite = doorOpen ? sideOpenDoorSprite : sideClosedDoorSprite;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        roomManager.onEntranceExit.Invoke();
     }
 }

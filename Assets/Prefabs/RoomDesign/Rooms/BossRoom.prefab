@@ -5356,6 +5356,7 @@ MonoBehaviour:
   - {fileID: 2916657273243541233}
   - {fileID: 5566130094315618097}
   boss: {fileID: 5183568937902963476}
+  bossDoorPrefab: {fileID: 6201475082725438284, guid: 97d9ad0299c12634ebcb32c8ed3937fe, type: 3}
 --- !u!61 &2939126284320088402
 BoxCollider2D:
   m_ObjectHideFlags: 0
