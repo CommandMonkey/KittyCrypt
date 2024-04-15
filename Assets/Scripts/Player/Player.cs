@@ -226,7 +226,9 @@ public class Player : MonoBehaviour
 
     public void AddHealth(int hp)
     {
-
+        Debug.Log("Adding HP: " + hp);
+        health += hp;
+        animator.SetTrigger("WasHealed");
     }
 
     void BackToMenu()

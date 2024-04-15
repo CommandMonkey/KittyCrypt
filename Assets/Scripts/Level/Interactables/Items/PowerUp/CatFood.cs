@@ -8,7 +8,7 @@ public class CatFood : MonoBehaviour
     [SerializeField] float initialForceMagnitude;
     [SerializeField] float gravityMagnitude;
     [SerializeField] float timeUntilStop;
-    [SerializeField] int healthIncrease;
+    [SerializeField] int healthIncrease = 1;
 
     Player player;
     Rigidbody2D rigidbody2D;
@@ -18,7 +18,7 @@ public class CatFood : MonoBehaviour
 
     private void Start()
     {
-      //player = GameSession.Instance.player;
+        player = GameSession.Instance.player;
         rigidbody2D = GetComponent<Rigidbody2D>();
 
         gravityVector = new Vector2(0, gravityMagnitude);
