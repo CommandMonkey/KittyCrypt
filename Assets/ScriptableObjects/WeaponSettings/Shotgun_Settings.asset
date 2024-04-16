@@ -17,7 +17,7 @@ MonoBehaviour:
   reloadAudio: {fileID: 8300000, guid: 0eccad6467630a946b3d1afede8365f4, type: 3}
   fireRate: 1
   reloadTime: 1.3
-  bulletDamage: 2
+  bulletDamage: 3
   bulletsBeforeReload: 15
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
