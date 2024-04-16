@@ -18,6 +18,7 @@ public class PlayerInteraction : MonoBehaviour
 
     // cached references
     UserInput userInput;
+    CircleCollider2D circleCollider;
     GameSession gameSession;
 
 
@@ -25,6 +26,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         interactablePromptText = GameObject.FindGameObjectWithTag("InteractPromptText")?.GetComponent<TMP_Text>();
         userInput = FindObjectOfType<UserInput>();
+        circleCollider = GetComponent<CircleCollider2D>();
         gameSession = FindObjectOfType<GameSession>();
         // Setup Input
         userInput.onInteract.AddListener(OnInteract);
@@ -46,7 +48,26 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
-        closestInteractable = GetClosestInteractable()?.transform;
+        //foreach (GameObject t in interactablesInRange)
+        //{
+        //    if (t != null)
+        //    {
+        //        if (!circleCollider.OverlapPoint(t.transform.position))
+        //        {
+        //            UnRegisterInteractable(t);
+        //        }
+        //    }
+
+        //}
+
+        GameObject interactable = GetClosestInteractable();
+        if (interactable != null)
+        {
+            closestInteractable = interactable.transform;
+        }
+        else
+            closestInteractable = null;
+
 
         if (closestInteractable != null)
         {
@@ -151,9 +172,9 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (interactable.GetComponent<IInteractable>().canInteract)
             {
-                float magnitude = (interactable.transform.position - transform.position).sqrMagnitude; // Using sqrMagnitude for performance
-
-                if (magnitude < smallestMagnitude)
+                float magnitude = (interactable.transform.position - transform.position).magnitude; // Using sqrMagnitude for performance
+                Debug.Log(magnitude + " , " + circleCollider.radius);
+                if (magnitude < circleCollider.radius && magnitude < smallestMagnitude)
                 {
                     closestInteractable = interactable;
                     smallestMagnitude = magnitude;

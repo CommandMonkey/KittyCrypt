@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
         OnDamageTaken();
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         PlayDeathVFX();
         Destroy(gameObject);
