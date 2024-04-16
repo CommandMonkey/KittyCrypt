@@ -151,7 +151,7 @@
                     "path": "<DualShockGamepad>/leftStick",
                     "interactions": "",
                     "processors": "StickDeadzone",
-                    "groups": "PlayStation controller",
+                    "groups": "PlayStation Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -195,7 +195,7 @@
                     "path": "<DualShockGamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PlayStation controller",
+                    "groups": "PlayStation Controller",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -239,7 +239,7 @@
                     "path": "<DualShockGamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PlayStation controller",
+                    "groups": "PlayStation Controller",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -294,7 +294,7 @@
                     "path": "<DualShockGamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PlayStation controller",
+                    "groups": "PlayStation Controller",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -382,7 +382,7 @@
                     "path": "<DualShockGamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PlayStation controller",
+                    "groups": "PlayStation Controller",
                     "action": "Aiming",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -404,7 +404,7 @@
                     "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PlayStation controller;Switch Controller;Xbox Controller",
+                    "groups": "PlayStation Controller;Switch Controller;Xbox Controller",
                     "action": "TogglePause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -448,7 +448,7 @@
                     "path": "<DualShockGamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PlayStation controller",
+                    "groups": "PlayStation Controller",
                     "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -518,8 +518,8 @@
             ]
         },
         {
-            "name": "PlayStation controller",
-            "bindingGroup": "PlayStation controller",
+            "name": "PlayStation Controller",
+            "bindingGroup": "PlayStation Controller",
             "devices": [
                 {
                     "devicePath": "<DualShockGamepad>/{Back}",

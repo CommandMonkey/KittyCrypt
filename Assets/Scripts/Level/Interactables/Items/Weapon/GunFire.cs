@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-public class GunFire : IItem
+public class GunFire : Item
 {
     //Configurable parameters damage
     [Header("General Options")] [SerializeField]

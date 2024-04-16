@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 
 public class PlayerInteraction : MonoBehaviour
@@ -67,7 +69,29 @@ public class PlayerInteraction : MonoBehaviour
 
     private void UpdateInteractPromptText()
     {
-        interactablePromptText.text = closestInteractable.GetComponent<IInteractable>().interactPrompt;
+        interactablePromptText.text = closestInteractable.GetComponent<IInteractable>().interactPrompt + "(" + GetInteractKey() + ")";
+    }
+
+    private string GetInteractKey()
+    {
+        string currentControllScheme = gameSession.playerInput.currentControlScheme;
+        if (currentControllScheme == "Keyboard and mouse")
+        {
+            return "E";
+        }
+        else if (currentControllScheme == "PlayStation Controller")
+        {
+            return "X";
+        }
+        else  if (currentControllScheme == "Xbox Controller")
+        {
+            return "A";
+        }
+        else if (currentControllScheme == "Switch Controller")
+        {
+            return "B";
+        }
+        return "I DONT FUCKING KNOW";
     }
 
     private void OnTriggerEnter2D(Collider2D other)

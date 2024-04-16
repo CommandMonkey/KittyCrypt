@@ -20,7 +20,7 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
             item = gameSession.levelSettings.GetRandomItem();
         }
 
-        interactPrompt = "E to pickup " + item.name;
+        interactPrompt = item.name;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null )
         {
