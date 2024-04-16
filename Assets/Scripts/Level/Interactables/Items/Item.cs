@@ -1,8 +1,9 @@
 
 using UnityEngine;
 
-public class IItem : MonoBehaviour
+public class Item : MonoBehaviour
 {
+    [SerializeField] public string itemName = "Item";
     public virtual void Activate()
     {
         

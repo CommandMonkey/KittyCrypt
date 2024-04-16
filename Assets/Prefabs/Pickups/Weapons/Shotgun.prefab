@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Shotgun
   settings: {fileID: 11400000, guid: 3eaa3ef979af8564cbe8703e85b4e119, type: 2}
   active: 0
 --- !u!114 &5810745877326213981

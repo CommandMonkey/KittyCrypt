@@ -36,8 +36,8 @@ public class PlayerInventory : MonoBehaviour
         if (cHotbarItem != null)
         {
             Debug.Log(cHotbarItem.name);
-            SpawnItemPickup(cHotbarItem);
-            IItem oldItem = GameHelper.GetComponentInAllChildren<IItem>(cHotbarItem);
+            Item oldItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem);
+            SpawnItemPickup(cHotbarItem, oldItem.name);
             if (oldItem != null)
             {
                 Debug.Log("Found OldItem IItem");
@@ -67,7 +67,7 @@ public class PlayerInventory : MonoBehaviour
         
         cHotbarItem.SetActive(true);
 
-        IItem newItem = GameHelper.GetComponentInAllChildren<IItem>(cHotbarItem);
+        Item newItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem);
         if (newItem != null)
         {
             Debug.Log("Found NewItem IItem");
@@ -127,15 +127,23 @@ public class PlayerInventory : MonoBehaviour
 
     // Pickup Helper
 
-    void SpawnItemPickup(GameObject item)
+    void SpawnItemPickup(GameObject itemObj, string name)
     {
         GameObject pickupObject = Instantiate(itemPickupPrefab, transform.position, Quaternion.identity);
-        pickupObject.name = item.name;
+
 
         // make weapon child of pickup
         //content.transform.SetParent(pickup.transform);
 
         ItemPickupInteractable pickupScript = pickupObject.GetComponent<ItemPickupInteractable>();
-        pickupScript.item = item;
+        pickupScript.item = itemObj;
+
+        // Set name
+        GameObject pickupItem = pickupObject.GetComponent<ItemPickupInteractable>().item;
+        if (pickupItem != null)
+        {
+            Item itemitem = pickupItem.GetComponent<Item>();
+            if (itemitem != null) itemitem.itemName = name;
+        }
     }
 }

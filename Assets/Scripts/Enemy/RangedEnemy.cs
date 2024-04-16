@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RangedEnemy : Enemy
 {
@@ -12,11 +13,11 @@ public class RangedEnemy : Enemy
     [SerializeField] private float GunsCooldownTime = 2f;
     [SerializeField] private float GunsShootingDuration = 3f;
     [SerializeField] private float maxShootingDistance = 5f; 
-    [Header("Gun Rotation")]
-    [SerializeField] private float gunRotationSpeed;
-    [SerializeField] private float shootingGunRotationSpeed;
-    [SerializeField] private float maxRotationSpeed;
-    [SerializeField] private float maxAngularVelocity;
+    //[Header("Gun Rotation")]
+    //[SerializeField] private float gunRotationSpeed;
+    //[SerializeField] private float shootingGunRotationSpeed;
+    //[SerializeField] private float maxRotationSpeed;
+    //[SerializeField] private float maxAngularVelocity;
     [SerializeField] private float pointingThresholdAngle = 1f;
 
     [System.Serializable] private class GunProperties
@@ -71,7 +72,7 @@ public class RangedEnemy : Enemy
         }
 
 
-        SetGunsFacings();
+        //SetGunsFacings();
     }
 
     private void PauseGunRotation()
@@ -152,19 +153,19 @@ public class RangedEnemy : Enemy
         state = gunState.idle;
     }
 
-    void SetGunsFacings()
-    {
-        if (state == gunState.idle)
-            foreach (GunProperties gun in guns)
-            {
-                SetGunDirection(gun.gunTransform, gunRotationSpeed);
-            }
-        else
-            foreach (GunProperties gun in guns)
-            {
-                SetGunDirection(gun.gunTransform, shootingGunRotationSpeed);
-            }
-    }
+    //void SetGunsFacings()
+    //{
+    //    if (state == gunState.idle)
+    //        foreach (GunProperties gun in guns)
+    //        {
+    //            SetGunDirection(gun.gunTransform, gunRotationSpeed);
+    //        }
+    //    else
+    //        foreach (GunProperties gun in guns)
+    //        {
+    //            SetGunDirection(gun.gunTransform, shootingGunRotationSpeed);
+    //        }
+    //}
 
     private void SetGunDirection(Transform gunTransform, float rotationAcceleration)
     {
@@ -172,18 +173,22 @@ public class RangedEnemy : Enemy
         Vector2 targetDirection = (targetPosition - gunTransform.position).normalized;
 
         // Calculate the angle between the current forward direction and the target direction
-        float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
 
-        // Calculate the difference in angle between current rotation and target angle
-        float angleDifference = Mathf.DeltaAngle(gunTransform.eulerAngles.z, targetAngle);
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        // Calculate the desired rotation speed based on the angle difference
-        float desiredRotationSpeed = Mathf.Clamp(angleDifference * rotationAcceleration, -maxRotationSpeed, maxRotationSpeed);
+        gunTransform.rotation = rotation;
 
-        // Apply rotation speed to the weapon
-        float newRotationSpeed = Mathf.MoveTowards(gunTransform.GetComponent<Rigidbody2D>().angularVelocity, desiredRotationSpeed, Time.deltaTime * rotationAcceleration);
-        newRotationSpeed = Mathf.Clamp(newRotationSpeed, -maxAngularVelocity, maxAngularVelocity);
-        gunTransform.GetComponent<Rigidbody2D>().angularVelocity = newRotationSpeed;
+        //// Calculate the difference in angle between current rotation and target angle
+        //float angleDifference = Mathf.DeltaAngle(gunTransform.eulerAngles.z, targetAngle);
+
+        //// Calculate the desired rotation speed based on the angle difference
+        //float desiredRotationSpeed = Mathf.Clamp(angleDifference * rotationAcceleration, -maxRotationSpeed, maxRotationSpeed);
+
+        //// Apply rotation speed to the weapon
+        //float newRotationSpeed = Mathf.MoveTowards(gunTransform.GetComponent<Rigidbody2D>().angularVelocity, desiredRotationSpeed, Time.deltaTime * rotationAcceleration);
+        //newRotationSpeed = Mathf.Clamp(newRotationSpeed, -maxAngularVelocity, maxAngularVelocity);
+        //gunTransform.GetComponent<Rigidbody2D>().angularVelocity = newRotationSpeed;
     }
 
     bool IsGunsPointingTowardsTarget()
