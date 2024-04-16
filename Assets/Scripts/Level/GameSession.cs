@@ -180,7 +180,6 @@ public class GameSession : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         angryFace.gameObject.SetActive(false);
-        Debug.Log("no angy");
     }
 }
 

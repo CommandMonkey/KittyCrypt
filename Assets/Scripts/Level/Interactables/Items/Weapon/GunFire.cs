@@ -215,10 +215,8 @@ public class GunFire : Item
     IEnumerator SetCatAngry()
     {
         gameSession.playerIsShooting = true;
-        Debug.Log(gameSession.playerIsShooting);
         yield return new WaitForSeconds(0.01f);
         gameSession.playerIsShooting = false;
-        Debug.Log(gameSession.playerIsShooting);
     }
 
     void GunFeedbackEffects()
