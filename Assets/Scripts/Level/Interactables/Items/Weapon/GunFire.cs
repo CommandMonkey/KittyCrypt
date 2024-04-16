@@ -70,17 +70,11 @@ public class GunFire : Item
 
         gameSession.onSceneloaded.AddListener(OnSceneLoaded);
 
-        Debug.Log(reloadImage);
         Activate();
 
         if (runtimeData == null)
         {
-            Debug.Log("RuntimeData initialized");
             runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
-        }
-        else
-        {
-            Debug.Log("RuntimeData already exist");
         }
 
         if (nuzzleLight != null)
@@ -121,11 +115,10 @@ public class GunFire : Item
 
     void OnFire()
     {
-        Debug.Log("Hello");
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         if (ProjectileFire()) return;
         if (BurstFire()) return;
-        if (RaycastFire()) return; 
+        if (RaycastFire()) return;
     }
 
     private void OnDisable()
@@ -140,8 +133,6 @@ public class GunFire : Item
         {
             return false;
         }
-
-        Debug.Log("Fire");
 
         // Fire
         ShootBullet();
@@ -158,7 +149,6 @@ public class GunFire : Item
     bool BurstFire()
     {
         if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) { return false; }
-        Debug.Log("BurstFire");
 
         // Fire
         for (int i = 0; i < settings.bulletsBeforeReload || settings.bulletsBeforeReload == 0; i++)
@@ -180,8 +170,10 @@ public class GunFire : Item
         {
             return false;
         }
-
-        Debug.Log("Fire");
+        if (!gameSession.playerIsShooting)
+        {
+            StartCoroutine(SetCatAngry());
+        }
 
         // Fire
         bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
@@ -213,15 +205,26 @@ public class GunFire : Item
 
     void ShootBullet()
     {
+        if (!gameSession.playerIsShooting)
+        {
+            StartCoroutine(SetCatAngry());
+        }
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);
         runtimeData.bulletsFired++;
     }
 
+    IEnumerator SetCatAngry()
+    {
+        gameSession.playerIsShooting = true;
+        yield return new WaitForSeconds(0.01f);
+        gameSession.playerIsShooting = false;
+    }
+
     void GunFeedbackEffects()
     {
-        gunSource.PlayOneShot(settings.fireAudio);
+        gunSource.PlayOneShot(settings.fireAudio, settings.audioVolume);
         gameSession.gameCamera.DoCameraShake();
         player.exteriorVelocity += -(Vector2)transform.right * settings.knockback;
 
@@ -289,7 +292,7 @@ public class GunFire : Item
         {
             GameSession.Instance.reloadCircle.gameObject.SetActive(true);
 
-            Image reloadImage = GameSession.Instance.reloadCircle.GetComponent<Image>();
+            Image reloadImage = GameSession.Instance.reloadCircle.GetComponentInChildren<Image>();
 
             reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
             runtimeData.reloadTimer -= Time.deltaTime;

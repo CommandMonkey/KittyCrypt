@@ -24,7 +24,6 @@ public class DirectionPointer : MonoBehaviour
 
         Vector3 viewportPoint = Camera.main.WorldToViewportPoint(target.transform.position);
         bool onScreen = viewportPoint.x > 0 && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 1;
-        Debug.Log(onScreen);
         if (!onScreen)
         {
             arrow.gameObject.SetActive(true);

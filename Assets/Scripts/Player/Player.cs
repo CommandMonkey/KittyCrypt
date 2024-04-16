@@ -75,7 +75,6 @@ public class Player : MonoBehaviour
 
         FetchExternalRefs();
 
-        Debug.Log("Player Start");
         // Input Events
         userInput.onMove.AddListener(OnMove);
         userInput.onDash.AddListener(OnDash);
@@ -101,7 +100,6 @@ public class Player : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("PlayerSceneLoaded");
         FetchExternalRefs();
 /*        userInput.onMove.AddListener(OnMove);
         userInput.onAiming.AddListener(OnAim);
@@ -231,7 +229,6 @@ public class Player : MonoBehaviour
 
     public void AddHealth(int hp)
     {
-        Debug.Log("Adding HP: " + hp);
         health += hp;
         health = Mathf.Clamp(health, 0, 9);
         animator.SetTrigger("WasHealed");
@@ -256,7 +253,6 @@ public class Player : MonoBehaviour
 
     public bool IsOverlapping<T>(GameObject toCompare) where T : Component
     {
-        Debug.Log("AAAAAA----: " + toCompare.name + "parent: " + toCompare.transform.parent.name);  
         // Get colliders
         Collider2D[] colliders = new Collider2D[10];
         Physics2D.OverlapCollider(myCollider, noFilter, colliders);

@@ -66,7 +66,6 @@ public class EncounterRoom : Room
     //    {
     //        if (obj == null) _enemiesAlive--; 
     //    }
-    //    Debug.Log(_enemiesAlive);
     //    if (_enemiesAlive == 0)
     //    {
     //        isRoomDefeated = true;

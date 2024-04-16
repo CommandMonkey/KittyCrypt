@@ -39,9 +39,9 @@ public class Enemy : MonoBehaviour
         player = gameSession.player;
         target = player.transform;
 
-        maxHealth = health;
+        health *= gameSession.levelSettings.enemyHP_Multiplier;
 
-        if (player == null) { Debug.Log("PLAYER FOUND"); }
+        maxHealth = health;
 
         EnemyStart();
     }
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
         OnDamageTaken();
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         PlayDeathVFX();
         Destroy(gameObject);

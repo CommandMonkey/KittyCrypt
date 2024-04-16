@@ -15,6 +15,7 @@ public class WeaponSettingsObject : ScriptableObject
     [SerializeField] internal WeaponType weaponType;
     [SerializeField] internal AudioClip fireAudio;
     [SerializeField] internal AudioClip reloadAudio;
+    [SerializeField] internal float audioVolume = 1f;
     [SerializeField] internal float fireRate = 0.5f;
     [SerializeField] internal float reloadTime = 1f;
     [SerializeField] internal float bulletDamage = 1f;

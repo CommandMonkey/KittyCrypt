@@ -43,7 +43,7 @@ MonoBehaviour:
   endRooms:
   - {fileID: 3722623101364078196, guid: ed0e7df6c77408a488482dad4dc82fad, type: 3}
   - {fileID: 3722623101364078196, guid: bf0c0fbe75d494f478d4b5513a19d9bf, type: 3}
-  - {fileID: 3722623101364078196, guid: a134d7bf6785e5f4d82fd2dec5ef4eb4, type: 3}
+  - {fileID: 3722623101364078196, guid: 714cf90886788f048944e2ebde4373ca, type: 3}
   entranceBlockers:
   - direction: 0
     gameObject: {fileID: 3722623101364078196, guid: 7c1d9730c6c59a94f89eb6b072f5a935, type: 3}

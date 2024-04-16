@@ -55,6 +55,8 @@ public class RatBossBehaviour : Enemy
     float currentRotationAcceleration;
     float currentMaxAngularVelocity;
 
+    List<GameObject> ratMinions = new List<GameObject>();
+
     private enum RatState
     {
         paused,
@@ -265,7 +267,7 @@ public class RatBossBehaviour : Enemy
         for (int i = 0; i < amountOfRatsToSpawn; i++)
             _rats.Add(ratsPrefab);
 
-        GameHelper.InstanciateInCollider(roomCollider, _rats, LayerMask.GetMask("Wall"));
+        ratMinions.AddRange(GameHelper.InstanciateInCollider(roomCollider, _rats, LayerMask.GetMask("Wall")));
         yield break;
     }
 
@@ -308,7 +310,7 @@ public class RatBossBehaviour : Enemy
         ScaleDifficulty(1-healthRatio);
     }
 
-    protected override void Die()
+    public override void Die()
     {
         if (state != RatState.dead)
         {
@@ -319,11 +321,22 @@ public class RatBossBehaviour : Enemy
             animator.SetTrigger("die");
             musicManager.PlayExploringTheme();
 
+            KillAllRatMinions();
+
             bossRoom.OnBossDead();
         }
 
     }
 
+    private void KillAllRatMinions()
+    {
+        foreach (GameObject rat in ratMinions)
+        {
+            if (rat != null)
+                rat.GetComponent<Enemy>().Die();
+
+}
+    }
 
     private void ScaleDifficulty(float t)
     {

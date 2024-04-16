@@ -18,7 +18,7 @@ public class GameSessionData : ScriptableObject
     {
         LevelSettings resultSettings = levelData[Mathf.Min(levelIndex, levelData.Count-1)];
 
-        float power = levelIndex + 1;
+        float power = levelIndex;
 
         resultSettings.roomValueCapacityMultiplier = Mathf.Ceil(Mathf.Pow(roomValueCapacityMultiplier, power));
         resultSettings.enemyHP_Multiplier = Mathf.Pow(enemyHP_Multiplier, power);   
@@ -32,8 +32,9 @@ public class GameSessionData : ScriptableObject
     {
         // Inspector variables
         public RoomGenObject roomGenSettings;
-        public EnemyValue[] enemyPool;
-        public ItemProbability[] itemPool;
+        [SerializeField] EnemyValue[] enemyPool;
+        [SerializeField] List<ItemProbability> spawnItemPool;
+        [SerializeField] List<ItemProbability> tressureItemPool;
 
         // non serialized
         // (depend on general scaling, Set in GameSessionSettings.GetLevelData())
@@ -91,21 +92,25 @@ public class GameSessionData : ScriptableObject
             return selectedEnemies;
         }
 
-
-        public GameObject GetRandomItem()
+        public GameObject GetRandomSpawnRoomItem()
         {
-            // Calculate the total weight (sum of probabilities)
-            float totalWeight = 0f;
-            foreach (var item in itemPool)
-            {
-                totalWeight += item.probability;
-            }
+            return GetRandomItem(spawnItemPool);
+        }
 
-            // Generate a random value between 0 and the total weight
-            float randomValue = UnityEngine.Random.Range(0f, totalWeight);
+        public GameObject GetRandomTressureItem()
+        {
+            return GetRandomItem(tressureItemPool);
+        }
+
+        public GameObject GetRandomItem(List<ItemProbability> list)
+        {
+            List<ItemProbability> shuffledList = GameHelper.ShuffleList<ItemProbability>(list);
+
+            // Generate a random value between 0 and 1
+            float randomValue = UnityEngine.Random.Range(0f, 1f);
 
             // Find the item corresponding to the random value
-            foreach (var item in itemPool)
+            foreach (var item in shuffledList)
             {
                 if (randomValue < item.probability)
                 {
@@ -115,9 +120,14 @@ public class GameSessionData : ScriptableObject
             }
 
             // Fallback: Return the first item (if the probabilities don't add up to 1)
-            return itemPool[0].prefab;
+            if (shuffledList[0].prefab != null)
+                return shuffledList[0].prefab;
+            else
+            {
+                Debug.LogError("Cannot find Any items in the item pool... configure the GameSessionSettings ItemPool! - Anton");
+                return null;
+            }
         }
-
     }
 
     [Serializable]

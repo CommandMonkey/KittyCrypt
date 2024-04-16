@@ -39,7 +39,7 @@ public class BossRoom : Room
     {
         levelExit.SetInteractable();
         Invoke("focusCamOnPlayer", 1f);
-        bossDoor.CloseDoor();
+        bossDoor.OpenDoor();
     }
 
     void OnRoomSpawningDone()

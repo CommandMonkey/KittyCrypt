@@ -4,6 +4,7 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
 {
 
     public GameObject item;
+    [SerializeField] bool useSpawnRoomPool;
     public string interactPrompt { get; set; }
     public bool canInteract { get; set; } = true;
 
@@ -17,10 +18,10 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
 
         if (item == null)
         {
-            item = gameSession.levelSettings.GetRandomItem();
+            item = gameSession.levelSettings.GetRandomTressureItem();
         }
 
-        interactPrompt = item.name;
+        interactPrompt = GameHelper.GetComponentInAllChildren<Item>(item).itemName;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null )
         {
@@ -57,6 +58,7 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
 
         canInteract = false;
         gameObject.SetActive(false);
+        FindObjectOfType<PlayerInteraction>().UnRegisterInteractable(gameObject) ;
         Destroy(gameObject);
     }
 }
