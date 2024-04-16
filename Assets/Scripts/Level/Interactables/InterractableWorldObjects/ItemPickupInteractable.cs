@@ -20,7 +20,7 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
             item = gameSession.levelSettings.GetRandomItem();
         }
 
-        interactPrompt = item.name;
+        interactPrompt = GameHelper.GetComponentInAllChildren<Item>(item).itemName;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null )
         {
