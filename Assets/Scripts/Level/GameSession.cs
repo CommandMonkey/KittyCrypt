@@ -95,6 +95,8 @@ public class GameSession : MonoBehaviour
         musicManager = FindObjectOfType<MusicManager>();
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
+
+        onSceneloaded.Invoke(); 
     }
 
     GameState previousState;

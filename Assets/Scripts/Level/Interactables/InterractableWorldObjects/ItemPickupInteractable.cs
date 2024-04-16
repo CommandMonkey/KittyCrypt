@@ -20,7 +20,7 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
             item = gameSession.levelSettings.GetRandomItem();
         }
 
-        interactPrompt = item.name;
+        interactPrompt = GameHelper.GetComponentInAllChildren<Item>(item).itemName;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null )
         {
@@ -46,6 +46,8 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
     {
         FindObjectOfType<PlayerInventory>().AddWeapon(item);
         FindObjectOfType<PlayerInteraction>().UnRegisterInteractable(gameObject);
+        canInteract = false;
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 

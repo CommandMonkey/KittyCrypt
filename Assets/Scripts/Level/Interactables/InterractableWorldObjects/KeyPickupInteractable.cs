@@ -23,6 +23,7 @@ public class KeyPickupInteractable : MonoBehaviour, IInteractable
     public void Interact()
     {
         gameObject.SetActive(false);
+        Destroy(gameObject);
         FollowKey key = Instantiate(replacementPrefab, transform.position, transform.rotation).GetComponent<FollowKey>();
         key.target = player.transform;
 
