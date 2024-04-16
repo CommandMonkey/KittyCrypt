@@ -14,6 +14,7 @@ public class Crosshair : MonoBehaviour
     private bool isUsingMouse = true;
 
     SpriteRenderer spriteRenderer;
+    ReloadCircleFollowCursor reloadCircle;
 
 
     private void Start()
