@@ -114,7 +114,6 @@ GameObject:
   - component: {fileID: 5354840983626471616}
   - component: {fileID: 7709134303033472481}
   - component: {fileID: 122009594615970746}
-  - component: {fileID: 8859775702836323341}
   m_Layer: 5
   m_Name: ReloadCircle
   m_TagString: ReloadCircle
@@ -200,20 +199,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8859775702836323341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144426911529953221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3b67854ef6b2549b7860a76ef461b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crosshair: {fileID: 0}
-  reloadCanvas: {fileID: 0}
 --- !u!1 &6438481001964424523
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,10 +252,13 @@ MonoBehaviour:
   levelSettings:
     roomGenSettings: {fileID: 0}
     enemyPool: []
-    itemPool: []
+    spawnItemPool: []
+    tressureItemPool: []
   gameSessionData: {fileID: 11400000, guid: 2dbcf30d29d89a942ba89ba94e2f9d32, type: 2}
   levelIndex: 0
+  playerIsShooting: 0
   player: {fileID: 0}
+  angryFace: {fileID: 0}
   playerInput: {fileID: 0}
   enemyContainer: {fileID: 0}
   crosshair: {fileID: 0}
@@ -380,6 +368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1881291232912052140}
+  - component: {fileID: 5766126927312811292}
   m_Layer: 0
   m_Name: ReloadCanvasTransform
   m_TagString: Untagged
@@ -403,6 +392,20 @@ Transform:
   - {fileID: 2989426985475818949}
   m_Father: {fileID: 4116786722865674713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5766126927312811292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7310062709526014756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3b67854ef6b2549b7860a76ef461b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshair: {fileID: 0}
+  reloadCanvas: {fileID: 0}
 --- !u!1001 &645398632360810179
 PrefabInstance:
   m_ObjectHideFlags: 0

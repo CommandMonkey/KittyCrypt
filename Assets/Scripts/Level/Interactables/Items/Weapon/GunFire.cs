@@ -292,7 +292,7 @@ public class GunFire : Item
         {
             GameSession.Instance.reloadCircle.gameObject.SetActive(true);
 
-            Image reloadImage = GameSession.Instance.reloadCircle.GetComponent<Image>();
+            Image reloadImage = GameSession.Instance.reloadCircle.GetComponentInChildren<Image>();
 
             reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
             runtimeData.reloadTimer -= Time.deltaTime;
