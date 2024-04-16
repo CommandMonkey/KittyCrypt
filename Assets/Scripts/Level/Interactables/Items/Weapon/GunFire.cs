@@ -2,6 +2,7 @@ using System.Collections;
 using Cinemachine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class GunFire : Item
     [Header("General Options")] [SerializeField]
     WeaponSettingsObject settings;
     Crosshair crosshair;
+    PlayerInput playerInput;
 
     public bool active = false;
 
@@ -53,10 +55,6 @@ public class GunFire : Item
     Image reloadImage;
     TMP_Text ammoUI;
 
-    private void Awake()
-    {
-    }
-
     private void Start()
     {
         userInput = FindObjectOfType<UserInput>();
@@ -67,7 +65,8 @@ public class GunFire : Item
         nuzzleLight = GetComponent<Light2D>();
         uiCanvas = FindObjectOfType<UICanvas>();
         ammoUI = uiCanvas.ammoText;
-        crosshair = FindObjectOfType<Crosshair>();
+        crosshair = GameSession.Instance.crosshair;
+        playerInput = GameSession.Instance.playerInput;
 
         Debug.Log(reloadImage);
         Activate();
@@ -258,6 +257,14 @@ public class GunFire : Item
         if (!runtimeData.isReloading && runtimeData.bulletsFired != 0)
         {
             runtimeData.isReloading = true;
+            if (playerInput.currentControlScheme != "Keyboard and mouse")
+            {
+                crosshair.gameObject.SetActive(false);
+            }
+            else
+            {
+                Cursor.visible = false;
+            }
             StartCoroutine(ReloadRoutine());
         }
     }
@@ -292,6 +299,14 @@ public class GunFire : Item
             runtimeData.bulletsFired = 0;
             runtimeData.isReloading = false;
             runtimeData.reloadTimer = settings.reloadTime;
+            if (playerInput.currentControlScheme != "Keyboard and mouse")
+            {
+                crosshair.gameObject.SetActive(true);
+            }
+            else
+            {
+                Cursor.visible = true;
+            }
             GameSession.Instance.reloadCircle.gameObject.SetActive(false);
 
             // Ammo Text
