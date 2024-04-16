@@ -10,13 +10,16 @@ public class HealthDisplay : MonoBehaviour
     [SerializeField] Sprite damagedHeart;
 
     int playerHealth;
-    Player player; 
+    [SerializeField] Player player; 
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameSession.Instance.player;
-        playerHealth = player.GetHealth();
+        if (player != null)
+        {
+            playerHealth = player.GetHealth();
+        }
     }
 
     // Update is called once per frame
@@ -29,7 +32,7 @@ public class HealthDisplay : MonoBehaviour
         catch
         {
             Debug.Log("dont have ref to player, fetching one");
-            player = FindObjectOfType<Player>();
+            player = GameSession.Instance.player;
         }
 
 
