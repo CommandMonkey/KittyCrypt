@@ -2,9 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class ChestInteractable : MonoBehaviour, IInteractable
 {
