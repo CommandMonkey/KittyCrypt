@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Crossbow_Settings
   m_EditorClassIdentifier: 
   weaponType: 0
-  fireAudio: {fileID: 0}
-  reloadAudio: {fileID: 0}
+  fireAudio: {fileID: 8300000, guid: 09fcfea083752c144a78ab124dd6fa34, type: 3}
+  reloadAudio: {fileID: 8300000, guid: cd8470db28da0c54194e6ed05559bf92, type: 3}
   fireRate: 0.1
   reloadTime: 2
   bulletDamage: 20

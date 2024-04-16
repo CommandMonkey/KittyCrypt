@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -27,9 +28,11 @@ public class GameSession : MonoBehaviour
     public int levelIndex = 0;
     
     bool killYourself = false;
+    public bool playerIsShooting = false;
 
     public GameCamera gameCamera { get; private set; }
     public Player player;
+    public GameObject angryFace; 
     public PlayerInput playerInput;
     public Transform enemyContainer;
     public Crosshair crosshair;
@@ -64,6 +67,7 @@ public class GameSession : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
+        angryFace = GameObject.Find("Angry");
         playerInput = FindObjectOfType<PlayerInput>();
         musicManager = FindObjectOfType<MusicManager>();
         gameCamera = FindObjectOfType<GameCamera>();
@@ -74,6 +78,7 @@ public class GameSession : MonoBehaviour
 
         gameCamera.SetPrimaryTarget(player.transform);
         crosshair.gameObject.SetActive(false);
+        angryFace.gameObject.SetActive(false);
 
         levelSettings = gameSessionData.GetLevelData(levelIndex);
 
@@ -116,6 +121,7 @@ public class GameSession : MonoBehaviour
         previousState = state;
 
         SetCursorOrCrosshair();
+        SetPlayerAngry();
     }
 
     private void Die()
@@ -161,6 +167,20 @@ public class GameSession : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    void SetPlayerAngry()
+    {
+        if (!playerIsShooting) { return; }
+        StopAllCoroutines();
+        angryFace.gameObject.SetActive(true);
+        StartCoroutine(PlayerAngryDisable());
+    }
+
+    IEnumerator PlayerAngryDisable()
+    {
+        yield return new WaitForSeconds(5f);
+        angryFace.gameObject.SetActive(false);
     }
 }
 

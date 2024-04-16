@@ -125,7 +125,7 @@ public class GunFire : Item
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         if (ProjectileFire()) return;
         if (BurstFire()) return;
-        if (RaycastFire()) return; 
+        if (RaycastFire()) return;
     }
 
     private void OnDisable()
@@ -213,6 +213,7 @@ public class GunFire : Item
 
     void ShootBullet()
     {
+        gameSession.playerIsShooting = true;
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);

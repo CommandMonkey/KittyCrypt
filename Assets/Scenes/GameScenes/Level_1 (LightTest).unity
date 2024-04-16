@@ -933,14 +933,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1449913438}
-    - target: {fileID: 2989426985475818949, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989426985475818949, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4116786722865674713, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -981,41 +973,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4753911817160123097, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0944228
-      objectReference: {fileID: 0}
-    - target: {fileID: 4753911817160123097, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.0944228
-      objectReference: {fileID: 0}
-    - target: {fileID: 4753911817160123097, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.0944228
-      objectReference: {fileID: 0}
-    - target: {fileID: 4753911817160123097, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6438481001964424523, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: m_Name
       value: GameSessionPoop
-      objectReference: {fileID: 0}
-    - target: {fileID: 7709134303033472481, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7709134303033472481, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 2100000, guid: 2fc7e955644b4c648859112802e8615c, type: 2}
-    - target: {fileID: 8859775702836323341, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: crosshair
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8859775702836323341, guid: 50f70758040f7784c863029768591f8c, type: 3}
-      propertyPath: reloadCanvas
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
