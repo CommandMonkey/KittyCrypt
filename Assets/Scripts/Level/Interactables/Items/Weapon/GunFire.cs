@@ -10,6 +10,7 @@ public class GunFire : IItem
     //Configurable parameters damage
     [Header("General Options")] [SerializeField]
     WeaponSettingsObject settings;
+    Crosshair crosshair;
 
     public bool active = false;
 
@@ -51,7 +52,10 @@ public class GunFire : IItem
 
     Image reloadImage;
     TMP_Text ammoUI;
-    
+
+    private void Awake()
+    {
+    }
 
     private void Start()
     {
@@ -62,9 +66,10 @@ public class GunFire : IItem
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
         uiCanvas = FindObjectOfType<UICanvas>();
-        reloadImage = uiCanvas.reloadCircle;
         ammoUI = uiCanvas.ammoText;
+        crosshair = FindObjectOfType<Crosshair>();
 
+        Debug.Log(reloadImage);
         Activate();
 
         if (runtimeData == null)
@@ -265,7 +270,10 @@ public class GunFire : IItem
         // Update Reload Animation circle
         while (runtimeData.isReloading)
         {
-            reloadImage.gameObject.SetActive(true);
+            GameSession.Instance.reloadCircle.gameObject.SetActive(true);
+
+            Image reloadImage = GameSession.Instance.reloadCircle.GetComponent<Image>();
+
             reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
             runtimeData.reloadTimer -= Time.deltaTime;
             if (runtimeData.reloadTimer <= 0)
@@ -284,7 +292,7 @@ public class GunFire : IItem
             runtimeData.bulletsFired = 0;
             runtimeData.isReloading = false;
             runtimeData.reloadTimer = settings.reloadTime;
-            reloadImage.gameObject.SetActive(false);
+            GameSession.Instance.reloadCircle.gameObject.SetActive(false);
 
             // Ammo Text
             if (settings.weaponType == WeaponSettingsObject.WeaponType.BurstFire)

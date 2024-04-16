@@ -32,6 +32,7 @@ public class GameSession : MonoBehaviour
     public PlayerInput playerInput;
     public Transform enemyContainer;
     public Crosshair crosshair;
+    public ReloadCircleFollowCursor reloadCircle;
     public UserInput userInput { get; private set; }
     public MusicManager musicManager { get; private set; }
 
@@ -54,6 +55,7 @@ public class GameSession : MonoBehaviour
 
         onEnemyKill = new UnityEvent();
         OnNewState = new UnityEvent();
+        reloadCircle = FindObjectOfType<ReloadCircleFollowCursor>();
     }
 
     private void Start()
@@ -65,6 +67,7 @@ public class GameSession : MonoBehaviour
         sceneLoader = FindObjectOfType<SceneLoader>();
         crosshair = FindObjectOfType<Crosshair>();
         userInput = GetComponentInChildren<UserInput>();
+        
 
         gameCamera.SetPrimaryTarget(player.transform);
         crosshair.gameObject.SetActive(false);
