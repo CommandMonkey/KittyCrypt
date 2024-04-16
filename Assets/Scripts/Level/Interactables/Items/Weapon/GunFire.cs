@@ -171,6 +171,10 @@ public class GunFire : Item
         {
             return false;
         }
+        if (!gameSession.playerIsShooting)
+        {
+            StartCoroutine(SetCatAngry());
+        }
 
         // Fire
         bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);

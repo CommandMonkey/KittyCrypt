@@ -18,7 +18,7 @@ public class GameSessionData : ScriptableObject
     {
         LevelSettings resultSettings = levelData[Mathf.Min(levelIndex, levelData.Count-1)];
 
-        float power = levelIndex +1;
+        float power = levelIndex;
 
         resultSettings.roomValueCapacityMultiplier = Mathf.Ceil(Mathf.Pow(roomValueCapacityMultiplier, power));
         resultSettings.enemyHP_Multiplier = Mathf.Pow(enemyHP_Multiplier, power);   
