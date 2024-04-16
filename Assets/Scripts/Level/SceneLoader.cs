@@ -33,7 +33,6 @@ public class SceneLoader : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
-        Debug.Log("Quitting");
     }
 
     public void LoadLevel1()

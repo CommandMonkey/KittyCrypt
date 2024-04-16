@@ -58,7 +58,6 @@ public class RoomManager : MonoBehaviour
 
         //Spawn first room (it will spawn more rooms)
         spawnedRooms.Add(Instantiate(roomGenSettings.startRoom, grid).GetComponent<Room>());
-        Debug.Log("------- RoomSpawning Begin -------");
         StartCoroutine(SpawnRoomsRoutine());
         
     }
@@ -71,7 +70,6 @@ public class RoomManager : MonoBehaviour
         while (roomsToSpawn.Count > 0)
         {
             waveCount++;
-            Debug.Log("Room Wave: " + waveCount);
 
             if (ShouldTerminateRoomSpawning(waveCount, previousRoomCount))
             {
@@ -98,7 +96,6 @@ public class RoomManager : MonoBehaviour
         if (gameSession.levelIndex == 0) CloseDoors(true);
         onRoomSpawningDone.Invoke();
         player.transform.position = Vector3.zero;
-        Debug.Log("------- RoomSpawning Done -------");
     }
 
     bool ShouldTerminateRoomSpawning(int waveCount, int previousRoomCount)
@@ -108,8 +105,6 @@ public class RoomManager : MonoBehaviour
 
     void TerminateRoomSpawning()
     {
-        Debug.Log("TERMINATING ROOM SPAWNING");
-        LogWarningPerRooms("can't spawn room: ");
         DestroyAllRooms();
         entrances.Clear();
         StartRoomSpawning();
@@ -272,14 +267,6 @@ public class RoomManager : MonoBehaviour
         {
             //sforeach(Entrance entr in room.entrances) entr.Die();
             Destroy(room.gameObject);
-        }
-    }
-
-    void LogWarningPerRooms(string pretext = "")
-    {
-        foreach(GameObject room in roomsToSpawn)
-        {
-            Debug.Log(pretext + room.name);
         }
     }
 

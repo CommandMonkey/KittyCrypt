@@ -58,7 +58,6 @@ public class Mace : MonoBehaviour
     {
         transform.localPosition = new Vector3(0, 0, 0);
         AttackBlock = false;
-        Debug.Log(transform.localPosition);
     }
 }
 

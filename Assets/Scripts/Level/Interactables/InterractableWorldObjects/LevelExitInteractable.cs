@@ -22,7 +22,6 @@ public class LevelExitInteractable : MonoBehaviour, IInteractable
         interactPrompt = "Go to the next level(E)";
         gameSession = GameSession.Instance;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Debug.Log(spriteRenderer != null);
         SetInteractable();
         UpdateSprite();
     }

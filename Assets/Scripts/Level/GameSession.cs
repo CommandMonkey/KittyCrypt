@@ -130,7 +130,6 @@ public class GameSession : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        Debug.Log("Killing GameSession");
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
@@ -179,8 +178,9 @@ public class GameSession : MonoBehaviour
 
     IEnumerator PlayerAngryDisable()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         angryFace.gameObject.SetActive(false);
+        Debug.Log("no angy");
     }
 }
 

@@ -27,7 +27,6 @@ public class TimeManager : MonoBehaviour
     {
         if (GameSession.state != GameSession.GameState.Loading)
         {
-            Debug.Log("TimeManager toggle pause");
             TogglePause();
         }
     }

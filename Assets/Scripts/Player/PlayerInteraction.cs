@@ -28,7 +28,6 @@ public class PlayerInteraction : MonoBehaviour
         gameSession = FindObjectOfType<GameSession>();
         // Setup Input
         userInput.onInteract.AddListener(OnInteract);
-        Debug.Log("Interaction start");
 
         //SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -122,7 +121,6 @@ public class PlayerInteraction : MonoBehaviour
     // ////// Interact ////// //
     void OnInteract()
     {
-        Debug.Log("PlayerInteract");
         if (closestInteractable == null || GameSession.state != GameSession.GameState.Running) return;
         closestInteractable.GetComponent<IInteractable>().Interact();
     } 

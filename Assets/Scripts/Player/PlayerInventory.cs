@@ -29,18 +29,15 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddWeapon(GameObject weapon)
     {
-        Debug.Log("AddingWeapon");
         GameObject cHotbarItem = itemInventory[currentHotbarPos];
         
         // drop item if holding one
         if (cHotbarItem != null)
         {
-            Debug.Log(cHotbarItem.name);
             Item oldItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem);
             SpawnItemPickup(cHotbarItem, oldItem.name);
             if (oldItem != null)
             {
-                Debug.Log("Found OldItem IItem");
                 oldItem.DeActivate();
             }
             cHotbarItem.SetActive(false);
@@ -51,14 +48,11 @@ public class PlayerInventory : MonoBehaviour
         
         if(weapon.transform.IsChildOf(holdableItemAnchor))
         {
-            //Debug.Log("Found pickup Content in hierarchy, Rebasing");
-
             weapon.transform.SetParent(holdableItemAnchor);
             itemInventory[currentHotbarPos] = weapon;
         }
         else
         {
-            //Debug.Log("Pickup Content not in hierarchy, Spawning new");
             itemInventory[currentHotbarPos] = Instantiate(weapon, holdableItemAnchor);
         }
         
@@ -70,7 +64,6 @@ public class PlayerInventory : MonoBehaviour
         Item newItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem);
         if (newItem != null)
         {
-            Debug.Log("Found NewItem IItem");
             newItem.Activate();
         }
         
