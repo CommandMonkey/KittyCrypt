@@ -631,6 +631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3b67854ef6b2549b7860a76ef461b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crosshair: {fileID: 0}
+  reloadCanvas: {fileID: 0}
 --- !u!1 &1470379059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8460649545028718464, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
@@ -648,6 +650,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3b67854ef6b2549b7860a76ef461b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crosshair: {fileID: 0}
+  reloadCanvas: {fileID: 0}
 --- !u!1001 &1545988864
 PrefabInstance:
   m_ObjectHideFlags: 0
