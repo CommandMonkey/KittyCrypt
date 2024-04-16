@@ -18,8 +18,7 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
 
         if (item == null)
         {
-            item = useSpawnRoomPool ? gameSession.levelSettings.GetRandomSpawnRoomItem() : 
-                                        gameSession.levelSettings.GetRandomItem();
+            item = gameSession.levelSettings.GetRandomTressureItem();
         }
 
         interactPrompt = GameHelper.GetComponentInAllChildren<Item>(item).itemName;

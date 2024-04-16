@@ -18,10 +18,14 @@ public class SpawnRoom : Room
     {
         foreach (Transform t in startWeaponPoints)
         {
+            int tries = 0;
+
             GameObject item = null;
             while (item == null || itemsSpawned.Contains(item))
             {
                 item = gameSession.levelSettings.GetRandomSpawnRoomItem();
+                tries++;
+                if (tries == 50) break;
             }
             itemsSpawned.Add(item);
 
