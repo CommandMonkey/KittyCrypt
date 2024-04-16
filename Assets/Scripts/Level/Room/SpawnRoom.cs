@@ -15,7 +15,7 @@ public class SpawnRoom : Room
         {
             if (weapon == null)
             {
-                FindObjectOfType<RoomManager>().OpenDoors();
+                FindObjectOfType<RoomManager>().OpenDoors(true);
                 popAll = true;
                 Destroy(this);
                 Destroy(pickUpWeaponText);
