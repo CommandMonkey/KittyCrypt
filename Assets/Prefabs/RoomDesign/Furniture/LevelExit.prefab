@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f4507397732b04ab23a99f5a08ee88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenSprite: {fileID: 21300000, guid: 41421e55158ae30428895b48961f66d9, type: 3}
-  ClosedSprite: {fileID: 21300000, guid: 506b83f92c2696947a96f9954d66ed4d, type: 3}
+  OpenSprite: {fileID: 21300000, guid: d1a0a638663d8cc408ad47c4a8593b95, type: 3}
+  ClosedSprite: {fileID: 21300000, guid: 3c9c07f3d09503f40a96e754147ba213, type: 3}
   interactable: 0
 --- !u!61 &5025602309743048116
 BoxCollider2D:
