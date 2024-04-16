@@ -22,6 +22,7 @@ public class ChestInteractable : MonoBehaviour, IInteractable
     List<Rigidbody2D> gravityObjects = new List<Rigidbody2D>();
     List<ItemPickupInteractable> instancedItemPickups = new List<ItemPickupInteractable>();
 
+
     Vector2 gravVector;
 
     // Start is called before the first frame update
@@ -35,6 +36,7 @@ public class ChestInteractable : MonoBehaviour, IInteractable
 
     private void Update()
     {
+
         if (instancedItemPickups.Count > 0)
         {
             bool popAll = false;
@@ -53,8 +55,8 @@ public class ChestInteractable : MonoBehaviour, IInteractable
                     if (obj != null)
                         obj.PopAndDie();
                 }
-
-                gameObject.SetActive(false);
+                FindObjectOfType<PlayerInteraction>().UnRegisterInteractable(gameObject);
+                Destroy(this);
             }
 
         }
@@ -62,6 +64,7 @@ public class ChestInteractable : MonoBehaviour, IInteractable
     }
     private void FixedUpdate()
     {
+
         if (gravityObjects.Count < 1) 
             return;
         else
