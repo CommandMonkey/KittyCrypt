@@ -64,7 +64,7 @@ MonoBehaviour:
     bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1
-  - gunTransform: {fileID: 4781741036668855007}
+  - gunTransform: {fileID: 0}
     gunCooldownTime: 0.1
     bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
     bulletSpeed: 20
@@ -76,7 +76,7 @@ MonoBehaviour:
     bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1
-  - gunTransform: {fileID: 2284136052061416681}
+  - gunTransform: {fileID: 0}
     gunCooldownTime: 0.1
     bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
     bulletSpeed: 20
@@ -87,12 +87,9 @@ MonoBehaviour:
   GunsCooldownTime: 5
   GunsShootingDuration: 3
   maxShootingDistance: 10
-  gunRotationSpeed: 5000
-  shootingGunRotationSpeed: 500
-  maxRotationSpeed: 300
-  maxAngularVelocity: 100
   pointingThresholdAngle: 5
   state: 2
+  canSeeTarget: 0
 --- !u!61 &7792572867758684807
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -272,24 +269,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 747112674386361343, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1942034395484123749}
-    - targetCorrespondingSourceObject: {fileID: 8498250605575203959, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4477973169950284203}
     - targetCorrespondingSourceObject: {fileID: 4852495591995906099, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7854353942835853908}
-    - targetCorrespondingSourceObject: {fileID: 7889321895198463435, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7453716156782880414}
   m_SourcePrefab: {fileID: 100100000, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
 --- !u!4 &896651763863290535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3085330664239745259, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
-  m_PrefabInstance: {fileID: 2783444348038924876}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2284136052061416681 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4112391466350110373, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
   m_PrefabInstance: {fileID: 2783444348038924876}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2796385890502640716 stripped
@@ -313,75 +299,6 @@ Rigidbody2D:
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!4 &4781741036668855007 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7276954707890006163, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
-  m_PrefabInstance: {fileID: 2783444348038924876}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5466322757206269831 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7889321895198463435, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
-  m_PrefabInstance: {fileID: 2783444348038924876}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &7453716156782880414
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5466322757206269831}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!1 &6003049836430173755 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8498250605575203959, guid: 014c98552b8901d43a84eca202b85b30, type: 3}
-  m_PrefabInstance: {fileID: 2783444348038924876}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &4477973169950284203
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6003049836430173755}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0

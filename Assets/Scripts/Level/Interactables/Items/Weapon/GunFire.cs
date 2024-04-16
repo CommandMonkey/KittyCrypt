@@ -221,7 +221,7 @@ public class GunFire : Item
 
     void GunFeedbackEffects()
     {
-        gunSource.PlayOneShot(settings.fireAudio);
+        gunSource.PlayOneShot(settings.fireAudio, settings.audioVolume);
         gameSession.gameCamera.DoCameraShake();
         player.exteriorVelocity += -(Vector2)transform.right * settings.knockback;
 
