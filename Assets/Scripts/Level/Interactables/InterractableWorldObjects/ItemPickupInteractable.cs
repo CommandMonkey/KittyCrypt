@@ -46,6 +46,8 @@ public class ItemPickupInteractable : MonoBehaviour, IInteractable
     {
         FindObjectOfType<PlayerInventory>().AddWeapon(item);
         FindObjectOfType<PlayerInteraction>().UnRegisterInteractable(gameObject);
+        canInteract = false;
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 

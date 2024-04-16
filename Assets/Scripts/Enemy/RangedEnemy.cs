@@ -44,7 +44,7 @@ public class RangedEnemy : Enemy
     }
     [SerializeField] gunState state = gunState.idle;
 
-    bool canSeeTarget;
+    [SerializeField] bool canSeeTarget;
 
 
     // Update is called once per frame
@@ -65,14 +65,12 @@ public class RangedEnemy : Enemy
                     Invoke("StartShooting", gunsChargeUpTime);
                 }
             }
-            else if (state == gunState.idle)
-            {
+            else 
                 MoveTowardsTarget();
-            }
         }
 
 
-        //SetGunsFacings();
+        SetGunsFacings();
     }
 
     private void PauseGunRotation()
@@ -153,21 +151,15 @@ public class RangedEnemy : Enemy
         state = gunState.idle;
     }
 
-    //void SetGunsFacings()
-    //{
-    //    if (state == gunState.idle)
-    //        foreach (GunProperties gun in guns)
-    //        {
-    //            SetGunDirection(gun.gunTransform, gunRotationSpeed);
-    //        }
-    //    else
-    //        foreach (GunProperties gun in guns)
-    //        {
-    //            SetGunDirection(gun.gunTransform, shootingGunRotationSpeed);
-    //        }
-    //}
+    void SetGunsFacings()
+    {
+        foreach (GunProperties gun in guns)
+        {
+            SetGunDirection(gun.gunTransform);
+        }
+    }
 
-    private void SetGunDirection(Transform gunTransform, float rotationAcceleration)
+    private void SetGunDirection(Transform gunTransform)
     {
         // Get the direction between weaponTransform and targetPos
         Vector2 targetDirection = (targetPosition - gunTransform.position).normalized;

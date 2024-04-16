@@ -67,9 +67,13 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         else
         {
             interactPrompt = "Locked.. Get the key first";
-            Transform keyPickup = FindObjectOfType<KeyPickupInteractable>().transform;
+            KeyPickupInteractable keyPickup = FindObjectOfType<KeyPickupInteractable>();
+            if (keyPickup != null)
+            {
             uiCanvas.directionPointer.gameObject.SetActive(true);
-            uiCanvas.directionPointer.target = keyPickup;
+            uiCanvas.directionPointer.target = keyPickup.transform;
+            }
+
 
             Invoke("ResetPromptText", 2f);
         }
