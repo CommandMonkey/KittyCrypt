@@ -211,7 +211,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -457,6 +457,7 @@ MonoBehaviour:
   exploringTheme: {fileID: 8300000, guid: 06d1db741cce4a546b4376c002eadf02, type: 3}
   ratBossTheme: {fileID: 8300000, guid: d9b68aefbe37ce14db470909f1d9f607, type: 3}
   battleTheme: {fileID: 8300000, guid: c3d6de1b818e29c46a8db13503531aa0, type: 3}
+  mainMenuTheme: {fileID: 8300000, guid: d888e653c5bd14d4886adfa724168007, type: 3}
   fadeDuration: 4
 --- !u!1 &3445801923569507857
 GameObject:

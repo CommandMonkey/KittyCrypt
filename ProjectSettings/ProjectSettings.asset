@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: KittyProductions
-  productName: KittyCrypt
+  companyName: CrazyCat Studios
+  productName: KittyCrypt :3
   defaultCursor: {fileID: 2800000, guid: 47386bac693282b4cabe9897a9412e96, type: 3}
   cursorHotspot: {x: 512, y: 512}
   m_SplashScreenBackgroundColor: {r: 0.106918216, g: 0.090443395, b: 0.0945621, a: 1}
@@ -143,7 +143,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 0.6
+  bundleVersion: 0.8.1
   preloadedAssets:
   - {fileID: 11400000, guid: 8c86c9712146d70448db853db2b3e359, type: 2}
   metroInputSource: 0
