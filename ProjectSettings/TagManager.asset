@@ -15,6 +15,8 @@ TagManager:
   - AmmoRemainingText
   - FogOfWar
   - Boss
+  - Wall
+  - Entrance
   layers:
   - Default
   - TransparentFX
@@ -32,7 +34,7 @@ TagManager:
   - Effects
   - PlayerDash
   - Crosshair
-  - 
+  - BulletPassthrough
   - 
   - 
   - 

@@ -6,10 +6,13 @@ using UnityEngine;
 public class BossRoom : Room
 {
     [SerializeField] private Transform boss;
+    [SerializeField] private GameObject bossDoorPrefab;
 
     private GameCamera gameCamera;
     private RatBossBehaviour bossScript;
     private LevelExitInteractable levelExit;
+
+    private BossDoorInteractable bossDoor;
 
     bool started = false;
 
@@ -20,6 +23,7 @@ public class BossRoom : Room
         levelExit = GetComponentInChildren<LevelExitInteractable>();
 
         onPlayerEnter.AddListener(OnPlayerEnter);
+        roomManager.onRoomSpawningDone.AddListener(OnRoomSpawningDone); // for switching to bossRoom door
 
         bossScript.bossRoom = this;
     }
@@ -27,14 +31,24 @@ public class BossRoom : Room
     private void OnPlayerEnter()
     {
         boss.gameObject.SetActive(true);
+        bossDoor.CloseDoor();
         StartCoroutine(BossCutsceneRoutine());
-
     }
 
     public void OnBossDead()
     {
         levelExit.SetInteractable();
         Invoke("focusCamOnPlayer", 1f);
+        bossDoor.CloseDoor();
+    }
+
+    void OnRoomSpawningDone()
+    {
+        // switching to bossRoom door
+        BossDoorInteractable bossDoor =  Instantiate(bossDoorPrefab, previousRoomEntrance.transform.position, Quaternion.identity).GetComponent<BossDoorInteractable>();
+        bossDoor.direction = previousRoomEntrance.direction;
+        previousRoomEntrance.Die();
+        this.bossDoor = bossDoor;
     }
 
 

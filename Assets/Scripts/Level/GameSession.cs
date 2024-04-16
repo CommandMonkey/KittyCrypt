@@ -39,7 +39,6 @@ public class GameSession : MonoBehaviour
 
     public static GameSession Instance { get; private set; }
 
-    
     private void Awake()
     {
         // Ensure there's only one instance
@@ -83,6 +82,8 @@ public class GameSession : MonoBehaviour
             return;
         }
 
+        onEnemyKill = new UnityEvent();
+        OnNewState = new UnityEvent();
         levelSettings = gameSessionData.GetLevelData(levelIndex);
 
         musicManager = FindObjectOfType<MusicManager>();
@@ -93,6 +94,8 @@ public class GameSession : MonoBehaviour
     GameState previousState;
     private void Update()
     {
+        Debug.Log(state);
+
         if (killYourself)
         {
             Die();

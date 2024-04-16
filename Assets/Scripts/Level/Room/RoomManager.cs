@@ -95,8 +95,7 @@ public class RoomManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         SpawnDoorCoversForUnconnectedEntrances();
-        GameSession.state = GameSession.GameState.Running;
-        CloseDoors(true);
+        if (gameSession.levelIndex == 0) CloseDoors(true);
         onRoomSpawningDone.Invoke();
         player.transform.position = Vector3.zero;
         Debug.Log("------- RoomSpawning Done -------");

@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     public bool isDead = false;
     public UnityEvent onInteract;
 
+    public bool hasKey;
+
 
     private float rollSpeed;
     private float rollSpeedDropMultiplier = 8f;
