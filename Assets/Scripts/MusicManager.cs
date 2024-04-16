@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] AudioClip exploringTheme;
     [SerializeField] AudioClip ratBossTheme;
     [SerializeField] AudioClip battleTheme;
+    [SerializeField] AudioClip mainMenuTheme;
     [SerializeField] float fadeDuration = 2f; // Duration of fade (in seconds)
 
     AudioSource audioSource;
@@ -19,6 +21,13 @@ public class MusicManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (SceneManager.GetActiveScene().buildIndex != 0)
             PlayExploringTheme(false);
+        else
+            PlayMainMenuTheme(false);
+    }
+
+    private void PlayMainMenuTheme(bool fade)
+    {
+        StartTheme(mainMenuTheme, fade);
     }
 
     public void PlayExploringTheme(bool fade = true)

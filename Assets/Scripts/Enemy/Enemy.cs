@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     protected bool lineOfSight = true;
     protected Vector3 targetPosition = Vector3.zero;
 
-    protected GameSession levelManager;
+    protected GameSession gameSession;
     protected Animator animator;
     protected Rigidbody2D rigidBody2D;
     protected Transform target;
@@ -33,14 +33,13 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        levelManager = FindObjectOfType<GameSession>();
+        gameSession = GameSession.Instance;
         animator = GetComponentInChildren<Animator>();
         rigidBody2D = GetComponent<Rigidbody2D>();
-        target = levelManager.player.transform;
-        player = target.GetComponent<Player>();
+        player = gameSession.player;
+        target = player.transform;
 
         maxHealth = health;
-
 
         if (player == null) { Debug.Log("PLAYER FOUND"); }
 
@@ -72,7 +71,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (!isDead && health <= 0)
         {
-            levelManager.onEnemyKill.Invoke();
+            gameSession.onEnemyKill.Invoke();
             Die();
         }
         OnDamageTaken();
