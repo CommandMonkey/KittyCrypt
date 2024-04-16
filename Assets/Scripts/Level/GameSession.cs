@@ -21,6 +21,7 @@ public class GameSession : MonoBehaviour
     public GameSessionData gameSessionData;
     [NonSerialized] public UnityEvent onEnemyKill;
     [NonSerialized] public UnityEvent OnNewState;
+    [NonSerialized] public UnityEvent onSceneloaded;
 
 
     public int levelIndex = 0;
@@ -37,6 +38,7 @@ public class GameSession : MonoBehaviour
     public MusicManager musicManager { get; private set; }
 
     SceneLoader sceneLoader;
+    
 
     public static GameSession Instance { get; private set; }
 
@@ -55,6 +57,7 @@ public class GameSession : MonoBehaviour
 
         onEnemyKill = new UnityEvent();
         OnNewState = new UnityEvent();
+        onSceneloaded = new UnityEvent();
         reloadCircle = FindObjectOfType<ReloadCircleFollowCursor>();
     }
 
@@ -97,7 +100,6 @@ public class GameSession : MonoBehaviour
     GameState previousState;
     private void Update()
     {
-        Debug.Log(state);
 
         if (killYourself)
         {

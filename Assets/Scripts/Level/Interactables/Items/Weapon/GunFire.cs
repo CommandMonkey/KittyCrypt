@@ -3,7 +3,9 @@ using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GunFire : Item
@@ -45,9 +47,8 @@ public class GunFire : Item
     RaycastHit2D bulletHit;
 
     UserInput userInput;
-    GameSession levelManager;
+    GameSession gameSession;
     Player player;
-    GameCamera gameCamera;
     AudioSource gunSource;
     Light2D nuzzleLight;
     UICanvas uiCanvas;
@@ -58,15 +59,16 @@ public class GunFire : Item
     private void Start()
     {
         userInput = FindObjectOfType<UserInput>();
-        levelManager = FindObjectOfType<GameSession>();
-        player = levelManager.player;
-        gameCamera = FindObjectOfType<GameCamera>();
+        gameSession = FindObjectOfType<GameSession>();
+        player = gameSession.player;
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
         uiCanvas = FindObjectOfType<UICanvas>();
         ammoUI = uiCanvas.ammoText;
         crosshair = GameSession.Instance.crosshair;
         playerInput = GameSession.Instance.playerInput;
+
+        gameSession.onSceneloaded.AddListener(OnSceneLoaded);
 
         Debug.Log(reloadImage);
         Activate();
@@ -97,6 +99,7 @@ public class GunFire : Item
         }
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -110,8 +113,15 @@ public class GunFire : Item
         DeActivate();
     }
 
+    void OnSceneLoaded()
+    {
+        DeActivate();
+        Activate();
+    }
+
     void OnFire()
     {
+        Debug.Log("Hello");
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         if (ProjectileFire()) return;
         if (BurstFire()) return;
@@ -212,7 +222,7 @@ public class GunFire : Item
     void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(settings.fireAudio);
-        gameCamera.DoCameraShake(   );
+        gameSession.gameCamera.DoCameraShake();
         player.exteriorVelocity += -(Vector2)transform.right * settings.knockback;
 
         if (nuzzleLight == null)

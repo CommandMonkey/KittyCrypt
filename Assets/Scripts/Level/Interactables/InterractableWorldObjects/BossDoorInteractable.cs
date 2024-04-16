@@ -59,7 +59,10 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
             {
                 Destroy(followKey.gameObject);
             }
-            canInteract = false;    
+            canInteract = false;
+            
+            uiCanvas.directionPointer.gameObject.SetActive(false);
+            uiCanvas.directionPointer.target = null;
         }
         else
         {
