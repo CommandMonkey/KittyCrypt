@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEditor.Experimental.GraphView;
 
 public class GunFire : Item
 {
@@ -70,17 +71,11 @@ public class GunFire : Item
 
         gameSession.onSceneloaded.AddListener(OnSceneLoaded);
 
-        Debug.Log(reloadImage);
         Activate();
 
         if (runtimeData == null)
         {
-            Debug.Log("RuntimeData initialized");
             runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
-        }
-        else
-        {
-            Debug.Log("RuntimeData already exist");
         }
 
         if (nuzzleLight != null)
@@ -121,7 +116,6 @@ public class GunFire : Item
 
     void OnFire()
     {
-        Debug.Log("Hello");
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         if (ProjectileFire()) return;
         if (BurstFire()) return;
@@ -141,8 +135,6 @@ public class GunFire : Item
             return false;
         }
 
-        Debug.Log("Fire");
-
         // Fire
         ShootBullet();
         GunFeedbackEffects();
@@ -158,7 +150,6 @@ public class GunFire : Item
     bool BurstFire()
     {
         if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) { return false; }
-        Debug.Log("BurstFire");
 
         // Fire
         for (int i = 0; i < settings.bulletsBeforeReload || settings.bulletsBeforeReload == 0; i++)
@@ -180,8 +171,6 @@ public class GunFire : Item
         {
             return false;
         }
-
-        Debug.Log("Fire");
 
         // Fire
         bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
@@ -213,11 +202,23 @@ public class GunFire : Item
 
     void ShootBullet()
     {
-        gameSession.playerIsShooting = true;
+        if (!gameSession.playerIsShooting)
+        {
+            StartCoroutine(SetCatAngry());
+        }
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);
         runtimeData.bulletsFired++;
+    }
+
+    IEnumerator SetCatAngry()
+    {
+        gameSession.playerIsShooting = true;
+        Debug.Log(gameSession.playerIsShooting);
+        yield return new WaitForSeconds(0.01f);
+        gameSession.playerIsShooting = false;
+        Debug.Log(gameSession.playerIsShooting);
     }
 
     void GunFeedbackEffects()

@@ -25,7 +25,6 @@ public class Explosion : MonoBehaviour
         {
             foreach (Collider2D collider in collider2Ds) 
             {
-                Debug.Log(collider.tag);    
                if (collider.CompareTag("Enemy"))
                 {
                     collider.gameObject.GetComponent<Enemy>().TakeDamage(explotionDamage);

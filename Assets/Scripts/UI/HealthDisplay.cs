@@ -31,7 +31,6 @@ public class HealthDisplay : MonoBehaviour
         }
         catch
         {
-            Debug.Log("dont have ref to player, fetching one");
             player = GameSession.Instance.player;
         }
 

@@ -43,8 +43,6 @@ public class Enemy : MonoBehaviour
 
         maxHealth = health;
 
-        if (player == null) { Debug.Log("PLAYER FOUND"); }
-
         EnemyStart();
     }
 

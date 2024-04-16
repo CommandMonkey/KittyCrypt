@@ -27,7 +27,6 @@ public class UserInput : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("UserInput Awake");
         onMove = new UnityEvent<Vector2>();
         onAiming = new UnityEvent<Vector2>();
         onScroll = new UnityEvent<float>();
@@ -47,7 +46,6 @@ public class UserInput : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("delta: " + (Time.time - lastFireTime));
         var fire = playerInput.actions["Fire"];
         if (Time.time - lastFireTime > fireCooldown && fire.IsPressed())
         {

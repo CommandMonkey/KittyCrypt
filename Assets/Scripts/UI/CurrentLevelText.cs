@@ -15,6 +15,5 @@ public class CurrentLevelText : MonoBehaviour
     private void Update()
     {
         levelText.text = "LEVEL " + (GameSession.Instance.levelIndex + 1).ToString();
-        Debug.Log(GameSession.Instance.levelIndex.ToString());
     }
 }
