@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class ItemPickupInteractable : MonoBehaviour, IInteractable
 {
-    [SerializeField] GameObject[] randomWeapon; 
 
     public GameObject item;
     public string interactPrompt { get; set; }
     public bool canInteract { get; set; } = true;
 
     [SerializeField] GameObject popVFX;
+    
+    GameSession gameSession;
 
     private void Start()
     {
+        gameSession = GameSession.Instance;
+
         if (item == null)
         {
-            item = randomWeapon[Random.Range(0, randomWeapon.Length)];
+            item = gameSession.levelSettings.GetRandomItem();
         }
 
         interactPrompt = "E to pickup " + item.name;

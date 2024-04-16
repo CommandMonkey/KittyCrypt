@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,7 +15,7 @@ public class SpawnRoom : Room
         {
             if (weapon == null)
             {
-                FindObjectOfType<RoomManager>().OpenDoors();
+                FindObjectOfType<RoomManager>().OpenDoors(true);
                 popAll = true;
                 Destroy(this);
                 Destroy(pickUpWeaponText);

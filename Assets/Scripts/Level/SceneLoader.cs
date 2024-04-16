@@ -9,14 +9,17 @@ public class SceneLoader : MonoBehaviour
     // Cached Component References
     Animator transitionAnimator;
     GameObject generationScreen;
+    GameSession gameSession;
 
     private void Start()
     {
+        gameSession = GameSession.Instance;
         transitionAnimator = GetComponentInChildren<Animator>();
         generationScreen = GameObject.Find("GeneratingScreen");
         transitionAnimator.SetBool("isLoading", false);
         if (generationScreen != null)
         {
+            gameSession.SetState(GameSession.GameState.Loading);
             StartCoroutine(LoadLevel());
         }
     }
@@ -50,10 +53,12 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)
     {
+        if (gameSession != null) gameSession.SetState(GameSession.GameState.Loading);
         transitionAnimator.SetBool("isLoading", true);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f);    
 
+        if(gameSession != null) gameSession.SetState(GameSession.GameState.Running);
         SceneManager.LoadScene(sceneIndex);
     }
 
@@ -62,6 +67,8 @@ public class SceneLoader : MonoBehaviour
         transitionAnimator.SetBool("isLoading", true);
         yield return new WaitForSeconds(Random.Range(2f, 5f));
         transitionAnimator.SetBool("isLoading", false);
+        if(gameSession != null) gameSession.SetState(GameSession.GameState.Running);
+
         generationScreen.gameObject.SetActive(false);
     }
 }

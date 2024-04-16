@@ -44,7 +44,7 @@ public class GunFire : IItem
     UserInput userInput;
     GameSession levelManager;
     Player player;
-    Animator virtualCameraAnimator;
+    GameCamera gameCamera;
     AudioSource gunSource;
     Light2D nuzzleLight;
     UICanvas uiCanvas;
@@ -58,7 +58,7 @@ public class GunFire : IItem
         userInput = FindObjectOfType<UserInput>();
         levelManager = FindObjectOfType<GameSession>();
         player = levelManager.player;
-        virtualCameraAnimator = FindObjectOfType<CinemachineVirtualCamera>().GetComponent<Animator>();
+        gameCamera = FindObjectOfType<GameCamera>();
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
         uiCanvas = FindObjectOfType<UICanvas>();
@@ -208,7 +208,7 @@ public class GunFire : IItem
     void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(settings.fireAudio);
-        virtualCameraAnimator.SetTrigger("CameraShake");
+        gameCamera.DoCameraShake(   );
         player.exteriorVelocity += -(Vector2)transform.right * settings.knockback;
 
         if (nuzzleLight == null)

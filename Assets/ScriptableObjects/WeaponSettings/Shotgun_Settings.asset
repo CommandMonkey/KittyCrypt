@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 1
   fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
-  reloadAudio: {fileID: 0}
+  reloadAudio: {fileID: 8300000, guid: 0eccad6467630a946b3d1afede8365f4, type: 3}
   fireRate: 1
-  reloadTime: 1.5
+  reloadTime: 1.3
   bulletDamage: 2
-  bulletsBeforeReload: 10
+  bulletsBeforeReload: 15
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
   knockback: 15
@@ -26,7 +26,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 7048
   projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 20
+  bulletSpreadRange: 30
   bulletSpeed: 40
   projectileVanishAfter: 3
   bulletTrail: {fileID: 0}
