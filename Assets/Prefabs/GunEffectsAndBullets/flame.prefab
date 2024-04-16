@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6392008055963127946}
   - component: {fileID: -2981332931489941326}
   - component: {fileID: 360734601873156480}
+  - component: {fileID: -1255552614357385277}
   m_Layer: 8
   m_Name: flame
   m_TagString: Untagged
@@ -181,7 +182,8 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a5114cb004fbebe42b03b5eb0aa03149, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -234,8 +236,8 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.8930817, g: 0.7800536, b: 0.075827554, a: 1}
-      key1: {r: 0.91194963, g: 0.06022296, b: 0.06022296, a: 1}
-      key2: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 0.91194963, g: 0.06022296, b: 0.06022296, a: 0.6431373}
+      key2: {r: 0.91194963, g: 0.06022296, b: 0.06022296, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -272,7 +274,7 @@ TrailRenderer:
   m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
-  m_ApplyActiveColorSpace: 0
+  m_ApplyActiveColorSpace: 1
 --- !u!114 &360734601873156480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,5 +285,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cb56a25d6570a548804230775a8ce76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1255552614357385277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834965403791016898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d0708e42157ed4c9652f27fc3d48c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

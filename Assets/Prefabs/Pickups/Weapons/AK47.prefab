@@ -105,7 +105,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 864004575432457577}
@@ -191,7 +191,7 @@ Transform:
   m_GameObject: {fileID: 7445562969301839146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 6.21, y: 0.89, z: 0}
+  m_LocalPosition: {x: 1.754, y: 0.221, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: AK47
   settings: {fileID: 11400000, guid: 0d6def13d8a7ba04f8dce903abafdb3a, type: 2}
   active: 0
 --- !u!114 &264496823960170481

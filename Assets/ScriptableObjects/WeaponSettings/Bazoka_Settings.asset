@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d9bf95a2d8be144a8e8b3835c456403, type: 3}
-  m_Name: Flamethrower_Settings
+  m_Name: Bazoka_Settings
   m_EditorClassIdentifier: 
-  weaponType: 1
-  fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
+  weaponType: 0
+  fireAudio: {fileID: 0}
   reloadAudio: {fileID: 0}
-  fireRate: 0.0000001
-  reloadTime: 0.00001
-  bulletDamage: 0.5
-  bulletsBeforeReload: 5
-  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
+  fireRate: 0.1
+  reloadTime: 2
+  bulletDamage: 20
+  bulletsBeforeReload: 1
+  hitEffect: {fileID: 1302304371134558319, guid: cf3aad10b11a5e846a80e6bc5e3abef8, type: 3}
   destroyHitEffectAfter: 1.5
-  knockback: 2
+  knockback: 50
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 7048
-  projectile: {fileID: 7834965403791016898, guid: de20bfa92680a7d4e866ba7c2f36672d, type: 3}
-  bulletSpreadRange: 27
-  bulletSpeed: 10
-  projectileVanishAfter: 0.4
+  projectile: {fileID: 7834965403791016898, guid: ad721c0f74dabe24198bbb3bc499a0b5, type: 3}
+  bulletSpreadRange: 0
+  bulletSpeed: 13
+  projectileVanishAfter: 3
   bulletTrail: {fileID: 0}
   destroyTrailAfter: 0.1

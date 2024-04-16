@@ -173,7 +173,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<DualShockGamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": ""StickDeadzone"",
-                    ""groups"": ""PlayStation controller"",
+                    ""groups"": ""PlayStation Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -217,7 +217,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<DualShockGamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PlayStation controller"",
+                    ""groups"": ""PlayStation Controller"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -261,7 +261,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<DualShockGamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PlayStation controller"",
+                    ""groups"": ""PlayStation Controller"",
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -316,7 +316,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<DualShockGamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PlayStation controller"",
+                    ""groups"": ""PlayStation Controller"",
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -404,7 +404,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<DualShockGamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PlayStation controller"",
+                    ""groups"": ""PlayStation Controller"",
                     ""action"": ""Aiming"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -426,7 +426,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PlayStation controller;Switch Controller;Xbox Controller"",
+                    ""groups"": ""PlayStation Controller;Switch Controller;Xbox Controller"",
                     ""action"": ""TogglePause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -470,7 +470,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<DualShockGamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PlayStation controller"",
+                    ""groups"": ""PlayStation Controller"",
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -540,8 +540,8 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""PlayStation controller"",
-            ""bindingGroup"": ""PlayStation controller"",
+            ""name"": ""PlayStation Controller"",
+            ""bindingGroup"": ""PlayStation Controller"",
             ""devices"": [
                 {
                     ""devicePath"": ""<DualShockGamepad>/{Back}"",
@@ -748,13 +748,13 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_SwitchControllerSchemeIndex];
         }
     }
-    private int m_PlayStationcontrollerSchemeIndex = -1;
-    public InputControlScheme PlayStationcontrollerScheme
+    private int m_PlayStationControllerSchemeIndex = -1;
+    public InputControlScheme PlayStationControllerScheme
     {
         get
         {
-            if (m_PlayStationcontrollerSchemeIndex == -1) m_PlayStationcontrollerSchemeIndex = asset.FindControlSchemeIndex("PlayStation controller");
-            return asset.controlSchemes[m_PlayStationcontrollerSchemeIndex];
+            if (m_PlayStationControllerSchemeIndex == -1) m_PlayStationControllerSchemeIndex = asset.FindControlSchemeIndex("PlayStation Controller");
+            return asset.controlSchemes[m_PlayStationControllerSchemeIndex];
         }
     }
     public interface IPlayerActions
