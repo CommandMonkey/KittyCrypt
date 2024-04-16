@@ -343,6 +343,6 @@ public class RoomManager : MonoBehaviour
         {
             entrance.OpenDoor();
         }
-        if (!silent) audioScource.PlayOneShot(openDoorAudio);
+        if (!silent) audioScource.PlayOneShot(openDoorAudio, 0.4f);
     }
 }

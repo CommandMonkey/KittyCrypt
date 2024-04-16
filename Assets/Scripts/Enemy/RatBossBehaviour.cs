@@ -19,6 +19,7 @@ public class RatBossBehaviour : Enemy
     [SerializeField] float followRange = 3f;
     [SerializeField] float timeBetweenAttacks = 4f;
     [SerializeField] LayerMask hitLayerMask;
+    [SerializeField] GameObject healthPrefab;
 
     [Header("Health Display")]
     [SerializeField] GameObject healthBarPrefab;
@@ -322,6 +323,7 @@ public class RatBossBehaviour : Enemy
             musicManager.PlayExploringTheme();
 
             KillAllRatMinions();
+            SpawnHP_Pickups();
 
             bossRoom.OnBossDead();
         }
@@ -368,7 +370,14 @@ public class RatBossBehaviour : Enemy
         newRotationSpeed = Mathf.Clamp(newRotationSpeed, -currentMaxAngularVelocity, currentMaxAngularVelocity);
         weaponTransform.GetComponent<Rigidbody2D>().angularVelocity = newRotationSpeed;
     }
-
+    void SpawnHP_Pickups()
+    {
+        int amountOfHealth = UnityEngine.Random.Range(1, 5);
+        for (int i = 0; i < amountOfHealth; i++)
+        {
+            Instantiate(healthPrefab, transform.position, Quaternion.identity);
+        }
+    }
 
     public void PlayShadowedCaneAnim()
     {

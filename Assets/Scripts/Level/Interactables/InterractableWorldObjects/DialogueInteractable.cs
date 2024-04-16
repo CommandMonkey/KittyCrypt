@@ -6,24 +6,21 @@ public class DialogueInteractable : MonoBehaviour, IInteractable
 {
     // serialize fields
     [SerializeField] GameObject dialogueTextPrefab;
+    [SerializeField] string promptText;
     [SerializeField] string dialogueText = "";
     [SerializeField] float dialogueDuration = 0f;
 
     [SerializeField] public string interactPrompt {  get; set; }
     public bool canInteract { get; set; } = true;
 
-    // static to avoid multiple dialogues at once
-    static bool dialogueActive = false;
+
 
     private void Start()
     {
-        interactPrompt = "press E"; 
+        interactPrompt = promptText;
+        canInteract = true;
     }
 
-    private void Update()
-    {
-        canInteract = !dialogueActive;
-    }
 
     public void Interact()
     {
@@ -32,13 +29,13 @@ public class DialogueInteractable : MonoBehaviour, IInteractable
 
     IEnumerator DisplayDialogueRutine()
     {
-        dialogueActive = true;
-        TMP_Text textInstance = Instantiate(dialogueTextPrefab, transform).GetComponent<TMP_Text>();
+        canInteract = false;
+        TMP_Text textInstance = Instantiate(dialogueTextPrefab,transform.position, Quaternion.identity, transform.parent).GetComponent<TMP_Text>();
         textInstance.text = dialogueText;
 
         yield return new WaitForSeconds(dialogueDuration);
 
-        dialogueActive = false;
-        Destroy(textInstance);
+        canInteract = true;
+        Destroy(textInstance.gameObject);
     }
 }

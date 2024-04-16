@@ -67,6 +67,7 @@ MonoBehaviour:
   hitLayerMask:
     serializedVersion: 2
     m_Bits: 192
+  healthPrefab: {fileID: 4317062860953269516, guid: 8234473345199d84bb952fd2cefef13a, type: 3}
   healthBarPrefab: {fileID: 4786842604661323783, guid: c16010bb1648114419fee0b5f99c08e8, type: 3}
   shootAimTime: 3
   aimLineVFX: {fileID: 9181747754686250940, guid: 65899a98ec85d6a459a1ccd48e37e441, type: 3}
