@@ -91,18 +91,52 @@ public class GameSessionData : ScriptableObject
             return selectedEnemies;
         }
 
+        public GameObject GetRandomSpawnRoomItem()
+        {
+            // Calculate the total weight (sum of probabilities)
+            //float totalWeight = 0f;
+            //foreach (var item in itemPool)
+            //{
+            //    totalWeight += item.probability;
+            //}
 
+            // Generate a random value between 0 and the total weight
+            float randomValue = UnityEngine.Random.Range(0f, 1);
+
+            // Find the item corresponding to the random value
+            foreach (ItemProbability item in itemPool)
+            {
+                if (item.inSpawnRoom && randomValue < item.probability)
+                {
+                    return item.prefab; // Return the selected item
+                }
+                randomValue -= item.probability;
+            }
+
+            // Fallback: Return the first item (if the probabilities don't add up to 1)
+
+            foreach (ItemProbability item in itemPool)
+            {
+                if (item.inSpawnRoom)
+                {
+                    return item.prefab; // Return the selected item
+                }
+            }
+            Debug.LogError("No items selected as Spawn room items. Configure Item pool! - Anton");
+            return null;
+        }
+    
         public GameObject GetRandomItem()
         {
             // Calculate the total weight (sum of probabilities)
-            float totalWeight = 0f;
-            foreach (var item in itemPool)
-            {
-                totalWeight += item.probability;
-            }
+            //float totalWeight = 0f;
+            //foreach (var item in itemPool)
+            //{
+            //    totalWeight += item.probability;
+            //}
 
             // Generate a random value between 0 and the total weight
-            float randomValue = UnityEngine.Random.Range(0f, totalWeight);
+            float randomValue = UnityEngine.Random.Range(0f, 1f);
 
             // Find the item corresponding to the random value
             foreach (var item in itemPool)
@@ -115,7 +149,15 @@ public class GameSessionData : ScriptableObject
             }
 
             // Fallback: Return the first item (if the probabilities don't add up to 1)
-            return itemPool[0].prefab;
+            if (itemPool[0].prefab != null)
+                return itemPool[0].prefab;
+            else
+            {
+                Debug.LogError("Cannot find Any items in the item pool... configure the GameSessionSettings ItemPool! - Anton");
+                return null;
+            }
+
+
         }
 
     }
@@ -125,6 +167,7 @@ public class GameSessionData : ScriptableObject
     {
         public GameObject prefab;
         [Range(0f, 1f)] public float probability;
+        public bool inSpawnRoom;
     }
 
     [Serializable]

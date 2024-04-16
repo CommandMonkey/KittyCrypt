@@ -91,7 +91,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             return "B";
         }
-        return "I DONT FUCKING KNOW";
+        return "I DONT KNOW";
     }
 
     private void OnTriggerEnter2D(Collider2D other)
