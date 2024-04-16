@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour
         player = gameSession.player;
         target = player.transform;
 
+        health *= gameSession.levelSettings.enemyHP_Multiplier;
+
         maxHealth = health;
 
         EnemyStart();
