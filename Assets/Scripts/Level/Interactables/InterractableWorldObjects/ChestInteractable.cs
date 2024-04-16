@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -13,6 +14,7 @@ public class ChestInteractable : MonoBehaviour, IInteractable
     [SerializeField] List<Transform> launchDirections;
     [SerializeField] float initialShootOutSpeed;
     [SerializeField] float gravityFactor;
+    [SerializeField] Sprite itemSpawnBallSprite;
     [SerializeField] Sprite openChest;
     [SerializeField] GameObject pickUpPrefab;
     SpriteRenderer mySpriteRenderer;
@@ -44,48 +46,70 @@ public class ChestInteractable : MonoBehaviour, IInteractable
                 }
             }
 
-            if(popAll)
+            if (popAll)
+            {
                 foreach (ItemPickupInteractable obj in instancedItemPickups)
                 {
-                    obj.PopAndDie();
+                    if (obj != null)
+                        obj.PopAndDie();
                 }
+
+                gameObject.SetActive(false);
+            }
+
         }
 
-
-        if (gravityObjects.Count == 0) return;
+    }
+    private void FixedUpdate()
+    {
+        if (gravityObjects.Count < 1) 
+            return;
         else
             foreach(Rigidbody2D obj in gravityObjects)
             {
+                obj.velocity += gravVector;
                 if (obj.position.y < transform.position.y)
                 {
                     obj.velocity = Vector2.zero;
                     gravityObjects.Remove(obj);
+                    spawnPickup(obj.position);
+                    Destroy(obj.gameObject);
                     break;
                 }
-                else
-                    obj.velocity -= gravVector;
             }
+    }
+
+    private void spawnPickup(Vector2 position)
+    {
+        instancedItemPickups.Add(Instantiate(pickUpPrefab, position, Quaternion.identity).GetComponent<ItemPickupInteractable>());
     }
 
     public void Interact()
     {
         mySpriteRenderer.sprite = openChest;
-        Instantiate(pickUpPrefab, new Vector2(transform.position.x, transform.position.y + .5f), Quaternion.identity);
+        //Instantiate(pickUpPrefab, new Vector2(transform.position.x, transform.position.y + .5f), Quaternion.identity);
         canInteract = false;
 
         foreach (Transform obj in launchDirections)
         {
-            LaunchObject(obj.position);
+            LaunchObject(obj.localPosition);
         }
     }
 
     void LaunchObject(Vector2 direction)
     {
         GameObject obj = new GameObject();
-        obj.AddComponent<Rigidbody2D>();
+        obj.transform.SetParent(transform, false);
+        Rigidbody2D objRigidbody = obj.AddComponent<Rigidbody2D>();
+        SpriteRenderer objRenderer = obj.AddComponent<SpriteRenderer>();
+        objRenderer.sprite = itemSpawnBallSprite;
 
-        Rigidbody2D instance = Instantiate(obj, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
-        instance.AddForce(direction * initialShootOutSpeed, ForceMode2D.Impulse);
-        gravityObjects.Add(instance);
+        obj.transform.position +=  new Vector3(0, 1f);
+
+        objRigidbody.bodyType = RigidbodyType2D.Kinematic;
+        //Rigidbody2D instance = Instantiate(obj, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+        objRigidbody.velocity += direction.normalized * initialShootOutSpeed;
+
+        gravityObjects.Add(objRigidbody);
     }
 }

@@ -30,7 +30,7 @@ public class SpawnRoom : Room
             itemsSpawned.Add(item);
 
 
-            ItemPickupInteractable pickup =  Instantiate(itemPickupInteractable, t.position, Quaternion.identity).GetComponent<ItemPickupInteractable>();
+            ItemPickupInteractable pickup =  Instantiate(itemPickupInteractable, t).GetComponent<ItemPickupInteractable>();
             pickup.item = item;
             startWeaponPickups.Add(pickup);
         }
