@@ -18,7 +18,7 @@ public class RangedEnemy : Enemy
     //[SerializeField] private float shootingGunRotationSpeed;
     //[SerializeField] private float maxRotationSpeed;
     //[SerializeField] private float maxAngularVelocity;
-    //[SerializeField] private float pointingThresholdAngle = 1f;
+    [SerializeField] private float pointingThresholdAngle = 1f;
 
     [System.Serializable] private class GunProperties
     {
@@ -72,7 +72,7 @@ public class RangedEnemy : Enemy
         }
 
 
-        SetGunsFacings();
+        //SetGunsFacings();
     }
 
     private void PauseGunRotation()
@@ -153,19 +153,19 @@ public class RangedEnemy : Enemy
         state = gunState.idle;
     }
 
-    void SetGunsFacings()
-    {
-        if (state == gunState.idle)
-            foreach (GunProperties gun in guns)
-            {
-                SetGunDirection(gun.gunTransform, gunRotationSpeed);
-            }
-        else
-            foreach (GunProperties gun in guns)
-            {
-                SetGunDirection(gun.gunTransform, shootingGunRotationSpeed);
-            }
-    }
+    //void SetGunsFacings()
+    //{
+    //    if (state == gunState.idle)
+    //        foreach (GunProperties gun in guns)
+    //        {
+    //            SetGunDirection(gun.gunTransform, gunRotationSpeed);
+    //        }
+    //    else
+    //        foreach (GunProperties gun in guns)
+    //        {
+    //            SetGunDirection(gun.gunTransform, shootingGunRotationSpeed);
+    //        }
+    //}
 
     private void SetGunDirection(Transform gunTransform, float rotationAcceleration)
     {
