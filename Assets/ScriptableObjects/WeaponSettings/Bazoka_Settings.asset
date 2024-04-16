@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Bazoka_Settings
   m_EditorClassIdentifier: 
   weaponType: 0
-  fireAudio: {fileID: 0}
+  fireAudio: {fileID: 8300000, guid: 39e31478a011ec04ba2dfd55c0b457ee, type: 3}
   reloadAudio: {fileID: 0}
+  audioVolume: 1
   fireRate: 1
   reloadTime: 3
   bulletDamage: 20

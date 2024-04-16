@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponType: 2
   fireAudio: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
   reloadAudio: {fileID: 8300000, guid: d201d037fe8984e459f72175ff450ead, type: 3}
+  audioVolume: 0.2
   fireRate: 0.3
   reloadTime: 2
   bulletDamage: 10
