@@ -29,20 +29,8 @@ public class MusicManager : MonoBehaviour
             PlayExploringTheme(false);
         else
             PlayMainMenuTheme(false);
-
-        gameSession.OnNewState.AddListener(OnNewState);
     }
 
-    private void OnDestroy()
-    {
-        gameSession.OnNewState.RemoveListener(OnNewState);
-    }
-
-
-    void OnNewState()
-    {
-        
-    }
 
     private void Update()
     {
