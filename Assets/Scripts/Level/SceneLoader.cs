@@ -60,8 +60,11 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)
     {
-        if (gameSession != null) gameSession.SetState(GameSession.GameState.Loading);
-        gameSession.player.transform.position = Vector3.zero;
+        if (gameSession != null) 
+        {
+            gameSession.SetState(GameSession.GameState.Loading);
+            gameSession.player.transform.position = Vector3.zero; 
+        }
         transitionAnimator.SetBool("isLoading", true);
 
         yield return new WaitForSeconds(2f);    

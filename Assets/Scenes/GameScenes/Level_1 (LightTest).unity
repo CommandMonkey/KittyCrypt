@@ -367,6 +367,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7794644811549423877, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8148368651603298506, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
       propertyPath: reloadCircle
       value: 
@@ -550,6 +554,10 @@ PrefabInstance:
     - target: {fileID: 2295993820953627326, guid: 61834024c39a4e84d9b2f25a85c64061, type: 3}
       propertyPath: m_Name
       value: CameraParent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700807228576763148, guid: 61834024c39a4e84d9b2f25a85c64061, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7280510040407455507, guid: 61834024c39a4e84d9b2f25a85c64061, type: 3}
       propertyPath: m_LocalPosition.x
@@ -932,6 +940,10 @@ PrefabInstance:
       propertyPath: m_IgnoreReversedGraphics
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7310062709526014756, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7709134303033472481, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: m_Color.a
       value: 0.5882353
@@ -948,6 +960,10 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8179313453937787822, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: levelSettings.roomGenSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
     - target: {fileID: 8350189241593918410, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.0223954
