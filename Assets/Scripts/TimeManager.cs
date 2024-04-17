@@ -48,6 +48,8 @@ public class TimeManager : MonoBehaviour
     {
         gamePaused = !gamePaused;
 
+        GameSession.state = gamePaused ? GameSession.GameState.Paused : GameSession.GameState.Running;
+
         pauseMenuContainer.SetActive(gamePaused);
 
         UpdateTimeScale();

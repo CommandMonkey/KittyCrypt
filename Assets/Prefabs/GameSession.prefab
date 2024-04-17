@@ -404,8 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3b67854ef6b2549b7860a76ef461b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshair: {fileID: 0}
-  reloadCanvas: {fileID: 0}
+  crosshair: {fileID: 6846608642815445389}
 --- !u!1001 &645398632360810179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -573,6 +572,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 896aea2204c58bf4c820eb02dd91df53, type: 3}
+--- !u!114 &6846608642815445389 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9085966251021492559, guid: 896aea2204c58bf4c820eb02dd91df53, type: 3}
+  m_PrefabInstance: {fileID: 2383490947019221186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc55ab06ccdc50345be3bd88cdf2c083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6968629263258645015 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4730564150095043285, guid: 896aea2204c58bf4c820eb02dd91df53, type: 3}

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour 
@@ -13,17 +15,49 @@ public class MusicManager : MonoBehaviour
     [SerializeField] float fadeDuration = 2f; // Duration of fade (in seconds)
 
     AudioSource audioSource;
+    GameSession gameSession;
+
+    GameSession.GameState localGameState = GameSession.GameState.Running;
 
     float exploringThemePauseTime = 0f;
 
     private void Start()
     {
+        gameSession = GameSession.Instance;
         audioSource = GetComponent<AudioSource>();
         if (SceneManager.GetActiveScene().buildIndex != 0)
             PlayExploringTheme(false);
         else
             PlayMainMenuTheme(false);
+
+        gameSession.OnNewState.AddListener(OnNewState);
     }
+
+    private void OnDestroy()
+    {
+        gameSession.OnNewState.RemoveListener(OnNewState);
+    }
+
+
+    void OnNewState()
+    {
+        
+    }
+
+    private void Update()
+    {
+        if (GameSession.state == GameSession.GameState.Paused && localGameState != GameSession.GameState.Paused)
+        {
+            localGameState = GameSession.GameState.Paused;
+            audioSource.Pause();
+        }
+        else if (GameSession.state != GameSession.GameState.Paused && localGameState == GameSession.GameState.Paused)
+        {
+            localGameState = GameSession.state;
+            audioSource.UnPause();
+        }
+    }
+
 
     private void PlayMainMenuTheme(bool fade)
     {

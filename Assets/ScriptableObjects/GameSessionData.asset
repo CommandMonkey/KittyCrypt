@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameSessionData
   m_EditorClassIdentifier: 
   roomValueCapacityMultiplier: 1.3
-  enemyHP_Multiplier: 1.5
+  enemyHP_Multiplier: 1.3
   levelData:
   - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
     enemyPool:

@@ -15,7 +15,7 @@ public class ReloadCircleFollowCursor : MonoBehaviour
     void Start()
     {
         playerInput = FindObjectOfType<PlayerInput>();
-        crosshair = GameSession.Instance.crosshair;
+        //crosshair = GameSession.Instance.crosshair;
         gameObject.SetActive(false);
     }
 
