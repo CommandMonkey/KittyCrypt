@@ -16,6 +16,11 @@ public class SpawnRoom : Room
 
     protected override void RoomStart()
     {
+        if (gameSession.levelIndex != 0)
+        {
+            pickUpWeaponText.text = "Pick a Weapon, \nIf you want!";
+        }
+
         foreach (Transform t in startWeaponPoints)
         {
             int tries = 0;
@@ -47,6 +52,7 @@ public class SpawnRoom : Room
                 popAll = true;
                 Destroy(this);
                 pickUpWeaponText.text = "Find the Rat King\nDon't forget you can Dash";
+                Destroy(pickUpWeaponText.gameObject, 3f);
             }
         }
         if (popAll)

@@ -109,6 +109,9 @@ public class GunFire : Item
 
     void OnSceneLoaded()
     {
+        uiCanvas = FindObjectOfType<UICanvas>();
+        ammoUI = uiCanvas.ammoText;
+
         DeActivate();
         Activate();
     }
@@ -304,6 +307,8 @@ public class GunFire : Item
 
             yield return new WaitForEndOfFrame();
         }
+
+
 
 
         void OnReloadDone()
