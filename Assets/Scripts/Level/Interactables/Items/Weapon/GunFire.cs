@@ -64,7 +64,6 @@ public class GunFire : Item
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
         uiCanvas = FindObjectOfType<UICanvas>();
-        ammoUI = uiCanvas.ammoText;
         crosshair = GameSession.Instance.crosshair;
         playerInput = GameSession.Instance.playerInput;
 
