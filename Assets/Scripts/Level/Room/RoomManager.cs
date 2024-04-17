@@ -95,7 +95,6 @@ public class RoomManager : MonoBehaviour
         SpawnDoorCoversForUnconnectedEntrances();
         if (gameSession.levelIndex == 0) CloseDoors(true);
         onRoomSpawningDone.Invoke();
-        player.transform.position = Vector3.zero;
     }
 
     bool ShouldTerminateRoomSpawning(int waveCount, int previousRoomCount)

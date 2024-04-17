@@ -61,7 +61,6 @@ public class GameSession : MonoBehaviour
         onEnemyKill = new UnityEvent();
         OnNewState = new UnityEvent();
         onSceneloaded = new UnityEvent();
-        reloadCircle = FindObjectOfType<ReloadCircleFollowCursor>();
     }
 
     private void Start()
