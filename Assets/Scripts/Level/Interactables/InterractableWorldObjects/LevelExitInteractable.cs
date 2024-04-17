@@ -24,6 +24,20 @@ public class LevelExitInteractable : MonoBehaviour, IInteractable
         spriteRenderer = GetComponent<SpriteRenderer>();
         SetInteractable();
         UpdateSprite();
+        
+        InvokeRepeating("CheckIfBossAlive", 1f, 3f);
+    }
+
+    void CheckIfBossAlive()
+    {
+        RatBossBehaviour ratBoss = FindObjectOfType<RatBossBehaviour>();
+        if (ratBoss != null)
+        {
+            if (ratBoss.state == RatBossBehaviour.RatState.dead)
+                SetInteractable();
+            else
+                SetUnInteractable();
+        }
     }
 
     public void Interact()

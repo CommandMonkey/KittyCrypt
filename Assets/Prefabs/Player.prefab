@@ -334,6 +334,7 @@ MonoBehaviour:
   drag: 0.9
   invinsibilityLenght: 1
   invisibilityLengthDash: 0.2
+  BloodSplatVFX: {fileID: 1158836865863372884, guid: 807a4a5b91ffe6e43ae4fb6e3b2fd86a, type: 3}
   crosshair: {fileID: 0}
   isDead: 0
   onInteract:

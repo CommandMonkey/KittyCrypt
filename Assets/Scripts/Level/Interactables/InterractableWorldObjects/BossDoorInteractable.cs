@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,8 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
     [SerializeField] Sprite frontOpenDoorSprite;
     [SerializeField] Sprite sideClosedDoorSprite;
     [SerializeField] Sprite sideOpenDoorSprite;
+    [SerializeField] GameObject dialogueTextPrefab;
+    [SerializeField] float dialogueDuration = 2f;
 
     public string interactPrompt { get; set; }
     public bool canInteract { get; set; }
@@ -37,7 +41,7 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
 
         canInteract = true;
 
-        ResetPromptText();
+        interactPrompt = "Rat Kings lair,\nTry To Open";   
         CloseDoor();
         SetDoorCollisionSize();
     }
@@ -66,23 +70,15 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         }
         else
         {
-            interactPrompt = "Locked.. Get the key first";
+            StartCoroutine(DisplayDialogueRutine("Door Is Locked,\n Find the Key"));
             KeyPickupInteractable keyPickup = FindObjectOfType<KeyPickupInteractable>();
             if (keyPickup != null)
             {
             uiCanvas.directionPointer.gameObject.SetActive(true);
             uiCanvas.directionPointer.target = keyPickup.transform;
             }
-
-
-            Invoke("ResetPromptText", 2f);
         }
 
-    }
-
-    void ResetPromptText()
-    {
-        interactPrompt = "Rat King - knock Beforehand";
     }
 
     private void SetDoorCollisionSize()
@@ -123,6 +119,18 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         {
             spriteRenderer.sprite = doorOpen ? sideOpenDoorSprite : sideClosedDoorSprite;
         }
+    }
+
+    IEnumerator DisplayDialogueRutine(string text)
+    {
+        canInteract = false;
+        TMP_Text textInstance = Instantiate(dialogueTextPrefab, transform.position, Quaternion.identity, transform.parent).GetComponent<TMP_Text>();
+        textInstance.text = text;
+
+        yield return new WaitForSeconds(dialogueDuration);
+
+        canInteract = true;
+        Destroy(textInstance.gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

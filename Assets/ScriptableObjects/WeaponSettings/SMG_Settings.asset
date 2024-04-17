@@ -18,7 +18,7 @@ MonoBehaviour:
   audioVolume: 0.5
   fireRate: 0.06
   reloadTime: 2
-  bulletDamage: 4
+  bulletDamage: 3
   bulletsBeforeReload: 50
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5

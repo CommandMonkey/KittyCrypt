@@ -102,7 +102,7 @@ MonoBehaviour:
   pickupVFX: {fileID: 0}
   initialForceMagnitude: 15
   gravityMagnitude: -0.8
-  timeUntilStop: 0.8
+  timeUntilStop: 0.7
   healthIncrease: 1
 --- !u!50 &1694111503620212296
 Rigidbody2D:

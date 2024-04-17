@@ -19,13 +19,16 @@ public class ChestInteractable : MonoBehaviour, IInteractable
 
     List<Rigidbody2D> gravityObjects = new List<Rigidbody2D>();
     List<ItemPickupInteractable> instancedItemPickups = new List<ItemPickupInteractable>();
+    List<GameObject> itemsSpawned = new List<GameObject>();
 
+    GameSession gameSession;
 
     Vector2 gravVector;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameSession = GameSession.Instance; 
         interactPrompt = "Chest";
         mySpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -82,7 +85,19 @@ public class ChestInteractable : MonoBehaviour, IInteractable
 
     private void spawnPickup(Vector2 position)
     {
-        instancedItemPickups.Add(Instantiate(pickUpPrefab, position, Quaternion.identity).GetComponent<ItemPickupInteractable>());
+        int tries = 0;
+
+        GameObject item = null;
+        while (item == null || itemsSpawned.Contains(item))
+        {
+            item = gameSession.levelSettings.GetRandomSpawnRoomItem();
+            tries++;
+            if (tries == 50) break;
+        }
+        itemsSpawned.Add(item);
+
+        ItemPickupInteractable pickup = Instantiate(pickUpPrefab, position, Quaternion.identity).GetComponent<ItemPickupInteractable>();
+        instancedItemPickups.Add(pickup);
     }
 
     public void Interact()

@@ -58,7 +58,7 @@ public class RatBossBehaviour : Enemy
 
     List<GameObject> ratMinions = new List<GameObject>();
 
-    private enum RatState
+    public enum RatState
     {
         paused,
         alive,
@@ -70,7 +70,7 @@ public class RatBossBehaviour : Enemy
     private Vector3 toTarget;
     private RaycastHit2D aimRayHit;
     private Vector3 targetMovePosition;
-    private RatState state = RatState.paused;
+    public RatState state = RatState.paused;
     private float elapsedTime;
     private Image healthBar;
 
@@ -298,7 +298,8 @@ public class RatBossBehaviour : Enemy
 
     private void SpawnHealthBar()
     {
-        healthBar = GameHelper.GetComponentInAllChildren<Image>(Instantiate(healthBarPrefab));
+        Instantiate(healthBarPrefab);
+        healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
         healthBar.fillAmount = health / maxHealth;
 
     }

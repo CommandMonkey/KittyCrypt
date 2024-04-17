@@ -11,6 +11,7 @@ public class BossRoom : Room
     private GameCamera gameCamera;
     private RatBossBehaviour bossScript;
     private LevelExitInteractable levelExit;
+    private UICanvas uiCanvas;
 
     private BossDoorInteractable bossDoor;
 
@@ -21,6 +22,7 @@ public class BossRoom : Room
         gameCamera = FindObjectOfType<GameCamera>();
         bossScript = boss.GetComponent<RatBossBehaviour>();
         levelExit = GetComponentInChildren<LevelExitInteractable>();
+        uiCanvas = FindObjectOfType<UICanvas>();
 
         onPlayerEnter.AddListener(OnPlayerEnter);
         roomManager.onRoomSpawningDone.AddListener(OnRoomSpawningDone); // for switching to bossRoom door
@@ -30,6 +32,7 @@ public class BossRoom : Room
 
     private void OnPlayerEnter()
     {
+        if (started) return;
         boss.gameObject.SetActive(true);
         bossDoor.CloseDoor();
         StartCoroutine(BossCutsceneRoutine());
@@ -40,6 +43,9 @@ public class BossRoom : Room
         levelExit.SetInteractable();
         Invoke("focusCamOnPlayer", 1f);
         bossDoor.OpenDoor();
+
+        uiCanvas.directionPointer.gameObject.SetActive(true);
+        uiCanvas.directionPointer.target = levelExit.transform;
     }
 
     void OnRoomSpawningDone()

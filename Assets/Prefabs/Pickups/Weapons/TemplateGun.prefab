@@ -172,7 +172,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 864004575432457577}
-  - component: {fileID: 890045728921608099}
   - component: {fileID: 1332264228652906649}
   - component: {fileID: 264496823960170481}
   m_Layer: 0
@@ -197,36 +196,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4383058845420255976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &890045728921608099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7445562969301839146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: d1408bbba88a7574bada20fcb7127903, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &1332264228652906649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +208,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Item
   settings: {fileID: 0}
+  active: 0
 --- !u!114 &264496823960170481
 MonoBehaviour:
   m_ObjectHideFlags: 0

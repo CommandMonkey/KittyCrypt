@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] float drag = 0.9f;
     [SerializeField] float invinsibilityLenght = 1f;
     [SerializeField] float invisibilityLengthDash = 0.2f;
+    [SerializeField] GameObject BloodSplatVFX;
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
@@ -195,7 +196,7 @@ public class Player : MonoBehaviour
         if (myRigidbody.velocity == Vector2.zero || isRollDelaying || GameSession.state != GameSession.GameState.Running) { return; }
 
         dashingEchoSpawner.StrartingDashTrail(transform.rotation);
-        animator.SetTrigger("Dash");
+        //animator.SetTrigger("Dash");
         rollSpeed = 50f;
         state = State.rolling;
         isRollDelaying = true;
@@ -219,12 +220,18 @@ public class Player : MonoBehaviour
         animator.SetTrigger("WasHurt");
         health -= damage;
         StartCoroutine(InvisibilityDelayRoutine(invinsibilityLenght));
+        SpawnBloodSplatVFX();
         if (health <= 0)
         {
             isDead = true;
             animator.SetTrigger("IsDead");
             Invoke("BackToMenu", 1f);
         }
+    }
+
+    private void SpawnBloodSplatVFX()
+    {
+        Instantiate(BloodSplatVFX, transform.position, Quaternion.identity);
     }
 
     public void AddHealth(int hp)

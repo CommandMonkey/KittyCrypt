@@ -46,7 +46,7 @@ public class SpawnRoom : Room
                 FindObjectOfType<RoomManager>().OpenDoors(true);
                 popAll = true;
                 Destroy(this);
-                Destroy(pickUpWeaponText);
+                pickUpWeaponText.text = "Find the Rat King\nDon't forget you can Dash";
             }
         }
         if (popAll)
