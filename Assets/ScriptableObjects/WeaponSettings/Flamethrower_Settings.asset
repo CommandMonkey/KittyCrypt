@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flamethrower_Settings
   m_EditorClassIdentifier: 
   weaponType: 1
-  fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
+  fireAudio: {fileID: 8300000, guid: 259cc49144bee1e4586039a1750351d4, type: 3}
   reloadAudio: {fileID: 0}
   audioVolume: 1
   fireRate: 0.1
@@ -25,10 +25,10 @@ MonoBehaviour:
   knockback: 2
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 7048
+    m_Bits: 7112
   projectile: {fileID: 7834965403791016898, guid: de20bfa92680a7d4e866ba7c2f36672d, type: 3}
   bulletSpreadRange: 27
-  bulletSpeed: 4
+  bulletSpeed: 6
   projectileVanishAfter: 0.4
   bulletTrail: {fileID: 0}
   destroyTrailAfter: 0.1

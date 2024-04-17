@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b466a7e040a07f440878ed89dd01a3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlastRadius: 5
-  explotionDamage: 25
+  BlastRadius: 6
+  explotionDamage: 40
   layers:
     serializedVersion: 2
     m_Bits: 0
@@ -3897,7 +3897,7 @@ ParticleSystem:
       emitProbability: 1
   LightsModule:
     enabled: 0
-    ratio: 0
+    ratio: 1
     light: {fileID: 0}
     randomDistribution: 1
     color: 1
