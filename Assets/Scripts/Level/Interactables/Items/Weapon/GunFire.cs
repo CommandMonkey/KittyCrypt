@@ -63,7 +63,6 @@ public class GunFire : Item
         player = gameSession.player;
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
-        uiCanvas = FindObjectOfType<UICanvas>();
         crosshair = GameSession.Instance.crosshair;
         playerInput = GameSession.Instance.playerInput;
 
@@ -289,11 +288,8 @@ public class GunFire : Item
         // Update Reload Animation circle
         while (runtimeData.isReloading)
         {
-            GameSession.Instance.reloadCircle.gameObject.SetActive(true);
 
-            Image reloadImage = GameSession.Instance.reloadCircle.GetComponentInChildren<Image>();
 
-            reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
             runtimeData.reloadTimer -= Time.deltaTime;
             if (runtimeData.reloadTimer <= 0)
             {
@@ -319,7 +315,6 @@ public class GunFire : Item
             {
                 Cursor.visible = true;
             }
-            GameSession.Instance.reloadCircle.gameObject.SetActive(false);
 
             // Ammo Text
             if (settings.weaponType == WeaponSettingsObject.WeaponType.BurstFire)
@@ -338,14 +333,12 @@ public class GunFire : Item
 
     void SetAmmoUI()
     {
-        ammoUI.text = (settings.bulletsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
-                      settings.bulletsBeforeReload.ToString();
+
     }
 
     void SetAmmoBurstUI()
     {
-        ammoUI.text = (1 - runtimeData.bulletsFired / settings.bulletsBeforeReload).ToString() + "/" +
-                      1.ToString();
+
     }
 
     public Vector3 GetBulletHitPoint()

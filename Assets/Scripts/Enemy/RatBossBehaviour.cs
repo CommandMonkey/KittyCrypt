@@ -104,7 +104,6 @@ public class RatBossBehaviour : Enemy
 
     public void StartBoss()
     {
-        musicManager.PlayRatBossTheme(false);
         SpawnHealthBar();
         state = RatState.alive;
         StartCoroutine(BossAttackLoopRoutine());
@@ -306,7 +305,6 @@ public class RatBossBehaviour : Enemy
     private void UpdateHealthBar()
     {
         float healthRatio = health / maxHealth;
-        healthBar.fillAmount = healthRatio;
 
         ScaleDifficulty(1-healthRatio);
     }
@@ -320,7 +318,6 @@ public class RatBossBehaviour : Enemy
             weaponTransform.gameObject.SetActive(false);
             aimLineRenderer.enabled = false;
             animator.SetTrigger("die");
-            musicManager.PlayExploringTheme();
 
             KillAllRatMinions();
             SpawnHP_Pickups();
