@@ -64,6 +64,7 @@ public class GunFire : Item
         gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
         nuzzleLight = GetComponent<Light2D>();
         uiCanvas = FindObjectOfType<UICanvas>();
+        ammoUI = uiCanvas.ammoText;
         crosshair = GameSession.Instance.crosshair;
         playerInput = GameSession.Instance.playerInput;
 
@@ -343,6 +344,7 @@ public class GunFire : Item
 
     void SetAmmoUI()
     {
+        Debug.Log(ammoUI.name);
         ammoUI.text = (settings.bulletsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
                       settings.bulletsBeforeReload.ToString();
     }
