@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3821606552105483599}
   - component: {fileID: 6392008055963127946}
   - component: {fileID: -2981332931489941326}
-  - component: {fileID: 360734601873156480}
   - component: {fileID: -795822725584318249}
   m_Layer: 8
   m_Name: TestBullet
@@ -274,18 +273,6 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &360734601873156480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7834965403791016898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cb56a25d6570a548804230775a8ce76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-795822725584318249
 MonoBehaviour:
   m_ObjectHideFlags: 0

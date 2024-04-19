@@ -3,21 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 
-public class DestroyOnImpact : MonoBehaviour
+public class DestroyBulletOnImpact : Bullet
 {
-    Bullet bullet;
-    private float damage;
-    private GameObject hitEffect;
-    private float destroyHitEffectAfter;
-
-    private void Start()
-    {
-        bullet = GetComponent<Bullet>();
-        damage = bullet.GetDamage();
-        hitEffect = bullet.GetHitEffect();
-        destroyHitEffectAfter = bullet.GetDestroyHitEffectAfter();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     { 
         Enemy enemyScript = other.gameObject.GetComponent<Enemy>();

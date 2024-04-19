@@ -2,25 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class PiercingBullet : Bullet
 {
     Bullet bullet;
-    private float damage;
-    private GameObject hitEffect;
-    private float destroyHitEffectAfter;
     bool inWall = false;
-
-    //Cached references
-    Rigidbody2D myRigidbody;
-
-    private void Start()
-    {
-        myRigidbody = GetComponent<Rigidbody2D>();
-        bullet = GetComponent<Bullet>();
-        damage = bullet.GetDamage();
-        hitEffect = bullet.GetHitEffect();
-        destroyHitEffectAfter = bullet.GetDestroyHitEffectAfter();
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,6 +21,7 @@ public class Arrow : MonoBehaviour
 
         if (enemyScript != null)
         {
+            Debug.Log("crossbowhit");
             enemyScript.TakeDamage(damage);
         }
 
