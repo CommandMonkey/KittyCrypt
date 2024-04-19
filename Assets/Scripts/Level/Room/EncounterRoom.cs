@@ -27,6 +27,7 @@ public class EncounterRoom : Room
     {
         thisRoomManager = FindObjectOfType<RoomManager>();
         roomCollider = GetComponent<BoxCollider2D>();
+        musicManager = FindObjectOfType<MusicManager>();
 
         base.onPlayerEnter.AddListener(OnPlayerEnter);
         //levelManager.onEnemyKill.AddListener(OnEnemyKill);
@@ -53,6 +54,7 @@ public class EncounterRoom : Room
             isActive = false;
             SpawnHP_Pickups();
             thisRoomManager.OpenDoors();    
+            musicManager.PlayExploringTheme(false);
         }
     }
 
@@ -90,6 +92,7 @@ public class EncounterRoom : Room
         thisRoomManager.CloseDoors();
         SpawnEnemies();
 
+        musicManager.PlayBattleTheme(false);
 
     }
 

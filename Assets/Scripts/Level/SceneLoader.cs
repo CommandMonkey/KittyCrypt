@@ -24,14 +24,6 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            GameSession.Instance.LoadNextLevel();
-        }
-    }
-
     public void LoadNextScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -61,7 +53,6 @@ public class SceneLoader : MonoBehaviour
     IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)
     {
         if (gameSession != null) gameSession.SetState(GameSession.GameState.Loading);
-        gameSession.player.transform.position = Vector3.zero;
         transitionAnimator.SetBool("isLoading", true);
 
         yield return new WaitForSeconds(2f);    
