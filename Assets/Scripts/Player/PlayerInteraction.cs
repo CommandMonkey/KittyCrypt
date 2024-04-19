@@ -173,7 +173,7 @@ public class PlayerInteraction : MonoBehaviour
             if (interactable.GetComponent<IInteractable>().canInteract)
             {
                 float magnitude = (interactable.transform.position - transform.position).magnitude; // Using sqrMagnitude for performance
-                Debug.Log(magnitude + " , " + circleCollider.radius);
+                // Debug.Log(magnitude + " , " + circleCollider.radius);
                 if (magnitude < circleCollider.radius && magnitude < smallestMagnitude)
                 {
                     closestInteractable = interactable;

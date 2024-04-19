@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-
 public class RushingEnemyBehavior : Enemy
 {
 
@@ -73,8 +69,6 @@ public class RushingEnemyBehavior : Enemy
 
         //Move myself
         rigidBody2D.velocity = direction * speed;
-
-
     }
 
 }

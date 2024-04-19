@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed;
-    private float damage;
-    private GameObject hitEffect;
-    private float destroyHitEffectAfter;
-    private float vanishAfter;
+    protected float speed;
+    protected float damage;
+    protected GameObject hitEffect;
+    protected float destroyHitEffectAfter;
+    protected float vanishAfter;
 
     //Cached references
-    Rigidbody2D myRigidbody;
+    protected Rigidbody2D myRigidbody;
 
     //Private variables
 
@@ -28,20 +28,5 @@ public class Bullet : MonoBehaviour
         this.hitEffect = hitEffect;
         this.destroyHitEffectAfter = destroyHitEffectAfter;
         this.vanishAfter = vanishAfter;
-    }
-
-    public float GetDamage()
-    {
-        return damage;
-    }
-
-    public GameObject GetHitEffect()
-    {
-        return hitEffect;
-    }
-
-    public float GetDestroyHitEffectAfter()
-    {
-        return destroyHitEffectAfter;
     }
 }
