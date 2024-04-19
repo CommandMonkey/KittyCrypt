@@ -119,9 +119,7 @@ public class GunFire : Item
     void OnFire()
     {
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
-        if (ProjectileFire()) return;
-        if (BurstFire()) return;
-        if (RaycastFire()) return;
+        WeaponFire();
     }
 
     private void OnDisable()
@@ -204,6 +202,11 @@ public class GunFire : Item
         SetAmmoUI();
 
         return true;
+    }
+
+    protected virtual void WeaponFire()
+    {
+
     }
 
     void ShootBullet()
@@ -307,8 +310,6 @@ public class GunFire : Item
 
             yield return new WaitForEndOfFrame();
         }
-
-
 
 
         void OnReloadDone()
