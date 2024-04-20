@@ -68,18 +68,20 @@ public class GameSession : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
         angryFace = GameObject.Find("Angry");
-        playerInput = FindObjectOfType<PlayerInput>();
+
         musicManager = FindObjectOfType<MusicManager>();
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
         crosshair = FindObjectOfType<Crosshair>();
         userInput = GetComponentInChildren<UserInput>();
-        
+        playerInput = userInput.GetComponent<PlayerInput>();
 
+        // Reset default values
         gameCamera.SetPrimaryTarget(player.transform);
         crosshair.gameObject.SetActive(false);
         angryFace.gameObject.SetActive(false);
 
+        // Get current level data (Based on levelIndex)
         levelSettings = gameSessionData.GetLevelData(levelIndex);
 
         SceneManager.sceneLoaded += OnSceneLoaded;

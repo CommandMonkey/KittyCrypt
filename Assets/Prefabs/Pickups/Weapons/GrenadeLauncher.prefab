@@ -204,9 +204,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8936745691506758931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cd35f297e13fd347bcaa40ab2624ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Crossbow
-  settings: {fileID: 11400000, guid: 7e1af06076a1b0840b6a191ee2146535, type: 2}
-  active: 0
+  itemName: Granade Launcher
+  settings: {fileID: 11400000, guid: 402da60a1fa4a87478712730e0f06305, type: 2}

@@ -3,27 +3,30 @@ using UnityEngine;
 
 public class RaycastGunLine : MonoBehaviour
 {
-    Vector3[] linePositions = new Vector3[2];
+    
     LineRenderer gunLineRenderer;
-    GunFire gunFire;
-    IEnumerator coroutine;
+
+    Vector2 lineStartPos;
+    Vector2 lineEndPos;
+
+    public void Initialize(Vector2 lineStartPos, Vector2 lineEndPos)
+    {
+        this.lineStartPos = lineStartPos;
+        this.lineEndPos = lineEndPos;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         gunLineRenderer = GetComponent<LineRenderer>();
-        gunFire = FindObjectOfType<GunFire>();
 
-
-        linePositions[0] = gunFire.transform.position;
-        linePositions[1] = gunFire.GetBulletHitPoint();
+        Vector3[] linePositions = new Vector3[2]
+        { lineStartPos, lineEndPos };
 
         gunLineRenderer.positionCount = linePositions.Length;
         gunLineRenderer.SetPositions(linePositions);
 
-        coroutine = IncreaseWidth();
-
-        StartCoroutine(coroutine);
+        StartCoroutine(IncreaseWidth());
     }
 
     IEnumerator IncreaseWidth()

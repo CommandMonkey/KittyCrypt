@@ -5,21 +5,17 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-public class GunFire : Item
+public class GunFire<T> : Item where T : GunSettingsObject
 {
     //Configurable parameters damage
-    [Header("General Options")] 
+    [Header("General Options")]
     [SerializeField]
-    protected GunSettingsObject settings;
-
-
-    //Cached reference
-
+    protected T settings;
 
     public class GunFireRuntimeData
     {
         public GunFireRuntimeData(int bulletsFired, float reloadTimer, float fireRateCooldownTimer,
-            bool isFireRateCoolingDown, bool isReloading)
+                                  bool isFireRateCoolingDown, bool isReloading)
         {
             this.bulletsFired = bulletsFired;
             this.reloadTimer = reloadTimer;
@@ -34,36 +30,41 @@ public class GunFire : Item
         public bool isFireRateCoolingDown;
         public bool isReloading;
     }
-    //Private variables
-    public GunFireRuntimeData runtimeData;
 
+    // Private variables
+    protected GunFireRuntimeData runtimeData;
     Quaternion randomBulletSpread;
-    RaycastHit2D bulletHit;
 
-    UserInput userInput;
+    // Cached reference
     protected GameSession gameSession;
     Player player;
-    AudioSource gunSource;
-    Light2D nuzzleLight;
-    UICanvas uiCanvas;
-    Crosshair crosshair;
+    UserInput userInput;
     PlayerInput playerInput;
+    Crosshair crosshair;
+    AudioSource gunSource;
 
-    Image reloadImage;
-    TMP_Text ammoUI;
+    UICanvas uiCanvas;
+    protected TMP_Text ammoUI;
+
+    Light2D nuzzleLight;
+
+
 
 
     private void Start()
     {
-        userInput = FindObjectOfType<UserInput>();
-        gameSession = FindObjectOfType<GameSession>();
+        gameSession = GameSession.Instance;
         player = gameSession.player;
-        gunSource = FindObjectOfType<GameSession>().gameObject.GetComponent<AudioSource>();
-        nuzzleLight = GetComponent<Light2D>();
+        userInput = gameSession.userInput;
+        playerInput = gameSession.playerInput;
+        crosshair = gameSession.crosshair;
+        gunSource = gameSession.GetComponent<AudioSource>();
+
         uiCanvas = FindObjectOfType<UICanvas>();
         ammoUI = uiCanvas.ammoText;
-        crosshair = GameSession.Instance.crosshair;
-        playerInput = GameSession.Instance.playerInput;
+
+        nuzzleLight = GetComponent<Light2D>();
+
 
         gameSession.onSceneloaded.AddListener(OnSceneLoaded);
 
@@ -117,27 +118,30 @@ public class GunFire : Item
         userInput.onReload.RemoveListener(Reload);
     }
 
-    private void OnDisable()
-    {
-        if (reloadImage != null)
-            reloadImage.gameObject.SetActive(false);
-    }
-
     void OnFire()
     {
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
+        
+        // Cat angry face
+        if (!gameSession.playerIsShooting)
+        {
+            StartCoroutine(SetCatAngry());
+        }
+
+             
+
         WeaponFire();
+
+        // Ammo
+        SetAmmoUI();
     }
 
 
-
-
-
-    protected void ShootBullet()
+    protected void ShootBullet(GameObject projectile, float bulletSpeed)
     {
         randomBulletSpread = GetBulletSpread();
-        Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
-        bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);
+        Bullet bullet = Instantiate(projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
+        bullet.Initialize(bulletSpeed, settings.damage, settings.hitEffect);
         runtimeData.bulletsFired++;
     }
 
@@ -148,11 +152,11 @@ public class GunFire : Item
         gameSession.playerIsShooting = false;
     }
 
-    void GunFeedbackEffects()
+    protected void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(settings.fireAudio, settings.audioVolume);
         gameSession.gameCamera.DoCameraShake();
-        player.exteriorVelocity += -(Vector2)transform.right * settings.knockback;
+        player.exteriorVelocity += -(Vector2)transform.right * settings.playerKnockback;
 
         if (nuzzleLight == null)
         {
@@ -165,12 +169,12 @@ public class GunFire : Item
 
     bool ShouldReload()
     {
-        if (settings.bulletsBeforeReload == 0)
+        if (settings.shotsBeforeReload == 0)
         {
             return false;
         }
 
-        if (runtimeData.bulletsFired >= settings.bulletsBeforeReload)
+        if (runtimeData.bulletsFired >= settings.shotsBeforeReload)
             return true;
         else
             return false;
@@ -255,8 +259,6 @@ public class GunFire : Item
         StopCoroutine(ReloadRoutine());
         runtimeData.isReloading = false;
         runtimeData.reloadTimer = settings.reloadTime;
-        if (reloadImage != null)
-            reloadImage.gameObject.SetActive(false);
     }
 
     IEnumerator NuzzleFlash()
@@ -264,13 +266,6 @@ public class GunFire : Item
         nuzzleLight.enabled = true;
         yield return new WaitForSeconds(0.05f);
         nuzzleLight.enabled = false;
-    }
-
-
-
-    public Vector3 GetBulletHitPoint()
-    {
-        return bulletHit.point;
     }
 
     public GameObject GetHitEffect()
@@ -303,8 +298,8 @@ public class GunFire : Item
     protected virtual void SetAmmoUI()
     {
         Debug.Log(ammoUI.name);
-        ammoUI.text = (settings.bulletsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
-                      settings.bulletsBeforeReload.ToString();
+        ammoUI.text = (settings.shotsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
+                      settings.shotsBeforeReload.ToString();
     }
 
     protected virtual void WeaponFire() { }

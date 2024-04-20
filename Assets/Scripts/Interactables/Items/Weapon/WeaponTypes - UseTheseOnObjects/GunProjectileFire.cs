@@ -2,25 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunProjectileFire : GunFire
+public class GunProjectileFire : GunFire<ProjectileGunSettingsObject>
 {
-
-
-    void ProjectileFire()
+    protected override void WeaponFire()
     {
-        if (settings.weaponType != GunSettingsObject.WeaponType.ProjectileFire)
-        {
-            return;
-        }
 
         // Fire
-        ShootBullet();
+        ShootBullet(settings.projectile, settings.bulletSpeed);
         GunFeedbackEffects();
         runtimeData.isFireRateCoolingDown = true;
 
 
         // Ammo
         SetAmmoUI();
-
     }
 }
