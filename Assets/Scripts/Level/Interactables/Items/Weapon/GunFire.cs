@@ -1,22 +1,16 @@
 using System.Collections;
-using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GunFire : Item
 {
     //Configurable parameters damage
-    [Header("General Options")] [SerializeField]
-    WeaponSettingsObject settings;
-    Crosshair crosshair;
-    PlayerInput playerInput;
-
-    public bool active = false;
+    [Header("General Options")] 
+    [SerializeField]
+    protected GunSettingsObject settings;
 
 
     //Cached reference
@@ -47,14 +41,17 @@ public class GunFire : Item
     RaycastHit2D bulletHit;
 
     UserInput userInput;
-    GameSession gameSession;
+    protected GameSession gameSession;
     Player player;
     AudioSource gunSource;
     Light2D nuzzleLight;
     UICanvas uiCanvas;
+    Crosshair crosshair;
+    PlayerInput playerInput;
 
     Image reloadImage;
     TMP_Text ammoUI;
+
 
     private void Start()
     {
@@ -81,16 +78,6 @@ public class GunFire : Item
         {
             nuzzleLight.enabled = false;
         }
-    
-
-        if (settings.weaponType == WeaponSettingsObject.WeaponType.BurstFire)
-        {
-            SetAmmoBurstUI();
-        }
-        else
-        {
-            SetAmmoUI();
-        }
     }
 
 
@@ -116,10 +103,18 @@ public class GunFire : Item
         Activate();
     }
 
-    void OnFire()
+    public override void Activate()
     {
-        if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
-        WeaponFire();
+        if (userInput == null) userInput = FindObjectOfType<UserInput>();
+        userInput.onReload.AddListener(Reload);
+        userInput.onFireEvent.AddListener(OnFire);
+    }
+
+    public override void DeActivate()
+    {
+        ResetReloading();
+        userInput.onFireEvent.RemoveListener(OnFire);
+        userInput.onReload.RemoveListener(Reload);
     }
 
     private void OnDisable()
@@ -128,93 +123,18 @@ public class GunFire : Item
             reloadImage.gameObject.SetActive(false);
     }
 
-    bool ProjectileFire()
+    void OnFire()
     {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.ProjectileFire)
-        {
-            return false;
-        }
-
-        // Fire
-        ShootBullet();
-        GunFeedbackEffects();
-        runtimeData.isFireRateCoolingDown = true;
-
-
-        // Ammo
-        SetAmmoUI();
-
-        return true;
+        if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
+        WeaponFire();
     }
 
-    bool BurstFire()
+
+
+
+
+    protected void ShootBullet()
     {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.BurstFire) { return false; }
-
-        // Fire
-        for (int i = 0; i < settings.bulletsBeforeReload || settings.bulletsBeforeReload == 0; i++)
-        {
-            ShootBullet();
-        }
-
-        GunFeedbackEffects();
-        runtimeData.isFireRateCoolingDown = true;
-        //Ammo
-        SetAmmoBurstUI();
-
-        return true;
-    }
-
-    bool RaycastFire()
-    {
-        if (settings.weaponType != WeaponSettingsObject.WeaponType.RaycastFire)
-        {
-            return false;
-        }
-        if (!gameSession.playerIsShooting)
-        {
-            StartCoroutine(SetCatAngry());
-        }
-
-        // Fire
-        bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
-        if (bulletHit)
-        {
-            runtimeData.bulletsFired++;
-            GunFeedbackEffects();
-            runtimeData.isFireRateCoolingDown = true;
-
-            var smoke = Instantiate(settings.hitEffect, bulletHit.point, Quaternion.identity);
-            Destroy(smoke, settings.destroyHitEffectAfter);
-
-            var line = Instantiate(settings.bulletTrail, transform.position, Quaternion.identity);
-            Destroy(line, settings.destroyTrailAfter);
-
-            Enemy enemyScript = bulletHit.collider.gameObject.GetComponent<Enemy>();
-
-            if (enemyScript != null)
-            {
-                enemyScript.TakeDamage(settings.bulletDamage);
-            }
-        }
-
-        // Ammo
-        SetAmmoUI();
-
-        return true;
-    }
-
-    protected virtual void WeaponFire()
-    {
-
-    }
-
-    void ShootBullet()
-    {
-        if (!gameSession.playerIsShooting)
-        {
-            StartCoroutine(SetCatAngry());
-        }
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(settings.projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(settings.bulletSpeed, settings.bulletDamage, settings.hitEffect);
@@ -327,13 +247,16 @@ public class GunFire : Item
                 Cursor.visible = true;
             }
             GameSession.Instance.reloadCircle.gameObject.SetActive(false);
-
-            // Ammo Text
-            if (settings.weaponType == WeaponSettingsObject.WeaponType.BurstFire)
-                SetAmmoBurstUI();
-            else
-                SetAmmoUI();
         }
+    }
+
+    void ResetReloading()
+    {
+        StopCoroutine(ReloadRoutine());
+        runtimeData.isReloading = false;
+        runtimeData.reloadTimer = settings.reloadTime;
+        if (reloadImage != null)
+            reloadImage.gameObject.SetActive(false);
     }
 
     IEnumerator NuzzleFlash()
@@ -343,18 +266,7 @@ public class GunFire : Item
         nuzzleLight.enabled = false;
     }
 
-    void SetAmmoUI()
-    {
-        Debug.Log(ammoUI.name);
-        ammoUI.text = (settings.bulletsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
-                      settings.bulletsBeforeReload.ToString();
-    }
 
-    void SetAmmoBurstUI()
-    {
-        ammoUI.text = (1 - runtimeData.bulletsFired / settings.bulletsBeforeReload).ToString() + "/" +
-                      1.ToString();
-    }
 
     public Vector3 GetBulletHitPoint()
     {
@@ -386,27 +298,15 @@ public class GunFire : Item
         return Quaternion.Euler(newAngles);
     }
 
-    public override void Activate()
+
+
+    protected virtual void SetAmmoUI()
     {
-        if (userInput == null) userInput = FindObjectOfType<UserInput>();
-        userInput.onReload.AddListener(Reload);
-        userInput.onFireEvent.AddListener(OnFire);
+        Debug.Log(ammoUI.name);
+        ammoUI.text = (settings.bulletsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
+                      settings.bulletsBeforeReload.ToString();
     }
 
-    public override void DeActivate()
-    {
-        ResetReloading();
-        userInput.onFireEvent.RemoveListener(OnFire);
-        userInput.onReload.RemoveListener(Reload);
-    }
-
-    void ResetReloading()
-    {
-        StopCoroutine(ReloadRoutine());
-        runtimeData.isReloading = false;
-        runtimeData.reloadTimer = settings.reloadTime;
-        if (reloadImage != null)
-            reloadImage.gameObject.SetActive(false);
-    }
+    protected virtual void WeaponFire() { }
 }
 
