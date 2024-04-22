@@ -9,26 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d9bf95a2d8be144a8e8b3835c456403, type: 3}
+  m_Script: {fileID: 0}
   m_Name: AK47_Settings
-  m_EditorClassIdentifier: 
-  weaponType: 2
-  fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
-  reloadAudio: {fileID: 8300000, guid: 1107325c1db1c8f43a566f3c54b936e8, type: 3}
-  audioVolume: 0.15
-  fireRate: 0.2
+  m_EditorClassIdentifier: Assembly-CSharp::RaycastGunSettingsObject
+  fireRate: 0.15
   reloadTime: 3
-  bulletDamage: 10
-  bulletsBeforeReload: 30
-  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
-  destroyHitEffectAfter: 1.5
-  knockback: 5
+  shotsBeforeReload: 30
+  bulletSpreadRange: 20
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 64397
-  projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 20
-  bulletSpeed: 40
-  projectileVanishAfter: 3
+  damage: 10
+  playerKnockback: 5
+  fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
+  reloadAudio: {fileID: 8300000, guid: 1107325c1db1c8f43a566f3c54b936e8, type: 3}
+  audioVolume: 0.15
+  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
+  destroyHitEffectAfter: 1.5
   bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
   destroyTrailAfter: 0.1
