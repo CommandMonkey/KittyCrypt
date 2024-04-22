@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b466a7e040a07f440878ed89dd01a3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlastRadius: 4
+  BlastRadius: 2
   explotionDamage: 30
   layers:
     serializedVersion: 2
@@ -60,7 +60,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302304371134558319}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 0.2
   simulationSpeed: 3
   stopAction: 0
   cullingMode: 0
@@ -189,7 +189,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 5
-      minScalar: 1.94
+      minScalar: 1.25
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -241,8 +241,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.93710685, g: 0.8866309, b: 0.06777809, a: 1}
-      maxColor: {r: 1, g: 0.2946976, b: 0, a: 1}
+      minColor: {r: 0.9372549, g: 0.81415427, b: 0.06666664, a: 1}
+      maxColor: {r: 1, g: 0.29991168, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0, b: 0.039513588, a: 1}
@@ -307,7 +307,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.25
-      minScalar: 2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -623,7 +623,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 250
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
