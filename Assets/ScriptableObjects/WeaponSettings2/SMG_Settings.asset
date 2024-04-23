@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 689d494d03b223b418a2484a61f14ff4, type: 3}
   m_Name: SMG_Settings
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileGunSettingsObject
   fireRate: 0.06
   reloadTime: 2
   shotsBeforeReload: 50
-  bulletSpreadRange: 6
+  bulletSpreadRange: 5
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 125889
   damage: 3
   playerKnockback: 2
   fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
