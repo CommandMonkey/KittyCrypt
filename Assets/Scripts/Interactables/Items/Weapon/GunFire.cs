@@ -70,7 +70,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
         Activate();
 
-        runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
+        runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);  
 
         if (nuzzleLight != null)
         {
