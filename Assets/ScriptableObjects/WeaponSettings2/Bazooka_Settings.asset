@@ -18,7 +18,7 @@ MonoBehaviour:
   bulletSpreadRange: 0
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 125888
   damage: 15
   playerKnockback: 50
   fireAudio: {fileID: 8300000, guid: 39e31478a011ec04ba2dfd55c0b457ee, type: 3}
