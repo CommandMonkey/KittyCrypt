@@ -24,9 +24,13 @@ public class GameSession : MonoBehaviour
     [NonSerialized] public UnityEvent OnNewState;
     [NonSerialized] public UnityEvent onSceneloaded;
 
-
+    //Stats
     public int levelIndex = 0;
-    
+    public float timePlayed = 0f;
+    public int enemiesKilled = 0;
+    public int roomsCleared = 0;
+    public int damageTaken = 0;
+
     bool killYourself = false;
     public bool playerIsShooting = false;
 
@@ -36,6 +40,7 @@ public class GameSession : MonoBehaviour
     public PlayerInput playerInput;
     public Transform enemyContainer;
     public Crosshair crosshair;
+    public DeathScreen deathScreen;
     public ReloadCircleFollowCursor reloadCircle;
     public UserInput userInput { get; private set; }
     public MusicManager musicManager { get; private set; }
@@ -73,12 +78,14 @@ public class GameSession : MonoBehaviour
         gameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
         crosshair = FindObjectOfType<Crosshair>();
+        deathScreen = FindObjectOfType<DeathScreen>();
         userInput = GetComponentInChildren<UserInput>();
         playerInput = userInput.GetComponent<PlayerInput>();
 
         // Reset default values
         gameCamera.SetPrimaryTarget(player.transform);
         crosshair.gameObject.SetActive(false);
+        deathScreen.gameObject.SetActive(false);
         angryFace.gameObject.SetActive(false);
 
         // Get current level data (Based on levelIndex)
@@ -109,7 +116,6 @@ public class GameSession : MonoBehaviour
     GameState previousState;
     private void Update()
     {
-
         if (killYourself)
         {
             Die();
@@ -124,6 +130,10 @@ public class GameSession : MonoBehaviour
 
         SetCursorOrCrosshair();
         SetPlayerAngry();
+        if(state == GameState.Running)
+        {
+            timePlayed += Time.deltaTime;
+        }
     }
 
     private void Die()
