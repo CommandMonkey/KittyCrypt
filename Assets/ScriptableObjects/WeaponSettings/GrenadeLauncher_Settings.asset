@@ -9,22 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 689d494d03b223b418a2484a61f14ff4, type: 3}
   m_Name: GrenadeLauncher_Settings
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileGunSettingsObject
   fireRate: 0.1
   reloadTime: 2
-  shotsBeforeReload: 5
-  bulletSpreadRange: 1
+  shotsBeforeReload: 6
+  bulletSpreadRange: 0
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  damage: 1
-  playerKnockback: 2
+    m_Bits: 125888
+  damage: 10
+  playerKnockback: 1
   fireAudio: {fileID: 0}
   reloadAudio: {fileID: 0}
   audioVolume: 1
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 1302304371134558319, guid: a3c9ba15306fb4147af41486427e97e0, type: 3}
   destroyHitEffectAfter: 1.5
-  projectile: {fileID: 0}
-  bulletSpeed: 5
+  projectile: {fileID: 6098931812284524543, guid: 4c344481c5d24a24d81531f9dec20f63, type: 3}
+  bulletSpeed: 50
