@@ -225,7 +225,7 @@ public class Player : MonoBehaviour
         {
             isDead = true;
             animator.SetTrigger("IsDead");
-            Invoke("BackToMenu", 1f);
+            //Invoke("BackToMenu", 1f);
         }
     }
 
