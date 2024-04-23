@@ -9,26 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d9bf95a2d8be144a8e8b3835c456403, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Glock_Settings
-  m_EditorClassIdentifier: 
-  weaponType: 2
+  m_EditorClassIdentifier: Assembly-CSharp::RaycastGunSettingsObject
+  fireRate: 0.3
+  reloadTime: 2
+  shotsBeforeReload: 17
+  bulletSpreadRange: 5
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  damage: 7
+  playerKnockback: 6
   fireAudio: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
   reloadAudio: {fileID: 8300000, guid: d201d037fe8984e459f72175ff450ead, type: 3}
   audioVolume: 0.14
-  fireRate: 0.3
-  reloadTime: 2
-  bulletDamage: 7
-  bulletsBeforeReload: 17
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
-  knockback: 5
-  ignoreLayerMask:
-    serializedVersion: 2
-    m_Bits: 97160
-  projectile: {fileID: 0}
-  bulletSpreadRange: 1
-  bulletSpeed: 5
-  projectileVanishAfter: 3
   bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
   destroyTrailAfter: 0.1
