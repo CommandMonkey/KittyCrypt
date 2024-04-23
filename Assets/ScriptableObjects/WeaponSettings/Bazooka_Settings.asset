@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 689d494d03b223b418a2484a61f14ff4, type: 3}
   m_Name: Bazooka_Settings
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileGunSettingsObject
   fireRate: 1
@@ -18,7 +18,7 @@ MonoBehaviour:
   bulletSpreadRange: 0
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 64397
+    m_Bits: 125888
   damage: 15
   playerKnockback: 50
   fireAudio: {fileID: 8300000, guid: 39e31478a011ec04ba2dfd55c0b457ee, type: 3}
