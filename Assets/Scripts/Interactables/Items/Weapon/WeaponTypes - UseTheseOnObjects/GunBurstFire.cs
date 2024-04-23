@@ -17,10 +17,4 @@ public class GunBurstFire : GunFire<BurstGunSettingsObject>
         //Ammo
         SetAmmoUI();
     }
-
-    protected override void SetAmmoUI()
-    {
-        ammoUI.text = (1 - runtimeData.bulletsFired / settings.shotsBeforeReload).ToString() + "/" +
-                      1.ToString();
-    }
 }

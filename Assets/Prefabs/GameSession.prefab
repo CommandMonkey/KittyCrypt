@@ -161,10 +161,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 2fc7e955644b4c648859112802e8615c, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -519,6 +519,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crosshair
       objectReference: {fileID: 0}
+    - target: {fileID: 3292090869242046189, guid: 896aea2204c58bf4c820eb02dd91df53, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -7176874171692316828, guid: a7fee1de10652dc46a363d4c6157c455, type: 2}
     - target: {fileID: 4730564150095043285, guid: 896aea2204c58bf4c820eb02dd91df53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.84
@@ -639,6 +643,14 @@ PrefabInstance:
     - target: {fileID: 3865313931253725056, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245328811851962098, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.0223954
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245328811851962098, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.099197716
       objectReference: {fileID: 0}
     - target: {fileID: 5357075528384600722, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
       propertyPath: m_LocalScale.x
