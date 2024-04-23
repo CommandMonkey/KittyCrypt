@@ -281,4 +281,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Shotgun
-  settings: {fileID: 11400000, guid: 7468cea5299a3234c8bf41cab45ad12e, type: 2}
+  settings: {fileID: 11400000, guid: 9d3fd67ed21600d43aab6b6cdb66326e, type: 2}

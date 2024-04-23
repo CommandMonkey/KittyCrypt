@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Glock17
-  settings: {fileID: 11400000, guid: cfc56038ad00b264a89ea2c71a6b3429, type: 2}
+  settings: {fileID: 11400000, guid: 8c0b2ce62c0278443837497cc3d669f4, type: 2}
 --- !u!1 &4547352020184242435
 GameObject:
   m_ObjectHideFlags: 0

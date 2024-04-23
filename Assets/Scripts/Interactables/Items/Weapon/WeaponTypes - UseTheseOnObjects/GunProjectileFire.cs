@@ -6,7 +6,7 @@ public class GunProjectileFire : GunFire<ProjectileGunSettingsObject>
 {
     protected override void WeaponFire()
     {
-
+        
         // Fire
         ShootBullet(settings.projectile, settings.bulletSpeed);
         GunFeedbackEffects();

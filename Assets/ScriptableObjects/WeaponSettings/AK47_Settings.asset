@@ -16,9 +16,6 @@ MonoBehaviour:
   reloadTime: 3
   shotsBeforeReload: 30
   bulletSpreadRange: 20
-  ignoreLayerMask:
-    serializedVersion: 2
-    m_Bits: 125888
   damage: 10
   playerKnockback: 5
   fireAudio: {fileID: 8300000, guid: 23cf2ab4f498b31419ae7d022ea98cc3, type: 3}
@@ -28,3 +25,6 @@ MonoBehaviour:
   destroyHitEffectAfter: 1.5
   bulletTrail: {fileID: 0}
   destroyTrailAfter: 0.1
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 125824

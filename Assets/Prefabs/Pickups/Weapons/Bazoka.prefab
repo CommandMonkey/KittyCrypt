@@ -259,4 +259,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Bazooka
-  settings: {fileID: 11400000, guid: 45bf1882cd28b0948957ef61b6f255b3, type: 2}
+  settings: {fileID: 11400000, guid: b552009f5fcb39044a3fdd49db1819c0, type: 2}

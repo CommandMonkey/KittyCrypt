@@ -208,4 +208,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Crossbow
-  settings: {fileID: 11400000, guid: 3bc6b991641ffec40a827f75a6c4fce0, type: 2}
+  settings: {fileID: 11400000, guid: 9970fe3db47e4a94aafaea59319e2ee4, type: 2}
