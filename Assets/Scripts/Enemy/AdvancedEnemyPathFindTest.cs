@@ -8,14 +8,19 @@ public class AdvancedEnemyPathFindTest : MonoBehaviour
 
     private void Update()
     {
+
+        Shootray();
+    }
+
+    void Shootray()
+    {
         Vector2 direction = target.position - transform.position;
-        float distance = direction.magnitude;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction);
+        Debug.DrawRay(transform.position, hit.point, Color.blue);
         if (hit.collider != null)
         {
-            Debug.Log("BINGUS D:");
-            Debug.DrawRay(transform.position, hit.point, Color.blue);
-        }
+            Debug.Log("BINGUS D:"); 
+        }       
         else
         {
             Debug.Log("Spoingus :D");
