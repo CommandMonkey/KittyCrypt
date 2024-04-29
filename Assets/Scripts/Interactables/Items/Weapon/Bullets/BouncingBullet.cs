@@ -6,7 +6,7 @@ using UnityEngine;
 public class BouncingBullet : Bullet
 {
     float destroyAfter = 2;
-    private void Start()
+    private new void Start()
     {
         base.Start();
         Invoke("Explode", destroyAfter);
