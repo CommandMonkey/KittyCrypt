@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] LayerMask ignoreOnDash;
-    [SerializeField] float Move_speed = 30f;
+     public float Move_speed = 30f;
     //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
     [SerializeField] int health = 9;
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] float invinsibilityLenght = 1f;
     [SerializeField] float invisibilityLengthDash = 0.2f;
     [SerializeField] GameObject BloodSplatVFX;
+
 
     [NonSerialized] public Vector2 exteriorVelocity;
 
@@ -90,7 +91,6 @@ public class Player : MonoBehaviour
         
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-
     }
 
     private void FetchExternalRefs()
@@ -142,6 +142,8 @@ public class Player : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
         RollDelay();
+
+      
     }
 
     private void FixedUpdate()
@@ -219,6 +221,7 @@ public class Player : MonoBehaviour
         if (invinsibility || state == State.rolling) { return; }
         animator.SetTrigger("WasHurt");
         health -= damage;
+        gameSession.damageTaken += damage;
         StartCoroutine(InvisibilityDelayRoutine(invinsibilityLenght));
         SpawnBloodSplatVFX();
         if (health <= 0)

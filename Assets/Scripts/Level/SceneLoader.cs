@@ -10,6 +10,7 @@ public class SceneLoader : MonoBehaviour
     Animator transitionAnimator;
     GameObject generationScreen;
     GameSession gameSession;
+    Player player;
 
     private void Start()
     {
@@ -50,12 +51,21 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(FadeAndLoadSceneRoutine(0));
     }
 
+    public void Retry()
+    {
+        LoadLevel1();
+    }
+
     IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)
     {
         if (gameSession != null) gameSession.SetState(GameSession.GameState.Loading);
         transitionAnimator.SetBool("isLoading", true);
 
-        yield return new WaitForSeconds(2f);    
+        yield return new WaitForSeconds(2f);
+        if (gameSession.player.isDead)
+        {
+            Destroy(gameSession.gameObject);
+        }
 
         if(gameSession != null) gameSession.SetState(GameSession.GameState.Running);
         SceneManager.LoadScene(sceneIndex);
