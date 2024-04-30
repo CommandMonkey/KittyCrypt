@@ -225,8 +225,14 @@ public class Player : MonoBehaviour
         {
             isDead = true;
             animator.SetTrigger("IsDead");
-            Invoke("BackToMenu", 1f);
+            StartCoroutine(WaitForDeathAnimation());
         }
+    }
+
+    IEnumerator WaitForDeathAnimation()
+    {
+        yield return new WaitForSeconds(2f);
+        gameSession.deathScreen.gameObject.SetActive(true);
     }
 
     private void SpawnBloodSplatVFX()

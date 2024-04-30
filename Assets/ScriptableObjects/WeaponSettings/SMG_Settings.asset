@@ -9,26 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d9bf95a2d8be144a8e8b3835c456403, type: 3}
+  m_Script: {fileID: 11500000, guid: 689d494d03b223b418a2484a61f14ff4, type: 3}
   m_Name: SMG_Settings
-  m_EditorClassIdentifier: 
-  weaponType: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileGunSettingsObject
+  fireRate: 0.06
+  reloadTime: 2
+  shotsBeforeReload: 50
+  bulletSpreadRange: 5
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 125889
+  damage: 3
+  playerKnockback: 2
   fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
   reloadAudio: {fileID: 8300000, guid: 1107325c1db1c8f43a566f3c54b936e8, type: 3}
   audioVolume: 0.5
-  fireRate: 0.06
-  reloadTime: 2
-  bulletDamage: 3
-  bulletsBeforeReload: 50
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
-  knockback: 2
-  ignoreLayerMask:
-    serializedVersion: 2
-    m_Bits: 7048
   projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
-  bulletSpreadRange: 5
   bulletSpeed: 40
-  projectileVanishAfter: 3
-  bulletTrail: {fileID: 0}
-  destroyTrailAfter: 0.1

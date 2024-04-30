@@ -172,8 +172,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 864004575432457577}
-  - component: {fileID: 1332264228652906649}
   - component: {fileID: 264496823960170481}
+  - component: {fileID: 1332264228652906649}
   m_Layer: 0
   m_Name: BarrelExit
   m_TagString: Untagged
@@ -196,21 +196,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4383058845420255976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &1332264228652906649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7445562969301839146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: FlameThrower
-  settings: {fileID: 11400000, guid: d3e8266bc3d29a840a47b0bd98c00463, type: 2}
-  active: 0
 --- !u!114 &264496823960170481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,3 +246,17 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1332264228652906649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445562969301839146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8a8a3d0e1f8084f9bad8be742dfc04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: FlameThrower
+  settings: {fileID: 11400000, guid: 97fedc9a128714047a01698a735da174, type: 2}

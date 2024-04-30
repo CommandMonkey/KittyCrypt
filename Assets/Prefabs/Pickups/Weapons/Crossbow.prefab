@@ -204,9 +204,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8936745691506758931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268a3cc754bedac4f924a81ee9dd4eeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cd35f297e13fd347bcaa40ab2624ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Crossbow
-  settings: {fileID: 11400000, guid: f409ea64ccf977548be92ba6f0fc3c31, type: 2}
-  active: 0
+  settings: {fileID: 11400000, guid: 9970fe3db47e4a94aafaea59319e2ee4, type: 2}

@@ -83,6 +83,7 @@ public class BossRoom : Room
         levelExit.SetUnInteractable();
 
         gameSession.SetState(GameSession.GameState.Paused);
+        gameSession.musicManager.StopMusic();
 
         focusCamOnBoss();
         yield return new WaitForSeconds(2f);

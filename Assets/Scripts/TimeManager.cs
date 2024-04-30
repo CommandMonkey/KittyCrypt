@@ -25,6 +25,7 @@ public class TimeManager : MonoBehaviour
 
     private void OnTogglePause()
     {
+        if (gameSession.player.isDead) { return; }
         if (GameSession.state != GameSession.GameState.Loading)
         {
             TogglePause();
