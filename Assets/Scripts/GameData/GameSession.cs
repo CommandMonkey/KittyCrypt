@@ -5,6 +5,14 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+
+public enum GameMode
+{
+    tutorial,
+    story,
+    endless
+}
+
 public class GameSession : MonoBehaviour
 {
     public enum GameState
@@ -16,6 +24,7 @@ public class GameSession : MonoBehaviour
 
     [Header("Load Settings")]
     public static GameState state = GameState.Loading;
+    public GameMode gameMode;
 
     public GameSessionData.LevelSettings levelSettings;
 
