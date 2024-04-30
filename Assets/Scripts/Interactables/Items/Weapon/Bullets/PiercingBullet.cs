@@ -25,7 +25,11 @@ public class PiercingBullet : Bullet
             enemyScript.TakeDamage(damage);
         }
 
-        var ffxInstance = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        Destroy(ffxInstance, destroyHitEffectAfter);
+        if (hitEffect != null)
+        {
+            var ffxInstance = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            Destroy(ffxInstance, destroyHitEffectAfter);
+        }
+
     }
 }

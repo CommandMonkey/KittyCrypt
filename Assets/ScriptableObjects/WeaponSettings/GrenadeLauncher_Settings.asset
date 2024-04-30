@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689d494d03b223b418a2484a61f14ff4, type: 3}
   m_Name: GrenadeLauncher_Settings
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileGunSettingsObject
-  fireRate: 0.1
+  fireRate: 0.5
   reloadTime: 2
-  shotsBeforeReload: 80
+  shotsBeforeReload: 6
   bulletSpreadRange: 0
   damage: 10
   playerKnockback: 1

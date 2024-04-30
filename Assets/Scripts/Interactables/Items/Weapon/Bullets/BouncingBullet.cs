@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BouncingBullet : Bullet
 {
-    float destroyAfter = 2;
+    [SerializeField] float destroyAfter = 1;
     private new void Start()
     {
         base.Start();
