@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileGunSettingsObject
   fireRate: 0.1
   reloadTime: 2
-  shotsBeforeReload: 6
+  shotsBeforeReload: 80
   bulletSpreadRange: 0
-  ignoreLayerMask:
-    serializedVersion: 2
-    m_Bits: 125888
   damage: 10
   playerKnockback: 1
   fireAudio: {fileID: 0}

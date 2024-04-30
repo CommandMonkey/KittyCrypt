@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    //Private variables
     protected float speed;
     protected float damage;
     protected GameObject hitEffect;
@@ -13,14 +14,6 @@ public class Bullet : MonoBehaviour
     //Cached references
     protected Rigidbody2D myRigidbody;
 
-    //Private variables
-
-    private void Start()
-    {
-        myRigidbody = GetComponent<Rigidbody2D>();
-        Destroy(gameObject, vanishAfter);
-        myRigidbody.velocity = transform.right * speed;
-    }
     public void Initialize(float speed, float damage, GameObject hitEffect, float destroyHitEffectAfter = 2f, float vanishAfter = 4f)
     {
         this.speed = speed;
@@ -28,5 +21,11 @@ public class Bullet : MonoBehaviour
         this.hitEffect = hitEffect;
         this.destroyHitEffectAfter = destroyHitEffectAfter;
         this.vanishAfter = vanishAfter;
+    }
+    protected void Start()
+    {
+        myRigidbody = GetComponent<Rigidbody2D>();
+        Destroy(gameObject, vanishAfter);
+        myRigidbody.velocity = transform.right * speed;
     }
 }

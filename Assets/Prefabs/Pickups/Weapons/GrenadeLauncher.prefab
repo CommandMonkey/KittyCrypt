@@ -208,4 +208,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Grenade Launcher
-  settings: {fileID: 11400000, guid: 402da60a1fa4a87478712730e0f06305, type: 2}
+  settings: {fileID: 11400000, guid: a5354168776857849a975a4870b69159, type: 2}

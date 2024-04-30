@@ -12,7 +12,7 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public UnityEvent<Vector2> onMove;
     [NonSerialized] public UnityEvent<Vector2> onAiming;
     [NonSerialized] public UnityEvent<float> onScroll;
-    [NonSerialized] public UnityEvent onFireEvent;
+    [NonSerialized] public UnityEvent onFire;
     [NonSerialized] public UnityEvent onDash;
     [NonSerialized] public UnityEvent onInteract;
     [NonSerialized] public UnityEvent onTogglePause;
@@ -30,7 +30,7 @@ public class UserInput : MonoBehaviour
         onMove = new UnityEvent<Vector2>();
         onAiming = new UnityEvent<Vector2>();
         onScroll = new UnityEvent<float>();
-        onFireEvent = new UnityEvent();
+        onFire = new UnityEvent();
         onDash = new UnityEvent();
         onInteract = new UnityEvent();
         onTogglePause = new UnityEvent();
@@ -49,7 +49,7 @@ public class UserInput : MonoBehaviour
         var fire = playerInput.actions["Fire"];
         if (Time.time - lastFireTime > fireCooldown && fire.IsPressed())
         {
-            onFireEvent.Invoke();
+            onFire.Invoke();
             lastFireTime = Time.time;
         }
     }
@@ -59,7 +59,7 @@ public class UserInput : MonoBehaviour
         onMove.RemoveAllListeners();
         onAiming.RemoveAllListeners();
         onScroll.RemoveAllListeners();
-        onFireEvent.RemoveAllListeners();
+        onFire.RemoveAllListeners();
         onDash.RemoveAllListeners();
         onInteract.RemoveAllListeners();
         onReload.RemoveAllListeners();

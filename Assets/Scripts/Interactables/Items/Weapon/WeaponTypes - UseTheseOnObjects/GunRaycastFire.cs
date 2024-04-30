@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GunRaycastFire : GunFire<RaycastGunSettingsObject>
 {
-    bool RaycastFire()
+    protected override void WeaponFire()
     {
+        Debug.Log("Raycast fire");
         // Fire
         RaycastHit2D bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
         if (bulletHit)
@@ -16,9 +17,10 @@ public class GunRaycastFire : GunFire<RaycastGunSettingsObject>
 
             GameObject smoke = Instantiate(settings.hitEffect, bulletHit.point, Quaternion.identity);
             RaycastGunLine line = Instantiate(settings.bulletTrail, transform.position, Quaternion.identity).GetComponent<RaycastGunLine>();
+            line.Initialize(transform.position, bulletHit.point);
 
             Destroy(smoke, settings.destroyHitEffectAfter);
-            Destroy(line, settings.destroyTrailAfter);
+            Destroy(line.gameObject, settings.destroyTrailAfter);
 
             Enemy enemyScript = bulletHit.collider.gameObject.GetComponent<Enemy>();
 
@@ -27,7 +29,9 @@ public class GunRaycastFire : GunFire<RaycastGunSettingsObject>
                 enemyScript.TakeDamage(settings.damage);
             }
         }
-
-        return true;
+        else
+        {
+            Debug.LogWarning("Raycast fire found no hitPoint.... Something might be wrong");
+        }
     }
 }

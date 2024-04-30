@@ -70,7 +70,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
         Activate();
 
-        runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
+        runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);  
 
         if (nuzzleLight != null)
         {
@@ -105,13 +105,13 @@ public class GunFire<T> : Item where T : GunSettingsObject
     {
         if (userInput == null) userInput = FindObjectOfType<UserInput>();
         userInput.onReload.AddListener(Reload);
-        userInput.onFireEvent.AddListener(OnFire);
+        userInput.onFire.AddListener(OnFire);
     }
 
     public override void DeActivate()
     {
         ResetReloading();
-        userInput.onFireEvent.RemoveListener(OnFire);
+        userInput.onFire.RemoveListener(OnFire);
         userInput.onReload.RemoveListener(Reload);
     }
 
@@ -128,6 +128,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
              
 
         WeaponFire();
+        runtimeData.bulletsFired++;
 
         // Ammo
         SetAmmoUI();
@@ -139,7 +140,6 @@ public class GunFire<T> : Item where T : GunSettingsObject
         randomBulletSpread = GetBulletSpread();
         Bullet bullet = Instantiate(projectile, transform.position, randomBulletSpread).GetComponent<Bullet>();
         bullet.Initialize(bulletSpeed, settings.damage, settings.hitEffect);
-        runtimeData.bulletsFired++;
     }
 
     IEnumerator SetCatAngry()
@@ -248,6 +248,8 @@ public class GunFire<T> : Item where T : GunSettingsObject
                 Cursor.visible = true;
             }
             GameSession.Instance.reloadCircle.gameObject.SetActive(false);
+            SetAmmoUI();
+
         }
     }
 
@@ -265,20 +267,6 @@ public class GunFire<T> : Item where T : GunSettingsObject
         nuzzleLight.enabled = false;
     }
 
-    public GameObject GetHitEffect()
-    {
-        return settings.hitEffect;
-    }
-
-    public LayerMask GetIgnoredLayers()
-    {
-        return settings.ignoreLayerMask;
-    }
-
-    public float GetDestroyHitEffectAfter()
-    {
-        return settings.destroyHitEffectAfter;
-    }
 
     private Quaternion GetBulletSpread()
     {
@@ -289,7 +277,6 @@ public class GunFire<T> : Item where T : GunSettingsObject
             angles.z + Random.Range(-settings.bulletSpreadRange, settings.bulletSpreadRange));
         return Quaternion.Euler(newAngles);
     }
-
 
 
     protected virtual void SetAmmoUI()

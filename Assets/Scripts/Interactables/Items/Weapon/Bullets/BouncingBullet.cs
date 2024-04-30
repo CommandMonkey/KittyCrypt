@@ -6,9 +6,17 @@ using UnityEngine;
 public class BouncingBullet : Bullet
 {
     float destroyAfter = 2;
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         Invoke("Explode", destroyAfter);
+    }
+
+    private void Update()
+    {
+        Vector2 dir = myRigidbody.velocity;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnCollisionEnter2D(Collision2D other)

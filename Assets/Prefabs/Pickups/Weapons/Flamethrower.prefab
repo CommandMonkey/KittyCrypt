@@ -259,4 +259,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: FlameThrower
-  settings: {fileID: 11400000, guid: f0f993df7ef3fe54b9e25766cd27e852, type: 2}
+  settings: {fileID: 11400000, guid: 97fedc9a128714047a01698a735da174, type: 2}

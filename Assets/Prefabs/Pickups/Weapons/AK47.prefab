@@ -259,4 +259,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: AK47
-  settings: {fileID: 11400000, guid: 78ddfb0d0f06d924eb25d3560b15377e, type: 2}
+  settings: {fileID: 11400000, guid: 2408a804339e8bb458e3da0a6121afbb, type: 2}

@@ -8,7 +8,6 @@ public class GunSettingsObject : ScriptableObject
     [SerializeField] internal float reloadTime = 1f;
     [SerializeField, Tooltip("Set to 0 for infinite (Except for burst fire)")] internal int shotsBeforeReload = 5;
     [SerializeField, Range(0f, 180f), Tooltip("Range goes in both directions")] internal float bulletSpreadRange = 1f;
-    [SerializeField] internal LayerMask ignoreLayerMask;
 
     [Header("Impact")]
     [SerializeField] internal float damage = 1f;
