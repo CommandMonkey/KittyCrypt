@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bbbadfd96ba2c944ab3aa59b788eaa3, type: 3}
   m_Name: Shotgun_Settings
   m_EditorClassIdentifier: Assembly-CSharp::BurstGunSettingsObject
-  fireRate: 0.06
+  fireRate: 0.4
   reloadTime: 4
-  shotsBeforeReload: 80
+  shotsBeforeReload: 3
   bulletSpreadRange: 30
   damage: 3
   playerKnockback: 15
