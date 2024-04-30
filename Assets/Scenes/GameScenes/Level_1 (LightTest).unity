@@ -328,7 +328,7 @@ PrefabInstance:
       objectReference: {fileID: 1449913438}
     - target: {fileID: 1209428894406204888, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4001163376681263849, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -473,8 +473,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeSurvived: {fileID: 177937041}
   finalFloor: {fileID: 767898666}
-  roomsCleared: {fileID: 1316398118}
-  enemiesKilled: {fileID: 1293257751}
+  roomsCleared: {fileID: 0}
+  enemiesKilled: {fileID: 0}
   damageTaken: {fileID: 2049682015}
 --- !u!1 &1138645000
 GameObject:

@@ -23,7 +23,7 @@ MonoBehaviour:
   audioVolume: 1
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
-  bulletTrail: {fileID: 0}
+  bulletTrail: {fileID: 9181747754686250940, guid: 0fc02b560c914eb4d8bc64ac3f7fdeac, type: 3}
   destroyTrailAfter: 0.1
   ignoreLayerMask:
     serializedVersion: 2
