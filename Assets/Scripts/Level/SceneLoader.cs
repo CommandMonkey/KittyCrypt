@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    [SerializeField] int mainMenuBuildIndex;
+    [SerializeField] int levelBuildIndex;
+    [SerializeField] int tutorialBuildIndex;
+    [SerializeField] int BuildIndex;
+
     // Cached Component References
     Animator transitionAnimator;
     GameObject generationScreen;
@@ -35,19 +40,28 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadLevel1()
+    public void LoadLevel1(bool fade = true)
     {
-        StartCoroutine(FadeAndLoadSceneRoutine(2));
+        if (fade)
+            SceneManager.LoadScene(levelBuildIndex);
+        else
+            StartCoroutine(FadeAndLoadSceneRoutine(levelBuildIndex));
     }
 
-    public void LoadSettings()
+    public void LoadMainMenu(bool fade = true)
     {
-        StartCoroutine(FadeAndLoadSceneRoutine(1));
+        if (fade)
+            SceneManager.LoadScene(mainMenuBuildIndex);
+        else
+            StartCoroutine(FadeAndLoadSceneRoutine(mainMenuBuildIndex));
     }
 
-    public void LoadMainMenu()
+    public void LoadTutorial(bool fade = true)
     {
-        StartCoroutine(FadeAndLoadSceneRoutine(0));
+        if (fade)
+            SceneManager.LoadScene(tutorialBuildIndex);
+        else
+            StartCoroutine(FadeAndLoadSceneRoutine(tutorialBuildIndex));
     }
 
     IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)
