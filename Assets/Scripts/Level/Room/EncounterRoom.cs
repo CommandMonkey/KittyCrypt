@@ -50,12 +50,18 @@ public class EncounterRoom : Room
         }
         if (_enemiesAlive == 0)
         {
-            isRoomDefeated = true;
-            isActive = false;
-            SpawnHP_Pickups();
-            thisRoomManager.OpenDoors();    
-            musicManager.PlayExploringTheme(false);
+            ClearRoom();
         }
+    }
+
+    void ClearRoom()
+    {
+        isRoomDefeated = true;
+        isActive = false;
+        SpawnHP_Pickups();
+        thisRoomManager.OpenDoors();
+        musicManager.PlayExploringTheme(false);
+        gameSession.roomsCleared++;
     }
 
     //void OnEnemyKill()

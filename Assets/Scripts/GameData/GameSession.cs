@@ -13,6 +13,13 @@ public enum GameMode
     endless
 }
 
+public enum GameDifficulty
+{
+    easy, 
+    medium,
+    hard
+}
+
 public class GameSession : MonoBehaviour
 {
     public enum GameState
@@ -139,9 +146,10 @@ public class GameSession : MonoBehaviour
 
         SetCursorOrCrosshair();
         SetPlayerAngry();
-        if(state == GameState.Running)
+        if(state == GameState.Running && !player.isDead)
         {
             timePlayed += Time.deltaTime;
+            Debug.Log(timePlayed);
         }
     }
 

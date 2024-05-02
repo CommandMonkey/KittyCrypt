@@ -80,6 +80,7 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
         PlayDeathVFX();
+        gameSession.enemiesKilled++;
         Destroy(gameObject);
     }
 

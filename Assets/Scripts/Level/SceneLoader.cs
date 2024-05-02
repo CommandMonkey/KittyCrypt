@@ -6,10 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    [SerializeField] int mainMenuBuildIndex;
+    [SerializeField] int levelBuildIndex;
+    [SerializeField] int tutorialBuildIndex;
+    [SerializeField] int BuildIndex;
+
     // Cached Component References
     Animator transitionAnimator;
     GameObject generationScreen;
     GameSession gameSession;
+    Player player;
 
     private void Start()
     {
@@ -35,19 +41,33 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadLevel1()
+    public void LoadLevel1(bool fade = true)
     {
-        StartCoroutine(FadeAndLoadSceneRoutine(2));
+        if (fade)
+            SceneManager.LoadScene(levelBuildIndex);
+        else
+            StartCoroutine(FadeAndLoadSceneRoutine(levelBuildIndex));
     }
 
-    public void LoadSettings()
+    public void LoadMainMenu(bool fade = true)
     {
-        StartCoroutine(FadeAndLoadSceneRoutine(1));
+        if (fade)
+            SceneManager.LoadScene(mainMenuBuildIndex);
+        else
+            StartCoroutine(FadeAndLoadSceneRoutine(mainMenuBuildIndex));
     }
 
-    public void LoadMainMenu()
+    public void LoadTutorial(bool fade = true)
     {
-        StartCoroutine(FadeAndLoadSceneRoutine(0));
+        if (fade)
+            SceneManager.LoadScene(tutorialBuildIndex);
+        else
+            StartCoroutine(FadeAndLoadSceneRoutine(tutorialBuildIndex));
+    }
+
+    public void Retry()
+    {
+        LoadLevel1();
     }
 
     IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)
@@ -55,7 +75,11 @@ public class SceneLoader : MonoBehaviour
         if (gameSession != null) gameSession.SetState(GameSession.GameState.Loading);
         transitionAnimator.SetBool("isLoading", true);
 
-        yield return new WaitForSeconds(2f);    
+        yield return new WaitForSeconds(2f);
+        if (gameSession.player.isDead)
+        {
+            Destroy(gameSession.gameObject);
+        }
 
         if(gameSession != null) gameSession.SetState(GameSession.GameState.Running);
         SceneManager.LoadScene(sceneIndex);
