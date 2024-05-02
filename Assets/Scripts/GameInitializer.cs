@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Android;
+using UnityEngine.UI;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -15,6 +12,9 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] GameSessionData endlessMediumSettings;
     [SerializeField] GameSessionData endlessHardSettings;
     [Header("Button References")]
+    [SerializeField] Image tutorialSelectButton;
+    [SerializeField] Image storySelectButton;
+    [SerializeField] Image endlessSelectButton;
 
     private GameMode gameMode;
     private GameDifficulty difficulty;
@@ -35,16 +35,41 @@ public class GameInitializer : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        
-    }
+        endlessSelectButton.gameObject.SetActive(false);
+        storySelectButton.gameObject.SetActive(false);
+        endlessSelectButton.gameObject.SetActive(false);
 
-    public void StartGame()
-    { 
         if (gameMode == GameMode.tutorial)
         {
-            sceneLoader.load
-            return;
+            endlessSelectButton.gameObject.SetActive(true);
         }
+        else if (gameMode == GameMode.story)
+        {
+            storySelectButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            endlessSelectButton.gameObject.SetActive(true);
+        }
+    }
+    
+
+    // Called by Start Button
+    public void StartGame()
+    {
+        if (gameMode == GameMode.tutorial)
+        {
+            sceneLoader.LoadTutorial();
+        }
+        else //if (gameMode == GameMode.story || gameMode == GameMode.endless)
+        {
+            sceneLoader.LoadLevel1();
+            CreateGameSession();
+        }
+    }
+
+    private void CreateGameSession()
+    {
         GameSessionData sessionSettings = GetSessionDataOfType(gameMode, difficulty);
         Instantiate(GameSessionPrefab);
     }
@@ -52,15 +77,15 @@ public class GameInitializer : MonoBehaviour
     private GameSessionData GetSessionDataOfType(GameMode gameMode, GameDifficulty difficulty)
     {
         GameSessionData result = null;
-        if (gameMode == GameMode.story) 
+        if (gameMode == GameMode.story)
         {
-            result =    difficulty == GameDifficulty.easy ? storyEasySettings :
+            result = difficulty == GameDifficulty.easy ? storyEasySettings :
                         difficulty == GameDifficulty.medium ? storyMediumSettings :
                         storyHardSettings;
-        } 
+        }
         else if (gameMode == GameMode.endless)
         {
-            result =    difficulty == GameDifficulty.easy ? endlessEasySettings :
+            result = difficulty == GameDifficulty.easy ? endlessEasySettings :
                         difficulty == GameDifficulty.medium ? endlessMediumSettings :
                         endlessHardSettings;
         }
