@@ -267,7 +267,7 @@ MonoBehaviour:
   angryFace: {fileID: 0}
   playerInput: {fileID: 0}
   enemyContainer: {fileID: 0}
-  crosshair: {fileID: 0}
+  crosshair: {fileID: 6846608642815445389}
   deathScreen: {fileID: 0}
   reloadCircle: {fileID: 0}
 --- !u!82 &6246352843894296377

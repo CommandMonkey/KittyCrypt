@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 4459397233979908493}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.9, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0.597, y: 0.196, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6239386400827781191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55181fb28ba149c40b7b69906252bfec, type: 3}
+  m_Script: {fileID: 11500000, guid: d80d6ed560691df45abe2af973df489d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   barrelExitPoint: {fileID: 206916783322102975}
