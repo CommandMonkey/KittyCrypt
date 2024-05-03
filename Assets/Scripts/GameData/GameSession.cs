@@ -13,6 +13,16 @@ public enum GameMode
     endless
 }
 
+<<<<<<< HEAD
+=======
+public enum GameDifficulty
+{
+    easy, 
+    medium,
+    hard
+}
+
+>>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858
 public class GameSession : MonoBehaviour
 {
     public enum GameState
