@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scenes/GameScenes/Attack skull.anim.meta
 guid: 5887d24fe4e52aa4c88d013b9f9bbfec
-========
-guid: 333819f1916d55445a7aa8d546cd326e
->>>>>>>> 8653451077e03b3f186d6a2300b31b93c493133d:Assets/Scenes/GameScenes/enemySpawnAnim.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
