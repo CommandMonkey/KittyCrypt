@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Sprites/GUI/ny achivement.png.meta
-guid: e4cc0be8b8ead12498ec70f03ead8697
-========
-guid: 61f298130b8d607458629a250f32dfb8
->>>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858:Assets/Character rigs/ny dödskalle canvas.png.meta
+guid: d2325732fd845a34c98451a68e9c8a7d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
