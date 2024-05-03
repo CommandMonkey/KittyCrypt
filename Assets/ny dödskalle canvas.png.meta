@@ -111,6 +111,15 @@ TextureImporter:
     sprites: []
     outline: []
     physicsShape: []
+<<<<<<< HEAD
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+=======
     bones:
     - name: bone_1
       guid: 3f3a2e6e165d5be43881fdc84c49b232
@@ -1729,6 +1738,7 @@ TextureImporter:
       boneIndex[1]: 0
       boneIndex[2]: 0
       boneIndex[3]: 0
+>>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858
     secondaryTextures: []
     nameFileIdTable: {}
   mipmapLimitGroupName: 

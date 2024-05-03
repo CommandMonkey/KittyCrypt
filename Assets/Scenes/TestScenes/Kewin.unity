@@ -297,6 +297,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7053898620622299610, guid: 1dce8d083aa3da4469fc941743ed2f85, type: 3}
   m_PrefabInstance: {fileID: 7441143633193680733}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+=======
 --- !u!1 &989587924
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +330,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1064501696}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858
 --- !u!1 &1047011424
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,8 +341,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1047011426}
   - component: {fileID: 1047011425}
+<<<<<<< HEAD
+=======
   - component: {fileID: 1047011427}
   - component: {fileID: 1047011428}
+>>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858
   m_Layer: 0
   m_Name: "ny d\xF6dskalle canvas"
   m_TagString: Untagged
@@ -407,6 +413,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047011424}
   serializedVersion: 2
+<<<<<<< HEAD
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.702202, y: -0.5689908, z: 0}
+  m_LocalScale: {x: 0.4038963, y: 0.4038963, z: 0.4038963}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+=======
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0.00000058114523}
   m_LocalPosition: {x: 2.702202, y: -0.5689908, z: 0}
   m_LocalScale: {x: 0.4038963, y: 0.4038963, z: 0.4038963}
@@ -522,6 +536,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1064501696}
+>>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7441143633193680733
 PrefabInstance:
