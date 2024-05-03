@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7674458987335247209}
   - component: {fileID: -6574789246697362393}
-  - component: {fileID: 5724335132345000708}
   - component: {fileID: 3565419157741980189}
+  - component: {fileID: 8920827678290991340}
   m_Layer: 3
   m_Name: BrokenMirror
   m_TagString: Untagged
@@ -86,22 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5724335132345000708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2501890820908802672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec3a5a8476601e74ea103019f486cbb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueTextPrefab: {fileID: 8588114063292629343, guid: abde8651137c5c448b3105484f7f992b, type: 3}
-  promptText: Cracked Mirror
-  dialogueText: You can barely see yourself
-  dialogueDuration: 3
 --- !u!61 &3565419157741980189
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -147,3 +131,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3984375, y: 1.7445102}
   m_EdgeRadius: 0
+--- !u!114 &8920827678290991340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2501890820908802672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb5764890fb9154eaa61a32241dea11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueTextPrefab: {fileID: 8588114063292629343, guid: abde8651137c5c448b3105484f7f992b, type: 3}
+  promptText: paintibg
+  dialogueText: sgargsrh
+  dialogueDuration: 0

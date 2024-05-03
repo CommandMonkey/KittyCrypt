@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRoom: {fileID: 3722623101364078196, guid: eabfd13b394f5284fadcff6ae3609e63, type: 3}
   randomRoomProbabilities:
-  - roomPrefab: {fileID: 3722623101364078196, guid: 74e11636006de494194d9042af50be4d, type: 3}
+  - roomPrefab: {fileID: 3722623101364078196, guid: bc7a9de5d1b3b374f81ccfe34ad45df4, type: 3}
     spawnProbability: 0.35
     maxAmount: 3
   - roomPrefab: {fileID: 3722623101364078196, guid: e55d434f63e9b3e4b948f6651a66ff89, type: 3}
