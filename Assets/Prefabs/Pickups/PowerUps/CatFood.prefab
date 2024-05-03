@@ -96,13 +96,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4317062860953269516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f63c8782d12059340901c0cb70a11718, type: 3}
+  m_Script: {fileID: 11500000, guid: 17d42bfcb9c2d5f4f98d60ac0c057ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pickupVFX: {fileID: 0}
-  initialForceMagnitude: 15
-  gravityMagnitude: -0.8
-  timeUntilStop: 0.7
+  initialForceMagnitude: 1
+  gravityMagnitude: 1
+  timeUntilStop: 1.5
   healthIncrease: 1
 --- !u!50 &1694111503620212296
 Rigidbody2D:

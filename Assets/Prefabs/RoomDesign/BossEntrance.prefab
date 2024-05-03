@@ -225,7 +225,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6201475082725438284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e068af1e9740c49bf11eeea41fb1dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 39a50653a2ce93f4aa53f7d7bb6ee591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   frontClosedDoorSprite: {fileID: 21300000, guid: b820b7f7375108c489d56590615b6ab5, type: 3}
