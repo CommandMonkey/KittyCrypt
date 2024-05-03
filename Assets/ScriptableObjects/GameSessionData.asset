@@ -25,14 +25,18 @@ MonoBehaviour:
       value: 0
     spawnItemPool:
     - prefab: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
-      probability: 1
-    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
-      probability: 1
+      probability: 0.5
+    - prefab: {fileID: 2074152661732882923, guid: 00ae2d4abd8df3044b9a7d72194347ca, type: 3}
+      probability: 0.5
+    - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
+      probability: 0.5
+    - prefab: {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+      probability: 0.5
     tressureItemPool:
     - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
-      probability: 1
-    - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
-      probability: 1
+      probability: 0.5
+    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+      probability: 0.5
   - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
     enemyPool:
     - prefab: {fileID: 8634053150640929787, guid: aa424c0756c45c244868633da29337ca, type: 3}

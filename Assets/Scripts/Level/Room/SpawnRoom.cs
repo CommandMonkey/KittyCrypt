@@ -29,6 +29,7 @@ public class SpawnRoom : Room
             while (item == null || itemsSpawned.Contains(item))
             {
                 item = gameSession.levelSettings.GetRandomSpawnRoomItem();
+                Debug.Log("SpawnRoom item: " + item.name);
                 tries++;
                 if (tries == 50) break;
             }
