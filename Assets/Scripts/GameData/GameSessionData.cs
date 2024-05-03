@@ -142,7 +142,7 @@ public class GameSessionData : ScriptableObject
     {
         public GameObject prefab;
         [Range(0f, 1f)] public float probability;
-        public int value;
+        [Min(1)] public int value;
     }
 
 }
