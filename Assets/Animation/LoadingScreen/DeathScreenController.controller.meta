@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Character rigs/Mask.controller.meta
+guid: f99d6dcfba8c1ed4ea459cd0b30e11ed
+========
 guid: 6aa694636c4570c40acf556126fbcb4d
+>>>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858:Assets/Animation/LoadingScreen/DeathScreenController.controller.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000
