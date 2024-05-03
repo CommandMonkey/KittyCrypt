@@ -56,6 +56,7 @@ public class RoomManager : MonoBehaviour
         GameSession.state = GameSession.GameState.Loading;
 
         roomsToSpawn = roomGenSettings.GetRoomsList();
+        Debug.Log("count: " +  roomsToSpawn.Count);
         spawnedRooms.Clear();
 
         totalTries++;
@@ -79,6 +80,7 @@ public class RoomManager : MonoBehaviour
         while (roomsToSpawn.Count > 0)
         {
             waveCount++;
+            Debug.Log("RoomSpawning Wave: " + waveCount);
 
             if (ShouldTerminateRoomSpawning(waveCount, previousRoomCount))
             {
@@ -114,6 +116,7 @@ public class RoomManager : MonoBehaviour
 
     void TerminateRoomSpawning()
     {
+        Debug.Log("Terminating roomSpawning");
         DestroyAllRooms();
         entrances.Clear();
         StartRoomSpawning();
