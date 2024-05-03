@@ -83,6 +83,9 @@ public class GameSession : MonoBehaviour
         OnNewState = new UnityEvent();
         onSceneloaded = new UnityEvent();
         reloadCircle = FindObjectOfType<ReloadCircleFollowCursor>();
+
+        // Get current level data (Based on levelIndex)
+        levelSettings = gameSessionData.GetLevelData(levelIndex);
     }
 
     private void Start()
@@ -104,8 +107,7 @@ public class GameSession : MonoBehaviour
         deathScreen.gameObject.SetActive(false);
         angryFace.gameObject.SetActive(false);
 
-        // Get current level data (Based on levelIndex)
-        levelSettings = gameSessionData.GetLevelData(levelIndex);
+
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
