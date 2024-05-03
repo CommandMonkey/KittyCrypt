@@ -4,27 +4,6 @@ using UnityEngine.UI;
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] GameObject GameSessionPrefab;
-<<<<<<< HEAD
-    [Header("GamemodeGamedata")]
-    [SerializeField] GameSessionData StoryEasySettings;
-    [SerializeField] GameSessionData StoryMediumSettings;
-    [SerializeField] GameSessionData StoryHardSettings;
-    [SerializeField] GameSessionData EndlessEasySettings;
-    [SerializeField] GameSessionData EndlessMediumSettings;
-    [SerializeField] GameSessionData EndlessHardSettings;
-
-
-    private GameMode gameMode;
-
-
-
-    public void SetGameMode(GameMode gameMode)
-    {
-
-    }
-
-    public void InstanciateGameSession()
-=======
     [Header("Gamemode Gamedata")]
     [SerializeField] GameSessionData storyEasySettings;
     [SerializeField] GameSessionData storyMediumSettings;
@@ -43,7 +22,6 @@ public class GameInitializer : MonoBehaviour
     SceneLoader sceneLoader;
 
     private void Start()
->>>>>>> d0dba0a64ac1b922aebee1db2b1e4e8136669858
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
     }
