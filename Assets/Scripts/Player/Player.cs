@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] LayerMask ignoreOnDash;
-     public float Move_speed = 30f;
+    public float Move_speed = 30f;
     //[SerializeField] float rollSpeedMinimum = 50f;
     [SerializeField] float rolldelay = 0.2f;
     [SerializeField] int health = 9;
