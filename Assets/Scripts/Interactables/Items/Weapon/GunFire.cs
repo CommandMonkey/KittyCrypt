@@ -192,7 +192,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
         }
     }
 
-    void Reload()
+    protected void Reload()
     {
         if (!runtimeData.isReloading && runtimeData.bulletsFired != 0)
         {
@@ -281,7 +281,6 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
     protected virtual void SetAmmoUI()
     {
-        Debug.Log(ammoUI.name);
         ammoUI.text = (settings.shotsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
                       settings.shotsBeforeReload.ToString();
     }
