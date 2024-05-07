@@ -13,6 +13,13 @@ public enum GameMode
     endless
 }
 
+public enum GameDifficulty
+{
+    easy, 
+    medium,
+    hard
+}
+
 public class GameSession : MonoBehaviour
 {
     public enum GameState
@@ -76,6 +83,9 @@ public class GameSession : MonoBehaviour
         OnNewState = new UnityEvent();
         onSceneloaded = new UnityEvent();
         reloadCircle = FindObjectOfType<ReloadCircleFollowCursor>();
+
+        // Get current level data (Based on levelIndex)
+        levelSettings = gameSessionData.GetLevelData(levelIndex);
     }
 
     private void Start()
@@ -97,8 +107,7 @@ public class GameSession : MonoBehaviour
         deathScreen.gameObject.SetActive(false);
         angryFace.gameObject.SetActive(false);
 
-        // Get current level data (Based on levelIndex)
-        levelSettings = gameSessionData.GetLevelData(levelIndex);
+
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -139,9 +148,10 @@ public class GameSession : MonoBehaviour
 
         SetCursorOrCrosshair();
         SetPlayerAngry();
-        if(state == GameState.Running)
+        if(state == GameState.Running && !player.isDead)
         {
             timePlayed += Time.deltaTime;
+            Debug.Log(timePlayed);
         }
     }
 

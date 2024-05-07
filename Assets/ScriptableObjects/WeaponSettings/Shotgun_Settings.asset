@@ -24,5 +24,5 @@ MonoBehaviour:
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
   bulletsPerShot: 15
-  projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
+  projectile: {fileID: 7834965403791016898, guid: 95b1ce42848e7114aa935b0fe8ddb916, type: 3}
   bulletSpeed: 40

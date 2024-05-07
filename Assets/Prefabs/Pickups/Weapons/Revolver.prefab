@@ -256,7 +256,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6239386400827781191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55181fb28ba149c40b7b69906252bfec, type: 3}
+  m_Script: {fileID: 11500000, guid: d80d6ed560691df45abe2af973df489d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   barrelExitPoint: {fileID: 206916783322102975}

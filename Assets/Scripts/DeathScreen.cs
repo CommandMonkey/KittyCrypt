@@ -13,19 +13,18 @@ public class DeathScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI enemiesKilled;
     [SerializeField] TextMeshProUGUI damageTaken;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameSession = GameSession.Instance;
-    }
 
     private void OnEnable()
     {
+        gameSession = GameSession.Instance;
         if (gameSession != null)
-        {
+        {   
             var ts = TimeSpan.FromSeconds(gameSession.timePlayed);
             timeSurvived.text = "TIME SURVIVED: " + string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
             finalFloor.text = "FINAL FLOOR: " + (gameSession.levelIndex + 1).ToString();
+            roomsCleared.text = "ROOMS CLEARED: " + gameSession.roomsCleared.ToString();
+            enemiesKilled.text = "ENEMIES KILLED: " + gameSession.enemiesKilled.ToString();
+            damageTaken.text = "DAMAGE TAKEN: " + gameSession.damageTaken.ToString();
         }
     }
 }

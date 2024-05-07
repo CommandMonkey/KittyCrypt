@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -221,6 +220,7 @@ public class Player : MonoBehaviour
         if (invinsibility || state == State.rolling) { return; }
         animator.SetTrigger("WasHurt");
         health -= damage;
+        gameSession.damageTaken += damage;
         StartCoroutine(InvisibilityDelayRoutine(invinsibilityLenght));
         SpawnBloodSplatVFX();
         if (health <= 0)

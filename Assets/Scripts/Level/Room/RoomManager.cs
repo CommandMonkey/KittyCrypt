@@ -26,6 +26,8 @@ public class RoomManager : MonoBehaviour
     Dictionary<Entrance, List<string>> entranceRoomFailNames = new Dictionary<Entrance, List<string>>();
     ContactFilter2D roomsFilter;
 
+    int totalTries = 0;
+
     // Cached refs
     GameSession gameSession;
     AudioSource audioScource;
@@ -54,8 +56,16 @@ public class RoomManager : MonoBehaviour
         GameSession.state = GameSession.GameState.Loading;
 
         roomsToSpawn = roomGenSettings.GetRoomsList();
+        Debug.Log("count: " +  roomsToSpawn.Count);
         spawnedRooms.Clear();
 
+        totalTries++;
+
+        if (totalTries > 100 || roomsToSpawn == new List<GameObject>())
+        {
+            Debug.LogWarning("ROOM SPAWNING SUCKS AND FAILS");
+            return;
+        }
         //Spawn first room (it will spawn more rooms)
         spawnedRooms.Add(Instantiate(roomGenSettings.startRoom, grid).GetComponent<Room>());
         StartCoroutine(SpawnRoomsRoutine());
@@ -70,6 +80,7 @@ public class RoomManager : MonoBehaviour
         while (roomsToSpawn.Count > 0)
         {
             waveCount++;
+            Debug.Log("RoomSpawning Wave: " + waveCount);
 
             if (ShouldTerminateRoomSpawning(waveCount, previousRoomCount))
             {
@@ -105,6 +116,7 @@ public class RoomManager : MonoBehaviour
 
     void TerminateRoomSpawning()
     {
+        Debug.Log("Terminating roomSpawning");
         DestroyAllRooms();
         entrances.Clear();
         StartRoomSpawning();

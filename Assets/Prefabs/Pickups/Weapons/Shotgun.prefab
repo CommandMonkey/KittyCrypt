@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1479070672966793703}
-  - component: {fileID: 1565425875212602402}
+  - component: {fileID: 4682618188502708412}
   m_Layer: 0
   m_Name: PivotPoint
   m_TagString: Untagged
@@ -65,7 +65,7 @@ Transform:
   - {fileID: 4383058845420255976}
   m_Father: {fileID: 7406951540403912369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1565425875212602402
+--- !u!114 &4682618188502708412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4196395211595052769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55181fb28ba149c40b7b69906252bfec, type: 3}
+  m_Script: {fileID: 11500000, guid: d80d6ed560691df45abe2af973df489d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   barrelExitPoint: {fileID: 864004575432457577}
