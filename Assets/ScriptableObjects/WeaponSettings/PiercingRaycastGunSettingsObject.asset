@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf42af0f63902943bda03a1ce0c18e0, type: 3}
   m_Name: PiercingRaycastGunSettingsObject
   m_EditorClassIdentifier: 
-  fireRate: 0.5
-  reloadTime: 1
-  shotsBeforeReload: 5
+  fireRate: 1
+  reloadTime: 3
+  shotsBeforeReload: 1
   bulletSpreadRange: 1
-  damage: 1
-  playerKnockback: 2
+  damage: 150
+  playerKnockback: 30
   fireAudio: {fileID: 0}
   reloadAudio: {fileID: 0}
   audioVolume: 1
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
   chargeUpTime: 3
-  bulletTrail: {fileID: 0}
+  bulletTrail: {fileID: 9181747754686250940, guid: 0429c01ccfc77a346aba27c7f07be3c8, type: 3}
   destroyTrailAfter: 0.1
   ignoreLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 125824
