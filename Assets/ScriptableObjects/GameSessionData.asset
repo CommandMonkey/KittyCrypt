@@ -25,11 +25,19 @@ MonoBehaviour:
       value: 15
     spawnItemPool:
     - prefab: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
-      probability: 1
-    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
-      probability: 1
-    tressureItemPool:
-    - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
-      probability: 1
+      probability: 0.75
     - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
       probability: 1
+    - prefab: {fileID: 2074152661732882923, guid: 00ae2d4abd8df3044b9a7d72194347ca, type: 3}
+      probability: 1
+    - prefab: {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+      probability: 0.75
+    tressureItemPool:
+    - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
+      probability: 0.4
+    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+      probability: 1
+    - prefab: {fileID: 149285161579284881, guid: e5ebfeef1c11234469752a3f93d43977, type: 3}
+      probability: 0.6
+    - prefab: {fileID: 3885001662025064534, guid: 2b28572761a169743945590ccec0b544, type: 3}
+      probability: 0.2
