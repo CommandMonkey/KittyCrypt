@@ -94,9 +94,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3305357583661570773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e1ef26c3a2a4b14a9cea8cd886b1c21, type: 3}
+  m_Script: {fileID: 11500000, guid: 01c484d003fbf7948b56acf45e5a5007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  followSpeed: 2
-  maxDistance: 1.5
+  followSpeed: 5
+  maxDistance: 2
