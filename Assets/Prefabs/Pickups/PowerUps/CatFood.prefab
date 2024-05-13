@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupVFX: {fileID: 0}
-  initialForceMagnitude: 1
-  gravityMagnitude: 1
-  timeUntilStop: 1.5
+  initialForceMagnitude: 20
+  gravityMagnitude: -1
+  timeUntilStop: 0.4
   healthIncrease: 1
 --- !u!50 &1694111503620212296
 Rigidbody2D:

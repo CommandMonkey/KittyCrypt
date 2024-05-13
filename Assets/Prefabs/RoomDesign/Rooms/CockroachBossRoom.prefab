@@ -5355,6 +5355,9 @@ MonoBehaviour:
   - {fileID: 4283842208990743483}
   - {fileID: 2916657273243541233}
   - {fileID: 5566130094315618097}
+  wallsRenderers:
+  - {fileID: 2716945667526680580}
+  - {fileID: 7597897488986454909}
   boss: {fileID: 0}
   bossDoorPrefab: {fileID: 6201475082725438284, guid: 97d9ad0299c12634ebcb32c8ed3937fe, type: 3}
 --- !u!61 &2939126284320088402
@@ -5446,6 +5449,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6be7c2fbfebeb94cb1f5d6ec53740fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  health: 1
+  enemyDMG: 1
+  attackSpeed: 0.1
+  BloodSplatVFX: {fileID: 0}
+  BloodStainVFX: {fileID: 0}
+  enemyHitAudio: {fileID: 0}
+  obsticleLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &4526478723344158037
 GameObject:
   m_ObjectHideFlags: 0

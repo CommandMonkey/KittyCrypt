@@ -12716,6 +12716,9 @@ MonoBehaviour:
   entrances:
   - {fileID: 8116252510572144639}
   - {fileID: 5011637721339894139}
+  wallsRenderers:
+  - {fileID: 7597897488986454909}
+  - {fileID: 2716945667526680580}
   enemyValueCapacity: 30
   enemiesToSpawn:
   - {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}

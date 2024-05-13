@@ -3977,7 +3977,7 @@ MonoBehaviour:
   - {x: 33, y: -12, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 32488
+  m_InstanceId: 68182
   m_LocalBounds:
     m_Center: {x: 10.5, y: 10.5, z: 0}
     m_Extent: {x: 22.5, y: 22.5, z: 0}
@@ -5290,7 +5290,7 @@ MonoBehaviour:
   - {x: 32.125, y: -11.125, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 32472
+  m_InstanceId: 68166
   m_LocalBounds:
     m_Center: {x: 10.5, y: 8, z: 0}
     m_Extent: {x: 21.625, y: 19.125, z: 0}
@@ -5352,6 +5352,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entrances:
   - {fileID: 7502734693209204236}
+  wallsRenderers:
+  - {fileID: 2716945667526680580}
+  - {fileID: 7597897488986454909}
   startWeaponPoints:
   - {fileID: 6769278629998440161}
   - {fileID: 7691489204806359253}

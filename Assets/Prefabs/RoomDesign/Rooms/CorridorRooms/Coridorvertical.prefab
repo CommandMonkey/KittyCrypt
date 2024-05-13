@@ -3759,6 +3759,9 @@ MonoBehaviour:
   entrances:
   - {fileID: 2086476538810221120}
   - {fileID: 2649923778267792887}
+  wallsRenderers:
+  - {fileID: 2716945667526680580}
+  - {fileID: 7597897488986454909}
 --- !u!61 &2939126284320088402
 BoxCollider2D:
   m_ObjectHideFlags: 0
