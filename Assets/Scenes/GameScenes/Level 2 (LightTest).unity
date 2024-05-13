@@ -123,71 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &148930107
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.29780042
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.3200587
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 956762716333393946, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: item
-      value: 
-      objectReference: {fileID: 3885001662025064534, guid: 2b28572761a169743945590ccec0b544, type: 3}
-    - target: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: useSpawnRoomPool
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5068044822145740819, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
-      propertyPath: m_Name
-      value: ItemPickupPrefab
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
 --- !u!1001 &254037957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,6 +174,14 @@ PrefabInstance:
     - target: {fileID: 6438481001964424523, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: m_Name
       value: GameSession
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709134303033472481, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: m_FillOrigin
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709134303033472481, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: m_FillClockwise
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8179313453937787822, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: gameMode
@@ -706,7 +649,7 @@ PrefabInstance:
     - target: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+      objectReference: {fileID: 2074152661732882923, guid: 3261b72c38e712941b93fb52e2384a1b, type: 3}
     - target: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
       propertyPath: useSpawnRoomPool
       value: 0
@@ -1152,5 +1095,3 @@ SceneRoots:
   - {fileID: 874127641}
   - {fileID: 1577707819}
   - {fileID: 1138645002}
-  - {fileID: 148930107}
-  - {fileID: 1350954340}

@@ -16,9 +16,6 @@ MonoBehaviour:
   reloadTime: 2
   shotsBeforeReload: 50
   bulletSpreadRange: 5
-  ignoreLayerMask:
-    serializedVersion: 2
-    m_Bits: 125889
   damage: 3
   playerKnockback: 2
   fireAudio: {fileID: 8300000, guid: 61bd9389b023bc243ba8d09644a32272, type: 3}
@@ -26,5 +23,5 @@ MonoBehaviour:
   audioVolume: 0.5
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
-  projectile: {fileID: 7834965403791016898, guid: fd20272fe98ac6d40bd9256c6a09cde8, type: 3}
+  projectile: {fileID: 7834965403791016898, guid: 95b1ce42848e7114aa935b0fe8ddb916, type: 3}
   bulletSpeed: 40

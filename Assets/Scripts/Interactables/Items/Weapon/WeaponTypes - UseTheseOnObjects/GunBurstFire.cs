@@ -14,6 +14,7 @@ public class GunBurstFire : GunFire<BurstGunSettingsObject>
 
         GunFeedbackEffects();
         runtimeData.isFireRateCoolingDown = true;
+        runtimeData.bulletsFired++;
         //Ammo
         SetAmmoUI();
     }

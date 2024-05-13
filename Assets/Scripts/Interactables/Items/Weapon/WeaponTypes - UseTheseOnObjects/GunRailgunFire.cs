@@ -1,13 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunRaycastFire : GunFire<RaycastGunSettingsObject>
+public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
 {
+    bool isFiring = false;
+    float startFireTime;
     protected override void WeaponFire()
     {
-        Debug.Log("Raycast fire");
-        // Fire
+        if (!isFiring)
+        {
+            startFireTime = Time.time;
+            isFiring = true;
+        }
+    }
+
+    protected override void WeaponUpdate()
+    {
+        if (gameSession.playerInput.actions["Fire"].IsPressed())
+        {
+            float timePassed = Time.time - startFireTime;
+            Debug.Log("Time passed: " + timePassed);
+            if (timePassed >= settings.chargeUpTime)
+            {
+                Fire();
+                isFiring = false; 
+            }
+        }
+        else
+        {
+            // NOT holding putton
+            isFiring = false;
+        }
+    }
+
+    private void Fire()
+    {
         RaycastHit2D bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
         if (bulletHit)
         {
@@ -28,13 +57,6 @@ public class GunRaycastFire : GunFire<RaycastGunSettingsObject>
             {
                 enemyScript.TakeDamage(settings.damage);
             }
-
-            runtimeData.bulletsFired++;
-            SetAmmoUI();
-        }
-        else
-        {
-            Debug.LogWarning("Raycast fire found no hitPoint.... Something might be wrong");
         }
     }
 }

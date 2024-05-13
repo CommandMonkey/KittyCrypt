@@ -9,21 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11649cec4f8b9174c808cd92632076e3, type: 3}
-  m_Name: Revolver_Settings
+  m_Script: {fileID: 11500000, guid: 1cf42af0f63902943bda03a1ce0c18e0, type: 3}
+  m_Name: PiercingRaycastGunSettingsObject
   m_EditorClassIdentifier: 
   fireRate: 1
-  reloadTime: 3.5
-  shotsBeforeReload: 6
+  reloadTime: 3
+  shotsBeforeReload: 1
   bulletSpreadRange: 1
-  damage: 30
-  playerKnockback: 10
-  fireAudio: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
-  reloadAudio: {fileID: 8300000, guid: d201d037fe8984e459f72175ff450ead, type: 3}
+  damage: 150
+  playerKnockback: 30
+  fireAudio: {fileID: 0}
+  reloadAudio: {fileID: 0}
   audioVolume: 1
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
   destroyHitEffectAfter: 1.5
-  bulletTrail: {fileID: 9181747754686250940, guid: 5137d381b9d6f254eaffbe330a3dc1f3, type: 3}
+  chargeUpTime: 3
+  bulletTrail: {fileID: 9181747754686250940, guid: 0429c01ccfc77a346aba27c7f07be3c8, type: 3}
   destroyTrailAfter: 0.1
   ignoreLayerMask:
     serializedVersion: 2
