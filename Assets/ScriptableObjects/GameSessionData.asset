@@ -14,22 +14,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomValueCapacityMultiplier: 1.2
   enemyHP_Multiplier: 1.2
-  levelData:
-  - roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
+  looping: 0
+  levelDatas:
+  - LevelName: Anger
+    roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
+    wallColor: {r: 1, g: 0.45597476, b: 0.45597476, a: 0}
     enemyPool:
-    - prefab: {fileID: 8634053150640929787, guid: aa424c0756c45c244868633da29337ca, type: 3}
+    - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
+      probability: 1
+      value: 5
+    - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 1
       value: 10
-    - prefab: {fileID: 3997974298972901596, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+    spawnItemPool:
+    - prefab: {fileID: 2074152661732882923, guid: 00ae2d4abd8df3044b9a7d72194347ca, type: 3}
+      probability: 0.5
+    - prefab: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
+      probability: 0.5
+    - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
+      probability: 0.5
+    - prefab: {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+      probability: 0.5
+    tressureItemPool:
+    - prefab: {fileID: 149285161579284881, guid: b7160680ec027964db7adf6d6a31e197, type: 3}
+      probability: 0.5
+    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+      probability: 0.5
+  - LevelName: Bargain
+    roomGenSettings: {fileID: 11400000, guid: a972ff3824f5ea14599c9fc5bf269116, type: 2}
+    wallColor: {r: 1, g: 0.8794556, b: 0.49371064, a: 0}
+    enemyPool:
+    - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
+      probability: 1
+      value: 5
+    - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
+      probability: 1
+      value: 10
+    - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
       probability: 1
       value: 15
     spawnItemPool:
+    - prefab: {fileID: 2074152661732882923, guid: 00ae2d4abd8df3044b9a7d72194347ca, type: 3}
+      probability: 0.5
     - prefab: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
-      probability: 1
-    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
-      probability: 1
-    tressureItemPool:
-    - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
-      probability: 1
+      probability: 0.5
     - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
-      probability: 1
+      probability: 0.5
+    - prefab: {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+      probability: 0.5
+    tressureItemPool: []
+  - LevelName: Depression
+    roomGenSettings: {fileID: 11400000, guid: 0c324fa6cd01be34f8edf304b9cedbab, type: 2}
+    wallColor: {r: 1, g: 1, b: 1, a: 0}
+    enemyPool: []
+    spawnItemPool: []
+    tressureItemPool: []

@@ -1,5 +1,4 @@
 using System;
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +15,7 @@ public enum Direction
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
+    [SerializeField] private SpriteRenderer wallsRenderer;
 
     [NonSerialized] public Entrance previousRoomEntrance;
     [NonSerialized] protected UnityEvent onPlayerEnter;
@@ -41,6 +41,8 @@ public class Room : MonoBehaviour
         entrances = transform.GetComponentsInAllChildren<Entrance>();
 
         roomManager.onEntranceExit.AddListener(OnPlayerLeftEntrance);
+
+        wallsRenderer.color = gameSession.levelSettings.wallColor;
 
         RoomStart();
     }

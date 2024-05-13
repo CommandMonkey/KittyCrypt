@@ -151,7 +151,6 @@ public class GameSession : MonoBehaviour
         if(state == GameState.Running && !player.isDead)
         {
             timePlayed += Time.deltaTime;
-            Debug.Log(timePlayed);
         }
     }
 

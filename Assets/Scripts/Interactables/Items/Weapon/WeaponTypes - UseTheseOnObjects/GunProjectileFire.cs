@@ -12,7 +12,7 @@ public class GunProjectileFire : GunFire<ProjectileGunSettingsObject>
         GunFeedbackEffects();
         runtimeData.isFireRateCoolingDown = true;
 
-
+        runtimeData.bulletsFired++;
         // Ammo
         SetAmmoUI();
     }
