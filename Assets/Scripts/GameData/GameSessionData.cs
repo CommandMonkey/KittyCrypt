@@ -7,16 +7,18 @@ using UnityEngine;
 public class GameSessionData : ScriptableObject
 {
     [Header("Continious Scaling")]
+
     [SerializeField] private float roomValueCapacityMultiplier;
     [SerializeField] private float enemyHP_Multiplier;
 
     [Header("Set Level Scaling")]
     [Tooltip("if LevelIndex > LevelData.Count, it will defaut to the highest level in LevelData")]
-    public List<LevelSettings> levelData;
+    [SerializeField] private bool looping;
+    public List<LevelSettings> levelDatas;
 
     public LevelSettings GetLevelData(int levelIndex)
     {
-        LevelSettings resultSettings = levelData[Mathf.Min(levelIndex, levelData.Count-1)];
+        LevelSettings resultSettings = levelDatas[levelIndex % levelDatas.Count];
 
         float power = levelIndex;
 
@@ -31,10 +33,13 @@ public class GameSessionData : ScriptableObject
     public struct LevelSettings
     {
         // Inspector variables
+        public string LevelName;
         public RoomGenObject roomGenSettings;
+        public Color wallColor;
         [SerializeField] EnemyValue[] enemyPool;
         [SerializeField] List<ItemProbability> spawnItemPool;
         [SerializeField] List<ItemProbability> tressureItemPool;
+
 
         // non serialized
         // (depend on general scaling, Set in GameSessionSettings.GetLevelData())

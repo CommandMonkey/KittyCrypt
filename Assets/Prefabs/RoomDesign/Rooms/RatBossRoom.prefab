@@ -5311,7 +5311,7 @@ GameObject:
   - component: {fileID: 3391722650668413456}
   - component: {fileID: 2939126284320088402}
   m_Layer: 9
-  m_Name: BossRoom
+  m_Name: RatBossRoom
   m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
