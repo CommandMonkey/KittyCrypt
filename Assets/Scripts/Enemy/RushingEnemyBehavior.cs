@@ -11,6 +11,7 @@ public class RushingEnemyBehavior : Enemy
     protected override void EnemyStart()
     {
         previousPosition = transform.position;
+
     }
 
     void Update()

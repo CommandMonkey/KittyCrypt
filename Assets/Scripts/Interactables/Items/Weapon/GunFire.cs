@@ -69,6 +69,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
         gameSession.onSceneloaded.AddListener(OnSceneLoaded);
 
         Activate();
+        WeaponStart();
 
         runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);  
 
@@ -88,6 +89,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
         WeaponUpdate();
     }
+    protected virtual void WeaponStart() { }
 
     protected virtual void WeaponUpdate() { }
 

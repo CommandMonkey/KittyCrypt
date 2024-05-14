@@ -2,11 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
 {
+
+    bool hasFired = false;
     bool isFiring = false;
     float startFireTime;
+
+    Light2D nuzzleLight;
+
     protected override void WeaponFire()
     {
         if (!isFiring)
@@ -16,23 +22,39 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
         }
     }
 
+    protected override void WeaponStart()
+    {
+        nuzzleLight = GetComponent<Light2D>();
+    }
     protected override void WeaponUpdate()
     {
-        if (gameSession.playerInput.actions["Fire"].IsPressed())
+        if (gameSession.playerInput.actions["Fire"].IsPressed() && hasFired == false)
         {
             float timePassed = Time.time - startFireTime;
             Debug.Log("Time passed: " + timePassed);
+            nuzzleLight.enabled = true;
+            nuzzleLight.intensity = timePassed * 75;
             if (timePassed >= settings.chargeUpTime)
             {
+                nuzzleLight.intensity = 50f;
                 Fire();
-                isFiring = false; 
+                isFiring = false;
+                hasFired = true;
+                StartCoroutine(ShootCoolDownRoutine());
             }
         }
         else
         {
             // NOT holding putton
             isFiring = false;
+            nuzzleLight.enabled = false;
         }
+    }
+
+    IEnumerator ShootCoolDownRoutine()
+    {
+        yield return new WaitForSeconds(settings.reloadTime);
+        hasFired = false;
     }
 
     private void Fire()

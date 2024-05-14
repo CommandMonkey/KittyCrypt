@@ -6,34 +6,23 @@ public class GunOverheatingFire : GunFire<OverheatingGunSettingsObject>
 {
 
     GameSession gamesesion;
-
-    float heat = 0f;
     bool isFiring = false;
-float timePassed = 0f;
+    protected override void WeaponFire()
+    {
+        Fire();
+        settings.heat += 0.5f;
+    }
+
     protected override void WeaponUpdate()
     {
-        if (gameSession.playerInput.actions["Fire"].IsPressed())
+        settings.heat -= 5f * Time.deltaTime;
+
+        if (settings.heat >= settings.MaxHeat ) 
         {
-            
-            timePassed = Time.time;
-            Debug.Log("Time passed: " + timePassed);
-            if (timePassed >= settings.heat)
-            {
-                Reload();
-                isFiring = false;
-                
-            }
-            else
-            {
-              Fire();
-            }
+            Reload(); 
         }
-        else
-        {
-            // NOT holding putton
-            isFiring = false;
-            timePassed = 0f;
-        }
+
+        if (settings.heat < 0) { return; }
     }
 
 
