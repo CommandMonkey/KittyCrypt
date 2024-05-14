@@ -51,7 +51,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
 
 
-    private void Start()
+    protected void Start()
     {
         gameSession = GameSession.Instance;
         player = gameSession.player;

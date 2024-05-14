@@ -144,6 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueTextPrefab: {fileID: 8588114063292629343, guid: abde8651137c5c448b3105484f7f992b, type: 3}
-  promptText: paintibg
-  dialogueText: sgargsrh
-  dialogueDuration: 0
+  promptText: Painting
+  dialogueText: some kind of.... Weed
+  dialogueDuration: 2
