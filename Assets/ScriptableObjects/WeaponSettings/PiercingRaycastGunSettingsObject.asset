@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf42af0f63902943bda03a1ce0c18e0, type: 3}
   m_Name: PiercingRaycastGunSettingsObject
   m_EditorClassIdentifier: 
-  fireRate: 1
+  fireRate: 3
   reloadTime: 3
   shotsBeforeReload: 1
   bulletSpreadRange: 1
