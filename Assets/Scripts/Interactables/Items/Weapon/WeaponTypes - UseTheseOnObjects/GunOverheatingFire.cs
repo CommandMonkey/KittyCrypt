@@ -2,17 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunOverheatingFire : GunFire<RaycastGunSettingsObject>
+public class GunOverheatingFire : GunFire<OverheatingGunSettingsObject>
 {
 
     GameSession gamesesion;
 
     float heat = 0f;
-
-    protected override void WeaponFire()
+    bool isFiring = false;
+float timePassed = 0f;
+    protected override void WeaponUpdate()
     {
-        Debug.Log("Raycast fire");
-        // Fire
+        if (gameSession.playerInput.actions["Fire"].IsPressed())
+        {
+            
+            timePassed = Time.time;
+            Debug.Log("Time passed: " + timePassed);
+            if (timePassed >= settings.heat)
+            {
+                Reload();
+                isFiring = false;
+                
+            }
+            else
+            {
+              Fire();
+            }
+        }
+        else
+        {
+            // NOT holding putton
+            isFiring = false;
+            timePassed = 0f;
+        }
+    }
+
+
+    private void Fire()
+    {
         RaycastHit2D bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
         if (bulletHit)
         {
@@ -27,15 +53,6 @@ public class GunOverheatingFire : GunFire<RaycastGunSettingsObject>
             Destroy(smoke, settings.destroyHitEffectAfter);
             Destroy(line.gameObject, settings.destroyTrailAfter);
 
-            if (gamesesion.playerIsShooting == true)
-            {
-                heat++;
-            }
-            if (heat > 10f)
-            {
-                base.Reload();
-            }
-
             Enemy enemyScript = bulletHit.collider.gameObject.GetComponent<Enemy>();
 
             if (enemyScript != null)
@@ -43,10 +60,9 @@ public class GunOverheatingFire : GunFire<RaycastGunSettingsObject>
                 enemyScript.TakeDamage(settings.damage);
             }
         }
-        else
-        {
-            Debug.LogWarning("Raycast fire found no hitPoint.... Something might be wrong");
-        }
     }
 }
+    
+
+
 

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: OverheatingGunSettings
   m_EditorClassIdentifier: 
   fireRate: 0.00001
-  reloadTime: 1
-  shotsBeforeReload: 2355
-  bulletSpreadRange: 1
+  reloadTime: 30
+  shotsBeforeReload: 100000000
+  bulletSpreadRange: 10.5
   damage: 1
   playerKnockback: 2
   fireAudio: {fileID: 0}
@@ -28,3 +28,4 @@ MonoBehaviour:
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 125824
+  heat: 10

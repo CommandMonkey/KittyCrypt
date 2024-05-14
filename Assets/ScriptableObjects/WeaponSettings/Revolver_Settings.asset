@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Revolver_Settings
   m_EditorClassIdentifier: 
   fireRate: 1
-  reloadTime: 3.5
+  reloadTime: 2.5
   shotsBeforeReload: 6
   bulletSpreadRange: 1
   damage: 30
