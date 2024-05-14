@@ -28,5 +28,5 @@ MonoBehaviour:
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 125824
-  heat: -1
+  heat: -75.0515
   MaxHeat: 30
