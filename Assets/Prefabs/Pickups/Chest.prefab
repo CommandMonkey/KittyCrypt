@@ -97,13 +97,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2003479900174032128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0be6483fa986479489919a98f1d0d79c, type: 3}
+  m_Script: {fileID: 11500000, guid: 20b738f1e185b604d8d860b6fc0eb039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   launchDirections:
   - {fileID: 3366427819873796113}
   - {fileID: 8583575876667817085}
-  initialShootOutSpeed: 10
+  initialShootOutSpeed: 2
   gravityFactor: -1
   itemSpawnBallSprite: {fileID: -2413806693520163455, guid: 1eed610d12c73804c9e0f96d047a1977, type: 3}
   openChest: {fileID: -714310872, guid: 8ca1a4fbe71fe42478d147434990b5ab, type: 3}

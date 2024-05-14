@@ -3146,6 +3146,9 @@ MonoBehaviour:
   - {fileID: 2527114754418737332}
   - {fileID: 6044119464662677161}
   - {fileID: 2086476538810221120}
+  wallsRenderers:
+  - {fileID: 2716945667526680580}
+  - {fileID: 7597897488986454909}
 --- !u!61 &2939126284320088402
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RatBossBehaviour : Enemy
+public class RatBossBehaviour : Boss
 {
     [Serializable]
     private struct StartAndEndValue<T>
@@ -73,13 +72,11 @@ public class RatBossBehaviour : Enemy
     public RatState state = RatState.paused;
     private float elapsedTime;
     private Image healthBar;
+    private GameObject healthBarObject;
 
     private LineRenderer aimLineRenderer;
     private BoxCollider2D roomCollider;
-    private GameCamera cam;
-    private AudioSource audioSource;
-    private SpriteRenderer spriteRenderer;
-    private MusicManager musicManager;
+
 
     private void Awake()
     {
@@ -102,7 +99,7 @@ public class RatBossBehaviour : Enemy
         aimLineRenderer.startColor = startAimColor;
     }
 
-    public void StartBoss()
+    internal override void StartBoss()
     {
         musicManager.PlayRatBossTheme(false);
         SpawnHealthBar();
@@ -298,7 +295,7 @@ public class RatBossBehaviour : Enemy
 
     private void SpawnHealthBar()
     {
-        Instantiate(healthBarPrefab);
+        healthBarObject = Instantiate(healthBarPrefab);
         healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
         healthBar.fillAmount = health / maxHealth;
 
@@ -325,6 +322,8 @@ public class RatBossBehaviour : Enemy
 
             KillAllRatMinions();
             SpawnHP_Pickups();
+
+            Destroy(healthBarObject);
 
             bossRoom.OnBossDead();
         }

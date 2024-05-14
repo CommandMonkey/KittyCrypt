@@ -5311,7 +5311,7 @@ GameObject:
   - component: {fileID: 3391722650668413456}
   - component: {fileID: 2939126284320088402}
   m_Layer: 9
-  m_Name: BossRoom
+  m_Name: RatBossRoom
   m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5355,6 +5355,9 @@ MonoBehaviour:
   - {fileID: 4283842208990743483}
   - {fileID: 2916657273243541233}
   - {fileID: 5566130094315618097}
+  wallsRenderers:
+  - {fileID: 2716945667526680580}
+  - {fileID: 7597897488986454909}
   boss: {fileID: 5183568937902963476}
   bossDoorPrefab: {fileID: 6201475082725438284, guid: 97d9ad0299c12634ebcb32c8ed3937fe, type: 3}
 --- !u!61 &2939126284320088402

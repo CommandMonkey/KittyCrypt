@@ -85,7 +85,11 @@ public class GunFire<T> : Item where T : GunSettingsObject
         //if (player.isDead) {  return; }
         if (ShouldReload() && !runtimeData.isReloading) Reload();
         FireRateCooldown();
+
+        WeaponUpdate();
     }
+
+    protected virtual void WeaponUpdate() { }
 
     private void OnDestroy()
     {
@@ -128,7 +132,6 @@ public class GunFire<T> : Item where T : GunSettingsObject
              
 
         WeaponFire();
-        runtimeData.bulletsFired++;
 
         // Ammo
         SetAmmoUI();

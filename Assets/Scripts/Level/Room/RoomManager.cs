@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Tilemaps;
 
 public class RoomManager : MonoBehaviour
 {
@@ -291,17 +292,17 @@ public class RoomManager : MonoBehaviour
     public void SpawnRoom(GameObject _roomToSpawn, Vector3 _position, Entrance _entrance)
     {
 
-        Room newRoomInstance = Instantiate(_roomToSpawn, _position, Quaternion.identity, grid)
+        Room _newRoomInstance = Instantiate(_roomToSpawn, _position, Quaternion.identity, grid)
             .GetComponent<Room>();
-        spawnedRooms.Add(newRoomInstance);
+        spawnedRooms.Add(_newRoomInstance);
 
 
         // Remove entrance from the spawned room instance
-        Entrance _roomMeetingEntrance = GetEntranceOfDir(newRoomInstance, InvertDirection(_entrance.direction));
+        Entrance _roomMeetingEntrance = GetEntranceOfDir(_newRoomInstance, InvertDirection(_entrance.direction));
         if (_roomMeetingEntrance != null)
         {
-            newRoomInstance.previousRoomEntrance = _entrance;
-            newRoomInstance.entrances.Remove(_roomMeetingEntrance);
+            _newRoomInstance.previousRoomEntrance = _entrance;
+            _newRoomInstance.entrances.Remove(_roomMeetingEntrance);
             _roomMeetingEntrance.Die();
         }
         _entrance.OnConnectedRoomSpawned();
@@ -310,8 +311,12 @@ public class RoomManager : MonoBehaviour
 
     public void SpawnDoorCover(Direction _dir, Vector3 _pos)
     {
-        GameObject roomBlocker = roomGenSettings.GetEntranceBlockerOfDir(_dir);
-        Instantiate(roomBlocker, _pos, Quaternion.identity, grid);
+        GameObject _roomBlocker = roomGenSettings.GetEntranceBlockerOfDir(_dir);
+        GameObject _instance = Instantiate(_roomBlocker, _pos, Quaternion.identity, grid);
+        foreach (Tilemap _tilemap in GameHelper.GetComponentsInAllChildren<Tilemap>(_instance.transform))
+        {
+            _tilemap.color = gameSession.levelSettings.wallColor;
+        }
     }
 
 

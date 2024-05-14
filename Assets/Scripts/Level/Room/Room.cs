@@ -1,8 +1,8 @@
 using System;
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Tilemaps;
 
 public enum Direction
 {
@@ -16,6 +16,7 @@ public enum Direction
 public class Room : MonoBehaviour
 {
     public List<Entrance> entrances;
+    [SerializeField] private Tilemap[] wallsRenderers;
 
     [NonSerialized] public Entrance previousRoomEntrance;
     [NonSerialized] protected UnityEvent onPlayerEnter;
@@ -41,6 +42,11 @@ public class Room : MonoBehaviour
         entrances = transform.GetComponentsInAllChildren<Entrance>();
 
         roomManager.onEntranceExit.AddListener(OnPlayerLeftEntrance);
+
+        foreach (Tilemap tilemap in wallsRenderers)
+        {
+            tilemap.color = gameSession.levelSettings.wallColor;
+        }
 
         RoomStart();
     }
