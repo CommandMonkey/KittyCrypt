@@ -197,7 +197,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
         }
     }
 
-    void Reload()
+    protected void Reload()
     {
         if (!runtimeData.isReloading && runtimeData.bulletsFired != 0)
         {

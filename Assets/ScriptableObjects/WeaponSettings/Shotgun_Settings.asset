@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun_Settings
   m_EditorClassIdentifier: Assembly-CSharp::BurstGunSettingsObject
   fireRate: 0.4
-  reloadTime: 4
+  reloadTime: 2.5
   shotsBeforeReload: 3
   bulletSpreadRange: 30
   damage: 3
