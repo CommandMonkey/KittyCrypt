@@ -26,6 +26,9 @@ MonoBehaviour:
   chargeUpTime: 3
   bulletTrail: {fileID: 9181747754686250940, guid: 0429c01ccfc77a346aba27c7f07be3c8, type: 3}
   destroyTrailAfter: 0.1
-  ignoreLayerMask:
+  obsticleLayer:
     serializedVersion: 2
-    m_Bits: 125824
+    m_Bits: 4160
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024

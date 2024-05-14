@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
 {
@@ -11,35 +12,37 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
     bool isFiring = false;
     float startFireTime;
 
-    Light2D nuzzleLight;
-
     protected override void WeaponFire()
     {
-        if (!isFiring)
+        if (!isFiring && !runtimeData.isReloading)
         {
             startFireTime = Time.time;
             isFiring = true;
         }
     }
 
-    protected override void WeaponStart()
+    protected new void Start()
     {
+        base.Start();
+
         nuzzleLight = GetComponent<Light2D>();
     }
-    protected override void WeaponUpdate()
+    protected new void Update()
     {
-        if (gameSession.playerInput.actions["Fire"].IsPressed() && hasFired == false)
+        base.Update();
+
+        if (gameSession.playerInput.actions["Fire"].IsPressed() && hasFired == false && startFireTime != 0f)
         {
             float timePassed = Time.time - startFireTime;
-            Debug.Log("Time passed: " + timePassed);
             nuzzleLight.enabled = true;
             nuzzleLight.intensity = timePassed * 75;
             if (timePassed >= settings.chargeUpTime)
             {
                 nuzzleLight.intensity = 50f;
-                Fire();
+                PiercingRaycastFire();
                 isFiring = false;
                 hasFired = true;
+                startFireTime = 0f;
                 StartCoroutine(ShootCoolDownRoutine());
             }
         }
@@ -57,9 +60,9 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
         hasFired = false;
     }
 
-    private void Fire()
+    private void PiercingRaycastFire()
     {
-        RaycastHit2D bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
+        RaycastHit2D bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, settings.obsticleLayer);
         if (bulletHit)
         {
             runtimeData.bulletsFired++;
@@ -73,12 +76,32 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
             Destroy(smoke, settings.destroyHitEffectAfter);
             Destroy(line.gameObject, settings.destroyTrailAfter);
 
-            Enemy enemyScript = bulletHit.collider.gameObject.GetComponent<Enemy>();
+            Vector2 toHit = bulletHit.point - (Vector2)transform.position;
+            List<Collider2D> enemyColliders = new List<Collider2D>();
+            int unitlenghtsTraveled = 0;
 
-            if (enemyScript != null)
+            while ((toHit.normalized * unitlenghtsTraveled).magnitude < toHit.magnitude)
             {
-                enemyScript.TakeDamage(settings.damage);
+                enemyColliders.AddRange(Physics2D.OverlapCircleAll((toHit.normalized * unitlenghtsTraveled) + (Vector2)transform.position, 1f, settings.enemyLayer));
+                unitlenghtsTraveled++;
             }
+
+            foreach (Collider2D collider in enemyColliders)
+            {
+                Enemy enemyScript = collider.gameObject.GetComponent<Enemy>();
+                if (enemyScript != null)
+                {
+                    enemyScript.TakeDamage(settings.damage);
+                }
+            }
+
         }
+    }
+
+    public override void DeActivate()
+    {
+        base.DeActivate();
+        hasFired = false;
+        isFiring = false;
     }
 }

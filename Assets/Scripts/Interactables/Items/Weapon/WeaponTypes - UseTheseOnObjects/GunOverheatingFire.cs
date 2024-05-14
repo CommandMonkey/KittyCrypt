@@ -6,23 +6,24 @@ public class GunOverheatingFire : GunFire<OverheatingGunSettingsObject>
 {
 
     GameSession gamesesion;
-    bool isFiring = false;
+    float timeWhenlastFire = 0f;
     protected override void WeaponFire()
     {
         Fire();
+        timeWhenlastFire = Time.time;
         settings.heat += 0.5f;
     }
 
-    protected override void WeaponUpdate()
+    protected new void Update()
     {
-        settings.heat -= 5f * Time.deltaTime;
+        base.Update();
 
+        if (Time.time - timeWhenlastFire > 1f) settings.heat = Mathf.Max((settings.heat- 8f * Time.deltaTime), 0f);
+        Debug.Log(settings.heat);   
         if (settings.heat >= settings.MaxHeat ) 
         {
             Reload(); 
         }
-
-        if (settings.heat < 0) { return; }
     }
 
 
@@ -49,6 +50,11 @@ public class GunOverheatingFire : GunFire<OverheatingGunSettingsObject>
                 enemyScript.TakeDamage(settings.damage);
             }
         }
+    }
+
+    protected override void SetAmmoUI()
+    {
+        
     }
 }
     

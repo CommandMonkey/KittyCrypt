@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4672704b6da27b34c9a083222d1d8b7a, type: 3}
   m_Name: GameSessionData
   m_EditorClassIdentifier: 
-  roomValueCapacityMultiplier: 1.2
-  enemyHP_Multiplier: 1.2
+  roomValueCapacityMultiplier: 1.05
+  enemyHP_Multiplier: 1.5
   looping: 0
   levelDatas:
   - LevelName: Anger

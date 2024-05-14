@@ -46,7 +46,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
     UICanvas uiCanvas;
     protected TMP_Text ammoUI;
 
-    Light2D nuzzleLight;
+    protected Light2D nuzzleLight;
 
 
 
@@ -69,7 +69,6 @@ public class GunFire<T> : Item where T : GunSettingsObject
         gameSession.onSceneloaded.AddListener(OnSceneLoaded);
 
         Activate();
-        WeaponStart();
 
         runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);  
 
@@ -81,17 +80,13 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         //if (player.isDead) {  return; }
         if (ShouldReload() && !runtimeData.isReloading) Reload();
         FireRateCooldown();
 
-        WeaponUpdate();
     }
-    protected virtual void WeaponStart() { }
-
-    protected virtual void WeaponUpdate() { }
 
     private void OnDestroy()
     {

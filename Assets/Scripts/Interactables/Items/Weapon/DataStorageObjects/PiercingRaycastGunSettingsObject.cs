@@ -8,5 +8,6 @@ public class PiercingRaycastGunSettingsObject : GunSettingsObject
 
     [SerializeField] internal GameObject bulletTrail;
     [SerializeField] internal float destroyTrailAfter = .1f;
-    [SerializeField] internal LayerMask ignoreLayerMask;
+    [SerializeField] internal LayerMask obsticleLayer;
+    [SerializeField] internal LayerMask enemyLayer;
 }

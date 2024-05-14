@@ -29,7 +29,6 @@ public class GunRaycastFire : GunFire<RaycastGunSettingsObject>
                 enemyScript.TakeDamage(settings.damage);
             }
 
-            runtimeData.bulletsFired++;
             SetAmmoUI();
         }
         else

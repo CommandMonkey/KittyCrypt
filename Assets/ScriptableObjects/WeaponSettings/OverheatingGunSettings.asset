@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3917e6d23057745b72f68a3d61275b, type: 3}
   m_Name: OverheatingGunSettings
   m_EditorClassIdentifier: 
-  fireRate: 0.00001
-  reloadTime: 30
+  fireRate: 0.03
+  reloadTime: 8
   shotsBeforeReload: 100000000
   bulletSpreadRange: 10.5
   damage: 1
@@ -28,5 +28,5 @@ MonoBehaviour:
   ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 125824
-  heat: -1
+  heat: 24.820028
   MaxHeat: 30
