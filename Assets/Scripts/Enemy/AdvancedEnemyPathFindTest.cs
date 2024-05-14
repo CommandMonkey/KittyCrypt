@@ -4,11 +4,8 @@ public class AdvancedEnemyPathFindTest : MonoBehaviour
 {
 
     [SerializeField] Transform target;
-
-
     private void Update()
     {
-
         Shootray();
     }
 
@@ -19,17 +16,11 @@ public class AdvancedEnemyPathFindTest : MonoBehaviour
         Debug.DrawRay(transform.position, hit.point, Color.blue);
         if (hit.collider != null)
         {
-            Debug.Log("BINGUS D:"); 
-        }       
+            Debug.Log("BINGUS D:");
+        }
         else
         {
             Debug.Log("Spoingus :D");
         }
-        
-
-
     }
-
-
-
 }
