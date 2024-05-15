@@ -598,7 +598,7 @@ PrefabInstance:
     - target: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 2074152661732882923, guid: 3261b72c38e712941b93fb52e2384a1b, type: 3}
+      objectReference: {fileID: 149285161579284881, guid: e5ebfeef1c11234469752a3f93d43977, type: 3}
     - target: {fileID: 3959466128668725086, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
       propertyPath: useSpawnRoomPool
       value: 0

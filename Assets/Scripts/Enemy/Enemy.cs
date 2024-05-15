@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     bool isDead = false;
 
 
-    private void Start()
+    protected void Start()
     {
         gameSession = GameSession.Instance;
         animator = GetComponentInChildren<Animator>();
@@ -42,8 +42,6 @@ public class Enemy : MonoBehaviour
         health *= gameSession.levelSettings.enemyHP_Multiplier;
 
         maxHealth = health;
-
-        EnemyStart();
     }
 
     protected bool ShootLineOfSightRay()
@@ -103,5 +101,4 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void OnDamageTaken() { }
-    protected virtual void EnemyStart() { }
 }

@@ -8,10 +8,11 @@ public class RushingEnemyBehavior : Enemy
     private Vector3 previousPosition;
 
     // called from baseClass
-    protected override void EnemyStart()
+    protected new void Start()
     {
-        previousPosition = transform.position;
+        base.Start();
 
+        previousPosition = transform.position;
     }
 
     void Update()

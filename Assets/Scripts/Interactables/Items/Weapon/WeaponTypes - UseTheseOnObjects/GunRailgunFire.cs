@@ -94,7 +94,6 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
                     enemyScript.TakeDamage(settings.damage);
                 }
             }
-
         }
     }
 

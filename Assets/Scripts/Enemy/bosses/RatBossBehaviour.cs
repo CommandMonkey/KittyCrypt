@@ -86,8 +86,10 @@ public class RatBossBehaviour : Boss
     }
 
     // Start is called before the first frame update
-    protected override void EnemyStart()
+    protected new void Start()
     {
+        base.Start();
+
         aimLineRenderer = GetComponent<LineRenderer>();
         roomCollider = transform.parent.GetComponent<BoxCollider2D>();
         cam = FindObjectOfType<GameCamera>();
