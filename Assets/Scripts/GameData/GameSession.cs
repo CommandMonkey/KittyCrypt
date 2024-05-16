@@ -58,7 +58,7 @@ public class GameSession : MonoBehaviour
     public Crosshair crosshair;
     public DeathScreen deathScreen;
     public ReloadCircleFollowCursor reloadCircle;
-    public UserInput userInput { get; private set; }
+    public UserInput userInput;
     public MusicManager musicManager { get; private set; }
 
     SceneLoader sceneLoader;
