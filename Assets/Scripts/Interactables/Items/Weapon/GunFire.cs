@@ -63,7 +63,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
         uiCanvas = FindObjectOfType<UICanvas>();
         ammoUI = uiCanvas.ammoText;
 
-        nuzzleLight = GetComponent<Light2D>();
+        nuzzleLight = GameHelper.GetComponentInAllChildren<Light2D>(transform);
 
 
         gameSession.onSceneloaded.AddListener(OnSceneLoaded);
@@ -104,7 +104,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
     public override void Activate()
     {
-        if (userInput == null) userInput = FindObjectOfType<UserInput>();
+        userInput = GameSession.Instance.userInput;
         userInput.onReload.AddListener(Reload);
         userInput.onFire.AddListener(OnFire);
     }
@@ -121,7 +121,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
         if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         
         // Cat angry face
-        if (!gameSession.playerIsShooting)
+        if (!gameSession.playerIsShooting && gameObject.activeInHierarchy)
         {
             StartCoroutine(SetCatAngry());
         }

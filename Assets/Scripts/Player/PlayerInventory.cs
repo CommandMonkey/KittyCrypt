@@ -34,7 +34,7 @@ public class PlayerInventory : MonoBehaviour
         // drop item if holding one
         if (cHotbarItem != null)
         {
-            Item oldItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem);
+            Item oldItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem.transform);
             SpawnItemPickup(cHotbarItem, oldItem.name);
             if (oldItem != null)
             {
@@ -61,7 +61,7 @@ public class PlayerInventory : MonoBehaviour
         
         cHotbarItem.SetActive(true);
 
-        Item newItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem);
+        Item newItem = GameHelper.GetComponentInAllChildren<Item>(cHotbarItem.transform);
         if (newItem != null)
         {
             newItem.Activate();
@@ -107,10 +107,12 @@ public class PlayerInventory : MonoBehaviour
         {
             if (weapon != null && weapon == itemInventory[currentHotbarPos]) 
             {
+                weapon.GetComponent<Item>().Activate();
                 weapon.SetActive(true);
             }
             else if (weapon != null)
             {
+                weapon.GetComponent<Item>().DeActivate();
                 weapon.SetActive(false);
             }
         }
