@@ -47,7 +47,7 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
 
         // Flip Nuzzle Flash (using rotation)
         Transform _pivotPoint = transform.parent.parent;
-        float _yRotation = _pivotPoint.localScale.y == 1 ? 180 : 180; // Added by Anton... Google search "Terinary operators"
+        float _yRotation = _pivotPoint.localScale.y == 1 ? 180 : 0; // Added by Anton... Google search "Terinary operators"
         nuzzleLight.transform.localRotation = Quaternion.Euler(new Vector3(0, _yRotation,  90)); 
 
     }
