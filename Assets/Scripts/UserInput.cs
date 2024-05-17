@@ -1,22 +1,24 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class UserInput : MonoBehaviour
 {
     [SerializeField] float fireCooldown = .1f;
 
-    [NonSerialized] public UnityEvent<Vector2> onMove;
-    [NonSerialized] public UnityEvent<Vector2> onAiming;
-    [NonSerialized] public UnityEvent<float> onScroll;
-    [NonSerialized] public UnityEvent onFire;
-    [NonSerialized] public UnityEvent onDash;
-    [NonSerialized] public UnityEvent onInteract;
-    [NonSerialized] public UnityEvent onTogglePause;
-    [NonSerialized] public UnityEvent onReload;
+    [NonSerialized] public SafeUnityEvent<Vector2> onMove;
+    [NonSerialized] public SafeUnityEvent<Vector2> onAiming;
+    [NonSerialized] public SafeUnityEvent<float> onScroll;
+    [NonSerialized] public SafeUnityEvent onFire;
+    [NonSerialized] public SafeUnityEvent onDash;
+    [NonSerialized] public SafeUnityEvent onInteract;
+    [NonSerialized] public SafeUnityEvent onTogglePause;
+    [NonSerialized] public SafeUnityEvent onReload;
 
     PlayerInput playerInput;
     Crosshair crosshair;
@@ -27,14 +29,14 @@ public class UserInput : MonoBehaviour
 
     private void Awake()
     {
-        onMove = new UnityEvent<Vector2>();
-        onAiming = new UnityEvent<Vector2>();
-        onScroll = new UnityEvent<float>();
-        onFire = new UnityEvent();
-        onDash = new UnityEvent();
-        onInteract = new UnityEvent();
-        onTogglePause = new UnityEvent();
-        onReload = new UnityEvent();
+        onMove = new SafeUnityEvent<Vector2>();
+        onAiming = new SafeUnityEvent<Vector2>();
+        onScroll = new SafeUnityEvent<float>();
+        onFire = new SafeUnityEvent();
+        onDash = new SafeUnityEvent();
+        onInteract = new SafeUnityEvent();
+        onTogglePause = new SafeUnityEvent();
+        onReload = new SafeUnityEvent();
 
         ClearListeners();   
     }
@@ -49,7 +51,7 @@ public class UserInput : MonoBehaviour
         var fire = playerInput.actions["Fire"];
         if (Time.time - lastFireTime > fireCooldown && fire.IsPressed())
         {
-            onFire.Invoke();
+            onFire.SafeInvoke();
             lastFireTime = Time.time;
         }
     }
@@ -67,17 +69,17 @@ public class UserInput : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        onMove.Invoke(value.Get<Vector2>());
+        onMove.SafeInvoke(value.Get<Vector2>());
     }
 
     void OnAiming(InputValue value)
     {
-        onAiming.Invoke(value.Get<Vector2>());
+        onAiming.SafeInvoke(value.Get<Vector2>());
     }
 
     void OnScroll(InputValue value)
     {
-        onScroll.Invoke(value.Get<float>());
+        onScroll.SafeInvoke(value.Get<float>());
     }
 
 /*
@@ -93,22 +95,100 @@ public class UserInput : MonoBehaviour
 
     void OnDash()
     {
-        onDash.Invoke();
+        onDash.SafeInvoke();
     }
 
     void OnInteract()
     {
-        onInteract.Invoke();
+        onInteract.SafeInvoke();
     }
 
     void OnTogglePause()
     {
-        onTogglePause.Invoke();
+        onTogglePause.SafeInvoke();
     }
 
     void OnReload()
     {
-        onReload.Invoke();
+        onReload.SafeInvoke();
+    }
+}
+
+
+
+public class SafeUnityEvent<T> : UnityEvent<T>
+{
+    private List<UnityAction<T>> listeners = new List<UnityAction<T>>();
+
+    public new void AddListener(UnityAction<T> call)
+    {
+        if (call != null)
+        {
+            listeners.Add(call);
+            base.AddListener(call);
+        }
     }
 
+    public new void RemoveListener(UnityAction<T> call)
+    {
+        if (call != null)
+        {
+            listeners.Remove(call);
+            base.RemoveListener(call);
+        }
+    }
+
+    public void SafeInvoke(T arg)
+    {
+        for (int i = listeners.Count - 1; i >= 0; i--)
+        {
+            var listener = listeners[i];
+            if (listener.Target == null || listener.Target.Equals(null))
+            {
+                RemoveListener(listener);
+            }
+        }
+
+        base.Invoke(arg);
+    }
 }
+
+public class SafeUnityEvent : UnityEvent
+{
+    private List<UnityAction> listeners = new List<UnityAction>();
+
+    public new void AddListener(UnityAction call)
+    {
+        if (call != null)
+        {
+            listeners.Add(call);
+            base.AddListener(call);
+        }
+    }
+
+    public new void RemoveListener(UnityAction call)
+    {
+        if (call != null)
+        {
+            listeners.Remove(call);
+            base.RemoveListener(call);
+        }
+    }
+
+    public void SafeInvoke()
+    {
+        for (int i = listeners.Count - 1; i >= 0; i--)
+        {
+            var listener = listeners[i];
+            if (listener.Target == null || listener.Target.Equals(null))
+            {
+                RemoveListener(listener);
+            }
+        }
+
+        base.Invoke();
+    }
+}
+
+
+
