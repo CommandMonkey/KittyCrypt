@@ -252,7 +252,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8935155097770472290, guid: 50f70758040f7784c863029768591f8c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9213228629192578972, guid: 50f70758040f7784c863029768591f8c, type: 3}
@@ -324,6 +325,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1060088308832874070, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_text
+      value: Ratsune Miku
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060088308832874070, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_fontSize
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060088308832874070, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459067833370791509, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 380.3019
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459067833370791509, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 104.229
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459067833370791509, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459067833370791509, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 333
+      objectReference: {fileID: 0}
     - target: {fileID: 5939864187684484325, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -407,6 +436,10 @@ PrefabInstance:
     - target: {fileID: 7794644811549423877, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
       propertyPath: m_Name
       value: UICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429236735540756660, guid: 623399ab3669b9c4696d5e910a350a45, type: 3}
+      propertyPath: m_Name
+      value: RatBossNameText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
