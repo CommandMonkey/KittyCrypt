@@ -82,4 +82,10 @@ public class SceneLoader : MonoBehaviour
 
         generationScreen.gameObject.SetActive(false);
     }
+
+    public void KillGameSession()
+    {
+        Debug.Log(gameSession.gameObject);
+        gameSession.Die();
+    }
 }

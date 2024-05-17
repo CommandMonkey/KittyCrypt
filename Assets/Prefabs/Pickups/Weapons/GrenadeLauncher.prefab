@@ -208,4 +208,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Grenade Launcher
+  hotbarImage: {fileID: 21300000, guid: 701e5d3d2f3a2954280d62527a5c2e6d, type: 3}
   settings: {fileID: 11400000, guid: a5354168776857849a975a4870b69159, type: 2}

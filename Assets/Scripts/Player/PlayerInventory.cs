@@ -5,13 +5,13 @@ public class PlayerInventory : MonoBehaviour
 {
     [Header("Item")]
     [SerializeField] Transform holdableItemAnchor;
-    [SerializeField] GameObject[] itemInventory;
+    public GameObject[] itemInventory;
     [SerializeField] GameObject itemPickupPrefab;
 
 
 
     // Hotbar
-    int currentHotbarPos = 0;
+    public int currentHotbarPos = 0;
 
     // References
     UserInput userInput;

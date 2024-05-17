@@ -154,7 +154,7 @@ public class GameSession : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         crosshair.gameObject.SetActive(false);
         Cursor.visible = true;
