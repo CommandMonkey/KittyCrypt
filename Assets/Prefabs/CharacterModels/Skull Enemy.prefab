@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 8532810722821167220}
   - component: {fileID: 992943761469213203}
   m_Layer: 0
-  m_Name: Scull (1)
+  m_Name: 'Skull '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,8 +232,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -456,8 +456,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7889338319159381570}
+  - component: {fileID: 6943138780077409047}
   m_Layer: 0
-  m_Name: Scull Particle
+  m_Name: Skull Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -479,6 +480,18 @@ Transform:
   - {fileID: 1543415340735013282}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6943138780077409047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7602735114611573108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efebda25743d754f8028f3837c2a9ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8843197293665522241
 GameObject:
   m_ObjectHideFlags: 0
