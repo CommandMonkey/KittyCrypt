@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5874182887706826656}
   - component: {fileID: 2528093153573326587}
   m_Layer: 7
-  m_Name: CatEcho
+  m_Name: CatEchoVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
