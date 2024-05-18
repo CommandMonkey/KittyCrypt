@@ -30,6 +30,8 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddWeapon(GameObject weapon)
     {
+        currentHotbarPos = GetEmptyHotBarPos();
+        UpdateWeapon();
         GameObject currentHotbarItem = itemInventory[currentHotbarPos];
 
         // Drop item if holding one
@@ -72,6 +74,21 @@ public class PlayerInventory : MonoBehaviour
             currentHotbarItem.transform.localPosition = Vector3.zero;
         }
     }
+
+    private int GetEmptyHotBarPos()
+    {
+        for (int i = 0; i < itemInventory.Length; i++)
+        {
+            if (itemInventory[i] == null)
+                return i;
+
+            if (GameHelper.GetComponentInAllChildren<Item>(itemInventory[i].transform) == null)
+                return i;
+        }
+        return currentHotbarPos;
+    }
+
+
 
     void OnScroll(float scrollValue)
     {

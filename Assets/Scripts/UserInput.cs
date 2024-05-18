@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class UserInput : MonoBehaviour
 {
@@ -23,12 +21,13 @@ public class UserInput : MonoBehaviour
     PlayerInput playerInput;
     Crosshair crosshair;
     float lastFireTime = 0f;
-
+    
 
     bool firing = false;
 
     private void Awake()
     {
+        if (onMove != null) return;
         onMove = new SafeUnityEvent<Vector2>();
         onAiming = new SafeUnityEvent<Vector2>();
         onScroll = new SafeUnityEvent<float>();
@@ -37,8 +36,6 @@ public class UserInput : MonoBehaviour
         onInteract = new SafeUnityEvent();
         onTogglePause = new SafeUnityEvent();
         onReload = new SafeUnityEvent();
-
-        ClearListeners();   
     }
 
     private void Start()

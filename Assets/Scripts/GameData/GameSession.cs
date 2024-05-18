@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public enum GameMode
 {
+    notAssigned,
     tutorial,
     story,
     endless
@@ -15,6 +16,7 @@ public enum GameMode
 
 public enum GameDifficulty
 {
+    notAssigned,
     easy, 
     medium,
     hard

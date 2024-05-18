@@ -16,11 +16,11 @@ MonoBehaviour:
   reloadTime: 2
   shotsBeforeReload: 50
   bulletSpreadRange: 25
-  damage: 0.8
+  damage: 10
   playerKnockback: 2
-  fireAudio: {fileID: 0}
-  reloadAudio: {fileID: 0}
-  audioVolume: 1
+  fireAudio: {fileID: 8300000, guid: 259cc49144bee1e4586039a1750351d4, type: 3}
+  reloadAudio: {fileID: 8300000, guid: 1107325c1db1c8f43a566f3c54b936e8, type: 3}
+  audioVolume: 0.2
   hitEffect: {fileID: 0}
   destroyHitEffectAfter: 1.5
   bulletsPerShot: 4

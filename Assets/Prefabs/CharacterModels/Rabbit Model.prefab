@@ -94,7 +94,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: 14ba43a5ea5a8cd4aa78e93249647723, type: 3}
       propertyPath: m_Name
-      value: Rabbit psb
+      value: Rabbit Model
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 14ba43a5ea5a8cd4aa78e93249647723, type: 3}
       propertyPath: m_LocalScale.x
@@ -249,7 +249,7 @@ MonoBehaviour:
   obsticleLayer:
     serializedVersion: 2
     m_Bits: 0
-  chargeUpGranadeSprite: {fileID: 0}
+  chargeUpGranadeSprite: {fileID: 4730187000027880896}
   GranadePrefab: {fileID: 0}
   state: 0
 --- !u!50 &8516962383452132475
