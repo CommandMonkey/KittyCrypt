@@ -61,13 +61,13 @@ MonoBehaviour:
   guns:
   - gunTransform: {fileID: 7819887436740749723}
     gunCooldownTime: 0.1
-    bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
+    bulletPrefab: {fileID: 7834965403791016898, guid: b0e68f4ecc06b7e4bb0b1b6046b6723d, type: 3}
     bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1
   - gunTransform: {fileID: 2796385890502640716}
     gunCooldownTime: 0.1
-    bulletPrefab: {fileID: 7834965403791016898, guid: 3575d47d95e40ee42b7cf1528ef0e3de, type: 3}
+    bulletPrefab: {fileID: 7834965403791016898, guid: b0e68f4ecc06b7e4bb0b1b6046b6723d, type: 3}
     bulletSpeed: 20
     bulletDamage: 1
     bulletSpreadRange: 1

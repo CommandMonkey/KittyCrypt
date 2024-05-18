@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.U2D.Sprites;
 using UnityEngine;
 
 public class GranadeEnemy : Enemy
 {
     [SerializeField] SpriteRenderer chargeUpGranadeSprite;
-    [SerializeField] GameObject GranadePrefab;
+    [SerializeField] GameObject granadePrefab;
+    [SerializeField] float granadeSpeed = 5;
    
     bool inCombat = false;
     [SerializeField] GranadeEnemyState state = GranadeEnemyState.idle; // Serialized for DEBUG
@@ -55,7 +52,7 @@ public class GranadeEnemy : Enemy
         }
         else if (state == GranadeEnemyState.waitingToThrow)
         {
-
+            chargeUpGranadeSprite.enabled = true;
         }
         else if (state == GranadeEnemyState.throwing)
         {
@@ -68,17 +65,21 @@ public class GranadeEnemy : Enemy
     // Called by animation Event 
     public void OnGranadeThrow()
     {
-        GameObject _GranadeInstance = Instantiate(GranadePrefab, chargeUpGranadeSprite.transform.position, Quaternion.identity);
+        chargeUpGranadeSprite.enabled = false;
+        GameObject _GranadeInstance = Instantiate(granadePrefab, chargeUpGranadeSprite.transform.position, Quaternion.identity);
+        _GranadeInstance.GetComponent<Rigidbody2D>().velocity = (targetPosition - chargeUpGranadeSprite.transform.position) * granadeSpeed;
+
     }
 
     private void DetermineWalkingTarget()
     {
 
 
+
     }
 
     void FlipSprite()
-    {
+    {   
         if (rigidBody2D.velocity.x > 0)
         { transform.rotation = Quaternion.Euler(0f, 180f, 0f); }
         else if (rigidBody2D.velocity.x < 0)
