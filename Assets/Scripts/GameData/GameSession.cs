@@ -103,8 +103,8 @@ public class GameSession : MonoBehaviour
         userInput = GetComponentInChildren<UserInput>();
         playerInput = userInput.GetComponent<PlayerInput>();
 
-        // Reset default values
-        gameCamera.SetPrimaryTarget(player.transform);
+        // Reset default value
+        gameCamera?.SetPrimaryTarget(player.transform);
         crosshair.gameObject.SetActive(false);
         deathScreen.gameObject.SetActive(false);
         angryFace.gameObject.SetActive(false);

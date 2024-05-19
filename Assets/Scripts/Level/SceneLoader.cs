@@ -19,7 +19,7 @@ public class SceneLoader : MonoBehaviour
         gameSession = GameSession.Instance;
         transitionAnimator = GetComponentInChildren<Animator>();
         generationScreen = GameObject.Find("GeneratingScreen");
-        transitionAnimator.SetBool("isLoading", false);
+        if (transitionAnimator != null) transitionAnimator.SetBool("isLoading", false);
         if (generationScreen != null)
         {
             gameSession.SetState(GameSession.GameState.Loading);
