@@ -265,7 +265,7 @@ MonoBehaviour:
   roomsCleared: 0
   damageTaken: 0
   playerIsShooting: 0
-  player: {fileID: 0}
+  player: {fileID: 5193036274598550480}
   angryFace: {fileID: 0}
   playerInput: {fileID: 0}
   enemyContainer: {fileID: 0}
@@ -929,6 +929,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9164578391081965062, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
   m_PrefabInstance: {fileID: 5263481802929251640}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5193036274598550480 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 79651003279785704, guid: f2da567470c12c44a9250f10f3f76261, type: 3}
+  m_PrefabInstance: {fileID: 5263481802929251640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedb169af54241a42a7a3973671d5972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8765526222580655892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3507956081393271340, guid: f2da567470c12c44a9250f10f3f76261, type: 3}

@@ -14,16 +14,14 @@ public class SkullEnemy : Enemy
     [Header("Bings zone")]
     [SerializeField] GameObject enemyFlamePrefab;
     [SerializeField] GameObject hitEffect;
-    [SerializeField] float speed;
+    [SerializeField] float bulletSpeed;
     [SerializeField] int damage;
 
-    bool isShooting;
-    bool ableToShoot;
+    [Header("")]
+    [SerializeField] bool isShooting;
+    [SerializeField] bool ableToShoot;
 
-    protected new void Start()
-    {
-        base.Start();
-    }
+   
 
 //The Attacking Fuctions ---------------------------------
 
@@ -43,7 +41,7 @@ public class SkullEnemy : Enemy
         Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
         GameObject EnemyFlame = Instantiate(enemyFlamePrefab, transform.position, rotation);
-        EnemyFlame.GetComponent<EnemyBullet>(). Initialize(speed, damage, hitEffect);
+        EnemyFlame.GetComponent<EnemyBullet>(). Initialize(bulletSpeed, damage, hitEffect);
         
     }
 
@@ -51,6 +49,8 @@ public class SkullEnemy : Enemy
 
     void Update()
     {
+        ShootLineOfSightRay();
+
         if (lineOfSight)
         {
             if (ableToShoot)
@@ -92,6 +92,6 @@ public class SkullEnemy : Enemy
         direction.Normalize();
 
         //Move myself
-        rigidBody2D.velocity = direction * speed;
+        rigidBody2D.velocity = direction * movementSpeed;
     }
 }
