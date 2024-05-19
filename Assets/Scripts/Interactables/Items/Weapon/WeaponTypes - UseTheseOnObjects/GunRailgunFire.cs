@@ -41,6 +41,7 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
         else
         {
             // NOT holding putton
+            startFireTime = 0f;
             isFiring = false;
             nuzzleLight.enabled = false;
         }

@@ -68,9 +68,10 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
         gameSession.onSceneloaded.AddListener(OnSceneLoaded);
 
-        Activate();
 
-        runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);  
+        runtimeData = new GunFireRuntimeData(0, settings.reloadTime, settings.fireRate, false, false);
+
+        Activate();
 
         if (nuzzleLight != null)
         {
@@ -95,6 +96,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
     void OnSceneLoaded()
     {
+        gameSession = GameSession.Instance;
         uiCanvas = FindObjectOfType<UICanvas>();
         ammoUI = uiCanvas.ammoText;
 
@@ -107,6 +109,13 @@ public class GunFire<T> : Item where T : GunSettingsObject
         userInput = GameSession.Instance.userInput;
         userInput.onReload.AddListener(Reload);
         userInput.onFire.AddListener(OnFire);
+
+        if (!runtimeData.isReloading)
+        {
+            gameSession.reloadCircle.gameObject.SetActive(false);
+        }
+
+        SetAmmoUI();
     }
 
     public override void DeActivate()
@@ -118,7 +127,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
     void OnFire()
     {
-        if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
+        if (!gameObject.active || GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         
         // Cat angry face
         if (!gameSession.playerIsShooting && gameObject.activeInHierarchy)
@@ -217,9 +226,9 @@ public class GunFire<T> : Item where T : GunSettingsObject
         // Update Reload Animation circle
         while (runtimeData.isReloading)
         {
-            GameSession.Instance.reloadCircle.gameObject.SetActive(true);
+            gameSession.reloadCircle.gameObject.SetActive(true);
 
-            Image reloadImage = GameSession.Instance.reloadCircle.GetComponentInChildren<Image>();
+            Image reloadImage = gameSession.reloadCircle.GetComponentInChildren<Image>();
 
             reloadImage.fillAmount = 1f - (runtimeData.reloadTimer / settings.reloadTime);
             runtimeData.reloadTimer -= Time.deltaTime;
@@ -247,7 +256,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
             {
                 Cursor.visible = true;
             }
-            GameSession.Instance.reloadCircle.gameObject.SetActive(false);
+            gameSession.reloadCircle.gameObject.SetActive(false);
             SetAmmoUI();
 
         }

@@ -6,7 +6,9 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] int mainMenuBuildIndex;
     [SerializeField] int tutorialBuildIndex;
+    [SerializeField] int CutsceneBuildIndex;
     [SerializeField] int levelBuildIndex;
+
 
 
     // Cached Component References
@@ -60,6 +62,13 @@ public class SceneLoader : MonoBehaviour
             SceneManager.LoadScene(tutorialBuildIndex);
         else
             StartCoroutine(FadeAndLoadSceneRoutine(tutorialBuildIndex));
+    }
+    public void LoadCutscene(bool fade = true)
+    {
+        if (!fade)
+            SceneManager.LoadScene(CutsceneBuildIndex);
+        else
+            StartCoroutine(FadeAndLoadSceneRoutine(CutsceneBuildIndex));
     }
 
     IEnumerator FadeAndLoadSceneRoutine(int sceneIndex)

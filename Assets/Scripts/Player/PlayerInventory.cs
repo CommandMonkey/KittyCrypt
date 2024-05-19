@@ -64,11 +64,11 @@ public class PlayerInventory : MonoBehaviour
         {
             currentHotbarItem.SetActive(true);
 
-            Item newItem = GameHelper.GetComponentInAllChildren<Item>(currentHotbarItem.transform);
-            if (newItem != null)
-            {
-                newItem.Activate();
-            }
+            //Item newItem = GameHelper.GetComponentInAllChildren<Item>(currentHotbarItem.transform);
+            //if (newItem != null)
+            //{
+            //    newItem.Activate();
+            //}
 
             // Reset local position
             currentHotbarItem.transform.localPosition = Vector3.zero;

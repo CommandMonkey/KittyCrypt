@@ -95,11 +95,16 @@ public class GameInitializer : MonoBehaviour
     {
         if (gameMode == GameMode.tutorial)
         {
-            sceneLoader.LoadTutorial();
+            sceneLoader.LoadTutorial(true);
         }
-        else //if (gameMode == GameMode.story || gameMode == GameMode.endless)
+        else if (gameMode == GameMode.story)
         {
-            sceneLoader.LoadLevel1();
+            sceneLoader.LoadCutscene(true);
+            CreateGameSession();
+        }
+        else if (gameMode == GameMode.endless)
+        {
+            sceneLoader.LoadLevel1(true);
             CreateGameSession();
         }
     }
