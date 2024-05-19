@@ -91,6 +91,7 @@ public class RangedEnemy : Enemy
     {   
         animator.SetBool("isMoving", true);
         if (targetPosition == Vector3.zero) return;
+            
         // Calculate the direction from the current position to the target position
         Vector3 direction = (targetPosition - transform.position).normalized;
 

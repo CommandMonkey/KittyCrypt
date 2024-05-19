@@ -68,7 +68,7 @@ public static class GameHelper
         return null; // No child with the specified tag found
     }
     
-    public static T GetComponentInAllChildren<T>(this GameObject parent) where T : Component
+    public static T GetComponentInAllChildren<T>(this Transform parent) where T : Component
     {
         // Check if the parent itself has the component
         T comp = parent.GetComponent<T>();
@@ -78,10 +78,10 @@ public static class GameHelper
         }
 
         // Iterate through all children and their descendants
-        foreach (Transform child in parent.transform)
+        foreach (Transform child in parent)
         {
             // Recursively search for the component in the child
-            comp = child.gameObject.GetComponentInAllChildren<T>();
+            comp = child.transform.GetComponentInAllChildren<T>();
             if (comp != null)
             {
                 return comp;

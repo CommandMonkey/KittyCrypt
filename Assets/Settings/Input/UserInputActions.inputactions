@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "NextCutscene",
+                    "type": "Button",
+                    "id": "e35a5631-1c9b-47c3-afa0-2d7ad3f3697d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -472,6 +481,17 @@
                     "processors": "",
                     "groups": "Xbox Controller",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b8f4299-5c6f-4f1b-99a3-e0d7de9a273b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextCutscene",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

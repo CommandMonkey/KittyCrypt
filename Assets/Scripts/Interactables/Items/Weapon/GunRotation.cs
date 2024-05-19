@@ -11,6 +11,7 @@ public class GunRotation : MonoBehaviour
     Vector3 aimTarget;
     Vector3 gunPivotToExit;
     float angle;
+    float yRotation; // used for flip
 
     private void Start()
     {

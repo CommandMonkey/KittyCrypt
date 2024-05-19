@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements;
+
 
 public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
 {
@@ -21,12 +19,6 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
         }
     }
 
-    protected new void Start()
-    {
-        base.Start();
-
-        nuzzleLight = GetComponent<Light2D>();
-    }
     protected new void Update()
     {
         base.Update();
@@ -52,6 +44,12 @@ public class GunRailgunFire : GunFire<PiercingRaycastGunSettingsObject>
             isFiring = false;
             nuzzleLight.enabled = false;
         }
+
+        // Flip Nuzzle Flash (using rotation)
+        Transform _pivotPoint = transform.parent.parent;
+        float _yRotation = _pivotPoint.localScale.y == 1 ? 180 : 0; // Added by Anton... Google search "Terinary operators"
+        nuzzleLight.transform.localRotation = Quaternion.Euler(new Vector3(0, _yRotation,  90)); 
+
     }
 
     IEnumerator ShootCoolDownRoutine()

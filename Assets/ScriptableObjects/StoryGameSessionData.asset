@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4672704b6da27b34c9a083222d1d8b7a, type: 3}
-  m_Name: GameSessionData
+  m_Name: StoryGameSessionData
   m_EditorClassIdentifier: 
   roomValueCapacityMultiplier: 1.05
-  enemyHP_Multiplier: 1.5
+  enemyHP_Multiplier: 1.05
   looping: 0
   levelDatas:
   - LevelName: Anger
     roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
-    wallColor: {r: 1, g: 0.45597476, b: 0.45597476, a: 1}
+    wallColor: {r: 1, g: 0.5943395, b: 0.5943395, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 1
@@ -42,7 +42,7 @@ MonoBehaviour:
       probability: 0.5
   - LevelName: Bargain
     roomGenSettings: {fileID: 11400000, guid: a972ff3824f5ea14599c9fc5bf269116, type: 2}
-    wallColor: {r: 1, g: 0.8794556, b: 0.49371064, a: 1}
+    wallColor: {r: 0.4564506, g: 1, b: 0.38823533, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 1

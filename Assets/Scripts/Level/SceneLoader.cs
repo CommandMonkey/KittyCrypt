@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] int mainMenuBuildIndex;
-    [SerializeField] int levelBuildIndex;
     [SerializeField] int tutorialBuildIndex;
-    [SerializeField] int BuildIndex;
+    [SerializeField] int levelBuildIndex;
+
 
     // Cached Component References
     Animator transitionAnimator;
@@ -19,7 +19,7 @@ public class SceneLoader : MonoBehaviour
         gameSession = GameSession.Instance;
         transitionAnimator = GetComponentInChildren<Animator>();
         generationScreen = GameObject.Find("GeneratingScreen");
-        transitionAnimator.SetBool("isLoading", false);
+        if (transitionAnimator != null) transitionAnimator.SetBool("isLoading", false);
         if (generationScreen != null)
         {
             gameSession.SetState(GameSession.GameState.Loading);
@@ -40,7 +40,7 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadLevel1(bool fade = true)
     {
-        if (fade)
+        if (!fade)
             SceneManager.LoadScene(levelBuildIndex);
         else
             StartCoroutine(FadeAndLoadSceneRoutine(levelBuildIndex));
@@ -48,15 +48,15 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMainMenu(bool fade = true)
     {
-        if (fade)
-            SceneManager.LoadScene(mainMenuBuildIndex   );
+        if (!fade)
+            SceneManager.LoadScene(mainMenuBuildIndex);
         else
             StartCoroutine(FadeAndLoadSceneRoutine(mainMenuBuildIndex));
     }
 
     public void LoadTutorial(bool fade = true)
     {
-        if (fade)
+        if (!fade)
             SceneManager.LoadScene(tutorialBuildIndex);
         else
             StartCoroutine(FadeAndLoadSceneRoutine(tutorialBuildIndex));
