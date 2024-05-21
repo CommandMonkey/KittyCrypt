@@ -208,4 +208,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Crossbow
+  hotbarImage: {fileID: 21300000, guid: c5e31f9e07132d14ca6e141e2886cab4, type: 3}
   settings: {fileID: 11400000, guid: 9970fe3db47e4a94aafaea59319e2ee4, type: 2}

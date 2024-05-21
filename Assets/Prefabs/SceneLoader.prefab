@@ -712,9 +712,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuBuildIndex: 0
-  levelBuildIndex: 2
   tutorialBuildIndex: 1
-  BuildIndex: 0
+  CutsceneBuildIndex: 2
+  levelBuildIndex: 3
 --- !u!223 &4193382351179164117
 Canvas:
   m_ObjectHideFlags: 0

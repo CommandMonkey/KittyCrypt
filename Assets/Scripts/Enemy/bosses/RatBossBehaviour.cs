@@ -305,6 +305,7 @@ public class RatBossBehaviour : Boss
 
     private void UpdateHealthBar()
     {
+        if (healthBarObject == null) return;    
         float healthRatio = health / maxHealth;
         healthBar.fillAmount = healthRatio;
 

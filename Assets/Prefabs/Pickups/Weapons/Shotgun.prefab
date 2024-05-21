@@ -281,4 +281,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Shotgun
+  hotbarImage: {fileID: 21300000, guid: c9329d708423e66438bdf2028f491cf5, type: 3}
   settings: {fileID: 11400000, guid: 9d3fd67ed21600d43aab6b6cdb66326e, type: 2}

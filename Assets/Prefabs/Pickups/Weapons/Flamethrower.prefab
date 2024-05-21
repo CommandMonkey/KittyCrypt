@@ -259,4 +259,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: FlameThrower
+  hotbarImage: {fileID: 21300000, guid: c50c4804650ca574aa0de08d59ecd4b1, type: 3}
   settings: {fileID: 11400000, guid: 97fedc9a128714047a01698a735da174, type: 2}

@@ -259,4 +259,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: SMG
+  hotbarImage: {fileID: 21300000, guid: 3e04b2d4cb3a0d045aabea790c15b965, type: 3}
   settings: {fileID: 11400000, guid: d6cf9627441e0904f96bfaea1ff31699, type: 2}

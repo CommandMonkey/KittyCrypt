@@ -5,19 +5,19 @@ public class GameInitializer : MonoBehaviour
 {
     [SerializeField] GameObject GameSessionPrefab;
     [Header("Gamemode Gamedata")]
-    [SerializeField] GameSessionData storyEasySettings;
-    [SerializeField] GameSessionData storyMediumSettings;
-    [SerializeField] GameSessionData storyHardSettings;
+    [SerializeField] GameSessionData storySettings;
     [SerializeField] GameSessionData endlessEasySettings;
     [SerializeField] GameSessionData endlessMediumSettings;
     [SerializeField] GameSessionData endlessHardSettings;
-    [Header("Button References")]
-    [SerializeField] Image tutorialSelectButton;
-    [SerializeField] Image storySelectButton;
-    [SerializeField] Image endlessSelectButton;
+    [Header("Button Refs")]
+    [SerializeField] Button startButton;
+    [SerializeField] Button quitButton;
+    [Header("Start Button")]
+    [SerializeField] Image startButtonImage;
+    [SerializeField] Color startButtonClickableColor;
 
-    private GameMode gameMode;
-    private GameDifficulty difficulty;
+    public GameMode gameMode;
+    private GameDifficulty endlessdifficulty = GameDifficulty.medium;
 
     SceneLoader sceneLoader;
 
@@ -26,32 +26,68 @@ public class GameInitializer : MonoBehaviour
         sceneLoader = FindObjectOfType<SceneLoader>();
     }
 
-    public void SetGameMode(GameMode gameMode)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            startButton.enabled = true;
+            quitButton.enabled = true;
+            gameObject.SetActive(false);
+        }
+    }
+
+
+    public void SetGameModeTutorial()
+    {
+        SetGameMode(GameMode.tutorial);
+    }
+
+    public void SetGameModeStory()
+    {
+        SetGameMode(GameMode.story);
+    }
+
+    public void SetGameModeEndless()
+    {
+        SetGameMode(GameMode.endless);
+    }
+
+    void SetGameMode(GameMode gameMode)
     {
         this.gameMode = gameMode;
-
-        UpdateVisuals();
+        UpdateStartButton();
     }
 
-    private void UpdateVisuals()
+    public void SetEndlessDifficultyEasy()
     {
-        endlessSelectButton.gameObject.SetActive(false);
-        storySelectButton.gameObject.SetActive(false);
-        endlessSelectButton.gameObject.SetActive(false);
+        this.endlessdifficulty = GameDifficulty.easy;
+    }
+    public void SetEndlessDifficultyMedium()
+    {
+        this.endlessdifficulty = GameDifficulty.medium;
+    }
+    public void SetEndlessDifficultyHard()
+    {
+        this.endlessdifficulty = GameDifficulty.hard;
+    }
 
-        if (gameMode == GameMode.tutorial)
+
+    void UpdateStartButton()
+    {
+        if (gameMode != GameMode.notAssigned)
         {
-            endlessSelectButton.gameObject.SetActive(true);
-        }
-        else if (gameMode == GameMode.story)
-        {
-            storySelectButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            endlessSelectButton.gameObject.SetActive(true);
+           startButtonImage.color = startButtonClickableColor;
         }
     }
+
+    public void OnStartButtonPressed()
+    {
+        if (startButtonImage.color == startButtonClickableColor)
+        {
+            StartGame();
+        }
+    }
+
     
 
     // Called by Start Button
@@ -59,35 +95,38 @@ public class GameInitializer : MonoBehaviour
     {
         if (gameMode == GameMode.tutorial)
         {
-            sceneLoader.LoadTutorial();
+            sceneLoader.LoadTutorial(true);
         }
-        else //if (gameMode == GameMode.story || gameMode == GameMode.endless)
+        else if (gameMode == GameMode.story)
         {
-            sceneLoader.LoadLevel1();
+            sceneLoader.LoadCutscene(true);
+            CreateGameSession();
+        }
+        else if (gameMode == GameMode.endless)
+        {
+            sceneLoader.LoadLevel1(true);
             CreateGameSession();
         }
     }
 
     private void CreateGameSession()
     {
-        GameSessionData sessionSettings = GetSessionDataOfType(gameMode, difficulty);
-        Instantiate(GameSessionPrefab);
+        GameSessionData sessionSettings = GetSessionDataOfType();
+        Instantiate(GameSessionPrefab).GetComponent<GameSession>().gameSessionData = sessionSettings;
     }
 
-    private GameSessionData GetSessionDataOfType(GameMode gameMode, GameDifficulty difficulty)
+    private GameSessionData GetSessionDataOfType()
     {
         GameSessionData result = null;
         if (gameMode == GameMode.story)
         {
-            result = difficulty == GameDifficulty.easy ? storyEasySettings :
-                        difficulty == GameDifficulty.medium ? storyMediumSettings :
-                        storyHardSettings;
+            result = storySettings;
         }
         else if (gameMode == GameMode.endless)
         {
-            result = difficulty == GameDifficulty.easy ? endlessEasySettings :
-                        difficulty == GameDifficulty.medium ? endlessMediumSettings :
-                        endlessHardSettings;
+            result = endlessdifficulty == GameDifficulty.easy ? endlessEasySettings :
+                     endlessdifficulty == GameDifficulty.medium ? endlessMediumSettings :
+                     endlessHardSettings;
         }
         return result;
     }

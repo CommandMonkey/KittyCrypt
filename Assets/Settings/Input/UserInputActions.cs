@@ -98,6 +98,15 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextCutscene"",
+                    ""type"": ""Button"",
+                    ""id"": ""e35a5631-1c9b-47c3-afa0-2d7ad3f3697d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -496,6 +505,17 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b8f4299-5c6f-4f1b-99a3-e0d7de9a273b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextCutscene"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -562,6 +582,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_TogglePause = m_Player.FindAction("TogglePause", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
+        m_Player_NextCutscene = m_Player.FindAction("NextCutscene", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -631,6 +652,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_TogglePause;
     private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_NextCutscene;
     public struct PlayerActions
     {
         private @UserInputActions m_Wrapper;
@@ -643,6 +665,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @TogglePause => m_Wrapper.m_Player_TogglePause;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        public InputAction @NextCutscene => m_Wrapper.m_Player_NextCutscene;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -676,6 +699,9 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @NextCutscene.started += instance.OnNextCutscene;
+            @NextCutscene.performed += instance.OnNextCutscene;
+            @NextCutscene.canceled += instance.OnNextCutscene;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -704,6 +730,9 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @NextCutscene.started -= instance.OnNextCutscene;
+            @NextCutscene.performed -= instance.OnNextCutscene;
+            @NextCutscene.canceled -= instance.OnNextCutscene;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -767,5 +796,6 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnTogglePause(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnNextCutscene(InputAction.CallbackContext context);
     }
 }

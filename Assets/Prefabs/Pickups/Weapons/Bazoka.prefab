@@ -259,4 +259,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Bazooka
+  hotbarImage: {fileID: 21300000, guid: 592594d277f74b64594faf9905abcb12, type: 3}
   settings: {fileID: 11400000, guid: b552009f5fcb39044a3fdd49db1819c0, type: 2}

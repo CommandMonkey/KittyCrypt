@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public enum GameMode
 {
+    notAssigned,
     tutorial,
     story,
     endless
@@ -15,6 +16,7 @@ public enum GameMode
 
 public enum GameDifficulty
 {
+    notAssigned,
     easy, 
     medium,
     hard
@@ -58,7 +60,7 @@ public class GameSession : MonoBehaviour
     public Crosshair crosshair;
     public DeathScreen deathScreen;
     public ReloadCircleFollowCursor reloadCircle;
-    public UserInput userInput { get; private set; }
+    public UserInput userInput;
     public MusicManager musicManager { get; private set; }
 
     SceneLoader sceneLoader;
@@ -101,8 +103,8 @@ public class GameSession : MonoBehaviour
         userInput = GetComponentInChildren<UserInput>();
         playerInput = userInput.GetComponent<PlayerInput>();
 
-        // Reset default values
-        gameCamera.SetPrimaryTarget(player.transform);
+        // Reset default value
+        gameCamera?.SetPrimaryTarget(player.transform);
         crosshair.gameObject.SetActive(false);
         deathScreen.gameObject.SetActive(false);
         angryFace.gameObject.SetActive(false);
@@ -154,7 +156,7 @@ public class GameSession : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         crosshair.gameObject.SetActive(false);
         Cursor.visible = true;
