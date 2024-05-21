@@ -2577,14 +2577,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameSessionPrefab: {fileID: 6438481001964424523, guid: 50f70758040f7784c863029768591f8c, type: 3}
-  storySettings: {fileID: 11400000, guid: 2dbcf30d29d89a942ba89ba94e2f9d32, type: 2}
-  endlessEasySettings: {fileID: 11400000, guid: 5d76b594d13146d43ba883d0a8e00440, type: 2}
+  storySettings: {fileID: 0}
+  endlessEasySettings: {fileID: 11400000, guid: 747f08c5bf78e2a4c8a8e76b0d1e66fe, type: 2}
   endlessMediumSettings: {fileID: 11400000, guid: 5d76b594d13146d43ba883d0a8e00440, type: 2}
-  endlessHardSettings: {fileID: 11400000, guid: 5d76b594d13146d43ba883d0a8e00440, type: 2}
+  endlessHardSettings: {fileID: 11400000, guid: e8c759ffe726ca6479c62d289842db2c, type: 2}
   startButton: {fileID: 90708355}
   quitButton: {fileID: 121709516}
-  startButtonImage: {fileID: 1298060905}
-  startButtonClickableColor: {r: 0.627451, g: 0.627451, b: 0.627451, a: 1}
+  startButtonImage: {fileID: 0}
+  startButtonClickableColor: {r: 0, g: 0, b: 0, a: 0}
   gameMode: 0
 --- !u!1 &1113919505
 GameObject:

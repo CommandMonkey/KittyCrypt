@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4672704b6da27b34c9a083222d1d8b7a, type: 3}
+  m_Name: EasyEndlessGameSessionData
+  m_EditorClassIdentifier: 
+  roomValueCapacityMultiplier: 1.01
+  enemyHP_Multiplier: 1.01
+  looping: 1
+  levelDatas:
+  - LevelName: Level 1
+    roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
+    wallColor: {r: 0.08253225, g: 0.67295593, b: 0.120945856, a: 0}
+    enemyPool:
+    - prefab: {fileID: 8634053150640929787, guid: aa424c0756c45c244868633da29337ca, type: 3}
+      probability: 0.272
+      value: 5
+    - prefab: {fileID: 3997974298972901596, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      probability: 0.483
+      value: 10
+    spawnItemPool:
+    - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
+      probability: 0.25
+    - prefab: {fileID: 2074152661732882923, guid: 00ae2d4abd8df3044b9a7d72194347ca, type: 3}
+      probability: 0.25
+    - prefab: {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+      probability: 0.25
+    - prefab: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
+      probability: 0.25
+    tressureItemPool:
+    - prefab: {fileID: 149285161579284881, guid: e5ebfeef1c11234469752a3f93d43977, type: 3}
+      probability: 0.095
+    - prefab: {fileID: 149285161579284881, guid: b7160680ec027964db7adf6d6a31e197, type: 3}
+      probability: 0.405
+    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+      probability: 0.494
+  - LevelName: Level 2
+    roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
+    wallColor: {r: 0.33546036, g: 0.041691314, b: 0.42767292, a: 0}
+    enemyPool:
+    - prefab: {fileID: 3997974298972901596, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      probability: 0.226
+      value: 10
+    - prefab: {fileID: 8634053150640929787, guid: aa424c0756c45c244868633da29337ca, type: 3}
+      probability: 0.467
+      value: 5
+    - prefab: {fileID: 7981245220381166137, guid: e0de1a24ed190fb4b9fcfac9bf949a2a, type: 3}
+      probability: 0.23
+      value: 10
+    spawnItemPool:
+    - prefab: {fileID: 0}
+      probability: 0.15
+    - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
+      probability: 0.15
+    - prefab: {fileID: 149285161579284881, guid: b7160680ec027964db7adf6d6a31e197, type: 3}
+      probability: 0.15
+    - prefab: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
+      probability: 0.15
+    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+      probability: 0.15
+    - prefab: {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+      probability: 0.15
+    - prefab: {fileID: 2074152661732882923, guid: 00ae2d4abd8df3044b9a7d72194347ca, type: 3}
+      probability: 0.15
+    tressureItemPool:
+    - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
+      probability: 0.06
+    - prefab: {fileID: 3885001662025064534, guid: 2b28572761a169743945590ccec0b544, type: 3}
+      probability: 0.222
+    - prefab: {fileID: 149285161579284881, guid: 89c196c0cf2c0b34da3ea3bd745dca09, type: 3}
+      probability: 0.38
+    - prefab: {fileID: 149285161579284881, guid: e5ebfeef1c11234469752a3f93d43977, type: 3}
+      probability: 0.122
+  - LevelName: Level 3
+    roomGenSettings: {fileID: 11400000, guid: a972ff3824f5ea14599c9fc5bf269116, type: 2}
+    wallColor: {r: 0.9433962, g: 0.9226296, b: 0.9226296, a: 0}
+    enemyPool:
+    - prefab: {fileID: 3997974298972901596, guid: 1285081e8520cac4d8b2f1310040cbf9, type: 3}
+      probability: 0.429
+      value: 7
+    - prefab: {fileID: 8634053150640929787, guid: aa424c0756c45c244868633da29337ca, type: 3}
+      probability: 0.388
+      value: 4
+    - prefab: {fileID: 7981245220381166137, guid: e0de1a24ed190fb4b9fcfac9bf949a2a, type: 3}
+      probability: 0.363
+      value: 8
+    spawnItemPool:
+    - prefab: {fileID: 149285161579284881, guid: e5ebfeef1c11234469752a3f93d43977, type: 3}
+      probability: 0.11
+    - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
+      probability: 0.338
+    - prefab: {fileID: 149285161579284881, guid: 4e78607ca4d26fb40902b850f080b8a9, type: 3}
+      probability: 0.214
+    - prefab: {fileID: 2074152661732882923, guid: 503e9082429d2d74fbf20425470d58fe, type: 3}
+      probability: 0.156
+    - prefab: {fileID: 149285161579284881, guid: 89c196c0cf2c0b34da3ea3bd745dca09, type: 3}
+      probability: 0.118
+    - prefab: {fileID: 3885001662025064534, guid: 2b28572761a169743945590ccec0b544, type: 3}
+      probability: 0.098
+    - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
+      probability: 0.098
+    tressureItemPool:
+    - prefab: {fileID: 149285161579284881, guid: e5ebfeef1c11234469752a3f93d43977, type: 3}
+      probability: 0.405
+    - prefab: {fileID: 149285161579284881, guid: 89c196c0cf2c0b34da3ea3bd745dca09, type: 3}
+      probability: 0.405
+    - prefab: {fileID: 3885001662025064534, guid: 2b28572761a169743945590ccec0b544, type: 3}
+      probability: 0.434
+    - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
+      probability: 0.429
