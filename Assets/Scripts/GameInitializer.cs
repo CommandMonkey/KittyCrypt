@@ -24,6 +24,8 @@ public class GameInitializer : MonoBehaviour
     private void Start()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
+
+
     }
 
     private void Update()
