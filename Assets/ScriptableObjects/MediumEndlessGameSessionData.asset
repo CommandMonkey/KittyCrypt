@@ -18,7 +18,7 @@ MonoBehaviour:
   levelDatas:
   - LevelName: Anger
     roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
-    wallColor: {r: 0.49056602, g: 0.45321932, b: 0, a: 1}
+    wallColor: {r: 0.675, g: 0.3564, b: 0.3564, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 1
@@ -42,7 +42,7 @@ MonoBehaviour:
       probability: 0.5
   - LevelName: Bargain
     roomGenSettings: {fileID: 11400000, guid: a972ff3824f5ea14599c9fc5bf269116, type: 2}
-    wallColor: {r: 0.4564506, g: 1, b: 0.38823533, a: 1}
+    wallColor: {r: 0.5026446, g: 0.71199995, b: 0.47703996, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 1
@@ -71,7 +71,7 @@ MonoBehaviour:
       probability: 0.5
   - LevelName: Depression
     roomGenSettings: {fileID: 11400000, guid: 0c324fa6cd01be34f8edf304b9cedbab, type: 2}
-    wallColor: {r: 1, g: 1, b: 1, a: 1}
+    wallColor: {r: 0.5921569, g: 0.5921569, b: 0.5921569, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 1
