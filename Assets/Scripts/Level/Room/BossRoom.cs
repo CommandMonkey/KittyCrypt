@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 
 public class BossRoom : Room
 {
@@ -12,33 +10,22 @@ public class BossRoom : Room
     private RatBossBehaviour bossScript;
     private LevelExitInteractable levelExit;
     private UICanvas uiCanvas;
-    private TextMeshProUGUI bossNameText;
 
     private BossDoorInteractable bossDoor;
 
     bool started = false;
 
-    protected new void Start()
+    protected override void RoomStart()
     {
-        base.Start();
         gameCamera = FindObjectOfType<GameCamera>();
         bossScript = boss.GetComponent<RatBossBehaviour>();
         levelExit = GetComponentInChildren<LevelExitInteractable>();
         uiCanvas = FindObjectOfType<UICanvas>();
-        bossNameText = GameObject.Find("RatBossNameText").GetComponent<TextMeshProUGUI>();
-
 
         onPlayerEnter.AddListener(OnPlayerEnter);
         roomManager.onRoomSpawningDone.AddListener(OnRoomSpawningDone); // for switching to bossRoom door
 
         bossScript.bossRoom = this;
-
-        bossNameText.enabled = false;
-    }
-
-    protected override void RoomStart()
-    {
-
     }
 
     private void OnPlayerEnter()
@@ -116,12 +103,9 @@ public class BossRoom : Room
         gameCamera.DoCameraShake(); 
 
         yield return new WaitForSeconds(3f); // fade in
-        bossNameText.enabled = true;
-
         gameCamera.DoCameraShake(2f); // initiate shake
         yield return new WaitForSeconds(2f);
 
-        bossNameText.enabled=false;
         focusCamOnBossAndPlayer();
         gameSession.SetState(GameSession.GameState.Running);
         bossScript.StartBoss();
