@@ -32,7 +32,7 @@ public class Room : MonoBehaviour
         onPlayerEnter = new UnityEvent();
     }
 
-    protected void Start()
+    void Start()
     {
         gameSession = GameSession.Instance;
         player = gameSession.player;
