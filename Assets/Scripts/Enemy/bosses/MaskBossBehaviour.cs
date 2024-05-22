@@ -1,9 +1,9 @@
-using System;
+
 using UnityEngine;
 
 public class MaskBossBehaviour : Boss
 {
-
+    // /// CONFIGURABLE VARIABLES /// //
     [Header("Orbit Attack")]
     [SerializeField] float orbitDistance = 3f; // Distance from the player
     [SerializeField] float orbitSpeed = 5f; // Speed of orbit
@@ -11,8 +11,23 @@ public class MaskBossBehaviour : Boss
     [SerializeField] float lungeInterval = 2f; // Time between lunges
     [SerializeField] float lungeSpeed = 10f; // Speed of the lunge
 
+    [Header("Bullet Hell Attack")]
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] float hellBulletFrequency;
+    [SerializeField] float hellBulletSpeed;
 
-    // orbit Attack priv var
+
+    // /// PRIVATE VARIABLES /// //
+
+    // Bullet Hell Attack
+
+
+
+    // Stagger (Damage Phase)
+
+
+
+    // Orbit / Lunge Attack
     private GameObject orbitTarget;
     private float orbitAngle; // Current angle in the orbit
     private float lungeTimer; // Timer for lunging
@@ -31,6 +46,9 @@ public class MaskBossBehaviour : Boss
 
     private enum State
     {
+        None,  
+        BulletHell,
+        Staggered,
         Orbiting,
         Lunging
     }
@@ -46,8 +64,16 @@ public class MaskBossBehaviour : Boss
 
     void Update()
     {
+        if (currentState == State.None) return;
+
         switch (currentState)
         {
+            case State.BulletHell:
+
+                break;
+            case State.Staggered:
+
+                break;
             case State.Orbiting:
                 OrbitPlayer();
                 break;
@@ -59,6 +85,14 @@ public class MaskBossBehaviour : Boss
         UpdateOrbitTargetPos();
     }
 
+    void SpawnBullets()
+    {
+        
+    }
+
+
+
+    // Orbit / Lunge Attack
     private void UpdateOrbitTargetPos()
     {
         orbitTarget.transform.position = Vector3.Lerp(orbitTarget.transform.position, player.transform.position, orbitFollowWeight);
