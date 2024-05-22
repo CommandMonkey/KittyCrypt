@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     protected float maxHealth;
     protected bool lineOfSight = true;
     protected Vector3 targetPosition = Vector3.zero;
+    protected bool canTakeDamage = true;
 
     protected GameSession gameSession;
     protected Animator animator;
@@ -64,6 +65,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (!canTakeDamage) return;
+
         PlayHurtVFX();
         PlayHurtSFX();
         health -= damage;
