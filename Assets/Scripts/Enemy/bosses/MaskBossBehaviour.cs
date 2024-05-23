@@ -1,4 +1,6 @@
 
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class MaskBossBehaviour : Boss
@@ -12,6 +14,9 @@ public class MaskBossBehaviour : Boss
     [SerializeField] float lungeSpeed = 10f; // Speed of the lunge
 
     [Header("Bullet Hell Attack")]
+    [SerializeField] float bulletHellDuration;
+    [SerializeField] Transform bulletSpawn;
+    [SerializeField] float bulletSpawnWidth;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float hellBulletFrequency;
     [SerializeField] float hellBulletSpeed;
@@ -85,9 +90,32 @@ public class MaskBossBehaviour : Boss
         UpdateOrbitTargetPos();
     }
 
-    void SpawnBullets()
+    IEnumerator BulletHellRoutine()
     {
-        
+        float startTime = Time.time;
+
+        while (true)
+        {
+            SpawnBullet();
+
+            if (Time.time - startTime > bulletHellDuration) 
+            {
+                StopBulletHell();
+                yield break;
+            }
+
+        }
+
+        void StopBulletHell()
+        {
+
+        }
+    }
+
+    private void SpawnBullet()
+    {
+        Vector2 spawnPos = new Vector2(Random.Range)    
+        GameObject bulletInstance = Instantiate(bulletPrefab);
     }
 
 
