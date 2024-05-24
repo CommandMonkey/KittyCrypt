@@ -114,8 +114,8 @@ public class MaskBossBehaviour : Boss
 
     private void SpawnBullet()
     {
-        Vector2 spawnPos = new Vector2(Random.Range)    
-        GameObject bulletInstance = Instantiate(bulletPrefab);
+        Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(-bulletSpawnWidth, bulletSpawnWidth), bulletSpawn.position.y);
+        GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.Euler(Vector3.forward*90));
     }
 
 

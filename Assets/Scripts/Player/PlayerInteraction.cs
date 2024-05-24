@@ -14,7 +14,6 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] bool anyInteractablesInRange = false;
 
     Transform closestInteractable;
-    Transform preciousClosestInteractable;
 
     // cached references
     UserInput userInput;
@@ -66,7 +65,9 @@ public class PlayerInteraction : MonoBehaviour
             closestInteractable = interactable.transform;
         }
         else
+        {
             closestInteractable = null;
+        }
 
 
         if (closestInteractable != null)

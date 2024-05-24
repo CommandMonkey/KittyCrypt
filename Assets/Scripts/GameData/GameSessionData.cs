@@ -18,12 +18,17 @@ public class GameSessionData : ScriptableObject
 
     public LevelSettings GetLevelData(int levelIndex)
     {
-        LevelSettings resultSettings = levelDatas[levelIndex % levelDatas.Count];
+        LevelSettings resultSettings = levelDatas[Mathf.Min(levelIndex, levelDatas.Count)];
 
         float power = levelIndex;
 
+
+        // Make Wall color loop over, not continnue with lvl3 
+        resultSettings.wallColor = levelDatas[levelIndex % levelDatas.Count].wallColor;
+
         resultSettings.roomValueCapacityMultiplier = Mathf.Ceil(Mathf.Pow(roomValueCapacityMultiplier, power));
-        resultSettings.enemyHP_Multiplier = Mathf.Pow(enemyHP_Multiplier, power);   
+        resultSettings.enemyHP_Multiplier = Mathf.Pow(enemyHP_Multiplier, power);  
+        
 
         return resultSettings;
     }

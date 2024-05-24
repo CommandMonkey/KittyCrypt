@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "LevelData", menuName = "ScriptableObjects/LevelData")]
+[CreateAssetMenu(fileName = "RoomGenData", menuName = "ScriptableObjects/RoomGenData")]
 public class RoomGenObject : ScriptableObject
 {
     [Header("Room Prefabs")]
@@ -17,8 +17,6 @@ public class RoomGenObject : ScriptableObject
 
     [Header("EntranceBlockers")]
     public List<DirectionGameObjectPair> entranceBlockers;
-    [Header("Doors")]
-    public List<DirectionGameObjectPair> doors;
 
     private Dictionary<GameObject, int> spawnedRoomCounts = new Dictionary<GameObject, int>();
 
