@@ -121,13 +121,14 @@ public class GunFire<T> : Item where T : GunSettingsObject
     public override void DeActivate()
     {
         ResetReloading();
+        runtimeData.isFireRateCoolingDown = false;
         userInput.onFire.RemoveListener(OnFire);
         userInput.onReload.RemoveListener(Reload);
     }
 
     void OnFire()
     {
-        if (!gameObject.active || GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
+        if (GameSession.state != GameSession.GameState.Running || runtimeData.isFireRateCoolingDown || runtimeData.isReloading || player.isDead) return;
         
         // Cat angry face
         if (!gameSession.playerIsShooting && gameObject.activeInHierarchy)

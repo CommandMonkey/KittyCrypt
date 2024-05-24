@@ -271,6 +271,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6943138780077409047, guid: 637a50d1852301b499583e4dad862033, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943138780077409047, guid: 637a50d1852301b499583e4dad862033, type: 3}
+      propertyPath: ableToShoot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943138780077409047, guid: 637a50d1852301b499583e4dad862033, type: 3}
+      propertyPath: bulletSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943138780077409047, guid: 637a50d1852301b499583e4dad862033, type: 3}
+      propertyPath: BloodStainVFX
+      value: 
+      objectReference: {fileID: 1158836865863372884, guid: 807a4a5b91ffe6e43ae4fb6e3b2fd86a, type: 3}
+    - target: {fileID: 6943138780077409047, guid: 637a50d1852301b499583e4dad862033, type: 3}
+      propertyPath: enemyHitAudio
+      value: 
+      objectReference: {fileID: 8095866884428330632, guid: f54f9b69a5a8dac4d8f573bcddcc35da, type: 3}
+    - target: {fileID: 6943138780077409047, guid: 637a50d1852301b499583e4dad862033, type: 3}
+      propertyPath: obsticleLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 7602735114611573108, guid: 637a50d1852301b499583e4dad862033, type: 3}
       propertyPath: m_Name
       value: Skull Enemy
