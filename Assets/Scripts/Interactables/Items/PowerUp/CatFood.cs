@@ -18,7 +18,7 @@ public class CatFood : MonoBehaviour
 
     private void Start()
     {
-        player = GameSession.Instance.player;
+        player = GameSession.Instance.Player;
         rigidbody2 = GetComponent<Rigidbody2D>();
 
         gravityVector = new Vector2(0, gravityMagnitude);

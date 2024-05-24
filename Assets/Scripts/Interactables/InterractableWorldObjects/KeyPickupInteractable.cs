@@ -13,7 +13,7 @@ public class KeyPickupInteractable : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        player = GameSession.Instance.player;
+        player = GameSession.Instance.Player;
         uiCanvas = FindObjectOfType<UICanvas>();
 
         interactPrompt = "Rat Key";

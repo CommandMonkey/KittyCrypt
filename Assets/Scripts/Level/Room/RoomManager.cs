@@ -44,7 +44,7 @@ public class RoomManager : MonoBehaviour
     {
         gameSession = GameSession.Instance;
         audioScource = GetComponent<AudioSource>();
-        player = gameSession.player;
+        player = gameSession.Player;
 
         roomGenSettings = gameSession.levelSettings.roomGenSettings;
         roomsFilter = CreateRoomsFilter();

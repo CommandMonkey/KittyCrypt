@@ -52,8 +52,8 @@ public class GameSession : MonoBehaviour
     bool killYourself = false;
     public bool playerIsShooting = false;
 
-    public GameCamera gameCamera { get; private set; }
-    public Player player;
+    public GameCamera GameCamera { get; private set; }
+    public Player Player;
     public GameObject angryFace; 
     public PlayerInput playerInput;
     public Transform enemyContainer;
@@ -61,6 +61,7 @@ public class GameSession : MonoBehaviour
     public DeathScreen deathScreen;
     public ReloadCircleFollowCursor reloadCircle;
     public UserInput userInput;
+    public
     public MusicManager musicManager { get; private set; }
 
     SceneLoader sceneLoader;
@@ -92,11 +93,11 @@ public class GameSession : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        Player = FindObjectOfType<Player>();
         angryFace = GameObject.Find("Angry");
 
         musicManager = FindObjectOfType<MusicManager>();
-        gameCamera = FindObjectOfType<GameCamera>();
+        GameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
         crosshair = FindObjectOfType<Crosshair>();
         deathScreen = FindObjectOfType<DeathScreen>();
@@ -104,7 +105,7 @@ public class GameSession : MonoBehaviour
         playerInput = userInput.GetComponent<PlayerInput>();
 
         // Reset default value
-        gameCamera?.SetPrimaryTarget(player.transform);
+        GameCamera?.SetPrimaryTarget(Player.transform);
         crosshair.gameObject.SetActive(false);
         deathScreen.gameObject.SetActive(false);
         angryFace.gameObject.SetActive(false);
@@ -127,7 +128,7 @@ public class GameSession : MonoBehaviour
         levelSettings = gameSessionData.GetLevelData(levelIndex);
 
         musicManager = FindObjectOfType<MusicManager>();
-        gameCamera = FindObjectOfType<GameCamera>();
+        GameCamera = FindObjectOfType<GameCamera>();
         sceneLoader = FindObjectOfType<SceneLoader>();
 
         onSceneloaded.Invoke(); 
@@ -150,7 +151,7 @@ public class GameSession : MonoBehaviour
 
         SetCursorOrCrosshair();
         SetPlayerAngry();
-        if(state == GameState.Running && !player.isDead)
+        if(state == GameState.Running && !Player.isDead)
         {
             timePlayed += Time.deltaTime;
         }

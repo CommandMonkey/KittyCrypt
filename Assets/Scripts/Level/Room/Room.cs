@@ -35,7 +35,7 @@ public class Room : MonoBehaviour
     void Start()
     {
         gameSession = GameSession.Instance;
-        player = gameSession.player;
+        player = gameSession.Player;
         roomManager = FindObjectOfType<RoomManager>();
         fogOfWarObject = GetComponentInChildren<FogOfWar>();
 
