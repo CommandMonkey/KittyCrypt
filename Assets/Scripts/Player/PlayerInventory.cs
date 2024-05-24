@@ -155,6 +155,7 @@ public class PlayerInventory : MonoBehaviour
 
             // Set name
             Item pickupItem = itemObj.GetComponent<Item>();
+            pickupItem.DeActivate();
             if (pickupItem != null)
             {
                 pickupItem.itemName = name;

@@ -19,9 +19,8 @@ public class Hotbar : MonoBehaviour
     {
         for (int i = 0; i < hotbarSpriteRenderer.Length; i++)
         {
-            Debug.Log("Hello there this is i: " + i);
             Item gunIcon = null;
-            if (inventory.itemInventory.Length > i)
+            if (inventory.itemInventory[i] != null)
             {
                 gunIcon = GameHelper.GetComponentInAllChildren<Item>(inventory.itemInventory[i].transform);
             }
