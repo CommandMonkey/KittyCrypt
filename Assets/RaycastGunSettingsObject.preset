@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RaycastGunSettingsObject
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 11649cec4f8b9174c808cd92632076e3, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: Assembly-CSharp::RaycastGunSettingsObject
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: fireRate
+    value: 0.3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: reloadTime
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: shotsBeforeReload
+    value: 17
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: bulletSpreadRange
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: damage
+    value: 7
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: playerKnockback
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: fireAudio
+    value: 
+    objectReference: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
+  - target: {fileID: 0}
+    propertyPath: reloadAudio
+    value: 
+    objectReference: {fileID: 8300000, guid: 1107325c1db1c8f43a566f3c54b936e8, type: 3}
+  - target: {fileID: 0}
+    propertyPath: audioVolume
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: hitEffect
+    value: 
+    objectReference: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
+  - target: {fileID: 0}
+    propertyPath: destroyHitEffectAfter
+    value: 1.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: bulletTrail
+    value: 
+    objectReference: {fileID: 9181747754686250940, guid: 5137d381b9d6f254eaffbe330a3dc1f3, type: 3}
+  - target: {fileID: 0}
+    propertyPath: destroyTrailAfter
+    value: 0.1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: ignoreLayerMask.m_Bits
+    value: 125824
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
