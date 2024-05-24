@@ -2583,8 +2583,8 @@ MonoBehaviour:
   endlessHardSettings: {fileID: 11400000, guid: e8c759ffe726ca6479c62d289842db2c, type: 2}
   startButton: {fileID: 90708355}
   quitButton: {fileID: 121709516}
-  startButtonImage: {fileID: 0}
-  startButtonClickableColor: {r: 0, g: 0, b: 0, a: 0}
+  startButtonImage: {fileID: 1298060905}
+  startButtonClickableColor: {r: 0.84900004, g: 0.84900004, b: 0.84900004, a: 1}
   gameMode: 0
 --- !u!1 &1113919505
 GameObject:
