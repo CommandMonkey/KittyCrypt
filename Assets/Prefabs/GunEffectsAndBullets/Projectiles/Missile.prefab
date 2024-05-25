@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -795822725584318249}
   - component: {fileID: 1549547998234636351}
   m_Layer: 8
-  m_Name: Misile
+  m_Name: Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5053,7 +5053,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7834965403791016898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8761a9c44e74bc742b4d0314cd1937bf, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a97c4795da69749918b96ca2afde9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!199 &1549547998234636351

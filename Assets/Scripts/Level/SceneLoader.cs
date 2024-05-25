@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] int mainMenuBuildIndex;
-    [SerializeField] int tutorialBuildIndex;
     [SerializeField] int CutsceneBuildIndex;
     [SerializeField] int levelBuildIndex;
 
@@ -54,14 +53,6 @@ public class SceneLoader : MonoBehaviour
             SceneManager.LoadScene(mainMenuBuildIndex);
         else
             StartCoroutine(FadeAndLoadSceneRoutine(mainMenuBuildIndex));
-    }
-
-    public void LoadTutorial(bool fade = true)
-    {
-        if (!fade)
-            SceneManager.LoadScene(tutorialBuildIndex);
-        else
-            StartCoroutine(FadeAndLoadSceneRoutine(tutorialBuildIndex));
     }
     public void LoadCutscene(bool fade = true)
     {

@@ -16,7 +16,7 @@ MonoBehaviour:
   reloadTime: 3
   shotsBeforeReload: 1
   bulletSpreadRange: 1
-  damage: 40
+  damage: 60
   playerKnockback: 80
   fireAudio: {fileID: 0}
   reloadAudio: {fileID: 0}

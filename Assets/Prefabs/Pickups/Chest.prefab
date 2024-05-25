@@ -103,8 +103,8 @@ MonoBehaviour:
   launchDirections:
   - {fileID: 3366427819873796113}
   - {fileID: 8583575876667817085}
-  initialShootOutSpeed: 2
-  gravityFactor: -1
+  initialShootOutSpeed: 15
+  gravityFactor: -4
   itemSpawnBallSprite: {fileID: -2413806693520163455, guid: 1eed610d12c73804c9e0f96d047a1977, type: 3}
   openChest: {fileID: -714310872, guid: 8ca1a4fbe71fe42478d147434990b5ab, type: 3}
   pickUpPrefab: {fileID: 5068044822145740819, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}

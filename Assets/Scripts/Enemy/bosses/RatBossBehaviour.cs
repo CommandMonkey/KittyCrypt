@@ -143,7 +143,7 @@ public class RatBossBehaviour : Boss
         {
             // 3 shoot attacks then one rat spawn
             aimLineRenderer.enabled = true;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 timeToNextShot = shootAimTime;
                 while (timeToNextShot > 0)

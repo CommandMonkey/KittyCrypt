@@ -388,7 +388,9 @@ MonoBehaviour:
   holdableItemAnchor: {fileID: 9164578391081965062}
   itemInventory:
   - {fileID: 0}
+  - {fileID: 0}
   itemPickupPrefab: {fileID: 5068044822145740819, guid: 317e73d66d50f6741995dcd68bd71a3a, type: 3}
+  currentHotbarPos: 0
 --- !u!1 &8284850585649897942
 GameObject:
   m_ObjectHideFlags: 0

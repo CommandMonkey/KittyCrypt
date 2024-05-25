@@ -18,7 +18,7 @@ MonoBehaviour:
   levelDatas:
   - LevelName: Level 1
     roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
-    wallColor: {r: 0.08253225, g: 0.67295593, b: 0.120945856, a: 1}
+    wallColor: {r: 0.7122642, g: 1, b: 0.7328167, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 0.272
@@ -44,7 +44,7 @@ MonoBehaviour:
       probability: 0.494
   - LevelName: Level 2
     roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
-    wallColor: {r: 0.33546036, g: 0.041691314, b: 0.42767292, a: 1}
+    wallColor: {r: 0.92143786, g: 0.6745283, b: 1, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 0.226
@@ -56,8 +56,6 @@ MonoBehaviour:
       probability: 0.23
       value: 10
     spawnItemPool:
-    - prefab: {fileID: 0}
-      probability: 0.15
     - prefab: {fileID: 3885001662025064534, guid: 30efca9f903d09246bdf7cfd15680356, type: 3}
       probability: 0.15
     - prefab: {fileID: 149285161579284881, guid: b7160680ec027964db7adf6d6a31e197, type: 3}
@@ -81,7 +79,7 @@ MonoBehaviour:
       probability: 0.122
   - LevelName: Level 3
     roomGenSettings: {fileID: 11400000, guid: a972ff3824f5ea14599c9fc5bf269116, type: 2}
-    wallColor: {r: 0.9433962, g: 0.9226296, b: 0.9226296, a: 1}
+    wallColor: {r: 1, g: 0.9198113, b: 0.9198113, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 0.429
