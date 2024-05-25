@@ -116,7 +116,9 @@ public class GameInitializer : MonoBehaviour
     private void CreateGameSession()
     {
         GameSessionData sessionSettings = GetSessionDataOfType();
-        Instantiate(GameSessionPrefab).GetComponent<GameSession>().gameSessionData = sessionSettings;
+        GameSession gameSession = Instantiate(GameSessionPrefab).GetComponent<GameSession>();
+        gameSession.gameSessionData = sessionSettings;
+        gameSession.gameMode = gameMode;
     }
 
     private GameSessionData GetSessionDataOfType()

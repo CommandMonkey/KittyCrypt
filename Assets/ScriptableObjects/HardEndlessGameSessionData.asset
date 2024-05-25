@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4672704b6da27b34c9a083222d1d8b7a, type: 3}
   m_Name: HardEndlessGameSessionData
   m_EditorClassIdentifier: 
-  roomValueCapacityMultiplier: 2
-  enemyHP_Multiplier: 2
+  roomValueCapacityMultiplier: 1.5
+  enemyHP_Multiplier: 1.5
   looping: 0
   levelDatas:
   - LevelName: Anger
@@ -22,10 +22,10 @@ MonoBehaviour:
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 0.467
-      value: 5
+      value: 7
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 0.239
-      value: 2
+      value: 4
     - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
       probability: 0.525
       value: 5
@@ -57,7 +57,10 @@ MonoBehaviour:
       value: 3
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 0.384
-      value: 5
+      value: 7
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
+      probability: 0.384
+      value: 7
     spawnItemPool:
     - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
       probability: 0.345
@@ -82,13 +85,16 @@ MonoBehaviour:
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
       probability: 0.471
-      value: 3
+      value: 10
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 0.21
-      value: 1
+      value: 5
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 0.537
-      value: 3
+      value: 10
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
+      probability: 0.537
+      value: 10
     spawnItemPool:
     - prefab: {fileID: 3885001662025064534, guid: 485892b80814be94abe1081dc3481bd5, type: 3}
       probability: 0.297

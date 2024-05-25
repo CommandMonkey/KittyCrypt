@@ -50,7 +50,7 @@ MonoBehaviour:
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 1
       value: 10
-    - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
       probability: 1
       value: 15
     spawnItemPool:
@@ -80,6 +80,9 @@ MonoBehaviour:
       probability: 1
       value: 10
     - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
+      probability: 1
+      value: 15
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
       probability: 1
       value: 15
     spawnItemPool:

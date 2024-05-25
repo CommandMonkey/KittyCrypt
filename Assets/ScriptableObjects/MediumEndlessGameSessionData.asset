@@ -53,6 +53,9 @@ MonoBehaviour:
     - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
       probability: 1
       value: 15
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
+      probability: 1
+      value: 15
     spawnItemPool:
     - prefab: {fileID: 149285161579284881, guid: b7160680ec027964db7adf6d6a31e197, type: 3}
       probability: 0.269
@@ -75,7 +78,7 @@ MonoBehaviour:
       probability: 0.5
   - LevelName: Depression
     roomGenSettings: {fileID: 11400000, guid: 0c324fa6cd01be34f8edf304b9cedbab, type: 2}
-    wallColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+    wallColor: {r: 0.8392157, g: 0.8392157, b: 0.8392157, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 1
@@ -84,6 +87,9 @@ MonoBehaviour:
       probability: 1
       value: 10
     - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
+      probability: 1
+      value: 15
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
       probability: 1
       value: 15
     spawnItemPool:

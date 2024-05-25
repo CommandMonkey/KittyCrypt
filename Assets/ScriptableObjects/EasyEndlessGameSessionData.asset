@@ -16,9 +16,9 @@ MonoBehaviour:
   enemyHP_Multiplier: 1.01
   looping: 1
   levelDatas:
-  - LevelName: Level 1
+  - LevelName: Anger
     roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
-    wallColor: {r: 0.7122642, g: 1, b: 0.7328167, a: 1}
+    wallColor: {r: 1, g: 0.7882353, b: 0.7882353, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 0.272
@@ -42,9 +42,9 @@ MonoBehaviour:
       probability: 0.405
     - prefab: {fileID: 149285161579284881, guid: cc64800af99a99a4f8288dbc23630177, type: 3}
       probability: 0.494
-  - LevelName: Level 2
+  - LevelName: Bargain
     roomGenSettings: {fileID: 11400000, guid: b5864f5bd437cd84fa72fe28be0950bd, type: 2}
-    wallColor: {r: 0.92143786, g: 0.6745283, b: 1, a: 1}
+    wallColor: {r: 0.7137255, g: 1, b: 0.68235296, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 0.226
@@ -52,7 +52,7 @@ MonoBehaviour:
     - prefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
       probability: 0.467
       value: 5
-    - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
       probability: 0.23
       value: 10
     spawnItemPool:
@@ -77,9 +77,9 @@ MonoBehaviour:
       probability: 0.38
     - prefab: {fileID: 149285161579284881, guid: e5ebfeef1c11234469752a3f93d43977, type: 3}
       probability: 0.122
-  - LevelName: Level 3
+  - LevelName: Depression
     roomGenSettings: {fileID: 11400000, guid: a972ff3824f5ea14599c9fc5bf269116, type: 2}
-    wallColor: {r: 1, g: 0.9198113, b: 0.9198113, a: 1}
+    wallColor: {r: 0.8392157, g: 0.8392157, b: 0.8392157, a: 1}
     enemyPool:
     - prefab: {fileID: 8727124918570381137, guid: f0042b0f3d5439b46b5fb41365120e44, type: 3}
       probability: 0.429
@@ -88,6 +88,9 @@ MonoBehaviour:
       probability: 0.388
       value: 4
     - prefab: {fileID: 8727124918570381137, guid: dd3e3739b5e76bf4daf2839ab8cbc593, type: 3}
+      probability: 0.363
+      value: 8
+    - prefab: {fileID: 8727124918570381137, guid: ba8bb58e1a17f264f8bf9c1339ff1a59, type: 3}
       probability: 0.363
       value: 8
     spawnItemPool:
