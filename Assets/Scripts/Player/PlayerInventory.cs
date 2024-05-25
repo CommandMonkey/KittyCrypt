@@ -5,86 +5,95 @@ using UnityEngine.Events;
 public class PlayerInventory : MonoBehaviour
 {
     [Header("Item")]
-    [SerializeField] Transform holdableItemAnchor;
+    [SerializeField] private Transform holdableItemAnchor;
     public GameObject[] itemInventory;
-    [SerializeField] GameObject itemPickupPrefab;
+    [SerializeField] private GameObject itemPickupPrefab;
 
     // Hotbar
     public int currentHotbarPos = 0;
 
     // References
-    UserInput userInput;
+    private UserInput userInput;
 
     private void Start()
     {
-        userInput = FindObjectOfType<UserInput>();
+        InitializeUserInput();
+        UpdateWeapon();
+    }
 
-        // Input events
+    private void InitializeUserInput()
+    {
+        userInput = FindObjectOfType<UserInput>();
         if (userInput != null)
         {
             userInput.onScroll.AddListener(OnScroll);
         }
-
-        UpdateWeapon();
     }
 
     public void AddWeapon(GameObject weapon)
     {
-        currentHotbarPos = GetEmptyHotBarPos();
+        currentHotbarPos = GetEmptyHotbarPos();
         UpdateWeapon();
+
         GameObject currentHotbarItem = itemInventory[currentHotbarPos];
+        HandleCurrentHotbarItem(currentHotbarItem);
 
-        // Drop item if holding one
-        if (currentHotbarItem != null)
-        {
-            Item oldItem = GameHelper.GetComponentInAllChildren<Item>(currentHotbarItem.transform);
-            if (oldItem != null)
-            {
-                SpawnItemPickup(currentHotbarItem, oldItem.name);
-                oldItem.DeActivate();
-                currentHotbarItem.SetActive(false);
-            }
-        }
-
-        // Add new weapon to current hotbar position
-        if (weapon.transform.IsChildOf(holdableItemAnchor))
-        {
-            weapon.transform.SetParent(holdableItemAnchor);
-            itemInventory[currentHotbarPos] = weapon;
-        }
-        else
-        {
-            itemInventory[currentHotbarPos] = Instantiate(weapon, holdableItemAnchor);
-        }
-
-        // Initiate weapon
-        currentHotbarItem = itemInventory[currentHotbarPos];
-
-        if (currentHotbarItem != null)
-        {
-            currentHotbarItem.SetActive(true);
-
-            // Reset local position
-            currentHotbarItem.transform.localPosition = Vector3.zero;
-        }
+        AddWeaponToHotbar(weapon);
+        ResetHotbarItemPosition();
     }
 
-    private int GetEmptyHotBarPos()
+    private int GetEmptyHotbarPos()
     {
         for (int i = 0; i < itemInventory.Length; i++)
         {
-            if (itemInventory[i] == null)
-                return i;
-
-            if (GameHelper.GetComponentInAllChildren<Item>(itemInventory[i].transform) == null)
+            if (itemInventory[i] == null || GameHelper.GetComponentInAllChildren<Item>(itemInventory[i].transform) == null)
                 return i;
         }
         return currentHotbarPos;
     }
 
+    private void HandleCurrentHotbarItem(GameObject currentHotbarItem)
+    {
+        if (currentHotbarItem != null)
+        {
+            Item oldItem = GameHelper.GetComponentInAllChildren<Item>(currentHotbarItem.transform);
+            if (oldItem != null)
+            {
+                SpawnItemPickup(currentHotbarItem, oldItem.itemName);
+                oldItem.DeActivate();
+                currentHotbarItem.SetActive(false);
+            }
+        }
+    }
 
+    private void AddWeaponToHotbar(GameObject weapon)
+    {
+        if (weapon.transform.IsChildOf(holdableItemAnchor))
+        {
+            weapon.transform.SetParent(holdableItemAnchor);
+            weapon.gameObject.SetActive(true);
+            itemInventory[currentHotbarPos] = weapon;
 
-    void OnScroll(float scrollValue)
+            Item currentItem = GameHelper.GetComponentInAllChildren<Item>(weapon.transform);
+            currentItem?.Activate();
+        }
+        else
+        {
+            itemInventory[currentHotbarPos] = Instantiate(weapon, holdableItemAnchor);
+            itemInventory[currentHotbarPos].gameObject.SetActive(true);
+        }
+    }
+
+    private void ResetHotbarItemPosition()
+    {
+        GameObject currentHotbarItem = itemInventory[currentHotbarPos];
+        if (currentHotbarItem != null)
+        {
+            currentHotbarItem.transform.localPosition = Vector3.zero;
+        }
+    }
+
+    private void OnScroll(float scrollValue)
     {
         if (scrollValue > 0)
         {
@@ -96,27 +105,22 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    void AddToHotbarPos(int value)
+    private void AddToHotbarPos(int value)
     {
         int newIndex = (currentHotbarPos + value) % itemInventory.Length;
-
-        // Ensure the index stays within bounds
         if (newIndex < 0)
         {
             newIndex += itemInventory.Length;
         }
-
         currentHotbarPos = newIndex;
-
         UpdateWeapon();
     }
 
-    void UpdateWeapon()
+    private void UpdateWeapon()
     {
         for (int i = 0; i < itemInventory.Length; i++)
         {
             GameObject weapon = itemInventory[i];
-            Debug.Log("hotbarpos: " + i);
             if (weapon != null)
             {
                 Item itemScript = GameHelper.GetComponentInAllChildren<Item>(weapon.transform);
@@ -126,8 +130,6 @@ public class PlayerInventory : MonoBehaviour
                     {
                         itemScript.Activate();
                         weapon.SetActive(true);
-
-                        Debug.Log("hotbarpos Holding: " + i + ", item: " + itemScript.itemName);
                     }
                     else
                     {
@@ -136,26 +138,19 @@ public class PlayerInventory : MonoBehaviour
                     }
                 }
             }
-            else if (i == currentHotbarPos)
-            {
-
-            }
         }
     }
 
-    // Pickup Helper
-    void SpawnItemPickup(GameObject itemObj, string name)
+    private void SpawnItemPickup(GameObject itemObj, string name)
     {
         GameObject pickupObject = Instantiate(itemPickupPrefab, transform.position, Quaternion.identity);
-
         ItemPickupInteractable pickupScript = pickupObject.GetComponent<ItemPickupInteractable>();
         if (pickupScript != null)
         {
             pickupScript.item = itemObj;
 
-            // Set name
-            Item pickupItem = itemObj.GetComponent<Item>();
-            pickupItem.DeActivate();
+            Item pickupItem = GameHelper.GetComponentInAllChildren<Item>(itemObj.transform);
+            pickupItem?.DeActivate();
             if (pickupItem != null)
             {
                 pickupItem.itemName = name;
