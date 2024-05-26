@@ -100,12 +100,6 @@ public class GameSession : MonoBehaviour
         {
             timePlayed += Time.deltaTime;
         }
-
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            LoadNextLevel();
-        }
     }
 
     private void OnDestroy()

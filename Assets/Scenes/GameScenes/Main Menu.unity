@@ -3755,7 +3755,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: For Fun... The Game Goes to infinity,  And becomes indefinetely difficult
+  m_text: 'For Fun... The Game Goes to infinity,  And becomes indefinetely difficult
+
+
+    #Note:
+    Hard is the most diffiult In Gaming History!!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
