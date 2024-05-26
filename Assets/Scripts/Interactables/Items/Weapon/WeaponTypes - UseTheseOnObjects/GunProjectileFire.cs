@@ -6,7 +6,6 @@ public class GunProjectileFire : GunFire<ProjectileGunSettingsObject>
 {
     protected override void WeaponFire()
     {
-        Debug.Log("Projectile Fire");
         // Fire
         ShootBullet(settings.projectile, settings.bulletSpeed);
         GunFeedbackEffects();

@@ -100,6 +100,8 @@ public class GunFire<T> : Item where T : GunSettingsObject
         uiCanvas = FindObjectOfType<UICanvas>();
         ammoUI = uiCanvas.ammoText;
 
+        Debug.Log("NEW SCENE");
+
         DeActivate();
         Activate();
     }
@@ -291,8 +293,10 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
     protected virtual void SetAmmoUI()
     {
+        
         ammoUI.text = (settings.shotsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
                       settings.shotsBeforeReload.ToString();
+        Debug.Log("Setting Ammo UI " + itemName + " " + ammoUI.text);
     }
 
     protected virtual void WeaponFire() { }

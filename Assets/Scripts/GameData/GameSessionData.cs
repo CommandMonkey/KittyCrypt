@@ -13,7 +13,7 @@ public class GameSessionData : ScriptableObject
 
     [Header("Set Level Scaling")]
     [Tooltip("if LevelIndex > LevelData.Count, it will defaut to the highest level in LevelData")]
-    [SerializeField] private bool looping;
+    [SerializeField] public bool looping;
     public List<LevelSettings> levelDatas;
 
     public LevelSettings GetLevelData(int levelIndex)

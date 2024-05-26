@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4b9e7deea1efe9344a32bde3e2912e01, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 05a68f6436cfae348bffb0f1525255f7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1526,12 +1526,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6438481001964424523, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: m_Name
-      value: GameSession BAJS
+      value: GameSession
       objectReference: {fileID: 0}
     - target: {fileID: 8179313453937787822, guid: 50f70758040f7784c863029768591f8c, type: 3}
       propertyPath: userInput
       value: 
       objectReference: {fileID: 612786134}
+    - target: {fileID: 8179313453937787822, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: gameSessionData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5d76b594d13146d43ba883d0a8e00440, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

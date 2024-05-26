@@ -74,6 +74,7 @@ public class GameSession : MonoBehaviour
     {
         InitializeReferences();
         ResetUIElements();
+
         levelSettings = gameSessionData.GetLevelData(levelIndex);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -98,6 +99,12 @@ public class GameSession : MonoBehaviour
         if (state == GameState.Running && !Player.isDead)
         {
             timePlayed += Time.deltaTime;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            LoadNextLevel();
         }
     }
 
@@ -159,7 +166,15 @@ public class GameSession : MonoBehaviour
             return;
         }
 
-        InitializeEvents();
+        // Stop Looping
+        if (!gameSessionData.looping)
+        {
+            if (levelIndex > gameSessionData.levelDatas.Count)
+            {
+                BackToMenu();
+                return;
+            }
+        }
         levelSettings = gameSessionData.GetLevelData(levelIndex);
 
         musicManager = FindObjectOfType<MusicManager>();
@@ -167,6 +182,7 @@ public class GameSession : MonoBehaviour
         sceneLoader = FindObjectOfType<SceneLoader>();
 
         onSceneloaded.Invoke();
+        InitializeEvents();
     }
 
     public void Die()

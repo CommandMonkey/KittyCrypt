@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2597818563085210310}
   - component: {fileID: -2981332931489941326}
   - component: {fileID: 4223379069919331}
-  - component: {fileID: -795822725584318249}
   - component: {fileID: 1549547998234636351}
+  - component: {fileID: 4191778196947321653}
   m_Layer: 8
   m_Name: Missile
   m_TagString: Untagged
@@ -5044,18 +5044,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &-795822725584318249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7834965403791016898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4a97c4795da69749918b96ca2afde9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &1549547998234636351
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5130,3 +5118,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4191778196947321653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834965403791016898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21343d23fb5139240bac10ad487bd2ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
