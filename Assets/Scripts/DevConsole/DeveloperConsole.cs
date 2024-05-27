@@ -15,9 +15,9 @@ public class DeveloperConsole
         this.commands = commands;
     }
 
-    public void ProcessCommand(string inputValue)
+    public bool ProcessCommand(string inputValue)
     {
-        if (!inputValue.StartsWith(prefix)) { return; }
+        if (!inputValue.StartsWith(prefix)) { return false; }
 
         inputValue = inputValue.Remove(0, prefix.Length);
 
@@ -26,10 +26,10 @@ public class DeveloperConsole
         string commandInput = inputSplit[0];
         string[] args = inputSplit.Skip(1).ToArray();
 
-        ProcessCommand(commandInput, args);
+        return ProcessCommand(commandInput, args);
     }
 
-    public void ProcessCommand(string commandInput, string[] args)
+    public bool ProcessCommand(string commandInput, string[] args)
     {
         foreach (var command in commands)
         {
@@ -41,9 +41,10 @@ public class DeveloperConsole
             if (command.Process(args))
             {
 
-                return;
+                return true;
             }
         }
+        return false;
     }
 }
 

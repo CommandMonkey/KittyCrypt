@@ -48,15 +48,17 @@ public class DeveloperConsoleBehaviour : MonoBehaviour
 
     public void Toggle()
     {
-        Debug.Log("CONSOLE Toggle");
+
         if (uiCanvas.activeSelf)
         {
+            Debug.Log("Toggeling OFF console");
             inputField.text = string.Empty;
             Time.timeScale = pausedTimeScale;
             uiCanvas.SetActive(false);
         }
         else
         {
+            Debug.Log("Toggeling ON console");
             pausedTimeScale = Time.timeScale;
             Time.timeScale = 0;
             uiCanvas.SetActive(true);
@@ -66,8 +68,10 @@ public class DeveloperConsoleBehaviour : MonoBehaviour
 
     public void ProcessCommand(string inputValue)
     {
-        DeveloperConsole.ProcessCommand(inputValue);
-
+        if (DeveloperConsole.ProcessCommand(inputValue))
+        {
+            Toggle();
+        }
         inputField.text = string.Empty;
     }
 }
