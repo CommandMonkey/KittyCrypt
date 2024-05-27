@@ -28,7 +28,8 @@ public class SpawnItemCommand : ConsoleCommand
 
     void SpawnItem(GameObject item)
     {
-        ItemPickupInteractable pickupInstance = Instantiate(pickupPrefab).GetComponent<ItemPickupInteractable>();
+        Vector3 spawnPos = GameSession.Instance.Player.transform.position;
+        ItemPickupInteractable pickupInstance = Instantiate(pickupPrefab, spawnPos, Quaternion.identity).GetComponent<ItemPickupInteractable>();
 
         pickupInstance.item = item;
     }

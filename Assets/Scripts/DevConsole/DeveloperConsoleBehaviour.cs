@@ -58,7 +58,7 @@ public class DeveloperConsoleBehaviour : MonoBehaviour
         else
         {
             pausedTimeScale = Time.timeScale;
-            Time.timeScale = 0.01f;
+            Time.timeScale = 0;
             uiCanvas.SetActive(true);
             inputField.ActivateInputField();
         }
