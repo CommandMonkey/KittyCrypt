@@ -107,6 +107,15 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleConsole"",
+                    ""type"": ""Button"",
+                    ""id"": ""1fe729ab-9087-4403-9a89-5bfa05512607"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -516,6 +525,28 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""NextCutscene"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4dafd48-c98e-4dd5-81b4-3e3b83af607a"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleConsole"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db161a6a-c735-47e6-88ed-aa7e2906bc20"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleConsole"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -583,6 +614,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
         m_Player_TogglePause = m_Player.FindAction("TogglePause", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_NextCutscene = m_Player.FindAction("NextCutscene", throwIfNotFound: true);
+        m_Player_ToggleConsole = m_Player.FindAction("ToggleConsole", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -653,6 +685,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_TogglePause;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_NextCutscene;
+    private readonly InputAction m_Player_ToggleConsole;
     public struct PlayerActions
     {
         private @UserInputActions m_Wrapper;
@@ -666,6 +699,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
         public InputAction @TogglePause => m_Wrapper.m_Player_TogglePause;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @NextCutscene => m_Wrapper.m_Player_NextCutscene;
+        public InputAction @ToggleConsole => m_Wrapper.m_Player_ToggleConsole;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -702,6 +736,9 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             @NextCutscene.started += instance.OnNextCutscene;
             @NextCutscene.performed += instance.OnNextCutscene;
             @NextCutscene.canceled += instance.OnNextCutscene;
+            @ToggleConsole.started += instance.OnToggleConsole;
+            @ToggleConsole.performed += instance.OnToggleConsole;
+            @ToggleConsole.canceled += instance.OnToggleConsole;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -733,6 +770,9 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
             @NextCutscene.started -= instance.OnNextCutscene;
             @NextCutscene.performed -= instance.OnNextCutscene;
             @NextCutscene.canceled -= instance.OnNextCutscene;
+            @ToggleConsole.started -= instance.OnToggleConsole;
+            @ToggleConsole.performed -= instance.OnToggleConsole;
+            @ToggleConsole.canceled -= instance.OnToggleConsole;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -797,5 +837,6 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
         void OnTogglePause(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnNextCutscene(InputAction.CallbackContext context);
+        void OnToggleConsole(InputAction.CallbackContext context);
     }
 }

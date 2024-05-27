@@ -18,7 +18,7 @@ public class GameSessionData : ScriptableObject
 
     public LevelSettings GetLevelData(int levelIndex)
     {
-        LevelSettings resultSettings = levelDatas[Mathf.Min(levelIndex, levelDatas.Count)];
+        LevelSettings resultSettings = levelDatas[Mathf.Min(levelIndex, levelDatas.Count-1)];
 
         float power = levelIndex;
 

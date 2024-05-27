@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleConsole",
+                    "type": "Button",
+                    "id": "1fe729ab-9087-4403-9a89-5bfa05512607",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -492,6 +501,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "NextCutscene",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4dafd48-c98e-4dd5-81b4-3e3b83af607a",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleConsole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db161a6a-c735-47e6-88ed-aa7e2906bc20",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleConsole",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

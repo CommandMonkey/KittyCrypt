@@ -58,6 +58,7 @@ public class GameSession : MonoBehaviour
     public DeathScreen deathScreen;
     public ReloadCircleFollowCursor reloadCircle;
     public UserInput userInput;
+    public DeveloperConsoleBehaviour developerConsole;
     public MusicManager musicManager { get; private set; }
 
     private SceneLoader sceneLoader;

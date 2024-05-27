@@ -17,6 +17,7 @@ public class UserInput : MonoBehaviour
     [NonSerialized] public SafeUnityEvent onInteract;
     [NonSerialized] public SafeUnityEvent onTogglePause;
     [NonSerialized] public SafeUnityEvent onReload;
+    [NonSerialized] public SafeUnityEvent onToggleConsole;
 
     PlayerInput playerInput;
     Crosshair crosshair;
@@ -36,6 +37,7 @@ public class UserInput : MonoBehaviour
         onInteract = new SafeUnityEvent();
         onTogglePause = new SafeUnityEvent();
         onReload = new SafeUnityEvent();
+        onToggleConsole = new SafeUnityEvent(); 
     }
 
     private void Start()
@@ -62,6 +64,7 @@ public class UserInput : MonoBehaviour
         onDash.RemoveAllListeners();
         onInteract.RemoveAllListeners();
         onReload.RemoveAllListeners();
+        onToggleConsole.RemoveAllListeners();
     }
 
     void OnMove(InputValue value)
@@ -108,6 +111,12 @@ public class UserInput : MonoBehaviour
     void OnReload()
     {
         onReload.SafeInvoke();
+    }
+
+    void OnToggleConsole()
+    {
+        Debug.Log("Input ToggleConsole");
+        onToggleConsole.SafeInvoke();
     }
 }
 
