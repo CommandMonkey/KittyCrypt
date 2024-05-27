@@ -190,6 +190,14 @@ PrefabInstance:
       propertyPath: gameSessionData
       value: 
       objectReference: {fileID: 11400000, guid: 5d76b594d13146d43ba883d0a8e00440, type: 2}
+    - target: {fileID: 8239138022436455627, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: commands.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239138022436455627, guid: 50f70758040f7784c863029768591f8c, type: 3}
+      propertyPath: commands.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3443218428359a24db1bcdbb9e25845c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
