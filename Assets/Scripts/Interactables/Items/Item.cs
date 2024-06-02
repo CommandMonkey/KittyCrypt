@@ -6,13 +6,16 @@ public class Item : MonoBehaviour
 {
     [SerializeField] public string itemName = "Item";
     [SerializeField] public Sprite hotbarImage;
-    public virtual void Activate()
+    internal virtual void Activate()
     {
         
     }
 
-    public virtual void DeActivate()
+    internal virtual void DeActivate()
     {
         
     }
+
+    internal virtual void OnFire() { }
+    internal virtual void OnReload() { }
 }

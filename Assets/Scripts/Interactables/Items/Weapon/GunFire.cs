@@ -106,7 +106,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
         Activate();
     }
 
-    public override void Activate()
+    internal override void Activate()
     {
         userInput = GameSession.Instance.userInput;
         userInput.onReload.AddListener(Reload);
@@ -120,7 +120,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
         SetAmmoUI();
     }
 
-    public override void DeActivate()
+    internal override void DeActivate()
     {
         ResetReloading();
         runtimeData.isFireRateCoolingDown = false;
