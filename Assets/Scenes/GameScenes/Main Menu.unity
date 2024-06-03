@@ -559,7 +559,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'Go through the 5 Stages of grief and find out what happened to your owner
+
+
+    Only
+    3 Stages'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1222,7 +1226,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'Discribes the controlls and how to play
+
+
+    Extreme Work in progress
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2013,7 +2022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 90708353}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &694003060
@@ -2577,7 +2586,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameSessionPrefab: {fileID: 6438481001964424523, guid: 50f70758040f7784c863029768591f8c, type: 3}
-  storySettings: {fileID: 0}
+  tutorialSettings: {fileID: 11400000, guid: 3b3c89cfd64386549873668046403a7d, type: 2}
+  storySettings: {fileID: 11400000, guid: 2dbcf30d29d89a942ba89ba94e2f9d32, type: 2}
   endlessEasySettings: {fileID: 11400000, guid: 747f08c5bf78e2a4c8a8e76b0d1e66fe, type: 2}
   endlessMediumSettings: {fileID: 11400000, guid: 5d76b594d13146d43ba883d0a8e00440, type: 2}
   endlessHardSettings: {fileID: 11400000, guid: e8c759ffe726ca6479c62d289842db2c, type: 2}
@@ -3745,7 +3755,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'For Fun... The Game Goes to infinity,  And becomes indefinetely difficult
+
+
+    #Note:
+    Hard is the most diffiult In Gaming History!!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

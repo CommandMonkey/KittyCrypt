@@ -568,13 +568,13 @@ MonoBehaviour:
     m_Bits: 64
   movementSpeed: 2
   shootingTime: 1
-  walkingTime: 1
+  walkingTime: 0.5
   enemyFlamePrefab: {fileID: 7834965403791016898, guid: b0e68f4ecc06b7e4bb0b1b6046b6723d, type: 3}
   hitEffect: {fileID: 4482243571059739484, guid: 76c99cced79f6c14199af0652af61ac0, type: 3}
-  bulletSpeed: 3
+  bulletSpeed: 7
   damage: 1
   isShooting: 0
-  ableToShoot: 0
+  ableToShoot: 1
 --- !u!1 &8843197293665522241
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
         gameSession = GameSession.Instance;
         animator = GetComponentInChildren<Animator>();
         rigidBody2D = GetComponent<Rigidbody2D>();
-        player = gameSession.player;
+        player = gameSession.Player;
         target = player.transform;
 
         health *= gameSession.levelSettings.enemyHP_Multiplier;

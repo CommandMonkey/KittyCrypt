@@ -15,7 +15,7 @@ public class HealthDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameSession.Instance.player;
+        player = GameSession.Instance.Player;
         if (player != null)
         {
             playerHealth = player.GetHealth();
@@ -31,7 +31,7 @@ public class HealthDisplay : MonoBehaviour
         }
         catch
         {
-            player = GameSession.Instance.player;
+            player = GameSession.Instance.Player;
         }
 
 

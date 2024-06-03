@@ -69,7 +69,7 @@ MonoBehaviour:
     m_Bits: 192
   healthPrefab: {fileID: 4317062860953269516, guid: 8234473345199d84bb952fd2cefef13a, type: 3}
   healthBarPrefab: {fileID: 4786842604661323783, guid: c16010bb1648114419fee0b5f99c08e8, type: 3}
-  shootAimTime: 3
+  shootAimTime: 1
   aimLineVFX: {fileID: 9181747754686250940, guid: 65899a98ec85d6a459a1ccd48e37e441, type: 3}
   shootLineVFX: {fileID: 9181747754686250940, guid: 65899a98ec85d6a459a1ccd48e37e441, type: 3}
   startAimColor: {r: 0, g: 0.048901558, b: 1, a: 0.27450982}
@@ -79,20 +79,21 @@ MonoBehaviour:
   gunShotSFX: {fileID: 8300000, guid: f4acfc9fbcea5ab4b84be42a182906d3, type: 3}
   weaponTransform: {fileID: 5410748414546813523}
   maxRotationSpeed:
-    startVal: 50
-    endVal: 100
-  rotationAcceleration:
     startVal: 100
     endVal: 150
+  rotationAcceleration:
+    startVal: 150
+    endVal: 200
   maxAngularVelocity:
-    startVal: 50
-    endVal: 100
+    startVal: 100
+    endVal: 150
   facingLeftWeaponPoint: {x: -1.3, y: 2.1}
   facingRightWeaponPoint: {x: 1.4, y: 2.1}
   ratsPrefab: {fileID: 8727124918570381137, guid: 49015589566736147baea1776299305b, type: 3}
   amountOfRatsToSpawn: 5
   CaneBoomSFX: {fileID: 8300000, guid: c3941fa804f250245a8a977c156df2d3, type: 3}
   bossRoom: {fileID: 0}
+  state: 0
 --- !u!120 &1627186473189343508
 LineRenderer:
   serializedVersion: 2

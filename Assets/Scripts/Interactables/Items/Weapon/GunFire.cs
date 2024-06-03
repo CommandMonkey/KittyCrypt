@@ -54,7 +54,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
     protected void Start()
     {
         gameSession = GameSession.Instance;
-        player = gameSession.player;
+        player = gameSession.Player;
         userInput = gameSession.userInput;
         playerInput = gameSession.playerInput;
         crosshair = gameSession.crosshair;
@@ -99,6 +99,8 @@ public class GunFire<T> : Item where T : GunSettingsObject
         gameSession = GameSession.Instance;
         uiCanvas = FindObjectOfType<UICanvas>();
         ammoUI = uiCanvas.ammoText;
+
+        Debug.Log("NEW SCENE");
 
         DeActivate();
         Activate();
@@ -162,7 +164,7 @@ public class GunFire<T> : Item where T : GunSettingsObject
     protected void GunFeedbackEffects()
     {
         gunSource.PlayOneShot(settings.fireAudio, settings.audioVolume);
-        gameSession.gameCamera.DoCameraShake();
+        gameSession.GameCamera.DoCameraShake();
         player.exteriorVelocity += -(Vector2)transform.right * settings.playerKnockback;
 
         if (nuzzleLight == null)
@@ -291,8 +293,10 @@ public class GunFire<T> : Item where T : GunSettingsObject
 
     protected virtual void SetAmmoUI()
     {
+        
         ammoUI.text = (settings.shotsBeforeReload - runtimeData.bulletsFired).ToString() + "/" +
                       settings.shotsBeforeReload.ToString();
+        Debug.Log("Setting Ammo UI " + itemName + " " + ammoUI.text);
     }
 
     protected virtual void WeaponFire() { }

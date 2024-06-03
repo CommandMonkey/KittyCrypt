@@ -6,7 +6,6 @@ public class GunRaycastFire : GunFire<RaycastGunSettingsObject>
 {
     protected override void WeaponFire()
     {
-        Debug.Log("Raycast fire");
         // Fire
         RaycastHit2D bulletHit = Physics2D.Raycast(transform.position, transform.right, Mathf.Infinity, ~settings.ignoreLayerMask);
         if (bulletHit)

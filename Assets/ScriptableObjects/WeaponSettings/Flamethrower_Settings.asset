@@ -16,7 +16,7 @@ MonoBehaviour:
   reloadTime: 2
   shotsBeforeReload: 50
   bulletSpreadRange: 25
-  damage: 5
+  damage: 3
   playerKnockback: 2
   fireAudio: {fileID: 8300000, guid: 259cc49144bee1e4586039a1750351d4, type: 3}
   reloadAudio: {fileID: 8300000, guid: 1107325c1db1c8f43a566f3c54b936e8, type: 3}

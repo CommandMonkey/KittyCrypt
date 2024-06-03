@@ -69,6 +69,7 @@ public class SkullEnemy : Enemy
         ableToShoot = false;
         isShooting = true;
         Shoot();
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(shootingTime);
         isShooting = false;
         yield return new WaitForSeconds(walkingTime);

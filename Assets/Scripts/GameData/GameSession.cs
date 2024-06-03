@@ -5,7 +5,6 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-
 public enum GameMode
 {
     notAssigned,
@@ -17,7 +16,7 @@ public enum GameMode
 public enum GameDifficulty
 {
     notAssigned,
-    easy, 
+    easy,
     medium,
     hard
 }
@@ -33,107 +32,54 @@ public class GameSession : MonoBehaviour
 
     [Header("Load Settings")]
     public static GameState state = GameState.Loading;
-    public GameMode gameMode;
-
-    public GameSessionData.LevelSettings levelSettings;
-
+    [NonSerialized] public GameMode gameMode;
+    [NonSerialized] public GameSessionData.LevelSettings levelSettings;
     public GameSessionData gameSessionData;
     [NonSerialized] public UnityEvent onEnemyKill;
     [NonSerialized] public UnityEvent OnNewState;
     [NonSerialized] public UnityEvent onSceneloaded;
 
-    //Stats
-    public int levelIndex = 0;
-    public float timePlayed = 0f;
-    public int enemiesKilled = 0;
-    public int roomsCleared = 0;
-    public int damageTaken = 0;
+    // Stats
+    [NonSerialized] public int levelIndex = 0;
+    [NonSerialized] public float timePlayed = 0f;
+    [NonSerialized] public int enemiesKilled = 0;
+    [NonSerialized] public int roomsCleared = 0;
+    [NonSerialized] public int damageTaken = 0;
 
-    bool killYourself = false;
-    public bool playerIsShooting = false;
+    private bool killYourself = false;
+    [NonSerialized] public bool playerIsShooting = false;
 
-    public GameCamera gameCamera { get; private set; }
-    public Player player;
-    public GameObject angryFace; 
+    public GameCamera GameCamera { get; private set; }
+    public Player Player;
+    public GameObject angryFace;
     public PlayerInput playerInput;
     public Transform enemyContainer;
     public Crosshair crosshair;
     public DeathScreen deathScreen;
     public ReloadCircleFollowCursor reloadCircle;
     public UserInput userInput;
+    public DeveloperConsoleBehaviour developerConsole;
     public MusicManager musicManager { get; private set; }
 
-    SceneLoader sceneLoader;
-    
-
+    private SceneLoader sceneLoader;
     public static GameSession Instance { get; private set; }
 
     private void Awake()
     {
-        // Ensure there's only one instance
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-
-        onEnemyKill = new UnityEvent();
-        OnNewState = new UnityEvent();
-        onSceneloaded = new UnityEvent();
+        InitializeSingleton();
+        InitializeEvents();
         reloadCircle = FindObjectOfType<ReloadCircleFollowCursor>();
-
-        // Get current level data (Based on levelIndex)
-        levelSettings = gameSessionData.GetLevelData(levelIndex);
     }
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
-        angryFace = GameObject.Find("Angry");
+        InitializeReferences();
+        ResetUIElements();
 
-        musicManager = FindObjectOfType<MusicManager>();
-        gameCamera = FindObjectOfType<GameCamera>();
-        sceneLoader = FindObjectOfType<SceneLoader>();
-        crosshair = FindObjectOfType<Crosshair>();
-        deathScreen = FindObjectOfType<DeathScreen>();
-        userInput = GetComponentInChildren<UserInput>();
-        playerInput = userInput.GetComponent<PlayerInput>();
-
-        // Reset default value
-        gameCamera?.SetPrimaryTarget(player.transform);
-        crosshair.gameObject.SetActive(false);
-        deathScreen.gameObject.SetActive(false);
-        angryFace.gameObject.SetActive(false);
-
-
-
+        levelSettings = gameSessionData.GetLevelData(levelIndex);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.buildIndex == 0)
-        {
-            killYourself = true;
-            return;
-        }
-
-        onEnemyKill = new UnityEvent();
-        OnNewState = new UnityEvent();
-        levelSettings = gameSessionData.GetLevelData(levelIndex);
-
-        musicManager = FindObjectOfType<MusicManager>();
-        gameCamera = FindObjectOfType<GameCamera>();
-        sceneLoader = FindObjectOfType<SceneLoader>();
-
-        onSceneloaded.Invoke(); 
-    }
-
-    GameState previousState;
     private void Update()
     {
         if (killYourself)
@@ -150,10 +96,88 @@ public class GameSession : MonoBehaviour
 
         SetCursorOrCrosshair();
         SetPlayerAngry();
-        if(state == GameState.Running && !player.isDead)
+
+        if (state == GameState.Running && !Player.isDead)
         {
             timePlayed += Time.deltaTime;
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
+    private void InitializeSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            gameObject.SetActive(false);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void InitializeEvents()
+    {
+        onEnemyKill = new UnityEvent();
+        OnNewState = new UnityEvent();
+        onSceneloaded = new UnityEvent();
+    }
+
+    private void InitializeReferences()
+    {
+        Player = FindObjectOfType<Player>();
+        angryFace = GameObject.Find("Angry");
+        musicManager = FindObjectOfType<MusicManager>();
+        GameCamera = FindObjectOfType<GameCamera>();
+        sceneLoader = FindObjectOfType<SceneLoader>();
+        crosshair = FindObjectOfType<Crosshair>();
+        deathScreen = FindObjectOfType<DeathScreen>();
+        userInput = GetComponentInChildren<UserInput>();
+        playerInput = userInput.GetComponent<PlayerInput>();
+
+        GameCamera?.SetPrimaryTarget(Player.transform);
+    }
+
+    private void ResetUIElements()
+    {
+        crosshair.gameObject.SetActive(false);
+        deathScreen.gameObject.SetActive(false);
+        angryFace.gameObject.SetActive(false);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 0)
+        {
+            killYourself = true;
+            return;
+        }
+
+        // Stop Looping
+        if (!gameSessionData.looping)
+        {
+            if (levelIndex > gameSessionData.levelDatas.Count)
+            {
+                BackToMenu();
+                return;
+            }
+        }
+        levelSettings = gameSessionData.GetLevelData(levelIndex);
+
+        musicManager = FindObjectOfType<MusicManager>();
+        GameCamera = FindObjectOfType<GameCamera>();
+        sceneLoader = FindObjectOfType<SceneLoader>();
+
+        onSceneloaded.Invoke();
+        InitializeEvents();
     }
 
     public void Die()
@@ -166,13 +190,6 @@ public class GameSession : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDestroy()
-    {
-        if (Instance == this)
-            Instance = null;
-    }
-
-
     public void SetState(GameState state)
     {
         GameSession.state = state;
@@ -184,7 +201,18 @@ public class GameSession : MonoBehaviour
         sceneLoader.LoadLevel1();
     }
 
-    void SetCursorOrCrosshair()
+    public void BackToMenu()
+    {
+        sceneLoader.LoadMainMenu();
+    }
+
+    public void RestartGame()
+    {
+        levelIndex = 0;
+        sceneLoader.LoadLevel1();
+    }
+
+    private void SetCursorOrCrosshair()
     {
         if (playerInput.currentControlScheme != "Keyboard and mouse")
         {
@@ -200,19 +228,19 @@ public class GameSession : MonoBehaviour
         }
     }
 
-    void SetPlayerAngry()
+    private void SetPlayerAngry()
     {
-        if (!playerIsShooting) { return; }
+        if (!playerIsShooting) return;
         StopAllCoroutines();
         angryFace.gameObject.SetActive(true);
         StartCoroutine(PlayerAngryDisable());
     }
 
-    IEnumerator PlayerAngryDisable()
+    private IEnumerator PlayerAngryDisable()
     {
         yield return new WaitForSeconds(1f);
         angryFace.gameObject.SetActive(false);
     }
+
+    private GameState previousState;
 }
-
-

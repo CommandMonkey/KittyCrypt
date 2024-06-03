@@ -32,10 +32,10 @@ public class Room : MonoBehaviour
         onPlayerEnter = new UnityEvent();
     }
 
-    void Start()
+    protected void Start()
     {
         gameSession = GameSession.Instance;
-        player = gameSession.player;
+        player = gameSession.Player;
         roomManager = FindObjectOfType<RoomManager>();
         fogOfWarObject = GetComponentInChildren<FogOfWar>();
 

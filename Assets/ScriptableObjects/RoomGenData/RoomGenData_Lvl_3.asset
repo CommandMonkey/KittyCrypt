@@ -39,7 +39,8 @@ MonoBehaviour:
     spawnProbability: 0.1
     maxAmount: 3
   amountOfRandomRooms: 12
-  setRooms: []
+  setRooms:
+  - {fileID: 3722623101364078196, guid: 714cf90886788f048944e2ebde4373ca, type: 3}
   endRooms:
   - {fileID: 3722623101364078196, guid: ed0e7df6c77408a488482dad4dc82fad, type: 3}
   - {fileID: 3722623101364078196, guid: bf0c0fbe75d494f478d4b5513a19d9bf, type: 3}
@@ -53,4 +54,3 @@ MonoBehaviour:
     gameObject: {fileID: 3722623101364078196, guid: 6bfe20e8df8c34f45ae2eb24505a3228, type: 3}
   - direction: 3
     gameObject: {fileID: 3722623101364078196, guid: 82f2a2764afb9e64dae3bb41e0f37ed0, type: 3}
-  doors: []

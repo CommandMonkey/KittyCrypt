@@ -37,7 +37,7 @@ public class BossDoorInteractable : MonoBehaviour, IInteractable
         spriteRenderer = GetComponent<SpriteRenderer>();
         roomManager = FindObjectOfType<RoomManager>();
         uiCanvas = FindObjectOfType<UICanvas>();
-        player = GameSession.Instance.player;
+        player = GameSession.Instance.Player;
 
         canInteract = true;
 

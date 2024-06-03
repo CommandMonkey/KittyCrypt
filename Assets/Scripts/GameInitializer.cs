@@ -5,6 +5,7 @@ public class GameInitializer : MonoBehaviour
 {
     [SerializeField] GameObject GameSessionPrefab;
     [Header("Gamemode Gamedata")]
+    [SerializeField] GameSessionData tutorialSettings;
     [SerializeField] GameSessionData storySettings;
     [SerializeField] GameSessionData endlessEasySettings;
     [SerializeField] GameSessionData endlessMediumSettings;
@@ -97,7 +98,8 @@ public class GameInitializer : MonoBehaviour
     {
         if (gameMode == GameMode.tutorial)
         {
-            sceneLoader.LoadTutorial(true);
+            sceneLoader.LoadLevel1(true);
+            CreateGameSession();
         }
         else if (gameMode == GameMode.story)
         {
@@ -114,13 +116,19 @@ public class GameInitializer : MonoBehaviour
     private void CreateGameSession()
     {
         GameSessionData sessionSettings = GetSessionDataOfType();
-        Instantiate(GameSessionPrefab).GetComponent<GameSession>().gameSessionData = sessionSettings;
+        GameSession gameSession = Instantiate(GameSessionPrefab).GetComponent<GameSession>();
+        gameSession.gameSessionData = sessionSettings;
+        gameSession.gameMode = gameMode;
     }
 
     private GameSessionData GetSessionDataOfType()
     {
         GameSessionData result = null;
-        if (gameMode == GameMode.story)
+        if (gameMode == GameMode.tutorial)
+        {
+            result = tutorialSettings;
+        }
+        else if (gameMode == GameMode.story)
         {
             result = storySettings;
         }
