@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ public static class GameHelper
         Vector2 min = collider.bounds.min;
         Vector2 max = collider.bounds.max;
 
-        float randomX = Random.Range(min.x, max.x);
-        float randomY = Random.Range(min.y, max.y);
+        float randomX = UnityEngine.Random.Range(min.x, max.x);
+        float randomY = UnityEngine.Random.Range(min.y, max.y);
 
         Vector2 pos = new Vector2(randomX, randomY);
 
@@ -128,5 +129,35 @@ public static class GameHelper
         float mappedValue = outputMin + (normalizedValue * outputSpan);
 
         return mappedValue;
+    }
+
+    public static int LevenshteinDistance(string source, string target)
+    {
+        if (source == null) throw new ArgumentNullException(nameof(source));
+        if (target == null) throw new ArgumentNullException(nameof(target));
+
+        int sourceLength = source.Length;
+        int targetLength = target.Length;
+
+        if (sourceLength == 0) return targetLength;
+        if (targetLength == 0) return sourceLength;
+
+        int[,] distance = new int[sourceLength + 1, targetLength + 1];
+
+        for (int i = 0; i <= sourceLength; distance[i, 0] = i++) { }
+        for (int j = 0; j <= targetLength; distance[0, j] = j++) { }
+
+        for (int i = 1; i <= sourceLength; i++)
+        {
+            for (int j = 1; j <= targetLength; j++)
+            {
+                int cost = (target[j - 1] == source[i - 1]) ? 0 : 1;
+                distance[i, j] = Math.Min(
+                    Math.Min(distance[i - 1, j] + 1, distance[i, j - 1] + 1),
+                    distance[i - 1, j - 1] + cost);
+            }
+        }
+
+        return distance[sourceLength, targetLength];
     }
 }

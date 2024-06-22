@@ -75,4 +75,15 @@ public class TeleportCommand : ConsoleCommand
     {
         GameSession.Instance.Player.transform.position = pos;
     }
+
+    public override List<string> GetSuggestions(string[] args)
+    {
+        return new List<string>
+        {
+            bossRoomStrings[0],
+            keyRoomStrings[0],
+            tressureRoomStrings[0],
+            startRoomStrings[0]
+        };
+    }
 }

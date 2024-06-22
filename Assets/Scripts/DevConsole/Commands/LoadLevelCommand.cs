@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -18,5 +19,10 @@ public class LoadLevelCommand : ConsoleCommand
         FindObjectOfType<SceneLoader>().LoadLevel1();
 
         return true;
+    }
+
+    public override List<string> GetSuggestions(string[] args)
+    {
+        return new List<string>() { "<level index>" };
     }
 }

@@ -41,6 +41,16 @@ public class SpawnItemCommand : ConsoleCommand
         public List<string> names;
         public GameObject prefab;
     }
+
+    public override List<string> GetSuggestions(string[] args)
+    {
+        List<string> result = new List<string>();
+        foreach (itemXNames item in items) 
+        {
+            result.Add(item.names[0]);
+        }
+        return result;
+    }
 }
 
 
