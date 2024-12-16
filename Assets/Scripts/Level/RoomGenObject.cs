@@ -10,15 +10,15 @@ public class RoomGenObject : ScriptableObject
 
     [Header("Room Prefabs")]
     public GameObject startRoom;
-    [SerializeField] List<RoomProbability> randomRoomProbabilities;
-    [SerializeField] int amountOfRandomRooms;
-    [SerializeField] List<GameObject> setRooms;
+    [SerializeField] List<RoomProbability> randomRoomProbabilities; // pool of rooms that get picked semi randomly (randomness is configurable) 
+    [SerializeField] int amountOfRandomRooms; // amount of rooms to pull from the random pool
+    [SerializeField] List<GameObject> setRooms; // set rooms that will get spawned 
 
     [Tooltip("spawned furthest away from each other, in order of list")] 
-    public List<GameObject> endRooms = null;
+    public List<GameObject> endRooms = null; // gest spawned as far away from each other as possible once all rooms have been spawned
 
     [Header("EntranceBlockers")]
-    public List<DirectionGameObjectPair> entranceBlockers;
+    public List<DirectionGameObjectPair> entranceBlockers; 
 
     private Dictionary<GameObject, int> spawnedRoomCounts = new Dictionary<GameObject, int>();
     
