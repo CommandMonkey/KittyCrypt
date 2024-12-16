@@ -5,15 +5,30 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
+// -- Basic information RoomManager -- //
+// Tries to spawn rooms in a maze like structure by trial and error. It tries addign room after room until it works
+// 
+// A room is a prefab with:
+//  - a box collider that show the bounds of a room. 
+//  - child objects positioned at the door locations with an Entrance component attached
+//
+// Room GO example structure:
+// CourtRoom
+// -- BoundsCollider
+// -- EntranceWest
+// -- EntranceNorth
+// -- EntranceEast
+
+
+
 public class RoomManager : MonoBehaviour
 {
+#region Fields & Properties
+    
     [Header("General")]
     [SerializeField] Transform grid;
     [SerializeField] AudioClip closeDoorAudio;
     [SerializeField] AudioClip openDoorAudio;
-
-    [Header("Room Spawning Prefabs")]
-
 
     // public fields
     [NonSerialized] internal RoomGenObject roomGenSettings;
@@ -26,14 +41,16 @@ public class RoomManager : MonoBehaviour
     List<Room> spawnedRooms = new List<Room>();
     Dictionary<Entrance, List<string>> entranceRoomFailNames = new Dictionary<Entrance, List<string>>();
     ContactFilter2D roomsFilter;
-
     int totalTries = 0;
 
     // Cached refs
     GameSession gameSession;
     AudioSource audioScource;
     Player player;
+    
+#endregion
 
+#region Initialization
     private void Awake()
     {
         onRoomSpawningDone = new UnityEvent();
@@ -45,16 +62,19 @@ public class RoomManager : MonoBehaviour
         gameSession = GameSession.Instance;
         audioScource = GetComponent<AudioSource>();
         player = gameSession.Player;
-
+        
+        // Setup Generation Data
         roomGenSettings = gameSession.levelSettings.roomGenSettings;
         roomsFilter = CreateRoomsFilter();
 
         StartRoomSpawning();
     }
-
-    public void StartRoomSpawning()
+    
+    
+    // Is called on start nd recursively if the room spawning fails. Terminates after 100 fails to prevent crash (kinda bad)
+    private void StartRoomSpawning()
     {
-        GameSession.state = GameSession.GameState.Loading;
+        GameSession.state = GameSession.GameState.Loading; // Bad reference
 
         roomsToSpawn = roomGenSettings.GetRoomsList();
         Debug.Log("count: " +  roomsToSpawn.Count);
@@ -72,50 +92,62 @@ public class RoomManager : MonoBehaviour
         StartCoroutine(SpawnRoomsRoutine());
         
     }
+    
+#endregion
+
+#region Room Spawning
 
     IEnumerator SpawnRoomsRoutine()
     {
         int previousRoomCount = 0;
         int waveCount = 0;
-
+        
+        // While there is rooms to spawn
         while (roomsToSpawn.Count > 0)
         {
+            // Debug
             waveCount++;
             Debug.Log("RoomSpawning Wave: " + waveCount);
 
             if (ShouldTerminateRoomSpawning(waveCount, previousRoomCount))
             {
-                TerminateRoomSpawning();
+                TerminateAndRetryRoomSpawning(); // Break point
                 yield break;
             }
             previousRoomCount = roomsToSpawn.Count;
 
+            // Shuffle
             List<GameObject> shuffledRooms = ShuffleRoomsToSpawn();
             yield return new WaitForEndOfFrame();
 
+            // Try Spawn rooms this wave
             foreach (Entrance entrance in GetShuffledUnconnectedEntrances())
             {
                 if (TrySpawnRoomsAtEntrance(shuffledRooms, entrance, roomsFilter))
                     break;
             }
         }
+        
+        // Finnishing
         yield return null;
         yield return null;
-        SpawnEndRooms();
+        SpawnEndRooms(); 
         yield return new WaitForEndOfFrame();
 
+        // Cleanup
         SpawnDoorCoversForUnconnectedEntrances();
         if (gameSession.levelIndex == 0) CloseDoors(true);
         onRoomSpawningDone.Invoke();
-        player.transform.position = Vector3.zero;
+        player.transform.position = Vector3.zero; // BAD, VERY BAD
     }
 
     bool ShouldTerminateRoomSpawning(int waveCount, int previousRoomCount)
     {
+        // there has been 10 waves and it could not place any rooms last wave
         return waveCount > 10 && roomsToSpawn.Count == previousRoomCount;
     }
 
-    void TerminateRoomSpawning()
+    void TerminateAndRetryRoomSpawning()
     {
         Debug.Log("Terminating roomSpawning");
         DestroyAllRooms();
@@ -159,6 +191,7 @@ public class RoomManager : MonoBehaviour
 
     void HandleFailedRoomSpawn(Entrance entrance, GameObject roomObj)
     {
+        // Save Room names that are incompatable with an entrance to reduce number of collider checks
         if (entranceRoomFailNames.ContainsKey(entrance))
         {
             entranceRoomFailNames[entrance].Add(roomObj.name);
@@ -223,11 +256,14 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+#endregion
+
 
     // /////// ================= /////// //
     // ///////  HELPER FUNCTION  /////// //
     // /////// ================= /////// //
 
+#region Helper Methods
 
     List<GameObject> ShuffleRoomsToSpawn()
     {
@@ -257,7 +293,7 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-        // Sort the anslutna entréer baserat på avståndet från avoidPositions
+        // Sort the anslutna entrï¿½er baserat pï¿½ avstï¿½ndet frï¿½n avoidPositions
         List<Entrance> sortedEntrances = new List<Entrance>(entranceDistances.Keys);
         sortedEntrances.Sort((entr1, entr2) =>
             entranceDistances[entr1].CompareTo(entranceDistances[entr2]));
@@ -362,4 +398,5 @@ public class RoomManager : MonoBehaviour
         }
         if (!silent) audioScource.PlayOneShot(openDoorAudio, 0.4f);
     }
+#endregion
 }

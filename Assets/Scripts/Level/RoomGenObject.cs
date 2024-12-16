@@ -6,6 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RoomGenData", menuName = "ScriptableObjects/RoomGenData")]
 public class RoomGenObject : ScriptableObject
 {
+#region Fields
+
     [Header("Room Prefabs")]
     public GameObject startRoom;
     [SerializeField] List<RoomProbability> randomRoomProbabilities;
@@ -19,7 +21,12 @@ public class RoomGenObject : ScriptableObject
     public List<DirectionGameObjectPair> entranceBlockers;
 
     private Dictionary<GameObject, int> spawnedRoomCounts = new Dictionary<GameObject, int>();
+    
+#endregion
 
+#region Methods
+    
+    // Returns a randomized list of all the rooms that should be spawned
     public List<GameObject> GetRoomsList()
     {
         List<GameObject> resultList = new List<GameObject>();
@@ -45,7 +52,18 @@ public class RoomGenObject : ScriptableObject
 
         return resultList;
     }
+    
+    public GameObject GetEntranceBlockerOfDir(Direction dir)
+    {
+        foreach (DirectionGameObjectPair pair in entranceBlockers)
+        {
+            if (pair.direction == dir)
+                return pair.gameObject;
+        }
+        return null;
+    }
 
+    
     private GameObject ChooseRandomRoom()
     {
         float totalProbability = 0f;
@@ -69,23 +87,16 @@ public class RoomGenObject : ScriptableObject
 
         return null;
     }
-
-
-    public GameObject GetEntranceBlockerOfDir(Direction dir)
-    {
-        foreach (DirectionGameObjectPair pair in entranceBlockers)
-        {
-            if (pair.direction == dir)
-                return pair.gameObject;
-        }
-        return null;
-    }
+    
+#endregion
 }
 
 
 [System.Serializable]
 public class RoomProbability
 {
+#region Fields
+
     public GameObject roomPrefab;
     [Range(0f, 1f)] public float spawnProbability = 0.5f;
     public int maxAmount = 1; 
@@ -95,12 +106,19 @@ public class RoomProbability
     {
         currentAmount = 0;
     }
+    
+#endregion
 }
 
 
 [System.Serializable]
 public class DirectionGameObjectPair
 {
+#region Fields
+
     public Direction direction;
     public GameObject gameObject;
+    
+
+    #endregion
 }
